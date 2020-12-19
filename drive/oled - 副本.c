@@ -134,6 +134,8 @@ uchar windows[]=
 0X04,0X10,0X00,0X00,0X00,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00};
 
 
+
+
 void draw_point(uchar x,uchar y)
 {
 	uchar temp=0x00;
