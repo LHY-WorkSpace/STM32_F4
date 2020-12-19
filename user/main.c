@@ -15,7 +15,7 @@
 //#include "ds18b20.h"
 #include "oled.h"
 #include "GUI.H"
-#include "DMA.h"  
+//#include "DMA.h"  
 //#include "pwm.h"
 //#include "ESP8266.h"
 //#include "FreeRTOS.h"
@@ -32,8 +32,6 @@
 
 extern float pitch,yaw,roll; 
 __align(4) uchar OLED[2560],TTTS[2560],TTTSA[512];
-
-uchar USED_FLAG;
 
 
 uchar Data_OK;					
@@ -123,18 +121,7 @@ int  main()
 	
 	while(1)
 	{
-	//memset(OLED,0xaa,sizeof(OLED));
-	//SD_Write_Block((uint*)OLED,k,2);
-	//memset(OLED,0,sizeof(OLED));	
-	// SD_Read_Block((uint*)OLED,k,2);
-	// for(i=0;i<1024;i++)	
-	// {
-	// printf("%4d:0x%x   ",i,(uchar*)OLED[i]);
-	// 	if(i%10==0)
-	// 		printf("\r\n");
-	// }
-		
-	
+
 
 		LED1_OFF;
 		delay_ms(300);
@@ -146,14 +133,6 @@ int  main()
 //	DMA2_Start();
 		//clear_screen();
 
-
-		
-		
-		
-		
-		
-		
-		
 	}
 
 
@@ -162,11 +141,6 @@ int  main()
 	
 	
 }	
-
-	
-
-
-
 
 	
 
@@ -206,7 +180,6 @@ void SPI2_IRQHandler()
 	}
 	if(i==1024)
 	{
-//		OLED_FULL=0;
 		i=0;
 	}
 
