@@ -497,12 +497,6 @@ SD_error SD_Read_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar cou
 	uint Addr_Temp;
 	Addr_Temp=(Physical_Block_BaseAddr/BLOCK_SIZE)*BLOCK_SIZE;
 
-		// CMD_Number_Argument_Responsetype(CMD16,BLOCK_SIZE,S_RESPONSE);                 //设置SD卡本次要读的数据长度
-		// error_type=CMD_ERROR();
-		// 	if(error_type!=SDIO_OK)
-		// 	return error_type;
-
-
 		SDIO_Data_Set(BLOCK_SIZE*count,TO_SDIO);			
 		
 		CMD_Number_Argument_Responsetype(CMD18,Addr_Temp,S_RESPONSE);                   
@@ -564,9 +558,6 @@ SD_error SD_Write_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar co
 	for(k=0;k<count;k++)
 	{
 
-
-
-
 			while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==0)                               //已发送指定长度数据块
 				{
 					
@@ -582,8 +573,6 @@ SD_error SD_Write_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar co
 					
 				}
 			SDIO_ClearFlag(SDIO_FLAG_DBCKEND|SDIO_FLAG_DATAEND);
-
-			//Addr_Temp+=BLOCK_SIZE;
 
 		/*
 			CMD_Number_Argument_Responsetype(CMD13,SD_information.SD_RCA,S_RESPONSE);  
