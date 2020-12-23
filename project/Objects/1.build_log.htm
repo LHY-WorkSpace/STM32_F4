@@ -21,17 +21,23 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
 Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
-G:\STM32F4-Bad apple\project\empty.uvprojx
+G:\DriverToolkit\STM32_F4\project\empty.uvprojx
 Project File Date:  12/08/2020
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\MDK 5\ARM\ARMCC\Bin'
 Build target 'Empty_Project'
 compiling main.c...
+compiling sd.c...
+..\drive\sd.c(306): warning:  #177-D: variable "j"  was declared but never referenced
+  	uchar i,j;
+..\drive\sd.c(435): warning:  #177-D: variable "k"  was declared but never referenced
+  	uchar j,i,k;
+..\drive\sd.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=14952 RO-data=568 RW-data=132 ZI-data=7820  
+Program Size: Code=13920 RO-data=568 RW-data=116 ZI-data=3532  
 FromELF: creating hex file...
-".\Objects\1.axf" - 0 Error(s), 0 Warning(s).
+".\Objects\1.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 

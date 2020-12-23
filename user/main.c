@@ -31,7 +31,10 @@
 
 
 extern float pitch,yaw,roll; 
-__align(4) uchar OLED[2560],TTTS[2560],TTTSA[512];
+__align(4) uchar A[512],B[512],C[512],D[512];
+
+
+#define NUM    0xa0
 
 
 uchar Data_OK;					
@@ -61,17 +64,16 @@ int  main()
 	
 	SD_CARD_Init();
 
-// 	memset(OLED,0x11,sizeof(OLED));
-// SD_Write_Block((uint*)OLED,512);
+	memset(A,NUM+1,sizeof(A));
+	memset(B,NUM+2,sizeof(A));
+	memset(C,NUM+3,sizeof(A));
+	memset(D,NUM+4,sizeof(A));
 
-// 	memset(OLED,0x22,sizeof(OLED));
-// SD_Write_Block((uint*)OLED,1024);
 
-// 	memset(OLED,0x33,sizeof(OLED));
-// SD_Write_Block((uint*)OLED,1536);
-
-// 	memset(OLED,0x44,sizeof(OLED));
-// SD_Write_Block((uint*)OLED,2048);
+SD_Write_Block((uint*)A,512);
+SD_Write_Block((uint*)B,1024);
+SD_Write_Block((uint*)C,1536);
+SD_Write_Block((uint*)D,2048);
 
 // 	memset(OLED,0x55,sizeof(OLED));
 // SD_Write_Block((uint*)OLED,2560);
@@ -81,7 +83,15 @@ int  main()
 	// memset(OLED,0xAA,sizeof(OLED));
 	// SD_Write_Block((uint*)OLED,1024);
 
-	SD_Read_Block((uint*)TTTS,1024);
+
+
+
+	SD_Read_Block((uint*)A,512);
+	SD_Read_Block((uint*)B,1024);
+	SD_Read_Block((uint*)C,1536);
+	SD_Read_Block((uint*)D,2048);
+	// SD_Read_Block((uint*)TTTS[1024],1024);
+	// SD_Read_Block((uint*)TTTS[1536],1536);	
 //	SD_Read_Block((uint*)TTTSA,512);
 	// for(i=0;i<512;i++)	
 	// {
@@ -111,12 +121,28 @@ int  main()
 
 	for(i=0;i<512;i++)	
 	{
-	printf("%4d:0x%2x   ",i,(uchar*)TTTS[i]);
+	printf("%4d:0x%2x   ",i,(uchar*)A[i]);
 		if(i%10==0)
 			printf("\r\n");
 	}
-
-
+	for(i=0;i<512;i++)	
+	{
+	printf("%4d:0x%2x   ",i,(uchar*)B[i]);
+		if(i%10==0)
+			printf("\r\n");
+	}
+	for(i=0;i<512;i++)	
+	{
+	printf("%4d:0x%2x   ",i,(uchar*)C[i]);
+		if(i%10==0)
+			printf("\r\n");
+	}
+	for(i=0;i<512;i++)	
+	{
+	printf("%4d:0x%2x   ",i,(uchar*)D[i]);
+		if(i%10==0)
+			printf("\r\n");
+	}
 			
 	
 	while(1)
@@ -153,7 +179,7 @@ void USART1_IRQHandler()
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)
 	{
 	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-  OLED[i]=USART_ReceiveData(USART1);
+//  OLED[i]=USART_ReceiveData(USART1);
 	i++;		
 	}
 
@@ -174,7 +200,7 @@ void SPI2_IRQHandler()
 
 	if(SPI_I2S_GetITStatus(SPI2,SPI_I2S_IT_TXE)==SET)
 	{
-		SPI_I2S_SendData(SPI2,OLED[i]);
+//		SPI_I2S_SendData(SPI2,OLED[i]);
 		SPI_I2S_ClearITPendingBit(SPI2,SPI_I2S_IT_TXE);
 		i++;
 	}

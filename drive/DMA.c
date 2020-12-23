@@ -8,7 +8,7 @@
 
 
 
-extern uchar OLED[512];
+uchar OLED[512];
 extern uchar windows[];
 extern uint tttt[];
 extern uint sss[];

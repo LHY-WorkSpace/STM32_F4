@@ -45,7 +45,7 @@ char Local_IP[12];
 char Net_Name[15];
 char Net_Password[10];
 char Wifi_Data[300];
-extern uchar USED_FLAG;
+ uchar USED_FLAG;
 
 
 

@@ -354,9 +354,10 @@ SD_error SD_CARD_Init()
 			}
 					 
 			SD_Select();//CMD7
+			SDIO_SetBusWide(SDIO_Buswide_4b);			
 			SD_SetTransmissionWide(SD_CARD_WIDTH_4b);
 			SDIO_SetSpeed(SDIO_High_Speed);
-			SDIO_SetBusWide(SDIO_Buswide_4b);
+
 
 			printf("SD RCA:%d\r\n",SD_information.SD_RCA>>16);
 			printf("Manufacture ID：%d\r\n",SD_information.SD_MID);
@@ -382,8 +383,6 @@ SD_error SD_CARD_Init()
 SD_error SD_Read_Block(uint *buffer,uint Physical_Block_BaseAddr)
 {
 
-
-	
 	uint i=0,j=0;
 
 				CMD_Number_Argument_Responsetype(CMD16,BLOCK_SIZE,S_RESPONSE);                 //设置SD卡本次要读的数据长度
@@ -392,15 +391,15 @@ SD_error SD_Read_Block(uint *buffer,uint Physical_Block_BaseAddr)
 				 return error_type;
 
 		
-				SDIO_Data_Set(BLOCK_SIZE,TO_SDIO);			
-				
 				CMD_Number_Argument_Responsetype(CMD17,Physical_Block_BaseAddr,S_RESPONSE);                   
 				error_type=CMD_ERROR();
 				 if(error_type!=SDIO_OK)
 				 return error_type;		
 		
+				SDIO_Data_Set(BLOCK_SIZE,TO_SDIO);	
+
 		
-//					__disable_irq();
+					__disable_irq();
 					while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==RESET)
 					{
    						if(SDIO_GetFlagStatus(SDIO_FLAG_RXFIFOHF) == 1)
@@ -416,10 +415,10 @@ SD_error SD_Read_Block(uint *buffer,uint Physical_Block_BaseAddr)
 						
 					}
 					 SDIO_ClearFlag(SDIO_FLAG_DBCKEND|SDIO_FLAG_DATAEND);
-					CMD_Number_Argument_Responsetype(CMD12,0,S_RESPONSE);  
-					error_type=CMD_ERROR();
-					 
-//					 __enable_irq();
+/*
+应添加读状态  CMD13
+*/
+					 __enable_irq();
 
 
 		
@@ -441,12 +440,16 @@ SD_error SD_Write_Block(uint *buffer,uint Physical_Block_BaseAddr)
 	if(error_type!=SDIO_OK)
 	return error_type;	
 
-	SDIO_Data_Set(BLOCK_SIZE,TO_SD_CARD);	                                               //设置SDIO要发送的数据长度，必须是512的倍数
-	
+
 	CMD_Number_Argument_Responsetype(CMD24,Physical_Block_BaseAddr,S_RESPONSE);                    //数据地址,必须是512的倍数
 	error_type=CMD_ERROR();
 	if(error_type!=SDIO_OK)
 	return error_type;	
+
+
+	SDIO_Data_Set(BLOCK_SIZE,TO_SD_CARD);	                                               //设置SDIO要发送的数据长度，必须是512的倍数
+
+	__disable_irq();
 	while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==0)                               //已发送指定长度数据块
 		{
 			
@@ -459,31 +462,18 @@ SD_error SD_Write_Block(uint *buffer,uint Physical_Block_BaseAddr)
 				j+=8;
 	
 			 }
-
-
-			
    	}
 	SDIO_ClearFlag(SDIO_FLAG_DBCKEND|SDIO_FLAG_DATAEND);
+	__enable_irq();
 
 	CMD_Number_Argument_Responsetype(CMD12,0,S_RESPONSE);  
 	error_type=CMD_ERROR();
 
-	/*
-	if(error_type!=SDIO_OK)
-	{
-	return  error_type;
-	}
-	else
-	{
-			while((SDIO_GetResponse(SDIO_RESP1)>>9)&0x01)
-			{
-				CMD_Number_Argument_Responsetype(CMD13,SD_information.SD_RCA,S_RESPONSE);  
-				error_type=CMD_ERROR();
-			}
+	delay_ms(3);
 
-	}              
-	
-	*/
+
+
+
 return  error_type;
 
 }

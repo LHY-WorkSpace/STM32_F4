@@ -80,7 +80,6 @@
 ".\objects\ff.o"
 ".\objects\ffsystem.o"
 ".\objects\ffunicode.o"
-".\objects\sdio_sdcard.o"
 ".\objects\inv_mpu.o"
 ".\objects\inv_mpu_dmp_motion_driver.o"
 --library_type=microlib --strict --scatter ".\Objects\1.sct"
