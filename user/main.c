@@ -81,8 +81,8 @@ int  main()
 	// memset(OLED,0xAA,sizeof(OLED));
 	// SD_Write_Block((uint*)OLED,1024);
 
-	// SD_Read_Block((uint*)TTTS,1024);
-	// SD_Read_Block((uint*)TTTSA,512);
+	SD_Read_Block((uint*)TTTS,1024);
+//	SD_Read_Block((uint*)TTTSA,512);
 	// for(i=0;i<512;i++)	
 	// {
 	// printf("%4d:0x%2x   ",i,(uchar*)TTTSA[i]);
