@@ -33,6 +33,8 @@
 #define CMD24          24                   //写入单个块
 #define CMD25          25                   //写入多个块
 
+#define CMD23          23                  //预擦除
+
 #define CMD32          32                  //擦除一个块(起始地址)
 #define CMD33          33                  //擦除一个块(终止地址)
 #define CMD38          38                  //选择好起始终止地址后，启动擦除

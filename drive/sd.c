@@ -280,6 +280,30 @@ SD_error SD_SetTransmissionWide(SD_TransmissionWide TransmissionWide)
 
 }
 
+
+SD_error SD_PreEraseMultiBlocks(u32 blocks)
+{
+		 CMD_Number_Argument_Responsetype(CMD55,SD_information.SD_RCA,S_RESPONSE);	
+		 error_type=CMD_ERROR();
+		 if(error_type!=SDIO_OK)
+		 return  error_type;			
+		 CMD_Number_Argument_Responsetype(CMD23,blocks&0x7FFFFF,S_RESPONSE);                         //设置SD卡传输宽度      bit[1:0]-00   1位宽度
+		 error_type=CMD_ERROR();	                                                                    //                      bit[1:0]-10   4位宽度                           
+		 if(error_type!=SDIO_OK)
+		 return  error_type;
+		 else
+		return  SDIO_OK;
+
+}
+
+
+
+
+
+
+
+
+
 void SDIO_SetSpeed(SDIO_Speed SDIO_speed)
 {
 			
@@ -480,42 +504,42 @@ return  error_type;
 
 SD_error SD_Read_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar count)
 {
-
-
-	
 	uint i=0,j=0,k=0;
 	uint Addr_Temp;
 	Addr_Temp=(Physical_Block_BaseAddr/BLOCK_SIZE)*BLOCK_SIZE;
 
-		SDIO_Data_Set(BLOCK_SIZE*count,TO_SDIO);			
+					
 		
 		CMD_Number_Argument_Responsetype(CMD18,Addr_Temp,S_RESPONSE);                   
 		error_type=CMD_ERROR();
 			if(error_type!=SDIO_OK)
 			return error_type;		
+
+		SDIO_Data_Set(BLOCK_SIZE*count,TO_SDIO);
+
 		
-	//__disable_irq();
+	__disable_irq();
 	for(k=0;k<count;k++)
 	{
 						
-					while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==RESET)
-					{
-   						if(SDIO_GetFlagStatus(SDIO_FLAG_RXFIFOHF) == 1)
+			while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==RESET)
+			{
+				if(SDIO_GetFlagStatus(SDIO_FLAG_RXFIFOHF) == 1)
+				{
+						for(i=0;i<8;i++)	
 						{
-								for(i=0;i<8;i++)	
-								{
-								buffer[i+j]=SDIO_ReadData(); 	
-								}
-							    SDIO_ClearFlag(SDIO_FLAG_RXFIFOHF);		
-							    j+=8;												
-									
-						 }
-						
+						buffer[i+j]=SDIO_ReadData(); 	
+						}
+						SDIO_ClearFlag(SDIO_FLAG_RXFIFOHF);		
+						j+=8;												
+							
 					}
-					SDIO_ClearFlag(SDIO_FLAG_DBCKEND|SDIO_FLAG_DATAEND);
+				
+			}
+			SDIO_ClearFlag(SDIO_FLAG_DBCKEND|SDIO_FLAG_DATAEND);
 
-		}
-		// __enable_irq();
+	}
+		 __enable_irq();
 		CMD_Number_Argument_Responsetype(CMD12,0,S_RESPONSE);  
 		error_type=CMD_ERROR();		
 
@@ -538,8 +562,13 @@ SD_error SD_Write_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar co
 	uint Addr_Temp;
 	Addr_Temp=(Physical_Block_BaseAddr/BLOCK_SIZE)*BLOCK_SIZE;
 
+
+	// SD_PreEraseMultiBlocks(count);
+	// delay_ms(3);
+
 	SDIO_Data_Set(BLOCK_SIZE*count,TO_SD_CARD);	                                               //设置SDIO要发送的数据长度，必须是512的倍数
 	
+
 	CMD_Number_Argument_Responsetype(CMD25,Addr_Temp,S_RESPONSE);                    //数据地址,必须是512的倍数
 	error_type=CMD_ERROR();
 	if(error_type!=SDIO_OK)
