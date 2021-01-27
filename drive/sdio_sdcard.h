@@ -185,7 +185,7 @@ typedef struct
 {
   SD_CSD SD_csd;
   SD_CID SD_cid;
-  long long CardCapacity;  	//SD卡容量,单位:字节,最大支持2^64字节大小的卡.
+  u32 CardCapacity;  	//SD卡容量,单位:字节,最大支持2^64字节大小的卡.
   u32 CardBlockSize; 		//SD卡块大小	
   u16 RCA;					//卡相对地址
   u8 CardType;				//卡类型
@@ -367,6 +367,7 @@ SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks);
 SD_Error SD_ProcessIRQSrc(void);
 
 void SD_DMA_Config(u32*mbuf,u32 bufsize,u32 dir);
+void SD_ShowInfomation(void);
 //void SD_DMA_Config(u32*mbuf,u32 bufsize,u8 dir); 
 
 u8 SD_ReadDisk(u8*buf,u32 sector,u8 cnt); 	//读SD卡,fatfs/usb调用

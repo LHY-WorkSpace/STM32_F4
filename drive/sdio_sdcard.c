@@ -1,6 +1,5 @@
 #include "sdio_sdcard.h"
-#include "string.h"	 
-#include "sys.h"	 
+#include "string.h"	  
 #include "usart.h"	 
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
@@ -655,7 +654,7 @@ SD_Error SD_ReadBlock(u8 *buf,long long addr,u16 blksize)
 	
  	if(DeviceMode==SD_POLLING_MODE)						//查询模式,轮询数据	 
 	{
- 		INTX_DISABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
+ 		////INTX_ENABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
 		
 		
 		
@@ -703,7 +702,7 @@ SD_Error SD_ReadBlock(u8 *buf,long long addr,u16 blksize)
 			*tempbuff=SDIO->FIFO;	//循环读取数据
 			tempbuff++;
 		}
-		INTX_ENABLE();//开启总中断
+		//INTX_ENABLE();//开启总中断
 		SDIO_ClearFlag(SDIO_STATIC_FLAGS);//清除所有标记
 	 
 	}
@@ -842,7 +841,7 @@ SD_Error SD_ReadMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 		
  		if(DeviceMode==SD_POLLING_MODE)
 		{
-			INTX_DISABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
+			////INTX_ENABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
 			while(!(SDIO->STA&((1<<5)|(1<<1)|(1<<3)|(1<<8)|(1<<9))))//无上溢/CRC/超时/完成(标志)/起始位错误
 			{
 				if(SDIO_GetFlagStatus(SDIO_FLAG_RXFIFOHF) != RESET)						//接收区半满,表示至少存了8个字
@@ -898,7 +897,7 @@ SD_Error SD_ReadMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 					if(errorstatus!=SD_OK)return errorstatus;	 
 				}
  			}
-			INTX_ENABLE();//开启总中断
+			//INTX_ENABLE();//开启总中断
 	 		SDIO_ClearFlag(SDIO_STATIC_FLAGS);//清除所有标记
  		}else if(DeviceMode==SD_DMA_MODE)
 		{
@@ -1028,7 +1027,7 @@ SD_Error SD_WriteBlock(u8 *buf,long long addr,  u16 blksize)
 	
 	if (DeviceMode == SD_POLLING_MODE)
 	{
-		INTX_DISABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
+		//////INTX_ENABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
 		while(!(SDIO->STA&((1<<10)|(1<<4)|(1<<1)|(1<<3)|(1<<9))))//数据块发送成功/下溢/CRC/超时/起始位错误
 		{
 			if(SDIO_GetFlagStatus(SDIO_FLAG_TXFIFOHE) != RESET)							//发送区半空,表示至少存了8个字
@@ -1075,7 +1074,7 @@ SD_Error SD_WriteBlock(u8 *buf,long long addr,  u16 blksize)
 			return SD_START_BIT_ERR;		 
 		}   
 	      
-		INTX_ENABLE();//开启总中断
+		//INTX_ENABLE();//开启总中断
 		SDIO_ClearFlag(SDIO_STATIC_FLAGS);//清除所有标记  
 	}else if(DeviceMode==SD_DMA_MODE)
 	{
@@ -1203,7 +1202,7 @@ SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 		if(DeviceMode==SD_POLLING_MODE)
 	    {
 			timeout=SDIO_DATATIMEOUT;
-			INTX_DISABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
+			////INTX_ENABLE();//关闭总中断(POLLING模式,严禁中断打断SDIO读写操作!!!)
 			while(!(SDIO->STA&((1<<4)|(1<<1)|(1<<8)|(1<<3)|(1<<9))))//下溢/CRC/数据结束/超时/起始位错误
 			{
 				if(SDIO_GetFlagStatus(SDIO_FLAG_TXFIFOHE) != RESET)							//发送区半空,表示至少存了8字(32字节)
@@ -1264,7 +1263,7 @@ SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 					if(errorstatus!=SD_OK)return errorstatus;	 
 				}
 			}
-			INTX_ENABLE();//开启总中断
+			//INTX_ENABLE();//开启总中断
 	 		SDIO_ClearFlag(SDIO_STATIC_FLAGS);//清除所有标记
 	    }else if(DeviceMode==SD_DMA_MODE)
 		{
@@ -1806,6 +1805,16 @@ u8 SD_WriteDisk(u8*buf,u32 sector,u8 cnt)
 		else sta=SD_WriteMultiBlocks(buf,lsector,512,cnt);	//多个sector  
 	}
 	return sta;
+}
+
+void SD_ShowInfomation(void)
+{
+
+printf("SD memmory:%d MB\r\n",SDCardInfo.CardCapacity>>20);
+printf("SD CardBlockSize size:%d\r\n",SDCardInfo.CardBlockSize);
+printf("SD RCA :0x%X\r\n",SDCardInfo.RCA);
+
+
 }
 
 

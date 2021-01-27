@@ -22,26 +22,21 @@ Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
 G:\STM32_F4\project\empty.uvprojx
-Project File Date:  12/08/2020
+Project File Date:  01/27/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\MDK 5\ARM\ARMCC\Bin'
 Build target 'Empty_Project'
-compiling main.c...
-..\user\main.c(51): warning:  #177-D: variable "ERR"  was declared but never referenced
-  	 SD_error ERR[9];
-..\user\main.c: 1 warning, 0 errors
-compiling sd.c...
-..\drive\sd.c(330): warning:  #177-D: variable "j"  was declared but never referenced
-  	uchar i,j;
-..\drive\sd.c(458): warning:  #177-D: variable "k"  was declared but never referenced
-  	uchar j,i,k;
-..\drive\sd.c: 2 warnings, 0 errors
-compiling i2c.c...
+compiling diskio.c...
 linking...
-Program Size: Code=6796 RO-data=424 RW-data=112 ZI-data=14736  
-FromELF: creating hex file...
-".\Objects\1.axf" - 0 Error(s), 3 Warning(s).
+.\Objects\1.axf: Error: L6218E: Undefined symbol ff_convert (referred from ff.o).
+.\Objects\1.axf: Error: L6218E: Undefined symbol ff_memalloc (referred from ff.o).
+.\Objects\1.axf: Error: L6218E: Undefined symbol ff_memfree (referred from ff.o).
+.\Objects\1.axf: Error: L6218E: Undefined symbol ff_wtoupper (referred from ff.o).
+Not enough information to list image symbols.
+Not enough information to list load addresses in the image map.
+Finished: 2 information, 0 warning and 4 error messages.
+".\Objects\1.axf" - 4 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -54,7 +49,8 @@ Package Vendor: Keil
   D:\MDK 5\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:05
+Target not created.
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

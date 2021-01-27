@@ -1,8 +1,7 @@
 .\objects\diskio.o: ..\SD\diskio.c
 .\objects\diskio.o: ..\SD\diskio.h
 .\objects\diskio.o: ..\SD\integer.h
-.\objects\diskio.o: ..\drive\sd.h
-.\objects\diskio.o: ..\lib\inc\stm32f4xx_sdio.h
+.\objects\diskio.o: ..\drive\sdio_sdcard.h
 .\objects\diskio.o: ..\user\stm32f4xx.h
 .\objects\diskio.o: ..\CMSIS\core_cm4.h
 .\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h

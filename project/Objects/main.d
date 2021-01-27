@@ -39,6 +39,8 @@
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\drive\CODE_RUN_TIME.h
 .\objects\main.o: ..\drive\led.h
-.\objects\main.o: ..\drive\sd.h
+.\objects\main.o: ..\drive\sdio_sdcard.h
 .\objects\main.o: ..\drive\i2c.h
+.\objects\main.o: ..\SD\diskio.h
+.\objects\main.o: ..\SD\integer.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h

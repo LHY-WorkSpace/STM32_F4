@@ -988,6 +988,16 @@
               <FileType>1</FileType>
               <FilePath>..\drive\DMA.c</FilePath>
             </File>
+            <File>
+              <FileName>sdio_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\sdio_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sdcard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\drive\sdio_sdcard.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

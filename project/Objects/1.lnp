@@ -67,6 +67,7 @@
 ".\objects\dht11.o"
 ".\objects\code_run_time.o"
 ".\objects\dma.o"
+".\objects\sdio_sdcard.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"
