@@ -179,10 +179,9 @@ return  :   NULL
 
 void IIC_SenddByte(uchar data)
 {
-// 	printf("%x\r\n",data);
+
 	uchar i=0;
 	IIC_SCL_LOW;	                      //À­µÍSCL
-//	Pin_in2out();                       //IO : IN->OUT
 
 	for(i=0;i<8;i++)
 	{
@@ -212,8 +211,6 @@ uchar IIC_GetByte(void)
 	uchar data=0;
 	uchar i=0;
 	
-	
-	
 	IIC_SCL_LOW;
 	delay_us(2);
 	Pin_out2in();
@@ -238,10 +235,6 @@ uchar IIC_GetByte(void)
 	Pin_in2out();	
 	delay_us(2);
 
-	
-	
-	
-	
   return data;
 }
 
@@ -317,14 +310,12 @@ uchar IIC_Wait_Ack_OK(void)
 				{
 					Pin_in2out();
 					Stop_IIC();
-					//printf("ACK_ERROR\r\n");
 					return 1;
 				}
 				
 		
 		}
 				
- //  printf("ACK-----OK\r\n");	
 	 IIC_SCL_LOW;	
 	 delay_us(2);		
    Pin_in2out();	

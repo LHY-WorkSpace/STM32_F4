@@ -40,4 +40,5 @@
 .\objects\main.o: ..\drive\CODE_RUN_TIME.h
 .\objects\main.o: ..\drive\led.h
 .\objects\main.o: ..\drive\sd.h
+.\objects\main.o: ..\drive\i2c.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h

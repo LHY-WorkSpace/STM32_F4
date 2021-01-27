@@ -422,7 +422,6 @@ SD_error SD_Read_Block(uint *buffer,uint Physical_Block_BaseAddr)
 		
 				SDIO_Data_Set(BLOCK_SIZE,TO_SDIO);	
 
-		
 					__disable_irq();
 					while(SDIO_GetFlagStatus(SDIO_FLAG_DBCKEND)==RESET)
 					{

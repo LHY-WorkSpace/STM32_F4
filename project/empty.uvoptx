@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=90,121,466,357,0)(1009=-1,-1,-1,-1,0)(1012=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=-1,-1,-1,-1,0)(1008=852,352,1228,588,0)(1009=-1,-1,-1,-1,0)(1012=950,363,1427,678,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -162,18 +162,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>89</LineNumber>
+          <LineNumber>416</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134230634</Address>
+          <Address>134220444</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\user\main.c</Filename>
+          <Filename>..\drive\i2c.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../user/main.c\89</Expression>
+          <Expression>\\1\../drive/i2c.c\416</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -211,6 +211,11 @@
           <count>6</count>
           <WinNumber>1</WinNumber>
           <ItemText>BB</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ERR</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
