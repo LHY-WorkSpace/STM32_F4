@@ -31,7 +31,7 @@
 //#include "inv_mpu_dmp_motion_driver.h"
 
 
-extern float pitch,yaw,roll; 
+float pitch,yaw,roll; 
 __align(4) uchar A[512],B[512],C[512],D[512],AA[1024],BB[4096],CC[1024];
 
 
@@ -53,28 +53,15 @@ int  main()
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);	
 	usart_init(115200);
 	IIC_Init();
+
 //	oled_init();	
 	led_init();
 	SD_Init();
-//	windows_open(10);
-//	DMA1_ConfigInit();
-//	DMA2_ConfigInit();
-//	DMA2_Start();	
- SD_ShowInfomation();
-	delay_ms(500);
-
-	
-	memset(AA,NUM+1,sizeof(AA));
-	SD_WriteMultiBlocks(AA,512,512,sizeof(AA)/512);
-	SD_ReadMultiBlocks(CC,512,512,sizeof(CC)/512);
-	// IIC_Write_NByte(0,0,10,A);
-
-	// IIC_Read_NByte(0,0,10,B);
-	for(i=0;i<sizeof(CC);i++)	
-	{
-	printf("%4d:0x%2x   ",i,CC[i]);
-	}
-
+ 	SD_ShowInfomation();
+//	delay_ms(500);
+LED1_ON;
+	MPU6050_Init();
+LED1_OFF;
 
 			
 	
@@ -82,15 +69,15 @@ int  main()
 	{
 
 
-		LED1_OFF;
-		delay_ms(300);
+	MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
+	printf("P:%f Y:%f R:%f\r\n",pitch,yaw,roll);
+	
+		// LED1_OFF;
+		// delay_ms(300);
+		// LED1_ON;
+		// delay_ms(300);
 
-	//	DMA1_Start();
-		LED1_ON;
-		delay_ms(300);
 
-//	DMA2_Start();
-		//clear_screen();
 
 	}
 

@@ -22,21 +22,23 @@ Dialog DLL:      TCM.DLL V1.46.0.0
  
 <h2>Project:</h2>
 G:\STM32_F4\project\empty.uvprojx
-Project File Date:  01/27/2021
+Project File Date:  01/29/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\MDK 5\ARM\ARMCC\Bin'
 Build target 'Empty_Project'
-compiling diskio.c...
+compiling main.c...
+..\user\main.c(63): warning:  #223-D: function "MPU6050_Init" declared implicitly
+  	MPU6050_Init();
+..\user\main.c(72): warning:  #223-D: function "MPU6050_Get_DMP_Data" declared implicitly
+  	MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
+..\user\main.c(51): warning:  #177-D: variable "i"  was declared but never referenced
+  	 uint i;
+..\user\main.c: 3 warnings, 0 errors
 linking...
-.\Objects\1.axf: Error: L6218E: Undefined symbol ff_convert (referred from ff.o).
-.\Objects\1.axf: Error: L6218E: Undefined symbol ff_memalloc (referred from ff.o).
-.\Objects\1.axf: Error: L6218E: Undefined symbol ff_memfree (referred from ff.o).
-.\Objects\1.axf: Error: L6218E: Undefined symbol ff_wtoupper (referred from ff.o).
-Not enough information to list image symbols.
-Not enough information to list load addresses in the image map.
-Finished: 2 information, 0 warning and 4 error messages.
-".\Objects\1.axf" - 4 Error(s), 0 Warning(s).
+Program Size: Code=26368 RO-data=3888 RW-data=196 ZI-data=2148  
+FromELF: creating hex file...
+".\Objects\1.axf" - 0 Error(s), 3 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -49,8 +51,7 @@ Package Vendor: Keil
   D:\MDK 5\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

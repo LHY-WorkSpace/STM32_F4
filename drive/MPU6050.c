@@ -13,12 +13,10 @@
 #include <string.h>
 #include "math.h"
 
-short gyro[3], accel[3], sensors;
-unsigned char more;
-long quat[4];
-unsigned long sensor_timestamp;
-float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;
-float pitch,yaw,roll;
+
+
+
+
 
 
 
@@ -47,8 +45,8 @@ delay_ms(10);
 
 
 signed char gyro_orientation[9] = {-1, 0, 0,
-																		0,-1, 0,
-																		0, 0, 1};	
+									0,-1, 0,
+									0, 0, 1};	
 
 
 unsigned short inv_row_2_scale(const signed char *row)
@@ -92,15 +90,13 @@ unsigned short inv_orientation_matrix_to_scalar(
 
 void MPU6050_Init(void)
 {
-  IIC_Init();
-
 	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
 	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
 	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
 	MPU6050_Write_Data(MPU6050_GYR_CONFIG_REG,MPU6050_FS_SEL);
 	MPU6050_Write_Data(MPU6050_ACC_CONFIG_REG,MPU6050_AFS_SEL);
 	MPU6050_Write_Data(MPU6050_FIFO_ENABLE_REG,MPU6050_TEMP_FIFO_ENABLE|MPU6050_GYRFIFO_ENABLE|MPU6050_ACCFIFO_ENABLE);
-	
+	MPU6050_DMP_Init();
 	
 
 }
@@ -178,8 +174,6 @@ uchar MPU6050_DMP_Init(void)
 {  
 	
 	
-	
-	
     if(mpu_init())
 		return 1;	
     if(mpu_set_sensors(INV_XYZ_GYRO | INV_XYZ_ACCEL))
@@ -188,10 +182,9 @@ uchar MPU6050_DMP_Init(void)
 		return 3;		
     if(mpu_set_sample_rate(DEFAULT_MPU_HZ))
 		return 4;
-//	  printf("firmware():   %d\r\n",dmp_load_motion_driver_firmware());
     if(dmp_load_motion_driver_firmware())
 		return 5;
-	
+
     if(dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation)))
 		return 6;
     hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
@@ -209,12 +202,6 @@ uchar MPU6050_DMP_Init(void)
 	return 0;
 
 }
-
-
-
-
-
-
 
 
 static void run_self_test()
@@ -245,13 +232,16 @@ static void run_self_test()
 
 
 
-
 /*读取数据到 pitch,yaw,roll  */
-uchar MPU6050_Get_DMP_Data(void)
+uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 {
 	uchar i=0;
-	
-	
+	long quat[4];
+	short gyro[3], accel[3], sensors;
+	unsigned long sensor_timestamp;
+	unsigned char more;
+	float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;
+
 	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<10)
 	{
 		i++;
@@ -265,9 +255,9 @@ uchar MPU6050_Get_DMP_Data(void)
 				q2=quat[2]/q30;
 				q3=quat[3]/q30;	
 					
-				pitch=asin(-2*q1*q3+2*q0*q2)*57.3;
-				roll=atan2(2*q2*q3+2*q0*q1,-2*q1*q1-2*q2*q2+1)*57.3;
-				yaw=atan2(2*(q1*q2+q3*q0),q0*q0+q1*q1-q2*q2-q3*q3)*57.3;
+				*pitch=asin(-2*q1*q3+2*q0*q2)*57.3;
+				*roll=atan2(2*q2*q3+2*q0*q1,-2*q1*q1-2*q2*q2+1)*57.3;
+				*yaw=atan2(2*(q1*q2+q3*q0),q0*q0+q1*q1-q2*q2-q3*q3)*57.3;
 
 				}
 
@@ -293,11 +283,10 @@ void usart1_niming_report(uchar fun,uchar *data,uchar len)
 }
 
 //匿名上位机//
-void mpu6050_SendTo_APP(short roll,short pitch,short yaw)
+void mpu6050_SendTo_APP(short pitch,short yaw,short roll)
 {
 	
-	 MPU6050_Get_DMP_Data();
-
+	MPU6050_Get_DMP_Data((float*)&pitch,(float*)&yaw,(float*)&roll);
 	uchar tbuf[28]; 
 	uchar i;
 	for(i=0;i<28;i++)tbuf[i]=0;//清0
@@ -313,7 +302,7 @@ void mpu6050_SendTo_APP(short roll,short pitch,short yaw)
 //	tbuf[5]=yaw&0XFF;
 //	usart1_niming_report(0XA1,tbuf,10);//飞控显示帧,0XAF	
 	
-	
+
 	
 	//显示姿态
 	
@@ -324,10 +313,6 @@ void mpu6050_SendTo_APP(short roll,short pitch,short yaw)
 //	tbuf[7]=ACC_Z_L;
 //	tbuf[8]=ACC_Z_H;
 //	
-	
-	
-	
-	
 	
 	
 	tbuf[18]=(roll>>8)&0XFF;

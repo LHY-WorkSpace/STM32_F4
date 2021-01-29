@@ -151,8 +151,7 @@ uchar  get_ms(unsigned long *count);
 unsigned short inv_row_2_scale(const signed char *row);
 unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
 void run_self_test(void);	
-uchar MPU6050_Get_DMP_Data(void);
-
+uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll);
 
 
 //上位机调试//
