@@ -68,38 +68,44 @@ return  :   get read data(1 byte=8 bit)
       
 ===============================================================================================*/
 
-uchar AT24C08Read_Byte(uchar block,uchar addr)
+uchar AT24C08Read_Byte(uchar dev_addr,uchar addr)
 {
 	
-    return IIC_Read_Byte(block,addr);
+    return IIC_Read_Byte(dev_addr,addr);
 }
 
 
 
 
-void AT24C08Write_Byte(uchar block,uchar addr,uchar data)
+void AT24C08Write_Byte(uchar dev_addr,uchar addr,uchar data)
 {
 	
-IIC_Write_Byte(block,addr,data);
+IIC_Write_Byte(dev_addr,addr,data);
 	
 
 }
 
 
-void AT24C08Read_NByte(uchar block,uchar addr,uchar n,uchar *data)
+void AT24C08Read_NByte(uchar dev_addr,uchar addr,uchar n,uchar *data)
 {
-	
-	IIC_Read_NByte(block,addr,n,data);
+	uint i;
+	for(i=0;i<n;i++)
+	{
+		data[i]=IIC_Read_Byte(dev_addr,addr+i);
+	}
 		
-
 }
 
 
 
-void AT24C08Write_NByte(uchar block,uchar addr,uchar n,uchar *data)
+void AT24C08Write_NByte(uchar dev_addr,uchar addr,uchar n,uchar *data)
 {
 	
-IIC_Write_NByte(block,addr,n,data);
+	uint i;
+	for(i=0;i<n;i++)
+	{
+		IIC_Write_Byte(dev_addr,addr+i,data[i]);
+	}
 
 }
 

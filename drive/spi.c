@@ -67,6 +67,25 @@
 //}
 
 
+void SPI2_IRQHandler()
+{
+	static uint i=0;
+
+	if(SPI_I2S_GetITStatus(SPI2,SPI_I2S_IT_TXE)==SET)
+	{
+//		SPI_I2S_SendData(SPI2,OLED[i]);
+		SPI_I2S_ClearITPendingBit(SPI2,SPI_I2S_IT_TXE);
+		i++;
+	}
+	if(i==1024)
+	{
+		i=0;
+	}
+
+
+
+
+}
 
 
 

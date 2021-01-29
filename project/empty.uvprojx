@@ -949,11 +949,6 @@
               <FilePath>..\drive\exti.c</FilePath>
             </File>
             <File>
-              <FileName>MPU6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\MPU6050.c</FilePath>
-            </File>
-            <File>
               <FileName>AT24C08.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\drive\AT24C08.c</FilePath>
@@ -994,9 +989,14 @@
               <FilePath>..\drive\sdio_sdcard.c</FilePath>
             </File>
             <File>
-              <FileName>sdio_sdcard.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\drive\sdio_sdcard.h</FilePath>
+              <FileName>lcd1602.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\lcd1602.c</FilePath>
+            </File>
+            <File>
+              <FileName>MPU6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\MPU6050.c</FilePath>
             </File>
           </Files>
         </Group>

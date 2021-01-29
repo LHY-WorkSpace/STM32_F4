@@ -105,3 +105,24 @@ int fputc(int ch, FILE* stream)
 //}
 
 
+
+// void USART1_IRQHandler()
+// {
+// 	static uint i=0;
+
+// 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)
+// 	{
+// 	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+// //  OLED[i]=USART_ReceiveData(USART1);
+// 	i++;		
+// 	}
+
+// 	if(i==1024)
+// 	{
+// 		//OLED_FULL=1;
+// 		i=0;
+
+// 	}
+
+
+// }

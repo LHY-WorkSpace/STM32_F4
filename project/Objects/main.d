@@ -39,8 +39,11 @@
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\drive\CODE_RUN_TIME.h
 .\objects\main.o: ..\drive\led.h
-.\objects\main.o: ..\drive\sdio_sdcard.h
 .\objects\main.o: ..\drive\i2c.h
+.\objects\main.o: ..\drive\AT24C08.h
+.\objects\main.o: ..\drive\MPU6050.h
 .\objects\main.o: ..\SD\diskio.h
 .\objects\main.o: ..\SD\integer.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\main.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h

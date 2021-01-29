@@ -126,13 +126,13 @@ return  :   NULL
 
 void Start_IIC(void)
 {
-		IIC_SCL_HIGH;
-	  delay_us(2);
+		Pin_in2out();
 		IIC_SDA_HIGH;
-		delay_us(2);
+		IIC_SCL_HIGH;
+	 	 delay_us(2);
 		IIC_SDA_LOW;
-	  delay_us(2);
-	  IIC_SCL_LOW;
+	 	 delay_us(2);
+	  	IIC_SCL_LOW;
 		delay_us(2);/////////////////////////////////////////
 
 }
@@ -149,16 +149,13 @@ return  :   NULL
 void Stop_IIC(void)
 {
 
+	Pin_in2out();
 	IIC_SCL_LOW;
 	delay_us(2);
-	
 	IIC_SDA_LOW;
 	delay_us(2);
-	
 	IIC_SCL_HIGH;
-
 	delay_us(2);
-	
 	IIC_SDA_HIGH;
 	delay_us(2);
 	
@@ -181,6 +178,7 @@ void IIC_SenddByte(uchar data)
 {
 
 	uchar i=0;
+	Pin_in2out();
 	IIC_SCL_LOW;	                      //拉低SCL
 
 	for(i=0;i<8;i++)
@@ -200,7 +198,7 @@ void IIC_SenddByte(uchar data)
 			IIC_SCL_HIGH;
 			delay_us(2);
 	}
-     IIC_SCL_LOW;                       //拉低SCL 防止SDA变化引起信号错误
+     IIC_SCL_LOW;                     
      delay_us(2);
 
 }
@@ -210,29 +208,24 @@ uchar IIC_GetByte(void)
 {
 	uchar data=0;
 	uchar i=0;
-	
-	IIC_SCL_LOW;
-	delay_us(2);
-	Pin_out2in();
 
+	Pin_out2in();	
+	IIC_SDA_HIGH;
+	delay_us(2);
 	for(i=0;i<8;i++)
 	{		
 			data<<=1;
-
-		
+			IIC_SCL_LOW;
 			delay_us(2); 		
 			IIC_SCL_HIGH;	
 			delay_us(2);
 			if(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)	
 			{
-      data|=0x01;
+      			data|=0x01;
 			}
-			IIC_SCL_LOW;
-
 
 	}
-  IIC_SCL_LOW;
-	Pin_in2out();	
+ 	 IIC_SCL_LOW;	
 	delay_us(2);
 
   return data;
@@ -250,6 +243,7 @@ void IIC_Send_Ack(void)
 {
 	
 	IIC_SCL_LOW;
+	Pin_in2out();
 	delay_us(2);	
 	IIC_SDA_LOW;
 	delay_us(2);
@@ -272,6 +266,7 @@ void IIC_Send_NAck(void)
 {
 
 	IIC_SCL_LOW;
+	Pin_in2out();
 	delay_us(2);
 	IIC_SDA_HIGH;
 	delay_us(2);
@@ -294,52 +289,46 @@ return  :   0-----------ACK-OK
 ===============================================================================================*/
 uchar IIC_Wait_Ack_OK(void)
 {
-	
 	uchar i=0;
-	IIC_SCL_LOW;	                                             //等待SDA变化
+
+	Pin_out2in();	
+	IIC_SDA_HIGH;  
 	delay_us(2);
-	IIC_SDA_HIGH;                                              //释放SDA等待拉低		
-  Pin_out2in();	
-	delay_us(2);	                                             //SDA变化
-	IIC_SCL_HIGH;                                              //拉高SCL 读取SDA
+	IIC_SCL_HIGH; 
 	delay_us(2);
+                                       
 		while(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)
 		{
 				i++;
 				if(i>250)
 				{
-					Pin_in2out();
 					Stop_IIC();
 					return 1;
 				}
 				
-		
 		}
 				
 	 IIC_SCL_LOW;	
 	 delay_us(2);		
-   Pin_in2out();	
-	 delay_us(2);
-
 	return 0;
 	
 }
 
 
 
-uchar IIC_Read_Byte(uchar ADDR,uchar REG)
+uchar IIC_Read_Byte(uchar dev_addr,uchar REG)
 {
 	
 		uchar DATA=0;
 	
 		Start_IIC();
-	  IIC_SenddByte(ADDR|0X00);
+	  IIC_SenddByte(dev_addr|0X00);
     IIC_Wait_Ack_OK();
 		IIC_SenddByte(REG);
 	  IIC_Wait_Ack_OK();
 	
 		Start_IIC();
-	  IIC_SenddByte((ADDR|0X01));	
+	  IIC_SenddByte((dev_addr|0X01));	
     IIC_Wait_Ack_OK();
 		DATA=IIC_GetByte();
 	  IIC_Send_NAck();
@@ -348,19 +337,19 @@ uchar IIC_Read_Byte(uchar ADDR,uchar REG)
 	return DATA;
 }
 
-void IIC_Write_Byte(uchar ADDR,uchar REG,uchar data)
+void IIC_Write_Byte(uchar dev_addr,uchar REG,uchar data)
 {
 	
 
 		Start_IIC();
-	  IIC_SenddByte(ADDR|0X00);        
+	  IIC_SenddByte(dev_addr);        
     IIC_Wait_Ack_OK();
 		IIC_SenddByte(REG);
 	  IIC_Wait_Ack_OK();
 	  IIC_SenddByte(data);	
 		IIC_Wait_Ack_OK();
 	  Stop_IIC();
-	  delay_ms(2);                                   //写入需要时间
+	  delay_ms(5);                                   //写入需要时间
 	
 }
 
@@ -369,13 +358,13 @@ void IIC_Write_Byte(uchar ADDR,uchar REG,uchar data)
 void IIC_Read_NByte(uchar dev_addr,uchar reg,uchar length,uchar *data)
 {
 	  uchar i=0;
-    Start_IIC();
-		IIC_SenddByte(dev_addr|0X00);
+    	Start_IIC();
+		IIC_SenddByte(dev_addr);
 		IIC_Wait_Ack_OK();
 		IIC_SenddByte(reg);
 		IIC_Wait_Ack_OK();
 	
-    Start_IIC();
+   		Start_IIC();
 		IIC_SenddByte(dev_addr|0X01);	
 		IIC_Wait_Ack_OK();
 	
