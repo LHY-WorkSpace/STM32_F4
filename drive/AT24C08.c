@@ -11,7 +11,6 @@ This is for AT24C08
 */
 
 
-
 void AT24C08_init(void)
 {
 	IIC_Init();
@@ -39,7 +38,6 @@ void AT24C08Read_NBytes(uchar dev_addr,uchar Data_addr,uchar length,uchar *data)
 	}
 		
 }
-
 
 
 void AT24C08Write_NBytes(uchar dev_addr,uchar Data_addr,uchar length,uchar *data)

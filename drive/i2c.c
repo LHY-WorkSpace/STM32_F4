@@ -250,57 +250,57 @@ EEPROM????2?????
 MPU6050???2?????????
 */
 
-void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
-{
-	 	uchar i=0;
-    	Start_IIC();
-		IIC_SenddByte(Dev_addr);
-		IIC_Wait_Ack_OK();
-		IIC_SenddByte(Data_addr);
-		IIC_Wait_Ack_OK();
-   		Start_IIC();
-		IIC_SenddByte(Dev_addr|0X01);	
-		IIC_Wait_Ack_OK();
+// void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+// {
+// 	 	uchar i=0;
+//     	Start_IIC();
+// 		IIC_SenddByte(Dev_addr);
+// 		IIC_Wait_Ack_OK();
+// 		IIC_SenddByte(Data_addr);
+// 		IIC_Wait_Ack_OK();
+//    		Start_IIC();
+// 		IIC_SenddByte(Dev_addr|0X01);	
+// 		IIC_Wait_Ack_OK();
 	
-		for(i=0;i<length;i++)
-		{
-			if(i<(length-1))
-			{
-				*data=IIC_GetByte();
-				IIC_Send_Ack();
-			}
-			else
-			{
-				*data=IIC_GetByte();
-				IIC_Send_NAck();	
-			}
-			data++;	
-		}
-	Stop_IIC();
-}
+// 		for(i=0;i<length;i++)
+// 		{
+// 			if(i<(length-1))
+// 			{
+// 				*data=IIC_GetByte();
+// 				IIC_Send_Ack();
+// 			}
+// 			else
+// 			{
+// 				*data=IIC_GetByte();
+// 				IIC_Send_NAck();	
+// 			}
+// 			data++;	
+// 		}
+// 	Stop_IIC();
+// }
 
-void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
-{
-	uchar i=0;
-	Start_IIC();
-	IIC_SenddByte(Dev_addr|0x00);
-	IIC_Wait_Ack_OK();
-	IIC_SenddByte(Data_addr);
-	IIC_Wait_Ack_OK();
-	for(i=0;i<length;i++)
-	{
-		IIC_SenddByte(*data);
-		if(IIC_Wait_Ack_OK()==1)
-		{
-			Stop_IIC();
-			return;
-		}
-		data++;
-	}
- 	Stop_IIC();
-	delay_ms(2);
+// void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+// {
+// 	uchar i=0;
+// 	Start_IIC();
+// 	IIC_SenddByte(Dev_addr|0x00);
+// 	IIC_Wait_Ack_OK();
+// 	IIC_SenddByte(Data_addr);
+// 	IIC_Wait_Ack_OK();
+// 	for(i=0;i<length;i++)
+// 	{
+// 		IIC_SenddByte(*data);
+// 		if(IIC_Wait_Ack_OK()==1)
+// 		{
+// 			Stop_IIC();
+// 			return;
+// 		}
+// 		data++;
+// 	}
+//  	Stop_IIC();
+// 	delay_ms(2);
 
-}
+// }
 
 
 
