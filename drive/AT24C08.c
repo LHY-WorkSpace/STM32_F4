@@ -64,7 +64,6 @@ void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 }
 
 /*
-	//分页的话会覆盖的问题！！！！待解决
 	u8 i=0;
 	Start_IIC();
 	IIC_SenddByte(dev_addr|0x00);
