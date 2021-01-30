@@ -1,7 +1,4 @@
-#include "stm32f4xx.h"
-#include "DMA.h"
-#include "delay.h"
-
+#include"IncludeFile.h"
 
 
 

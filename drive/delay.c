@@ -1,5 +1,4 @@
-#include "stm32f4xx.h"
-#include "delay.h"
+#include"IncludeFile.h"
 
 
 void delay_us(u32 nus)         //×î´ó798915us

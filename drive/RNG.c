@@ -1,7 +1,4 @@
-#include "stm32f4xx.h"
-#include "RNG.h"
-
-
+#include"IncludeFile.h"
 void rng_init()
 {
 RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_RNG,ENABLE);

@@ -1,7 +1,4 @@
-#include "stm32f4xx.h"
-#include "ds18b20.h"
-#include "delay.h"
-#include "oled.h"
+#include"IncludeFile.h"
 
 
                              //PB8 --------DATE

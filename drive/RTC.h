@@ -5,7 +5,7 @@
 //#define u32 unsigned int 
 
 
-int RTC_configinit(void);
+void RTC_configinit(void);
 
 
 

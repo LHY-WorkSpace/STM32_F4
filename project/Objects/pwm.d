@@ -1,4 +1,5 @@
 .\objects\pwm.o: ..\drive\pwm.c
+.\objects\pwm.o: ..\drive\IncludeFile.h
 .\objects\pwm.o: ..\user\stm32f4xx.h
 .\objects\pwm.o: ..\CMSIS\core_cm4.h
 .\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -34,5 +35,43 @@
 .\objects\pwm.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\pwm.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\pwm.o: ..\lib\inc\stm32f4xx_fsmc.h
-.\objects\pwm.o: ..\drive\pwm.h
+.\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\pwm.o: ..\CMSIS\arm_math.h
+.\objects\pwm.o: ..\CMSIS\core_cm4.h
+.\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\pwm.o: ..\drive\delay.h
+.\objects\pwm.o: ..\drive\usart.h
+.\objects\pwm.o: ..\drive\CODE_RUN_TIME.h
+.\objects\pwm.o: ..\drive\dac.h
+.\objects\pwm.o: ..\drive\adc.h
+.\objects\pwm.o: ..\drive\led.h
+.\objects\pwm.o: ..\drive\exti.h
+.\objects\pwm.o: ..\drive\sd.h
+.\objects\pwm.o: ..\drive\sdio_sdcard.h
+.\objects\pwm.o: ..\drive\i2c.h
+.\objects\pwm.o: ..\drive\AT24C08.h
+.\objects\pwm.o: ..\drive\MPU6050.h
+.\objects\pwm.o: ..\drive\DHT11.h
+.\objects\pwm.o: ..\drive\ds18b20.h
+.\objects\pwm.o: ..\drive\oled.h
+.\objects\pwm.o: ..\drive\GUI.H
+.\objects\pwm.o: ..\drive\DMA.h
+.\objects\pwm.o: ..\drive\pwm.h
+.\objects\pwm.o: ..\drive\ESP8266.h
+.\objects\pwm.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\pwm.o: ..\user\FreeRTOSConfig.h
+.\objects\pwm.o: ..\FreeRTOS\include\projdefs.h
+.\objects\pwm.o: ..\FreeRTOS\include\portable.h
+.\objects\pwm.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\pwm.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\pwm.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\pwm.o: ..\FreeRTOS\include\task.h
+.\objects\pwm.o: ..\FreeRTOS\include\list.h
+.\objects\pwm.o: ..\drive\RTC.h
+.\objects\pwm.o: ..\SD\diskio.h
+.\objects\pwm.o: ..\SD\integer.h
+.\objects\pwm.o: ..\drive\lcd1602.h
+.\objects\pwm.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\pwm.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h

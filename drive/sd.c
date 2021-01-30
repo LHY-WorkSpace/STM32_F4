@@ -1,11 +1,4 @@
-#include "stm32f4xx.h"
-#include "sd.h"
-#include "stdio.h"
-#include "delay.h"
-#include "usart.h"
-#include "math.h"
-#include "DMA.h"
-
+#include"IncludeFile.h"
 
 
 //u8 SD_ReadBuff[512];

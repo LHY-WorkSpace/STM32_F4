@@ -1,7 +1,4 @@
-#include "stm32f4xx.h"
-#include "i2c.h"
-#include "delay.h"
-#include "AT24C08.h"
+#include"IncludeFile.h"
 
 void AT24C08_init(void)
 {

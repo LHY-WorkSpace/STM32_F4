@@ -1,15 +1,4 @@
-#include "stm32f4xx.h"
-#include "exti.h"
-#include "led.h"
-#include "delay.h"
-#include "GUI.h"
-#include "oled.h"
-#include "usart.h"
-//#include "FreeRTOS.h"
-//#include "task.h"
-//#include "AT24C08.h"
-//#include "MPU6050.h"
-
+#include"IncludeFile.h"
 
 //extern TaskHandle_t xHandle1;
 //extern TaskHandle_t xHandle2;

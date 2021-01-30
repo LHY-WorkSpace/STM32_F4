@@ -1,4 +1,5 @@
 .\objects\main.o: ..\user\main.c
+.\objects\main.o: ..\drive\IncludeFile.h
 .\objects\main.o: ..\user\stm32f4xx.h
 .\objects\main.o: ..\CMSIS\core_cm4.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -34,9 +35,13 @@
 .\objects\main.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\main.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\main.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: ..\CMSIS\arm_math.h
+.\objects\main.o: ..\CMSIS\core_cm4.h
+.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\drive\delay.h
 .\objects\main.o: ..\drive\usart.h
-.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\drive\CODE_RUN_TIME.h
 .\objects\main.o: ..\drive\dac.h
 .\objects\main.o: ..\drive\adc.h
@@ -68,9 +73,5 @@
 .\objects\main.o: ..\SD\diskio.h
 .\objects\main.o: ..\SD\integer.h
 .\objects\main.o: ..\drive\lcd1602.h
-.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
-.\objects\main.o: ..\CMSIS\arm_math.h
-.\objects\main.o: ..\CMSIS\core_cm4.h
-.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\main.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h

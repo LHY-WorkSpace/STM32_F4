@@ -1,12 +1,4 @@
-#include "stm32f4xx.h"
-#include "oled.h"
-#include "GUI.h"
-#include "ds18b20.h"
-#include "DHT11.h"
-#include "delay.h"
-#include "usart.h"
-
-#include "led.h"
+#include"IncludeFile.h"
 
 #define X_LOCATION 48
 

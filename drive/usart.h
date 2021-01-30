@@ -1,6 +1,6 @@
 #ifndef     USART_H
 #define     USART_H
-#include "stdio.h"
+
 
 //#define u8unsigned char
 //#define u32 unsigned int 

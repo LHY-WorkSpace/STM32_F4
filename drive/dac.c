@@ -1,6 +1,4 @@
-#include "stm32f4xx.h"
-#include "dac.h"
-
+#include"IncludeFile.h"
 //#define u8unsigned char
 //#define u32 unsigned int 
 

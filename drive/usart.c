@@ -1,8 +1,4 @@
-#include "stm32f4xx.h"
-#include "usart.h"
-#include "stdio.h"
-#include "delay.h"
-
+#include"IncludeFile.h"
 //#define u8unsigned char
 //#define u32 unsigned int 
 

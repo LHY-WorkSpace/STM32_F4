@@ -998,6 +998,11 @@
               <FileType>1</FileType>
               <FilePath>..\drive\MPU6050.c</FilePath>
             </File>
+            <File>
+              <FileName>IncludeFile.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\drive\IncludeFile.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

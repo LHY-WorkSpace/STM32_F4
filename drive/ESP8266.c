@@ -1,10 +1,4 @@
-#include "stm32f4xx.h"
-#include "delay.h"
-#include "stdio.h"
-#include "usart.h"
-#include "ESP8266.h"
-#include "oled.h"
-#include "string.h"
+#include"IncludeFile.h"
 
 //#define u32 unsigned int
 //#define u8unsigned char

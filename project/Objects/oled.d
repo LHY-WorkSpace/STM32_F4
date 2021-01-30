@@ -1,4 +1,5 @@
 .\objects\oled.o: ..\drive\oled.c
+.\objects\oled.o: ..\drive\IncludeFile.h
 .\objects\oled.o: ..\user\stm32f4xx.h
 .\objects\oled.o: ..\CMSIS\core_cm4.h
 .\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -34,10 +35,43 @@
 .\objects\oled.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\oled.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\oled.o: ..\lib\inc\stm32f4xx_fsmc.h
-.\objects\oled.o: ..\drive\delay.h
-.\objects\oled.o: ..\drive\oled.h
-.\objects\oled.o: ..\drive\ds18b20.h
-.\objects\oled.o: ..\drive\RTC.h
-.\objects\oled.o: ..\drive\usart.h
+.\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\oled.o: ..\CMSIS\arm_math.h
+.\objects\oled.o: ..\CMSIS\core_cm4.h
+.\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\oled.o: ..\drive\delay.h
+.\objects\oled.o: ..\drive\usart.h
+.\objects\oled.o: ..\drive\CODE_RUN_TIME.h
+.\objects\oled.o: ..\drive\dac.h
+.\objects\oled.o: ..\drive\adc.h
 .\objects\oled.o: ..\drive\led.h
+.\objects\oled.o: ..\drive\exti.h
+.\objects\oled.o: ..\drive\sd.h
+.\objects\oled.o: ..\drive\sdio_sdcard.h
+.\objects\oled.o: ..\drive\i2c.h
+.\objects\oled.o: ..\drive\AT24C08.h
+.\objects\oled.o: ..\drive\MPU6050.h
+.\objects\oled.o: ..\drive\DHT11.h
+.\objects\oled.o: ..\drive\ds18b20.h
+.\objects\oled.o: ..\drive\oled.h
+.\objects\oled.o: ..\drive\GUI.H
+.\objects\oled.o: ..\drive\DMA.h
+.\objects\oled.o: ..\drive\pwm.h
+.\objects\oled.o: ..\drive\ESP8266.h
+.\objects\oled.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\oled.o: ..\user\FreeRTOSConfig.h
+.\objects\oled.o: ..\FreeRTOS\include\projdefs.h
+.\objects\oled.o: ..\FreeRTOS\include\portable.h
+.\objects\oled.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\oled.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\oled.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\oled.o: ..\FreeRTOS\include\task.h
+.\objects\oled.o: ..\FreeRTOS\include\list.h
+.\objects\oled.o: ..\drive\RTC.h
+.\objects\oled.o: ..\SD\diskio.h
+.\objects\oled.o: ..\SD\integer.h
+.\objects\oled.o: ..\drive\lcd1602.h
+.\objects\oled.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\oled.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h

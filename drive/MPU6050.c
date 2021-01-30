@@ -1,18 +1,4 @@
-#include "stm32f4xx.h"
-#include "MPU6050.h"
-#include "i2c.h"
-#include "delay.h"
-#include "usart.h"
-#include "stdio.h"
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include "math.h"
-
-
+#include"IncludeFile.h"
 
 struct rx_s {
     unsigned char header[3];

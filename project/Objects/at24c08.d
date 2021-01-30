@@ -1,4 +1,5 @@
 .\objects\at24c08.o: ..\drive\AT24C08.c
+.\objects\at24c08.o: ..\drive\IncludeFile.h
 .\objects\at24c08.o: ..\user\stm32f4xx.h
 .\objects\at24c08.o: ..\CMSIS\core_cm4.h
 .\objects\at24c08.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -34,6 +35,43 @@
 .\objects\at24c08.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\at24c08.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\at24c08.o: ..\lib\inc\stm32f4xx_fsmc.h
-.\objects\at24c08.o: ..\drive\i2c.h
+.\objects\at24c08.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\at24c08.o: ..\CMSIS\arm_math.h
+.\objects\at24c08.o: ..\CMSIS\core_cm4.h
+.\objects\at24c08.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\at24c08.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\at24c08.o: ..\drive\delay.h
+.\objects\at24c08.o: ..\drive\usart.h
+.\objects\at24c08.o: ..\drive\CODE_RUN_TIME.h
+.\objects\at24c08.o: ..\drive\dac.h
+.\objects\at24c08.o: ..\drive\adc.h
+.\objects\at24c08.o: ..\drive\led.h
+.\objects\at24c08.o: ..\drive\exti.h
+.\objects\at24c08.o: ..\drive\sd.h
+.\objects\at24c08.o: ..\drive\sdio_sdcard.h
+.\objects\at24c08.o: ..\drive\i2c.h
 .\objects\at24c08.o: ..\drive\AT24C08.h
+.\objects\at24c08.o: ..\drive\MPU6050.h
+.\objects\at24c08.o: ..\drive\DHT11.h
+.\objects\at24c08.o: ..\drive\ds18b20.h
+.\objects\at24c08.o: ..\drive\oled.h
+.\objects\at24c08.o: ..\drive\GUI.H
+.\objects\at24c08.o: ..\drive\DMA.h
+.\objects\at24c08.o: ..\drive\pwm.h
+.\objects\at24c08.o: ..\drive\ESP8266.h
+.\objects\at24c08.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\at24c08.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\at24c08.o: ..\user\FreeRTOSConfig.h
+.\objects\at24c08.o: ..\FreeRTOS\include\projdefs.h
+.\objects\at24c08.o: ..\FreeRTOS\include\portable.h
+.\objects\at24c08.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\at24c08.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\at24c08.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\at24c08.o: ..\FreeRTOS\include\task.h
+.\objects\at24c08.o: ..\FreeRTOS\include\list.h
+.\objects\at24c08.o: ..\drive\RTC.h
+.\objects\at24c08.o: ..\SD\diskio.h
+.\objects\at24c08.o: ..\SD\integer.h
+.\objects\at24c08.o: ..\drive\lcd1602.h
+.\objects\at24c08.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\at24c08.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
