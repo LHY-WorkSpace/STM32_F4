@@ -2,8 +2,8 @@
 #define   __SD_H
 #include "stm32f4xx_sdio.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 	
 
 /********************************************ÃüÁîË÷Òı************************/

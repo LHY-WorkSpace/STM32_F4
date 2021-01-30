@@ -1,8 +1,8 @@
 #ifndef   _MPU6050_H_
 #define   _MPU6050_H_
-
-#define u8 unsigned char
-#define u32 unsigned int 
+#include "stm32f4xx.h"
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 //               https://wenku.baidu.com/view/8dbd8f9e360cba1aa911da1d.html?rec_flag=default&sxts=1571581621334

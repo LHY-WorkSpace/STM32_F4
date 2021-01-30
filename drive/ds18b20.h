@@ -1,8 +1,8 @@
 #ifndef   DS18B20_H
 #define   DS18B20_H
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 int ds18B20_init(char CMD);
 int ds18b20_read_byte(void);

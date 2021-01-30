@@ -1,7 +1,7 @@
 #ifndef   LCD1602_H
 #define   LCD1602_H
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 

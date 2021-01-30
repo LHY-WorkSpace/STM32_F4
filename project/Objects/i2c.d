@@ -36,5 +36,4 @@
 .\objects\i2c.o: ..\lib\inc\stm32f4xx_fsmc.h
 .\objects\i2c.o: ..\drive\i2c.h
 .\objects\i2c.o: ..\drive\delay.h
-.\objects\i2c.o: ..\drive\usart.h
 .\objects\i2c.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h

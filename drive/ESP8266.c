@@ -6,8 +6,8 @@
 #include "oled.h"
 #include "string.h"
 
-#define u32 unsigned int
-#define u8 unsigned char
+//#define u32 unsigned int
+//#define u8unsigned char
 
 #define IP_START  	       "@!"
 #define IP_END     	       "!@"

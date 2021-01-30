@@ -1,6 +1,4 @@
 .\objects\oled.o: ..\drive\oled.c
-.\objects\oled.o: ..\drive\delay.h
-.\objects\oled.o: ..\drive\oled.h
 .\objects\oled.o: ..\user\stm32f4xx.h
 .\objects\oled.o: ..\CMSIS\core_cm4.h
 .\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -36,6 +34,8 @@
 .\objects\oled.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\oled.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\oled.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\oled.o: ..\drive\delay.h
+.\objects\oled.o: ..\drive\oled.h
 .\objects\oled.o: ..\drive\ds18b20.h
 .\objects\oled.o: ..\drive\RTC.h
 .\objects\oled.o: ..\drive\usart.h

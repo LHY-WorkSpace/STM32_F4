@@ -3,8 +3,8 @@
 #include "oled.h"
 
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
  u8 hour,second,minute,month,date,week;
  u32 year;

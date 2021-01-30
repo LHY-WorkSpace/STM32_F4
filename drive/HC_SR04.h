@@ -1,8 +1,8 @@
 #ifndef  HC_SR04_H
 #deffine  HC_SR04_H
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 

@@ -1,8 +1,8 @@
 #ifndef  _I2C_H_
 #define  _I2C_H_
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
  
 #define PORT_AHB                  RCC_AHB1Periph_GPIOB                                      //IO总线
 #define PORT_GROUP                GPIOB                                                     //IO端口组
@@ -15,15 +15,15 @@
 
 
 
-static void Pin_out2in(void);
-static void Pin_in2out(void);
+void Pin_out2in(void);
+void Pin_in2out(void);
 
 
-static void Stop_IIC(void);
-static void Start_IIC(void);
-static void IIC_Send_NAck(void);
-static void IIC_Send_Ack(void);
-static u8 IIC_Wait_Ack_OK(void);
+void Stop_IIC(void);
+void Start_IIC(void);
+void IIC_Send_NAck(void);
+void IIC_Send_Ack(void);
+u8 IIC_Wait_Ack_OK(void);
 
 
 void IIC_Init(void);

@@ -1,8 +1,5 @@
 #include "stm32f4xx.h"
 #include "delay.h"
-#define u8 unsigned char
-#define u32 unsigned int 
-
 
 
 void delay_us(u32 nus)         //×î´ó798915us

@@ -1,8 +1,8 @@
-#ifndef GUI_H
-#define GUI_H
+#ifndef _GUI_H_
+#define _GUI_H_
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 void Set_TempureMenu(void);
 void Main_Menu(void);

@@ -1,8 +1,8 @@
 #ifndef   DAC_H
 #define   DAC_H
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 void dac_init(void);

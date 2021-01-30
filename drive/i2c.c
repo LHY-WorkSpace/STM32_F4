@@ -3,8 +3,8 @@
 #include "delay.h"
 #include "stdio.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 /*
@@ -56,7 +56,7 @@ static void Pin_out2in(void)
 }
 
 
-static void Start_IIC(void)
+void Start_IIC(void)
 {
 		Pin_in2out();
 		IIC_SDA_HIGH;
@@ -70,7 +70,7 @@ static void Start_IIC(void)
 }
 
 
-static void Stop_IIC(void)
+void Stop_IIC(void)
 {
 
 	Pin_in2out();
@@ -91,7 +91,7 @@ static void Stop_IIC(void)
 
 
 
-static void IIC_Send_Ack(void)
+void IIC_Send_Ack(void)
 {
 	
 	IIC_SCL_LOW;
@@ -107,7 +107,7 @@ static void IIC_Send_Ack(void)
 
 
 
-static void IIC_Send_NAck(void)
+void IIC_Send_NAck(void)
 {
 
 	IIC_SCL_LOW;
@@ -123,7 +123,7 @@ static void IIC_Send_NAck(void)
 }
 
 
-static u8 IIC_Wait_Ack_OK(void)
+u8 IIC_Wait_Ack_OK(void)
 {
 	u8 i=0;
 	Pin_out2in();	

@@ -1,8 +1,7 @@
 #ifndef CODE_RUN_TIME_H
 #define CODE_RUN_TIME_H
+#include "stm32f4xx.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
 
 
 

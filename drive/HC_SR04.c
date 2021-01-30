@@ -7,8 +7,8 @@
 
 
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 void hcsr_gpio_init()
 {

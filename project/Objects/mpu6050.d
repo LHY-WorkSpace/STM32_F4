@@ -1,5 +1,4 @@
 .\objects\mpu6050.o: ..\drive\MPU6050.c
-.\objects\mpu6050.o: ..\drive\MPU6050.h
 .\objects\mpu6050.o: ..\user\stm32f4xx.h
 .\objects\mpu6050.o: ..\CMSIS\core_cm4.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -35,11 +34,11 @@
 .\objects\mpu6050.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\mpu6050.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\mpu6050.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\mpu6050.o: ..\drive\MPU6050.h
 .\objects\mpu6050.o: ..\drive\i2c.h
 .\objects\mpu6050.o: ..\drive\delay.h
 .\objects\mpu6050.o: ..\drive\usart.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
-.\objects\mpu6050.o: ..\drive\AT24C08.h
 .\objects\mpu6050.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\mpu6050.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdlib.h

@@ -1,6 +1,6 @@
+#include "stm32f4xx.h"
 #include "delay.h"
 #include "oled.h"
-#include "stm32f4xx.h"
 #include "ds18b20.h"
 #include "RTC.h"
 #include "usart.h"

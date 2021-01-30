@@ -1,11 +1,4 @@
 .\objects\gui.o: ..\drive\GUI.c
-.\objects\gui.o: ..\drive\oled.h
-.\objects\gui.o: ..\drive\GUI.h
-.\objects\gui.o: ..\drive\ds18b20.h
-.\objects\gui.o: ..\drive\DHT11.h
-.\objects\gui.o: ..\drive\delay.h
-.\objects\gui.o: ..\drive\usart.h
-.\objects\gui.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\gui.o: ..\user\stm32f4xx.h
 .\objects\gui.o: ..\CMSIS\core_cm4.h
 .\objects\gui.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -41,4 +34,11 @@
 .\objects\gui.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\gui.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\gui.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\gui.o: ..\drive\oled.h
+.\objects\gui.o: ..\drive\GUI.h
+.\objects\gui.o: ..\drive\ds18b20.h
+.\objects\gui.o: ..\drive\DHT11.h
+.\objects\gui.o: ..\drive\delay.h
+.\objects\gui.o: ..\drive\usart.h
+.\objects\gui.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\gui.o: ..\drive\led.h

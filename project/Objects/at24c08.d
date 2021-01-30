@@ -35,5 +35,5 @@
 .\objects\at24c08.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\at24c08.o: ..\lib\inc\stm32f4xx_fsmc.h
 .\objects\at24c08.o: ..\drive\i2c.h
-.\objects\at24c08.o: ..\drive\AT24C08.h
 .\objects\at24c08.o: ..\drive\delay.h
+.\objects\at24c08.o: ..\drive\AT24C08.h

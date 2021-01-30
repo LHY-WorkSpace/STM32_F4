@@ -1,8 +1,8 @@
 #ifndef   LED_H
 #define   LED_H
 #include "stm32f4xx.h"
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 

@@ -3,8 +3,8 @@
 #include "stdio.h"
 #include "delay.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 void usart_init(unsigned int bode)

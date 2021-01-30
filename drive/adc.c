@@ -1,7 +1,6 @@
 #include "stm32f4xx.h"
 #include "adc.h"
-#define u8 unsigned char
-#define u32 unsigned int 
+
 
 
 

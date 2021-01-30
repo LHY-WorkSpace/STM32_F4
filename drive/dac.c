@@ -1,8 +1,8 @@
 #include "stm32f4xx.h"
 #include "dac.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 void dac_init()

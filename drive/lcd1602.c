@@ -2,8 +2,8 @@
 #include"lcd1602.h"
 #include"delay.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
+//#define u8unsigned char
+//#define u32 unsigned int 
 
 
 #define  RW_DEAD  GPIO_SetBits(GPIOB,GPIO_Pin_8)

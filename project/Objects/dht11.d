@@ -1,6 +1,4 @@
 .\objects\dht11.o: ..\drive\DHT11.c
-.\objects\dht11.o: ..\drive\DHT11.h
-.\objects\dht11.o: ..\drive\delay.h
 .\objects\dht11.o: ..\user\stm32f4xx.h
 .\objects\dht11.o: ..\CMSIS\core_cm4.h
 .\objects\dht11.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -36,3 +34,5 @@
 .\objects\dht11.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\dht11.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\dht11.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\dht11.o: ..\drive\DHT11.h
+.\objects\dht11.o: ..\drive\delay.h

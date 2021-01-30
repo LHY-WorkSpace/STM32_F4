@@ -1,5 +1,4 @@
 .\objects\code_run_time.o: ..\drive\CODE_RUN_TIME.c
-.\objects\code_run_time.o: ..\drive\CODE_RUN_TIME.h
 .\objects\code_run_time.o: ..\user\stm32f4xx.h
 .\objects\code_run_time.o: ..\CMSIS\core_cm4.h
 .\objects\code_run_time.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -35,4 +34,5 @@
 .\objects\code_run_time.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\code_run_time.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\code_run_time.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\code_run_time.o: ..\drive\CODE_RUN_TIME.h
 .\objects\code_run_time.o: ..\drive\led.h

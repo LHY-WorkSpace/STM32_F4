@@ -1,5 +1,5 @@
-#include "MPU6050.h"
 #include "stm32f4xx.h"
+#include "MPU6050.h"
 #include "i2c.h"
 #include "delay.h"
 #include "usart.h"

@@ -1,6 +1,4 @@
 .\objects\dma.o: ..\drive\DMA.c
-.\objects\dma.o: ..\drive\DMA.h
-.\objects\dma.o: ..\drive\delay.h
 .\objects\dma.o: ..\user\stm32f4xx.h
 .\objects\dma.o: ..\CMSIS\core_cm4.h
 .\objects\dma.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -36,3 +34,5 @@
 .\objects\dma.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\dma.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\dma.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\dma.o: ..\drive\DMA.h
+.\objects\dma.o: ..\drive\delay.h

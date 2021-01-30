@@ -1,8 +1,7 @@
 #ifndef  DHT11_H
 #define  DHT11_H
+#include "stm32f4xx.h"
 
-#define u8 unsigned char
-#define u32 unsigned int 
 
 
 

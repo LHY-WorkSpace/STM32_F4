@@ -1,6 +1,7 @@
+#include "stm32f4xx.h"
 #include "DHT11.h"
 #include "delay.h"
-#include "stm32f4xx.h"
+
 
 #define  DHT11_OUT_HIGH   1
 #define  DHT11_OUT_LOW    0

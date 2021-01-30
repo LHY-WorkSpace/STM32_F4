@@ -38,12 +38,39 @@
 .\objects\main.o: ..\drive\usart.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\main.o: ..\drive\CODE_RUN_TIME.h
+.\objects\main.o: ..\drive\dac.h
+.\objects\main.o: ..\drive\adc.h
 .\objects\main.o: ..\drive\led.h
+.\objects\main.o: ..\drive\exti.h
+.\objects\main.o: ..\drive\sd.h
+.\objects\main.o: ..\drive\sdio_sdcard.h
 .\objects\main.o: ..\drive\i2c.h
 .\objects\main.o: ..\drive\AT24C08.h
 .\objects\main.o: ..\drive\MPU6050.h
+.\objects\main.o: ..\drive\DHT11.h
+.\objects\main.o: ..\drive\ds18b20.h
+.\objects\main.o: ..\drive\oled.h
+.\objects\main.o: ..\drive\GUI.H
+.\objects\main.o: ..\drive\DMA.h
+.\objects\main.o: ..\drive\pwm.h
+.\objects\main.o: ..\drive\ESP8266.h
+.\objects\main.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\main.o: ..\user\FreeRTOSConfig.h
+.\objects\main.o: ..\FreeRTOS\include\projdefs.h
+.\objects\main.o: ..\FreeRTOS\include\portable.h
+.\objects\main.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\main.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\main.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\main.o: ..\FreeRTOS\include\task.h
+.\objects\main.o: ..\FreeRTOS\include\list.h
+.\objects\main.o: ..\drive\RTC.h
 .\objects\main.o: ..\SD\diskio.h
 .\objects\main.o: ..\SD\integer.h
+.\objects\main.o: ..\drive\lcd1602.h
 .\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\main.o: ..\CMSIS\arm_math.h
+.\objects\main.o: ..\CMSIS\core_cm4.h
+.\objects\main.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\main.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\main.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
