@@ -4,7 +4,6 @@
 #include "delay.h"
 #include "usart.h"
 #include "stdio.h"
-#include "AT24C08.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include <stdio.h>
@@ -12,11 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "math.h"
-
-
-
-
-
 
 
 
@@ -37,19 +31,20 @@ struct hal_s {
 static struct hal_s hal = {0};
 
 
+
 uchar get_ms(unsigned long *count)
 {
-delay_ms(10);
+	delay_ms(10);
 	return 0;
 }
 
 
-signed char gyro_orientation[9] = {-1, 0, 0,
+
+static signed char gyro_orientation[9] = {-1, 0, 0,
 									0,-1, 0,
 									0, 0, 1};	
 
-
-unsigned short inv_row_2_scale(const signed char *row)
+static unsigned short inv_row_2_scale(const signed char *row)
 {
     unsigned short b;
 
@@ -71,16 +66,13 @@ unsigned short inv_row_2_scale(const signed char *row)
 }
 
 
-unsigned short inv_orientation_matrix_to_scalar(
-    const signed char *mtx)
+static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 {
     unsigned short scalar;
-
 
     scalar = inv_row_2_scale(mtx);
     scalar |= inv_row_2_scale(mtx + 3) << 3;
     scalar |= inv_row_2_scale(mtx + 6) << 6;
-
 
     return scalar;
 }
@@ -88,60 +80,18 @@ unsigned short inv_orientation_matrix_to_scalar(
 
 
 
-void MPU6050_Init(void)
-{
-	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
-	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
-	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
-	MPU6050_Write_Data(MPU6050_GYR_CONFIG_REG,MPU6050_FS_SEL);
-	MPU6050_Write_Data(MPU6050_ACC_CONFIG_REG,MPU6050_AFS_SEL);
-	MPU6050_Write_Data(MPU6050_FIFO_ENABLE_REG,MPU6050_TEMP_FIFO_ENABLE|MPU6050_GYRFIFO_ENABLE|MPU6050_ACCFIFO_ENABLE);
-	MPU6050_DMP_Init();
-	
 
-}
-
-/*=============================================================================================
-
-Function:   MPU6050_Read_Data 
-parmart :   COMMOND           MPU6050 register;
-return  :   the vlaue of register  ( 1 byte  )                               
-      
-===============================================================================================*/
 
 uchar MPU6050_Read_Data(uchar COMMOND)
 {
 	return IIC_Read_Byte(MPU6050_ADDRESS,COMMOND);
 }
 
-/*=============================================================================================
 
-Function:   MPU6050_Write_Data 
-
-parmart :   COMMOND           MPU6050 register;
-             data             the value you want write to the register   ( 1 byte  ) 
-
-return  :   NULL                              
-      
-===============================================================================================*/
 
 void MPU6050_Write_Data(uchar COMMOND,uchar data)
 {
-
 	IIC_Write_Byte(MPU6050_ADDRESS,COMMOND,data);
-	
-}
-
-
-
-double MPU6050_Tempure(void)
-{
-	short int temp;
-	double reval;
-	temp=(MPU6050_Read_Data(MPU6050_TEMP_OUT_H)<<8|MPU6050_Read_Data(MPU6050_TEMP_OUT_L));
-	reval=((double)temp/340+36.53f);
-  return reval;
-
 }
 
 
@@ -162,7 +112,43 @@ uchar MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data
 }
 
 
+static void run_self_test()
+{
+    int result;
+    long gyro[3], accel[3];
 
+    result = mpu_run_self_test(gyro, accel);
+    if (result == 0x3) 
+	{
+
+        float sens;
+        unsigned short accel_sens;
+        mpu_get_gyro_sens(&sens);
+        gyro[0] = (long)(gyro[0] * sens);
+        gyro[1] = (long)(gyro[1] * sens);
+        gyro[2] = (long)(gyro[2] * sens);
+        dmp_set_gyro_bias(gyro);
+        mpu_get_accel_sens(&accel_sens);
+        accel[0] *= accel_sens;
+        accel[1] *= accel_sens;
+        accel[2] *= accel_sens;
+        dmp_set_accel_bias(accel);
+    }
+
+
+}
+
+void MPU6050_Init(void)
+{
+	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
+	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
+	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
+	MPU6050_Write_Data(MPU6050_GYR_CONFIG_REG,MPU6050_FS_SEL);
+	MPU6050_Write_Data(MPU6050_ACC_CONFIG_REG,MPU6050_AFS_SEL);
+	MPU6050_Write_Data(MPU6050_FIFO_ENABLE_REG,MPU6050_TEMP_FIFO_ENABLE|MPU6050_GYRFIFO_ENABLE|MPU6050_ACCFIFO_ENABLE);
+	MPU6050_DMP_Init();
+	
+}
 
 uchar MPU6050_DMP_Init(void)
 {  
@@ -177,7 +163,6 @@ uchar MPU6050_DMP_Init(void)
 		return 4;
     if(dmp_load_motion_driver_firmware())
 		return 5;
-
     if(dmp_set_orientation(inv_orientation_matrix_to_scalar(gyro_orientation)))
 		return 6;
     hal.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
@@ -197,32 +182,15 @@ uchar MPU6050_DMP_Init(void)
 }
 
 
-static void run_self_test()
+double MPU6050_Tempure(void)
 {
-    int result;
-    long gyro[3], accel[3];
-
-    result = mpu_run_self_test(gyro, accel);
-    if (result == 0x3) 
-		{
-
-        float sens;
-        unsigned short accel_sens;
-        mpu_get_gyro_sens(&sens);
-        gyro[0] = (long)(gyro[0] * sens);
-        gyro[1] = (long)(gyro[1] * sens);
-        gyro[2] = (long)(gyro[2] * sens);
-        dmp_set_gyro_bias(gyro);
-        mpu_get_accel_sens(&accel_sens);
-        accel[0] *= accel_sens;
-        accel[1] *= accel_sens;
-        accel[2] *= accel_sens;
-        dmp_set_accel_bias(accel);
-    }
-
+	short int temp;
+	double reval;
+	temp=(MPU6050_Read_Data(MPU6050_TEMP_OUT_H)<<8|MPU6050_Read_Data(MPU6050_TEMP_OUT_L));
+	reval=((double)temp/340+36.53f);
+  return reval;
 
 }
-
 
 
 /*读取数据到 pitch,yaw,roll  */

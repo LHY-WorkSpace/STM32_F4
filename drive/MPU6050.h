@@ -149,7 +149,7 @@ uchar MPU6050_Write_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar  *da
 uchar  MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar  *data);
 uchar  get_ms(unsigned long *count);
 unsigned short inv_row_2_scale(const signed char *row);
-unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
+static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
 void run_self_test(void);	
 uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll);
 

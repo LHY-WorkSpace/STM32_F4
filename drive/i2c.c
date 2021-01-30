@@ -262,7 +262,7 @@ void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 			if(i<(length-1))
 			{
 				*data=IIC_GetByte();
-					IIC_Send_Ack();
+				IIC_Send_Ack();
 			}
 			else
 			{
