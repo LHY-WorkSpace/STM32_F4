@@ -12,20 +12,10 @@ This is for AT24C08
 
 
 
-/*=============================================================================================
-
-Function:   AT24C08_init
-parmart :   NULL
-return  :   NULL
-      
-===============================================================================================*/
 void AT24C08_init(void)
 {
 	IIC_Init();
 }
-
-
-
 
 
 uchar AT24C08Read_Byte(uchar dev_addr,uchar Data_addr)
@@ -34,19 +24,10 @@ uchar AT24C08Read_Byte(uchar dev_addr,uchar Data_addr)
 }
 
 
-
-
-
-
 void AT24C08Write_Byte(uchar dev_addr,uchar Data_addr,uchar data)
 {
 	IIC_Write_Byte(dev_addr,Data_addr,data);
 }
-
-
-
-
-
 
 
 void AT24C08Read_NBytes(uchar dev_addr,uchar Data_addr,uchar length,uchar *data)
@@ -71,10 +52,30 @@ void AT24C08Write_NBytes(uchar dev_addr,uchar Data_addr,uchar length,uchar *data
 
 }
 
+/*
+	//分页的话会覆盖的问题！！！！待解决
+	uchar i=0;
+	Start_IIC();
+	IIC_SenddByte(dev_addr|0x00);
+	IIC_Wait_Ack_OK();
+	IIC_SenddByte((Data_addr>>8)&0xFF);
+	IIC_Wait_Ack_OK();
+	IIC_SenddByte(Data_addr&0xFF);
+	IIC_Wait_Ack_OK();
+	for(i=0;i<length;i++)
+	{
+		IIC_SenddByte(*data);
+		if(IIC_Wait_Ack_OK()==1)
+		{
+			Stop_IIC();
+			return;
+		}
+		data++;
+	}
+ 	Stop_IIC();
+	delay_ms(2);
 
-
-
-
+*/
 
 
 

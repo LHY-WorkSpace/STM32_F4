@@ -197,7 +197,7 @@ static uchar IIC_Wait_Ack_OK(void)
 					Stop_IIC();
 					return 1;
 				}
-				
+				delay_us(2);	
 		}
 				
 	 IIC_SCL_LOW;	
@@ -244,15 +244,20 @@ void IIC_Write_Byte(uchar Dev_addr,uchar Data_addr,uchar data)
 }
 
 
+/*
+?????????EEPROM?MPU6050???????
+EEPROM????2?????
+MPU6050???2?????????
+*/
+
 void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 {
-	 	 uchar i=0;
+	 	uchar i=0;
     	Start_IIC();
 		IIC_SenddByte(Dev_addr);
 		IIC_Wait_Ack_OK();
 		IIC_SenddByte(Data_addr);
 		IIC_Wait_Ack_OK();
-	
    		Start_IIC();
 		IIC_SenddByte(Dev_addr|0X01);	
 		IIC_Wait_Ack_OK();
@@ -277,7 +282,6 @@ void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 {
 	uchar i=0;
-	
 	Start_IIC();
 	IIC_SenddByte(Dev_addr|0x00);
 	IIC_Wait_Ack_OK();

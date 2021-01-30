@@ -82,32 +82,74 @@ static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 
 
 
-uchar MPU6050_Read_Data(uchar COMMOND)
+uchar MPU6050_Read_Data(uchar Reg)
 {
-	return IIC_Read_Byte(MPU6050_ADDRESS,COMMOND);
+	return IIC_Read_Byte(MPU6050_ADDRESS,Reg);
 }
 
 
 
-void MPU6050_Write_Data(uchar COMMOND,uchar data)
+void MPU6050_Write_Data(uchar Reg,uchar data)
 {
-	IIC_Write_Byte(MPU6050_ADDRESS,COMMOND,data);
+	IIC_Write_Byte(MPU6050_ADDRESS,Reg,data);
 }
 
 
 
-uchar MPU6050_Write_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data)
+uchar MPU6050_Write_DMP(uchar devices_addr,uchar Reg,uchar length,uchar *data)
 {
-  	IIC_Write_NBytes(devices_addr,COMMOND,length,data);
+  	uchar i=0;
+	Start_IIC();
+	IIC_SenddByte(devices_addr|0x00);
+	IIC_Wait_Ack_OK();
+	IIC_SenddByte(Reg);
+	IIC_Wait_Ack_OK();
+	for(i=0;i<length;i++)
+	{
+		IIC_SenddByte(*data);
+		if(IIC_Wait_Ack_OK()==1)
+		{
+			Stop_IIC();
+			return 1;
+		}
+		data++;
+	}
+ 	Stop_IIC();
+	delay_ms(2);
 	return 0;
 
 }
 
 
 
-uchar MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data)
+uchar MPU6050_Read_DMP(uchar devices_addr,uchar Reg,uchar length,uchar *data)
 {
-	IIC_Read_NBytes(devices_addr,COMMOND,length,data);
+		uchar i=0;
+    	Start_IIC();
+		IIC_SenddByte(devices_addr);
+		IIC_Wait_Ack_OK();
+		IIC_SenddByte(Reg);
+		IIC_Wait_Ack_OK();
+   		Start_IIC();
+		IIC_SenddByte(devices_addr|0X01);	
+		IIC_Wait_Ack_OK();
+	
+		for(i=0;i<length;i++)
+		{
+			if(i<(length-1))
+			{
+				*data=IIC_GetByte();
+				IIC_Send_Ack();
+			}
+			else
+			{
+				*data=IIC_GetByte();
+				IIC_Send_NAck();	
+			}
+			data++;	
+		}
+		Stop_IIC();
+
 	return 0;
 }
 
