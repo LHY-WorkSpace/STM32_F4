@@ -29,8 +29,8 @@ static uchar IIC_Wait_Ack_OK(void);
 void IIC_Init(void);
 void IIC_Write_Byte(uchar Dev_addr,uchar Data_addr,uchar data);
 uchar IIC_Read_Byte(uchar Dev_addr,uchar Data_addr);
-void IIC_Write_NByte(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
-void IIC_Read_NByte(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
+void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
+void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
 
 
 

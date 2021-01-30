@@ -111,11 +111,7 @@ return  :   the vlaue of register  ( 1 byte  )
 
 uchar MPU6050_Read_Data(uchar COMMOND)
 {
-
-
 	return IIC_Read_Byte(MPU6050_ADDRESS,COMMOND);
-
-
 }
 
 /*=============================================================================================
@@ -152,7 +148,7 @@ double MPU6050_Tempure(void)
 
 uchar MPU6050_Write_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data)
 {
-  IIC_Write_NByte(devices_addr,COMMOND,length,data);
+  	IIC_Write_NBytes(devices_addr,COMMOND,length,data);
 	return 0;
 
 }
@@ -161,9 +157,7 @@ uchar MPU6050_Write_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *dat
 
 uchar MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data)
 {
-
-	IIC_Read_NByte(devices_addr,COMMOND,length,data);
-
+	IIC_Read_NBytes(devices_addr,COMMOND,length,data);
 	return 0;
 }
 
@@ -172,7 +166,6 @@ uchar MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar *data
 
 uchar MPU6050_DMP_Init(void)
 {  
-	
 	
     if(mpu_init())
 		return 1;	

@@ -244,7 +244,7 @@ void IIC_Write_Byte(uchar Dev_addr,uchar Data_addr,uchar data)
 }
 
 
-void IIC_Read_NByte(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 {
 	 	 uchar i=0;
     	Start_IIC();
@@ -274,7 +274,7 @@ void IIC_Read_NByte(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 	Stop_IIC();
 }
 
-void IIC_Write_NByte(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
 {
 	uchar i=0;
 	
