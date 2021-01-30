@@ -46,7 +46,6 @@ u8 k,dataA[100],dataB[100];
 													
 int  main()
 {
-//	 u32 i;
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);	
 	usart_init(115200);
