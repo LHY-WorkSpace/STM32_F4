@@ -88,62 +88,7 @@ static void Stop_IIC(void)
 }
 
 
-static void IIC_SenddByte(u8 data)
-{
 
-	u8 i=0;
-	Pin_in2out();
-	IIC_SCL_LOW;	                      //À­µÍSCL
-
-	for(i=0;i<8;i++)
-	{
-		IIC_SCL_LOW;
-		delay_us(2);
-			if(data&0x80)	
-			{
-			IIC_SDA_HIGH;
-			}
-			else
-			{
-			IIC_SDA_LOW;
-			}
-		   data<<=1;
-			delay_us(2);
-			IIC_SCL_HIGH;
-			delay_us(2);
-	}
-    IIC_SCL_LOW;                     
-    delay_us(2);
-
-}
-
-
-static u8 IIC_GetByte(void)
-{
-	u8 data=0;
-	u8 i=0;
-
-	Pin_out2in();	
-	IIC_SDA_HIGH;
-	delay_us(2);
-	for(i=0;i<8;i++)
-	{		
-			data<<=1;
-			IIC_SCL_LOW;
-			delay_us(2); 		
-			IIC_SCL_HIGH;	
-			delay_us(2);
-			if(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)	
-			{
-      			data|=0x01;
-			}
-
-	}
- 	IIC_SCL_LOW;	
-	delay_us(2);
-
-  return data;
-}
 
 
 static void IIC_Send_Ack(void)
@@ -204,7 +149,62 @@ static u8 IIC_Wait_Ack_OK(void)
 	return 0;
 }
 
+void IIC_SenddByte(u8 data)
+{
 
+	u8 i=0;
+	Pin_in2out();
+	IIC_SCL_LOW;	                      //À­µÍSCL
+
+	for(i=0;i<8;i++)
+	{
+		IIC_SCL_LOW;
+		delay_us(2);
+			if(data&0x80)	
+			{
+			IIC_SDA_HIGH;
+			}
+			else
+			{
+			IIC_SDA_LOW;
+			}
+		   data<<=1;
+			delay_us(2);
+			IIC_SCL_HIGH;
+			delay_us(2);
+	}
+    IIC_SCL_LOW;                     
+    delay_us(2);
+
+}
+
+
+u8 IIC_GetByte(void)
+{
+	u8 data=0;
+	u8 i=0;
+
+	Pin_out2in();	
+	IIC_SDA_HIGH;
+	delay_us(2);
+	for(i=0;i<8;i++)
+	{		
+			data<<=1;
+			IIC_SCL_LOW;
+			delay_us(2); 		
+			IIC_SCL_HIGH;	
+			delay_us(2);
+			if(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)	
+			{
+      			data|=0x01;
+			}
+
+	}
+ 	IIC_SCL_LOW;	
+	delay_us(2);
+
+  return data;
+}
 
 
 

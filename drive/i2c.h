@@ -18,13 +18,12 @@
 static void Pin_out2in(void);
 static void Pin_in2out(void);
 
+
 static void Stop_IIC(void);
 static void Start_IIC(void);
-
 static void IIC_Send_NAck(void);
 static void IIC_Send_Ack(void);
 static u8 IIC_Wait_Ack_OK(void);
-
 
 
 void IIC_Init(void);
@@ -36,12 +35,6 @@ u8 IIC_GetByte(void);
 // u8 IIC_Read_Byte(u8 Dev_addr,u8 Data_addr);
 // void IIC_Write_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
 // void IIC_Read_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
-
-
-
-
-
-
 
 
 
