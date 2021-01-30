@@ -2,8 +2,8 @@
 #define   __SD_H
 #include "stm32f4xx_sdio.h"
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 	
 
 /********************************************ÃüÁîË÷Òý************************/
@@ -162,17 +162,17 @@ typedef struct
 
 	SD_Type SD_type;                        //SDSC/SDHC
 	SD_Version SD_version;                  //v2/v1
-	uint SD_RCA;                            //RCA
- 	uint SD_Block_Size;
-	uint SD_MID;
- 	uint SD_SN;
-	uint SD_Memory;
-	uchar SD_InsideState;
-	uchar READ_BL_LEN;
-	uint C_SIZE;
-	uint C_SIZE_MULT;
+	u32 SD_RCA;                            //RCA
+ 	u32 SD_Block_Size;
+	u32 SD_MID;
+ 	u32 SD_SN;
+	u32 SD_Memory;
+	u8 SD_InsideState;
+	u8 READ_BL_LEN;
+	u32 C_SIZE;
+	u32 C_SIZE_MULT;
 	int MULT;
-	uint CSD[4];
+	u32 CSD[4];
 	
 }SD_Information;
 
@@ -184,7 +184,7 @@ typedef struct
 
 SD_error CMD_ERROR(void);
 SD_error SD_CARD_Init(void );
-void CMD_Number_Argument_Responsetype(uchar CMD_x, uint argument,uint response_type);
+void CMD_Number_Argument_Responsetype(u8 CMD_x, u32 argument,u32 response_type);
 SD_error SD_powerON(void);
 void SDIO_SetBusWide(SDIO_Buswide SDIO_wide);
 void SDIO_SetSpeed(SDIO_Speed SDIO_speed);
@@ -194,13 +194,13 @@ SD_error SD_CSDInfo(void);
 SD_error SD_RCAInfo(void);
 SD_error SD_ManufactoryInfo(void);
 SD_error SD_TypeInformation(void);
-uchar SD_GetVersion(void);
-void SDIO_Data_Set(uint N_BLOCK_SIZE,SDIO_Dirction direction);
+u8 SD_GetVersion(void);
+void SDIO_Data_Set(u32 N_BLOCK_SIZE,SDIO_Dirction direction);
 
-SD_error SD_Read_Block(uint *buffer,uint Physical_BLOCK_ADDR);
-SD_error SD_Write_Block(uint *buffer,uint Physical_BLOCK_ADDR);
-SD_error SD_Read_MultiBlocks(uint *buffer,uint Physical_BLOCK_ADDR,uchar count);
-SD_error SD_Write_MultiBlocks(uint *buffer,uint Physical_BLOCK_ADDR,uchar count);
+SD_error SD_Read_Block(u32 *buffer,u32 Physical_BLOCK_ADDR);
+SD_error SD_Write_Block(u32 *buffer,u32 Physical_BLOCK_ADDR);
+SD_error SD_Read_MultiBlocks(u32 *buffer,u32 Physical_BLOCK_ADDR,u8 count);
+SD_error SD_Write_MultiBlocks(u32 *buffer,u32 Physical_BLOCK_ADDR,u8 count);
 
 
 

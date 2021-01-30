@@ -1,11 +1,10 @@
 #include "stm32f4xx.h"
 #include "i2c.h"
 #include "delay.h"
-#include "usart.h"
 #include "stdio.h"
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 /*
@@ -89,10 +88,10 @@ static void Stop_IIC(void)
 }
 
 
-static void IIC_SenddByte(uchar data)
+static void IIC_SenddByte(u8 data)
 {
 
-	uchar i=0;
+	u8 i=0;
 	Pin_in2out();
 	IIC_SCL_LOW;	                      //拉低SCL
 
@@ -119,10 +118,10 @@ static void IIC_SenddByte(uchar data)
 }
 
 
-static uchar IIC_GetByte(void)
+static u8 IIC_GetByte(void)
 {
-	uchar data=0;
-	uchar i=0;
+	u8 data=0;
+	u8 i=0;
 
 	Pin_out2in();	
 	IIC_SDA_HIGH;
@@ -179,10 +178,9 @@ static void IIC_Send_NAck(void)
 }
 
 
-static uchar IIC_Wait_Ack_OK(void)
+static u8 IIC_Wait_Ack_OK(void)
 {
-	uchar i=0;
-
+	u8 i=0;
 	Pin_out2in();	
 	IIC_SDA_HIGH;  
 	delay_us(2);
@@ -208,49 +206,54 @@ static uchar IIC_Wait_Ack_OK(void)
 
 
 
-uchar IIC_Read_Byte(uchar Dev_addr,uchar Data_addr)
-{
-	uchar DATA=0;
-	
-	Start_IIC();
-	IIC_SenddByte(Dev_addr|0X00);
-    IIC_Wait_Ack_OK();
-	IIC_SenddByte(Data_addr);
-	IIC_Wait_Ack_OK();
-	
-	Start_IIC();
-	IIC_SenddByte((Dev_addr|0X01));	
-    IIC_Wait_Ack_OK();
-	DATA=IIC_GetByte();
-	IIC_Send_NAck();
-	Stop_IIC();
-	
-	return DATA;
-}
 
-void IIC_Write_Byte(uchar Dev_addr,uchar Data_addr,uchar data)
-{
-
-	Start_IIC();
-	IIC_SenddByte(Dev_addr);        
-    IIC_Wait_Ack_OK();
-	IIC_SenddByte(Data_addr);
-	IIC_Wait_Ack_OK();
-	IIC_SenddByte(data);	
-	IIC_Wait_Ack_OK();
-	Stop_IIC();
-	delay_ms(5);    
-	
-}
 
 
 /*
 EEPROM和MPU6050的地址宽度不同
 */
 
-// void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+// u8 IIC_Read_Byte(u8 Dev_addr,u8 Data_addr)
 // {
-// 	 	uchar i=0;
+// 	u8 DATA=0;
+	
+// 	Start_IIC();
+// 	IIC_SenddByte(Dev_addr|0X00);
+//     IIC_Wait_Ack_OK();
+// 	IIC_SenddByte(Data_addr);
+// 	IIC_Wait_Ack_OK();
+	
+// 	Start_IIC();
+// 	IIC_SenddByte((Dev_addr|0X01));	
+//     IIC_Wait_Ack_OK();
+// 	DATA=IIC_GetByte();
+// 	IIC_Send_NAck();
+// 	Stop_IIC();
+	
+// 	return DATA;
+// }
+
+// void IIC_Write_Byte(u8 Dev_addr,u8 Data_addr,u8 data)
+// {
+
+// 	Start_IIC();
+// 	IIC_SenddByte(Dev_addr);        
+//     IIC_Wait_Ack_OK();
+// 	IIC_SenddByte(Data_addr);
+// 	IIC_Wait_Ack_OK();
+// 	IIC_SenddByte(data);	
+// 	IIC_Wait_Ack_OK();
+// 	Stop_IIC();
+// 	delay_ms(5);    
+	
+// }
+
+
+
+
+// void IIC_Read_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data)
+// {
+// 	 	u8 i=0;
 //     	Start_IIC();
 // 		IIC_SenddByte(Dev_addr);
 // 		IIC_Wait_Ack_OK();
@@ -277,9 +280,9 @@ EEPROM和MPU6050的地址宽度不同
 // 	Stop_IIC();
 // }
 
-// void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data)
+// void IIC_Write_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data)
 // {
-// 	uchar i=0;
+// 	u8 i=0;
 // 	Start_IIC();
 // 	IIC_SenddByte(Dev_addr|0x00);
 // 	IIC_Wait_Ack_OK();

@@ -6,8 +6,8 @@
 #include "oled.h"
 #include "string.h"
 
-#define uint unsigned int
-#define uchar unsigned char
+#define u32 unsigned int
+#define u8 unsigned char
 
 #define IP_START  	       "@!"
 #define IP_END     	       "!@"
@@ -45,7 +45,7 @@ char Local_IP[12];
 char Net_Name[15];
 char Net_Password[10];
 char Wifi_Data[300];
- uchar USED_FLAG;
+ u8 USED_FLAG;
 
 
 
@@ -179,7 +179,7 @@ memset(Wifi_Data,0,sizeof(Wifi_Data));
 
 void Get_IP(char *str,char *temp)
 {
-	uchar i=0;
+	u8 i=0;
 	str+=24;
 	for(i=0;i<12;i++)
 	{

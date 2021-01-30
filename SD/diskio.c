@@ -71,7 +71,7 @@ DRESULT disk_read (
 	BYTE pdrv,		/* Physical drive nmuber (0..) */
 	BYTE *buff,		/* Data buffer to store read data */
 	DWORD sector,	/* Sector address (LBA) */
-	UINT count		/* Number of sectors to read (1..128) */
+	u32 count		/* Number of sectors to read (1..128) */
 )
 {
 	u8 res=0; 
@@ -114,7 +114,7 @@ DRESULT disk_write (
 	BYTE pdrv,			/* Physical drive nmuber (0..) */
 	const BYTE *buff,	/* Data to be written */
 	DWORD sector,		/* Sector address (LBA) */
-	UINT count			/* Number of sectors to write (1..128) */
+	u32 count			/* Number of sectors to write (1..128) */
 )
 {
 	u8 res=0;  
@@ -220,7 +220,7 @@ DWORD get_fattime (void)
 	return 0;
 }			 
 //¶¯Ì¬·ÖÅäÄÚ´æ
-// void *ff_memalloc (UINT size)			
+// void *ff_memalloc (u32 size)			
 // {
 // 	return (void*)mymalloc(SRAMIN,size);
 // }

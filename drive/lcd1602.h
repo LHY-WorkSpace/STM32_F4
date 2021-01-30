@@ -1,13 +1,13 @@
 #ifndef   LCD1602_H
 #define   LCD1602_H
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 
 void lcd_init(void);
-void lcd_write_order(uint lcd_order);
-void lcd_write_data(uint lcd_data);
+void lcd_write_order(u32 lcd_order);
+void lcd_write_data(u32 lcd_data);
 
 #endif
 
@@ -16,8 +16,8 @@ void lcd_write_data(uint lcd_data);
 
 ≤‚ ‘œ‘ æ
 
-uchar  table1[]="LCD1602";
-uchar  table2[]="STM32";
+u8  table1[]="LCD1602";
+u8  table2[]="STM32";
 
 
 

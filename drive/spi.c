@@ -4,8 +4,8 @@
 #include "stdio.h"
 
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 
@@ -69,7 +69,7 @@
 
 void SPI2_IRQHandler()
 {
-	static uint i=0;
+	static u32 i=0;
 
 	if(SPI_I2S_GetITStatus(SPI2,SPI_I2S_IT_TXE)==SET)
 	{
@@ -175,7 +175,7 @@ void SPI2_IRQHandler()
 
 
 
-//uint spi_getdata()
+//u32 spi_getdata()
 //{
 //		if(SPI_I2S_GetFlagStatus(SPI1,SPI_I2S_FLAG_RXNE)==1)
 //		{			

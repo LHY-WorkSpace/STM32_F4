@@ -18,8 +18,8 @@
 
 //  A2:SET    C3:+    E6:-//
 
-uchar Menu_Num=0,Set_Time=0;
-uchar Temperature_HIGH=25,Temperature_LOW=25,Humidity_HIGH=40,Humidity_LOW=40;
+u8 Menu_Num=0,Set_Time=0;
+u8 Temperature_HIGH=25,Temperature_LOW=25,Humidity_HIGH=40,Humidity_LOW=40;
 void exti_init()
 {
 

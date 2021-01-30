@@ -1,8 +1,8 @@
 #ifndef     ESP8266_H
 #define     ESP8266_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 void esp826_init(void);
 void Get_IP(char *str,char *temp);

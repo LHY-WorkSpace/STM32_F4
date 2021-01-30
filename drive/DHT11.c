@@ -30,7 +30,7 @@ void DHT11_IO_IN(void)
 }
 
 
-void DHT11_IO_OUT(uchar DHT11_IO_CMD)
+void DHT11_IO_OUT(u8 DHT11_IO_CMD)
 {
 
 
@@ -61,9 +61,9 @@ void DHT11_IO_OUT(uchar DHT11_IO_CMD)
 
 
 
-uchar DHT11_Init(void)
+u8 DHT11_Init(void)
 {
-    uchar DHT11_ACK=0,j=0;
+    u8 DHT11_ACK=0,j=0;
 	
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
@@ -100,9 +100,9 @@ uchar DHT11_Init(void)
 
 
 
-uchar DHT11_Read_Byte(void)
+u8 DHT11_Read_Byte(void)
 {
-	uchar Byte_Data=0,i=0,j=0;;
+	u8 Byte_Data=0,i=0,j=0;;
 for(i=0;i<8;i++)
 	{
           while(DHT11_IO_STATE==LOW&&j<200)				//检测到高电平时	
@@ -131,7 +131,7 @@ return Byte_Data;
 }
 
 
-void DHT11_Read_Data(uchar *temp,uchar *humi)//读取温湿度间隔必须大于1s
+void DHT11_Read_Data(u8 *temp,u8 *humi)//读取温湿度间隔必须大于1s
 {
 	
  __disable_irq();                   //关全局中断

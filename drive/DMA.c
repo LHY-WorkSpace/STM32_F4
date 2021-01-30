@@ -8,11 +8,11 @@
 
 
 
-uchar OLED[512];
-extern uchar windows[];
-extern uint tttt[];
-extern uint sss[];
-extern uchar Data_OK;
+u8 OLED[512];
+extern u8 windows[];
+extern u32 tttt[];
+extern u32 sss[];
+extern u8 Data_OK;
 
 
 
@@ -48,9 +48,9 @@ void DMA1_ConfigInit()
 	
 
 	
-	DMA_InitConfig.DMA_Memory0BaseAddr=(uint)OLED;	
+	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)OLED;	
 	   
-	DMA_InitConfig.DMA_PeripheralBaseAddr=(uint)&(SPI2->DR);
+	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI2->DR);
 	
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
 	
@@ -105,9 +105,9 @@ void DMA2_ConfigInit()
 	
 	NVIC_InitTypeDef  NVIC_Initstr;
 	
-	DMA_InitConfig.DMA_Memory0BaseAddr=(uint)OLED;	
+	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)OLED;	
 	   
-	DMA_InitConfig.DMA_PeripheralBaseAddr=(uint)&(USART1->DR);
+	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(USART1->DR);
 	
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Word;
 	

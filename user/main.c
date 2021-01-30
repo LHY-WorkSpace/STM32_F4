@@ -31,14 +31,14 @@
 #include "inv_mpu_dmp_motion_driver.h"
 
 float pitch,yaw,roll; 
-__align(4) uchar A[512],B[512],C[512],D[512],AA[1024],BB[4096],CC[1024];
+__align(4) u8 A[512],B[512],C[512],D[512],AA[1024],BB[4096],CC[1024];
 
 
 #define NUM    0x54
 
 
-uchar Data_OK;					
-uchar k,dataA[100],dataB[100];	
+u8 Data_OK;					
+u8 k,dataA[100],dataB[100];	
 
 
 
@@ -46,7 +46,7 @@ uchar k,dataA[100],dataB[100];
 													
 int  main()
 {
-//	 uint i;
+//	 u32 i;
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);	
 	usart_init(115200);

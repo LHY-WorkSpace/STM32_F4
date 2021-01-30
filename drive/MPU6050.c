@@ -32,7 +32,7 @@ static struct hal_s hal = {0};
 
 
 
-uchar get_ms(unsigned long *count)
+u8 get_ms(unsigned long *count)
 {
 	delay_ms(10);
 	return 0;
@@ -82,23 +82,49 @@ static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 
 
 
-uchar MPU6050_Read_Data(uchar Reg)
+u8 MPU6050_Read_Data(u8 Reg)
 {
-	return IIC_Read_Byte(MPU6050_ADDRESS,Reg);
+	u8 DATA=0;
+	
+	Start_IIC();
+	IIC_SenddByte(MPU6050_ADDRESS|0X00);
+    IIC_Wait_Ack_OK();
+	IIC_SenddByte(Reg);
+	IIC_Wait_Ack_OK();
+	
+	Start_IIC();
+	IIC_SenddByte((Reg|0X01));	
+    IIC_Wait_Ack_OK();
+	DATA=IIC_GetByte();
+	IIC_Send_NAck();
+	Stop_IIC();
+	
+	return DATA;
+
+
+
+}
+
+
+void MPU6050_Write_Data(u8 Reg,u8 data)
+{
+
+	Start_IIC();
+	IIC_SenddByte(MPU6050_ADDRESS);        
+    IIC_Wait_Ack_OK();
+	IIC_SenddByte(Reg);
+	IIC_Wait_Ack_OK();
+	IIC_SenddByte(data);	
+	IIC_Wait_Ack_OK();
+	Stop_IIC();
+	delay_ms(5); 
 }
 
 
 
-void MPU6050_Write_Data(uchar Reg,uchar data)
+u8 MPU6050_Write_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 {
-	IIC_Write_Byte(MPU6050_ADDRESS,Reg,data);
-}
-
-
-
-uchar MPU6050_Write_DMP(uchar devices_addr,uchar Reg,uchar length,uchar *data)
-{
-  	uchar i=0;
+  	u8 i=0;
 	Start_IIC();
 	IIC_SenddByte(devices_addr|0x00);
 	IIC_Wait_Ack_OK();
@@ -122,9 +148,9 @@ uchar MPU6050_Write_DMP(uchar devices_addr,uchar Reg,uchar length,uchar *data)
 
 
 
-uchar MPU6050_Read_DMP(uchar devices_addr,uchar Reg,uchar length,uchar *data)
+u8 MPU6050_Read_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 {
-		uchar i=0;
+		u8 i=0;
     	Start_IIC();
 		IIC_SenddByte(devices_addr);
 		IIC_Wait_Ack_OK();
@@ -192,7 +218,7 @@ void MPU6050_Init(void)
 	
 }
 
-uchar MPU6050_DMP_Init(void)
+u8 MPU6050_DMP_Init(void)
 {  
 	
     if(mpu_init())
@@ -236,9 +262,9 @@ double MPU6050_Tempure(void)
 
 
 /*读取数据到 pitch,yaw,roll  */
-uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
+u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 {
-	uchar i=0;
+	u8 i=0;
 	long quat[4];
 	short gyro[3], accel[3], sensors;
 	unsigned long sensor_timestamp;
@@ -269,10 +295,10 @@ uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 
 
 
-void usart1_niming_report(uchar fun,uchar *data,uchar len)
+void usart1_niming_report(u8 fun,u8 *data,u8 len)
 {
-	uchar send_buf[32];
-	uchar i;
+	u8 send_buf[32];
+	u8 i;
 	if(len>28)return;	//最多28字节数据 
 	send_buf[len+3]=0;	//校验数置零
 	send_buf[0]=0X88;	//帧头
@@ -290,8 +316,8 @@ void mpu6050_SendTo_APP(short pitch,short yaw,short roll)
 {
 	
 	MPU6050_Get_DMP_Data((float*)&pitch,(float*)&yaw,(float*)&roll);
-	uchar tbuf[28]; 
-	uchar i;
+	u8 tbuf[28]; 
+	u8 i;
 	for(i=0;i<28;i++)tbuf[i]=0;//清0
 	
 	
@@ -330,7 +356,7 @@ void mpu6050_SendTo_APP(short pitch,short yaw,short roll)
 
 } 
 
-void usart1_send_char(uchar c)
+void usart1_send_char(u8 c)
 {
 
 	while(USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET);

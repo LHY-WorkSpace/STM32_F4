@@ -3,13 +3,13 @@
 #include "oled.h"
 
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
- uchar hour,second,minute,month,date,week;
- uint year;
+ u8 hour,second,minute,month,date,week;
+ u32 year;
  
-void RTC_Set_Time(uchar hour,uchar minute,uchar second)
+void RTC_Set_Time(u8 hour,u8 minute,u8 second)
 {
 	RTC_TimeTypeDef RTC_TimeTypeDefinit;
 	
@@ -25,7 +25,7 @@ void RTC_Set_Time(uchar hour,uchar minute,uchar second)
 
 
 
-void RTC_Set_Date(uint year,uchar month,uchar date,uchar week)
+void RTC_Set_Date(u32 year,u8 month,u8 date,u8 week)
 {
 	RTC_DateTypeDef RTC_DateTypeDefinit;
 	
@@ -45,8 +45,8 @@ void RTC_Set_Date(uint year,uchar month,uchar date,uchar week)
 void RTC_configinit()
 {
 	RTC_InitTypeDef RTC_InitStructure;	
-	//uint retry=0X1FFF; 
-	uchar i;
+	//u32 retry=0X1FFF; 
+	u8 i;
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);//Ê¹ÄÜPWRÊ±ÖÓ
 	PWR_BackupAccessCmd(ENABLE);

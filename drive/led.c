@@ -27,7 +27,7 @@ void led_init()
 }
 
 
-//void lcd_write_data(uint dat)
+//void lcd_write_data(u32 dat)
 //{
 
 //	RS_data;
@@ -39,7 +39,7 @@ void led_init()
 
 //}
 
-//void lcd_write_order(uint ord)
+//void lcd_write_order(u32 ord)
 //{
 //	RS_order;
 //	RW_write;

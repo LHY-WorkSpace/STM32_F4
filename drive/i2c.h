@@ -1,8 +1,8 @@
 #ifndef  _I2C_H_
 #define  _I2C_H_
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
  
 #define PORT_AHB                  RCC_AHB1Periph_GPIOB                                      //IO总线
 #define PORT_GROUP                GPIOB                                                     //IO端口组
@@ -20,17 +20,22 @@ static void Pin_in2out(void);
 
 static void Stop_IIC(void);
 static void Start_IIC(void);
-static void IIC_SenddByte(uchar data);
-static uchar IIC_GetByte(void);
+
 static void IIC_Send_NAck(void);
 static void IIC_Send_Ack(void);
-static uchar IIC_Wait_Ack_OK(void);
+static u8 IIC_Wait_Ack_OK(void);
+
+
 
 void IIC_Init(void);
-void IIC_Write_Byte(uchar Dev_addr,uchar Data_addr,uchar data);
-uchar IIC_Read_Byte(uchar Dev_addr,uchar Data_addr);
-// void IIC_Write_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
-// void IIC_Read_NBytes(uchar Dev_addr,uchar Data_addr,uchar length,uchar *data);
+void IIC_SenddByte(u8 data);
+u8 IIC_GetByte(void);
+
+
+// void IIC_Write_Byte(u8 Dev_addr,u8 Data_addr,u8 data);
+// u8 IIC_Read_Byte(u8 Dev_addr,u8 Data_addr);
+// void IIC_Write_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
+// void IIC_Read_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
 
 
 

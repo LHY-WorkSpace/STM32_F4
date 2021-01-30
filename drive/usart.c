@@ -3,8 +3,8 @@
 #include "stdio.h"
 #include "delay.h"
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 void usart_init(unsigned int bode)
@@ -83,7 +83,7 @@ int fputc(int ch, FILE* stream)
 
 
 
-//void send_data(uint data)
+//void send_data(u32 data)
 //{
 //while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
 //USART_SendData(USART1,data);
@@ -108,7 +108,7 @@ int fputc(int ch, FILE* stream)
 
 // void USART1_IRQHandler()
 // {
-// 	static uint i=0;
+// 	static u32 i=0;
 
 // 	if(USART_GetITStatus(USART1,USART_IT_RXNE)==SET)
 // 	{

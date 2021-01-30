@@ -1,12 +1,12 @@
 #ifndef    SPI_H
 #define    SPI_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 //void spi_configinit(void);
-//uint spi_getdata(void);
+//u32 spi_getdata(void);
 
 
 

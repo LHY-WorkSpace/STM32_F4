@@ -6,7 +6,7 @@
 
                              //PB8 --------DATE
 
-void gpio_out(uchar state)
+void gpio_out(u8 state)
 {
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
@@ -56,9 +56,9 @@ void gpio_in()
 
 
 
-void ds18b20_write_byte(uint data)
+void ds18b20_write_byte(u32 data)
 {
-uchar i;
+u8 i;
 	for(i=0;i<8;i++)
 	{
 	gpio_out(0); 
@@ -83,8 +83,8 @@ uchar i;
 int ds18b20_read_byte()
 {
 char i;
-  uint	data=0;
-  uint 	temp=0;		
+  u32	data=0;
+  u32 	temp=0;		
 	for(i=0;i<8;i++)
 	{
 	gpio_out(0);
@@ -110,7 +110,7 @@ char i;
 int ds18B20_init(char CMD)
 {
 	
-uchar flag=0;
+u8 flag=0;
 
 	gpio_out(1); 
 	delay_us(10);
@@ -156,8 +156,8 @@ uchar flag=0;
 	
 void tempure_value_OLEDdisplay(char x,char y)
 {
-	uint LSB,MSB,A1,A2,A3;
-	uint wendu;
+	u32 LSB,MSB,A1,A2,A3;
+	u32 wendu;
 	
 	if(ds18B20_init(0)==0)
 	{
@@ -228,10 +228,10 @@ void tempure_value_OLEDdisplay(char x,char y)
 
 }	
 	
-void Get_Temperature(uchar *Temperature)
+void Get_Temperature(u8 *Temperature)
 {
-	uchar LSB,MSB;
-	uint wendu;
+	u8 LSB,MSB;
+	u32 wendu;
 	
 	__disable_irq();
 	
@@ -253,7 +253,7 @@ void Get_Temperature(uchar *Temperature)
 	
 
 	wendu=(LSB|((MSB&0x7)<<8))*625;
-	*Temperature=(uchar)(wendu/10000);
+	*Temperature=(u8)(wendu/10000);
 		
 	}
 	__enable_irq();

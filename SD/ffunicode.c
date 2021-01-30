@@ -15283,7 +15283,7 @@ WCHAR ff_uni2oem (	/* Returns OEM code character, zero on error */
 {
 	const WCHAR *p;
 	WCHAR c = 0, uc;
-	UINT i = 0, n, li, hi;
+	u32 i = 0, n, li, hi;
 
 
 	if (uni < 0x80) {	/* ASCII? */
@@ -15319,7 +15319,7 @@ WCHAR ff_oem2uni (	/* Returns Unicode character, zero on error */
 {
 	const WCHAR *p;
 	WCHAR c = 0;
-	UINT i = 0, n, li, hi;
+	u32 i = 0, n, li, hi;
 
 
 	if (oem < 0x80) {	/* ASCII? */
@@ -15366,7 +15366,7 @@ WCHAR ff_uni2oem (	/* Returns OEM code character, zero on error */
 {
 	const WCHAR *p;
 	WCHAR c = 0, uc;
-	UINT i, n, li, hi;
+	u32 i, n, li, hi;
 
 
 	if (uni < 0x80) {	/* ASCII? */
@@ -15418,7 +15418,7 @@ WCHAR ff_oem2uni (	/* Returns Unicode character, zero on error */
 {
 	const WCHAR *p;
 	WCHAR c = 0;
-	UINT i, n, li, hi;
+	u32 i, n, li, hi;
 
 
 	if (oem < 0x80) {	/* ASCII? */

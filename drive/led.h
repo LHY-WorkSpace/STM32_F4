@@ -1,8 +1,8 @@
 #ifndef   LED_H
 #define   LED_H
 #include "stm32f4xx.h"
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 
@@ -37,8 +37,8 @@
 #define  LEDC_ON  GPIO_ResetBits(GPIOC,GPIO_Pin_2)
 
 
-// void lcd_write_data(uint dat);
-// void lcd_write_order(uint ord);
+// void lcd_write_data(u32 dat);
+// void lcd_write_order(u32 ord);
 // void lcd_init(void);
 void	led_init(void);
 

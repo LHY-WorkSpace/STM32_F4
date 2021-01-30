@@ -8,8 +8,8 @@
 
 
 
-//uchar SD_ReadBuff[512];
-//uchar SD_WriteBuff[512];
+//u8 SD_ReadBuff[512];
+//u8 SD_WriteBuff[512];
 
 SD_error  error_type;
 SD_Information SD_information;
@@ -105,7 +105,7 @@ SD_error SD_powerON()
 
 
 
-void CMD_Number_Argument_Responsetype(uchar CMD_x, uint argument,uint response_type)               //发送命令索引，参数和响应类型
+void CMD_Number_Argument_Responsetype(u8 CMD_x, u32 argument,u32 response_type)               //发送命令索引，参数和响应类型
 {
 	
  	SDIO_CmdInitTypeDef SDIO_CmdInitTypeDefinit;
@@ -121,7 +121,7 @@ void CMD_Number_Argument_Responsetype(uchar CMD_x, uint argument,uint response_t
 }
 
 
-void SDIO_Data_Set(uint N_BLOCK_SIZE,SDIO_Dirction direction)
+void SDIO_Data_Set(u32 N_BLOCK_SIZE,SDIO_Dirction direction)
 {
 
 	SDIO_DataInitTypeDef SDIO_DataStruct;
@@ -137,7 +137,7 @@ void SDIO_Data_Set(uint N_BLOCK_SIZE,SDIO_Dirction direction)
 
 
 
-uchar SD_GetVersion()
+u8 SD_GetVersion()
 {
 		//CMD8   0X1AA:主机供电电压范围2.7~3.6V//
 	CMD_Number_Argument_Responsetype(CMD8,0X1AA,S_RESPONSE); 	
@@ -162,7 +162,7 @@ uchar SD_GetVersion()
 
 SD_error SD_TypeInformation()
 {
-	uchar voltage_check=0,j;
+	u8 voltage_check=0,j;
 
 	    	while(voltage_check!=1)
 			{
@@ -327,7 +327,7 @@ SD_error SD_CARD_Init()
 {
 	
 	SD_error error_type=SDIO_OK;
-	uchar i,j;
+	u8 i,j;
 	
 	 SD_powerON();
 
@@ -404,10 +404,10 @@ SD_error SD_CARD_Init()
 }
 
 
-SD_error SD_Read_Block(uint *buffer,uint Physical_Block_BaseAddr)
+SD_error SD_Read_Block(u32 *buffer,u32 Physical_Block_BaseAddr)
 {
 
-	uint i=0,j=0;
+	u32 i=0,j=0;
 
 				CMD_Number_Argument_Responsetype(CMD16,BLOCK_SIZE,S_RESPONSE);                 //设置SD卡本次要读的数据长度
 				error_type=CMD_ERROR();
@@ -453,9 +453,9 @@ return error_type;
 
 
 
-SD_error SD_Write_Block(uint *buffer,uint Physical_Block_BaseAddr)
+SD_error SD_Write_Block(u32 *buffer,u32 Physical_Block_BaseAddr)
 {
-	uchar j,i,k;
+	u8 j,i,k;
 
 
 	CMD_Number_Argument_Responsetype(CMD16,BLOCK_SIZE,S_RESPONSE);                 //设置SD卡本次要写的数据长度
@@ -501,10 +501,10 @@ return  error_type;
 
 }
 
-SD_error SD_Read_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar count)
+SD_error SD_Read_MultiBlocks(u32 *buffer,u32 Physical_Block_BaseAddr,u8 count)
 {
-	uint i=0,j=0,k=0;
-	uint Addr_Temp;
+	u32 i=0,j=0,k=0;
+	u32 Addr_Temp;
 	Addr_Temp=(Physical_Block_BaseAddr/BLOCK_SIZE)*BLOCK_SIZE;
 
 					
@@ -552,13 +552,13 @@ return error_type;
 
 
 
-SD_error SD_Write_MultiBlocks(uint *buffer,uint Physical_Block_BaseAddr,uchar count)
+SD_error SD_Write_MultiBlocks(u32 *buffer,u32 Physical_Block_BaseAddr,u8 count)
 {
 
 
 
-	uchar j,i,k;
-	uint Addr_Temp;
+	u8 j,i,k;
+	u32 Addr_Temp;
 	Addr_Temp=(Physical_Block_BaseAddr/BLOCK_SIZE)*BLOCK_SIZE;
 
 
@@ -623,7 +623,7 @@ return  error_type;
 
 SD_error CMD_ERROR(void)                                  
 {
-	uint j=0;
+	u32 j=0;
 	error_type=SD_timeout;	
 	
 						while(error_type)                                              

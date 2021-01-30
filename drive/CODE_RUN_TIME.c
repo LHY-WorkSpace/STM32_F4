@@ -3,7 +3,7 @@
 #include "led.h"
 
 
-extern uchar Set_Time; 
+extern u8 Set_Time; 
 
 
 void Programe_Start(void)
@@ -36,7 +36,7 @@ void Programe_Start(void)
 
 }
 
-uint Programe_End()
+u32 Programe_End()
 {
 
 return TIM_GetCounter(TIM6);
@@ -48,7 +48,7 @@ return TIM_GetCounter(TIM6);
 void TIM6_DAC_IRQHandler()
 {
 	
-	static uint water_times=0,fan_time=0;
+	static u32 water_times=0,fan_time=0;
 	
 		if(TIM_GetFlagStatus(TIM6,TIM_IT_Update)==1)
 		{

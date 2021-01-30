@@ -1,8 +1,8 @@
 #ifndef exti_h_
 #define exti_h_
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 void exti_init(void);

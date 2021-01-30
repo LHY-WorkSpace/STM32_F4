@@ -33,51 +33,51 @@
 
 	
 /*          8*8                        */
-uchar num0[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
-uchar num1[8]={0X00,0X00,0X42,0X42,0X7F,0X40,0X00,0X00};
-uchar num2[8]={0X00,0X00,0X7B,0X49,0X49,0X49,0X4F,0X00};
-uchar num3[8]={0X00,0X00,0X63,0X49,0X49,0X49,0X7F,0X00};
-uchar num4[8]={0X00,0X00,0X0F,0X08,0X7E,0X08,0X08,0X00};
-uchar num5[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X79,0X00};
-uchar num6[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X79,0X00};
-uchar num7[8]={0X00,0X00,0X01,0X01,0X7D,0X03,0X01,0X00};
-uchar num8[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X7F,0X00};
-uchar num9[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X7F,0X00};
+u8 num0[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
+u8 num1[8]={0X00,0X00,0X42,0X42,0X7F,0X40,0X00,0X00};
+u8 num2[8]={0X00,0X00,0X7B,0X49,0X49,0X49,0X4F,0X00};
+u8 num3[8]={0X00,0X00,0X63,0X49,0X49,0X49,0X7F,0X00};
+u8 num4[8]={0X00,0X00,0X0F,0X08,0X7E,0X08,0X08,0X00};
+u8 num5[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X79,0X00};
+u8 num6[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X79,0X00};
+u8 num7[8]={0X00,0X00,0X01,0X01,0X7D,0X03,0X01,0X00};
+u8 num8[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X7F,0X00};
+u8 num9[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X7F,0X00};
 
 
 
-uchar charA[8]={0X00,0X00,0X7C,0X12,0X11,0X12,0X7C,0X00};
-uchar charB[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X36,0X00};
-uchar charC[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X22,0X00};
-uchar charD[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X22,0X1C};
-uchar charE[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X49,0X00};
-uchar charF[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X01,0X00};
-uchar charG[8]={0X00,0X00,0X3E,0X41,0X59,0X49,0X32,0X00};
-uchar charH[8]={0X00,0X00,0X7F,0X08,0X08,0X08,0X7F,0X00};
-uchar charI[8]={0X00,0X00,0X41,0X41,0X7F,0X41,0X41,0X00};
-uchar charJ[8]={0X00,0X00,0X31,0X41,0X21,0X1F,0X01,0X00};
-uchar charK[8]={0X00,0X00,0X7F,0X08,0X14,0X22,0X41,0X00};
-uchar charL[8]={0X00,0X00,0X7F,0X40,0X40,0X40,0X40,0X00};
-uchar charM[8]={0X00,0X7F,0X02,0X04,0X04,0X02,0X7F,0X00};
-uchar charN[8]={0X00,0X7F,0X02,0X04,0X08,0X10,0X7F,0X00};
-uchar charO[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X3E,0X00};
-uchar charP[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X06,0X00};
-uchar charQ[8]={0X00,0X3E,0X41,0X41,0X51,0X3E,0X40,0X00};
-uchar charR[8]={0X00,0X7F,0X09,0X19,0X29,0X46,0X00,0X00};
-uchar charS[8]={0X00,0X4E,0X49,0X49,0X49,0X39,0X00,0X00};
-uchar charT[8]={0X00,0X00,0X01,0X01,0X7F,0X01,0X01,0X00};
-uchar charU[8]={0X00,0X00,0X3F,0X40,0X40,0X40,0X3F,0X00};
-uchar charV[8]={0X00,0X00,0X1F,0X20,0X40,0X20,0X1F,0X00};
-uchar charW[8]={0X00,0X3F,0X40,0X20,0X20,0X40,0X3F,0X00};
-uchar charX[8]={0X00,0X42,0X24,0X18,0X18,0X24,0X42,0X00};
-uchar charY[8]={0X00,0X01,0X02,0X04,0X78,0X04,0X02,0X01};	
-uchar charZ[8]={0X00,0X00,0X61,0X51,0X49,0X45,0X43,0X00};																					
-uchar charcolom[8]={0X00,0X00,0X00,0X66,0X66,0X00,0X00,0X00};    //冒号
-uchar char_tempure[8]={0X03,0X03,0X1C,0X62,0X81,0X81,0X42,0X44};
-uchar point[8]={0X00,0X00,0X00,0X60,0X60,0X00,0X00,0X00};	
+u8 charA[8]={0X00,0X00,0X7C,0X12,0X11,0X12,0X7C,0X00};
+u8 charB[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X36,0X00};
+u8 charC[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X22,0X00};
+u8 charD[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X22,0X1C};
+u8 charE[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X49,0X00};
+u8 charF[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X01,0X00};
+u8 charG[8]={0X00,0X00,0X3E,0X41,0X59,0X49,0X32,0X00};
+u8 charH[8]={0X00,0X00,0X7F,0X08,0X08,0X08,0X7F,0X00};
+u8 charI[8]={0X00,0X00,0X41,0X41,0X7F,0X41,0X41,0X00};
+u8 charJ[8]={0X00,0X00,0X31,0X41,0X21,0X1F,0X01,0X00};
+u8 charK[8]={0X00,0X00,0X7F,0X08,0X14,0X22,0X41,0X00};
+u8 charL[8]={0X00,0X00,0X7F,0X40,0X40,0X40,0X40,0X00};
+u8 charM[8]={0X00,0X7F,0X02,0X04,0X04,0X02,0X7F,0X00};
+u8 charN[8]={0X00,0X7F,0X02,0X04,0X08,0X10,0X7F,0X00};
+u8 charO[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X3E,0X00};
+u8 charP[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X06,0X00};
+u8 charQ[8]={0X00,0X3E,0X41,0X41,0X51,0X3E,0X40,0X00};
+u8 charR[8]={0X00,0X7F,0X09,0X19,0X29,0X46,0X00,0X00};
+u8 charS[8]={0X00,0X4E,0X49,0X49,0X49,0X39,0X00,0X00};
+u8 charT[8]={0X00,0X00,0X01,0X01,0X7F,0X01,0X01,0X00};
+u8 charU[8]={0X00,0X00,0X3F,0X40,0X40,0X40,0X3F,0X00};
+u8 charV[8]={0X00,0X00,0X1F,0X20,0X40,0X20,0X1F,0X00};
+u8 charW[8]={0X00,0X3F,0X40,0X20,0X20,0X40,0X3F,0X00};
+u8 charX[8]={0X00,0X42,0X24,0X18,0X18,0X24,0X42,0X00};
+u8 charY[8]={0X00,0X01,0X02,0X04,0X78,0X04,0X02,0X01};	
+u8 charZ[8]={0X00,0X00,0X61,0X51,0X49,0X45,0X43,0X00};																					
+u8 charcolom[8]={0X00,0X00,0X00,0X66,0X66,0X00,0X00,0X00};    //冒号
+u8 char_tempure[8]={0X03,0X03,0X1C,0X62,0X81,0X81,0X42,0X44};
+u8 point[8]={0X00,0X00,0X00,0X60,0X60,0X00,0X00,0X00};	
 
 //	
-uchar windows[]=
+u8 windows[]=
 {0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
@@ -159,7 +159,7 @@ void show_All()
 
 void clear_screen()
 {
- uint i;
+ u32 i;
 
 				oled_sendorder(0x21);           
 				oled_sendorder(0x00);	        
@@ -331,7 +331,7 @@ void oled_init(void)
 
 
 
-void  display_position(uchar x,uchar y,uchar length)
+void  display_position(u8 x,u8 y,u8 length)
 {
 
 		oled_sendorder(0x21);                       //列地址 	
@@ -345,10 +345,10 @@ void  display_position(uchar x,uchar y,uchar length)
 
 }
 
-void show_picture(uchar x_start,uchar y_start,uchar x_length,uchar y_length,uchar* data)      //像素的坐标x_start ，y_start 宽度x_length,高度y_length 图像数组data
+void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      //像素的坐标x_start ，y_start 宽度x_length,高度y_length 图像数组data
 {
 
-	uchar i=0,j=x_length*(y_length>>3);
+	u8 i=0,j=x_length*(y_length>>3);
 	
 		oled_sendorder(0x21);                             //列地址 	
 		oled_sendorder(x_start);	                    //起始地址 	 0-127
@@ -369,7 +369,7 @@ void show_picture(uchar x_start,uchar y_start,uchar x_length,uchar y_length,ucha
 
 
 
-void oled_senddata(uchar Tdata)
+void oled_senddata(u8 Tdata)
 {
 		OLED_DATA;
 
@@ -380,7 +380,7 @@ void oled_senddata(uchar Tdata)
 
 }
 
-void oled_sendorder(uchar Tdata)
+void oled_sendorder(u8 Tdata)
 {
 	
 	OLED_ORDER;	
@@ -393,7 +393,7 @@ void oled_sendorder(uchar Tdata)
 }
 
 
-void set_OLED_frequence_div(uchar fre,uchar div)              //闪烁设置fre[0-f]  div[0-f] 
+void set_OLED_frequence_div(u8 fre,u8 div)              //闪烁设置fre[0-f]  div[0-f] 
 {
     oled_sendorder(0Xd5);                 //设置刷新频率和分频值  
     oled_sendorder(0X00|fre<<4|div);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
@@ -401,7 +401,7 @@ void set_OLED_frequence_div(uchar fre,uchar div)              //闪烁设置fre[0-f]
 }
 
 
-void display_str_and_speed(char *word,uint speed)
+void display_str_and_speed(char *word,u32 speed)
 {
 
 	while(*word!='\0')
@@ -416,7 +416,7 @@ void display_str_and_speed(char *word,uint speed)
 
 }
 
-void set_contrast(uchar value)    //value[00-ff]
+void set_contrast(u8 value)    //value[00-ff]
 {
     oled_sendorder(0X81);           //对比度设置
     oled_sendorder(0X00|value);     //设置对比度值
@@ -424,7 +424,7 @@ void set_contrast(uchar value)    //value[00-ff]
 
 
 
-void display_num(uchar number)
+void display_num(u8 number)
 {
 
 	char i;
@@ -505,7 +505,7 @@ switch(number)
 
 void display_char(char alphabet)
 {
-	uchar i;
+	u8 i;
 
 switch(alphabet)
 		{
@@ -771,9 +771,9 @@ switch(alphabet)
 
 
 
-void windows_open(uint speed)
+void windows_open(u32 speed)
 {
-uint i;
+u32 i;
 	for(i=0;i<896;i++)
 	oled_senddata(windows[i]);
 	
@@ -792,7 +792,7 @@ uint i;
 
 void tempure_unit(void)            //   温度单位   .C
 {
-uchar i;
+u8 i;
 		for(i=0;i<8;i++)
 		{
 	oled_senddata(char_tempure[i]);

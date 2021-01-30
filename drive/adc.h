@@ -1,7 +1,7 @@
 #ifndef  ADC_H
 #define  ADC_H
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 extern  void adc_init(void);
 extern  float adc_val(void);

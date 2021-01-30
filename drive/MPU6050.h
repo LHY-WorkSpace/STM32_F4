@@ -1,8 +1,8 @@
 #ifndef   _MPU6050_H_
 #define   _MPU6050_H_
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 //               https://wenku.baidu.com/view/8dbd8f9e360cba1aa911da1d.html?rec_flag=default&sxts=1571581621334
@@ -133,8 +133,8 @@ PWR1_CONFIG:    DEVICES_REST     = bit[7]       RESET bit  (复位后自动清零)
 
 
 void MPU6050_Init(void);
-void MPU6050_Write_Data(uchar COMMOND,uchar data);
-uchar MPU6050_Read_Data(uchar COMMOND);
+void MPU6050_Write_Data(u8 COMMOND,u8 data);
+u8 MPU6050_Read_Data(u8 COMMOND);
 void MPU6050_Get_Gyro_Data(void);
 void MPU6050_Get_Acce_Data(void);
 double MPU6050_Tempure(void);
@@ -144,20 +144,20 @@ double MPU6050_Tempure(void);
 
 
 //DMP API//
-uchar MPU6050_DMP_Init(void);
-uchar MPU6050_Write_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar  *data);
-uchar  MPU6050_Read_DMP(uchar devices_addr,uchar COMMOND,uchar length,uchar  *data);
-uchar  get_ms(unsigned long *count);
+u8 MPU6050_DMP_Init(void);
+u8 MPU6050_Write_DMP(u8 devices_addr,u8 COMMOND,u8 length,u8  *data);
+u8  MPU6050_Read_DMP(u8 devices_addr,u8 COMMOND,u8 length,u8  *data);
+u8  get_ms(unsigned long *count);
 unsigned short inv_row_2_scale(const signed char *row);
 static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
 void run_self_test(void);	
-uchar MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll);
+u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll);
 
 
 //上位机调试//
 void  mpu6050_SendTo_APP(short roll,short pitch,short yaw);	
-void usart1_niming_report(uchar fun,uchar *data,uchar len);
-void usart1_send_char(uchar c);
+void usart1_niming_report(u8 fun,u8 *data,u8 len);
+void usart1_send_char(u8 c);
 
 //   mpu6050_SendTo_APP((int)(roll*100),(int)(pitch*100),(int)(yaw*10));	
 

@@ -2,8 +2,8 @@
 #include"lcd1602.h"
 #include"delay.h"
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 #define  RW_DEAD  GPIO_SetBits(GPIOB,GPIO_Pin_8)
@@ -33,7 +33,7 @@ void lcd_GPIO_init()
 
 }
 
-void lcd_write_order(uint lcd_order)
+void lcd_write_order(u32 lcd_order)
 {
 
 		RS_ORDER;
@@ -54,7 +54,7 @@ void lcd_write_order(uint lcd_order)
 
 }
 
-void lcd_write_data(uint lcd_data)
+void lcd_write_data(u32 lcd_data)
 {
 		RS_DATA;
 		RW_WRITE;

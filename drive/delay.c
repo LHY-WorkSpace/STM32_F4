@@ -1,13 +1,13 @@
 #include "stm32f4xx.h"
 #include "delay.h"
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 
-void delay_us(uint nus)         //最大798915us
+void delay_us(u32 nus)         //最大798915us
 {
- uint  temp;
+ u32  temp;
  SysTick->LOAD = 21*nus;
  SysTick->VAL=0X00;
  SysTick->CTRL=0X01;
@@ -22,9 +22,9 @@ void delay_us(uint nus)         //最大798915us
 
 
 
-void delay_ms(uint nms)        //最大798ms
+void delay_ms(u32 nms)        //最大798ms
 {
- uint temp;
+ u32 temp;
  SysTick->LOAD = 21*1000*nms;
  SysTick->VAL=0X00;
  SysTick->CTRL=0X01;

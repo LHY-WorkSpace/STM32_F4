@@ -1,8 +1,8 @@
 #ifndef   DMA_H
 #define   DMA_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 void DMA1_ConfigInit(void);

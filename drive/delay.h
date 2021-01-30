@@ -1,11 +1,11 @@
 #ifndef   DELAY_H
 #define   DELAY_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
-void delay_us(uint time_us);
-void delay_ms(uint time_ms);
+void delay_us(u32 time_us);
+void delay_ms(u32 time_ms);
 
 
 

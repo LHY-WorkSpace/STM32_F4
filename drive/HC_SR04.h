@@ -1,13 +1,13 @@
 #ifndef  HC_SR04_H
 #deffine  HC_SR04_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 
 void start_measure(void);
-uint get_distance();
+u32 get_distance();
 
 
 

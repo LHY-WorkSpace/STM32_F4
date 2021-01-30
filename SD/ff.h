@@ -128,7 +128,7 @@ typedef struct {
 	DWORD*	cltbl;			/* Pointer to the cluster link map table (Nulled on file open) */
 #endif
 #if _FS_LOCK
-	UINT	lockid;			/* File lock ID origin from 1 (index of file semaphore table Files[]) */
+	u32	lockid;			/* File lock ID origin from 1 (index of file semaphore table Files[]) */
 #endif
 #if !_FS_TINY
 	BYTE	buf[_MAX_SS];	/* File private data read/write window */
@@ -149,7 +149,7 @@ typedef struct {
 	BYTE*	dir;			/* Pointer to the current SFN entry in the win[] */
 	BYTE*	fn;				/* Pointer to the SFN (in/out) {file[8],ext[3],status[1]} */
 #if _FS_LOCK
-	UINT	lockid;			/* File lock ID (index of file semaphore table Files[]) */
+	u32	lockid;			/* File lock ID (index of file semaphore table Files[]) */
 #endif
 #if _USE_LFN
 	WCHAR*	lfn;			/* Pointer to the LFN working buffer */
@@ -169,7 +169,7 @@ typedef struct {
 	TCHAR	fname[13];		/* Short file name (8.3 format) */
 #if _USE_LFN
 	TCHAR*	lfname;			/* Pointer to the LFN buffer */
-	UINT 	lfsize;			/* Size of LFN buffer in TCHAR */
+	u32 	lfsize;			/* Size of LFN buffer in TCHAR */
 #endif
 } FILINFO;
 
@@ -207,9 +207,9 @@ typedef enum {
 
 FRESULT f_open (FIL* fp, const TCHAR* path, BYTE mode);				/* Open or create a file */
 FRESULT f_close (FIL* fp);											/* Close an open file object */
-FRESULT f_read (FIL* fp, void* buff, UINT btr, UINT* br);			/* Read data from a file */
-FRESULT f_write (FIL* fp, const void* buff, UINT btw, UINT* bw);	/* Write data to a file */
-FRESULT f_forward (FIL* fp, UINT(*func)(const BYTE*,UINT), UINT btf, UINT* bf);	/* Forward data to the stream */
+FRESULT f_read (FIL* fp, void* buff, u32 btr, u32* br);			/* Read data from a file */
+FRESULT f_write (FIL* fp, const void* buff, u32 btw, u32* bw);	/* Write data to a file */
+FRESULT f_forward (FIL* fp, u32(*func)(const BYTE*,u32), u32 btf, u32* bf);	/* Forward data to the stream */
 FRESULT f_lseek (FIL* fp, DWORD ofs);								/* Move file pointer of a file object */
 FRESULT f_truncate (FIL* fp);										/* Truncate file */
 FRESULT f_sync (FIL* fp);											/* Flush cached data of a writing file */
@@ -224,12 +224,12 @@ FRESULT f_chmod (const TCHAR* path, BYTE value, BYTE mask);			/* Change attribut
 FRESULT f_utime (const TCHAR* path, const FILINFO* fno);			/* Change times-tamp of the file/dir */
 FRESULT f_chdir (const TCHAR* path);								/* Change current directory */
 FRESULT f_chdrive (const TCHAR* path);								/* Change current drive */
-FRESULT f_getcwd (TCHAR* buff, UINT len);							/* Get current directory */
+FRESULT f_getcwd (TCHAR* buff, u32 len);							/* Get current directory */
 FRESULT f_getfree (const TCHAR* path, DWORD* nclst, FATFS** fatfs);	/* Get number of free clusters on the drive */
 FRESULT f_getlabel (const TCHAR* path, TCHAR* label, DWORD* vsn);	/* Get volume label */
 FRESULT f_setlabel (const TCHAR* label);							/* Set volume label */
 FRESULT f_mount (FATFS* fs, const TCHAR* path, BYTE opt);			/* Mount/Unmount a logical drive */
-FRESULT f_mkfs (const TCHAR* path, BYTE sfd, UINT au);				/* Create a file system on the volume */
+FRESULT f_mkfs (const TCHAR* path, BYTE sfd, u32 au);				/* Create a file system on the volume */
 FRESULT f_fdisk (BYTE pdrv, const DWORD szt[], void* work);			/* Divide a physical drive into some partitions */
 int f_putc (TCHAR c, FIL* fp);										/* Put a character to the file */
 int f_puts (const TCHAR* str, FIL* cp);								/* Put a string to the file */
@@ -241,7 +241,7 @@ TCHAR* f_gets (TCHAR* buff, int len, FIL* fp);						/* Get a string from the fil
 #define f_tell(fp) ((fp)->fptr)
 #define f_size(fp) ((fp)->fsize)
 
-FRESULT dir_sdi (DIR *dp,UINT idx);					//此处为自行添加的,用于方便查找上一个文件.
+FRESULT dir_sdi (DIR *dp,u32 idx);					//此处为自行添加的,用于方便查找上一个文件.
 void ff_enter(FATFS *fs);							//在diskio.c实现
 void ff_leave(FATFS* fs);
 #ifndef EOF
@@ -261,10 +261,10 @@ DWORD get_fattime (void);
 
 /* Unicode support functions */
 #if _USE_LFN							/* Unicode - OEM code conversion */
-WCHAR ff_convert (WCHAR chr, UINT dir);	/* OEM-Unicode bidirectional conversion */
+WCHAR ff_convert (WCHAR chr, u32 dir);	/* OEM-Unicode bidirectional conversion */
 WCHAR ff_wtoupper (WCHAR chr);			/* Unicode upper-case conversion */
 #if _USE_LFN == 3						/* Memory functions */
-void* ff_memalloc (UINT msize);			/* Allocate memory block */
+void* ff_memalloc (u32 msize);			/* Allocate memory block */
 void ff_memfree (void* mblock);			/* Free memory block */
 #endif
 #endif

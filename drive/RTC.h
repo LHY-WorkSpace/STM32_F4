@@ -1,8 +1,8 @@
 #ifndef RTC_H
 #define RTC_H
 
-#define uchar unsigned char
-#define uint unsigned int 
+#define u8 unsigned char
+#define u32 unsigned int 
 
 
 int RTC_configinit(void);
