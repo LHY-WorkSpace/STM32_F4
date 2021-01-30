@@ -1,7 +1,4 @@
 #include"IncludeFile.h"
-//#define u8unsigned char
-//#define u32 unsigned int 
-
 
 void usart_init(unsigned int bode)
 {

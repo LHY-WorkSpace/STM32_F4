@@ -1,30 +1,20 @@
 #include"IncludeFile.h"
 
-float pitch,yaw,roll; 
-__align(4) u8 A[256],B[256],C[512],D[512],AA[1024],BB[4096],CC[1024];
+__align(4) u8 A[2048],B[2048];   //对齐的部分不能在栈里！！！
 
-
-#define NUM    0x54
-
-u8 Data_OK;					
-u16 k,dataA[100],dataB[100];	
-
-
-													
-int  main()
+void MPU6050_Test()
 {
+	float pitch,yaw,roll; 
+	MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
+	printf("P:%f Y:%f R:%f\r\n",pitch,yaw,roll);
+}
+	
 
- 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_3);	
-	usart_init(115200);
-	IIC_Init();
-//	oled_init();	
-	led_init();
-//	delay_ms(500);
+void AT24C08_Test()
+{
+	u8 A[256],B[256];
+	u16 k;
 
-	MPU6050_Init();
-
-
-	LED1_ON;
 	memset(A,0X12,256);
 	AT24C08Write_NBytes(AT24C08_BLOCK1,0,256,A);
 	memset(A,0X34,256);
@@ -33,11 +23,6 @@ int  main()
 	AT24C08Write_NBytes(AT24C08_BLOCK3,0,256,A);
 	memset(A,0X78,256);
 	AT24C08Write_NBytes(AT24C08_BLOCK4,0,256,A);
-
-
-
-
-
 
  	AT24C08Read_NBytes(AT24C08_BLOCK1,0,256,B);
 	for(k=0;k<256;k++)
@@ -64,39 +49,61 @@ int  main()
 	}
 
 
-	LED1_OFF;
+}	
+		
+void SDIO_Test()
+{
+	u16 k;
+	SD_ShowInfomation();
+	memset(A,0x51,sizeof(A));
+ 	SD_WriteMultiBlocks(A,0, 512,sizeof(A)/512);  
+ 	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
+	for(k=0;k<sizeof(B);k++)
+	printf("Data %d : %x \r\n",k,B[k]);
+
+}
+
+
+
+
+
+int  main()
+{
+
+
+ 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
+	usart_init(115200);
+	led_init();
+	SD_Init();
+	IIC_Init();
+	MPU6050_Init();
+
+
+
+
+
+
+	AT24C08_Test();
+	SDIO_Test();
+	
 
 	while(1)
 	{
-
-
-
-	MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
-	printf("P:%f Y:%f R:%f\r\n",pitch,yaw,roll);
-		// LED1_OFF;
-		// delay_ms(500);
-		// LED1_ON;
-		// delay_ms(500);
-
-
+		MPU6050_Test();
+		LED1_OFF;
+		delay_ms(100);
+		LED1_ON;
+		delay_ms(100);
 
 	}
 
 
 
 	
-	
-	
 }	
 
 	
 
-
-
-
-	
-		
-		
 
 
 
