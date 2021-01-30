@@ -216,7 +216,6 @@ void Get_Temperature(u8 *Temperature)
 		LSB=ds18b20_read_byte();
 		MSB=ds18b20_read_byte();
 	
-	s
 	wendu=(LSB|((MSB&0x7)<<8))*625;
 	*Temperature=(u8)(wendu/10000);
 		
