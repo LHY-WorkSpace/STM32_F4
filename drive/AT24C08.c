@@ -8,14 +8,12 @@ void AT24C08_init(void)
 	IIC_Init();
 }
 
-u8 AT24C08Read_Byte(u8 dev_addr,u16 Data_addr)
+u8 AT24C08Read_Byte(u8 dev_addr,u8 Data_addr)
 {
 	u8 DATA=0;
 	Start_IIC();
 	IIC_SenddByte(dev_addr|0X00);
     IIC_Wait_Ack_OK();
-	IIC_SenddByte((Data_addr>>8)&0XFF);
-	IIC_Wait_Ack_OK();
 	IIC_SenddByte(Data_addr&0XFF);
 	IIC_Wait_Ack_OK();
 
@@ -23,7 +21,7 @@ u8 AT24C08Read_Byte(u8 dev_addr,u16 Data_addr)
 	IIC_SenddByte(dev_addr|0X01);	
     IIC_Wait_Ack_OK();
 	DATA=IIC_GetByte();
-	IIC_Send_NAck();
+	IIC_Send_Ack();
 	Stop_IIC();
 
 	return DATA;
@@ -31,23 +29,21 @@ u8 AT24C08Read_Byte(u8 dev_addr,u16 Data_addr)
 }
 
 
-void AT24C08Write_Byte(u8 dev_addr,u16 Data_addr,u8 data)
+void AT24C08Write_Byte(u8 dev_addr,u8 Data_addr,u8 data)
 {
 	Start_IIC();
 	IIC_SenddByte(dev_addr);        
     IIC_Wait_Ack_OK();
-	IIC_SenddByte((Data_addr>>8)&0XFF);
-	IIC_Wait_Ack_OK();
 	IIC_SenddByte(Data_addr&0XFF);
 	IIC_Wait_Ack_OK();
 	IIC_SenddByte(data);	
 	IIC_Wait_Ack_OK();
 	Stop_IIC();
-	delay_ms(5);  
+	delay_ms(3);  
 }
 
 
-void AT24C08Read_NBytes(u8 dev_addr,u16 Data_addr,u16 length,u8 *data)
+void AT24C08Read_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 {
 	u16 i;
 	for(i=0;i<length;i++)
@@ -57,7 +53,7 @@ void AT24C08Read_NBytes(u8 dev_addr,u16 Data_addr,u16 length,u8 *data)
 }
 
 
-void AT24C08Write_NBytes(u8 dev_addr,u16 Data_addr,u16 length,u8 *data)
+void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 {
 	u16 i;
 	for(i=0;i<length;i++)

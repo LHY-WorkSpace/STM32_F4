@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\1.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\1.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Jan 30 18:32:44 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Jan 30 21:56:54 2021
 <BR><P>
 <H3>Maximum Stack Usage =        376 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -390,7 +390,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[67]"></a>__aeabi_memset</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memset
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memset
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 <LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dmp_enable_lp_quat
 <LI><a href="#[d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dmp_enable_6x_lp_quat
@@ -591,14 +592,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[c3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrt
 </UL>
 
-<P><STRONG><a name="[78]"></a>AT24C08Read_Byte</STRONG> (Thumb, 76 bytes, Stack size 16 bytes, at24c08.o(i.AT24C08Read_Byte))
+<P><STRONG><a name="[78]"></a>AT24C08Read_Byte</STRONG> (Thumb, 66 bytes, Stack size 16 bytes, at24c08.o(i.AT24C08Read_Byte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = AT24C08Read_Byte &rArr; IIC_Wait_Ack_OK &rArr; Stop_IIC &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_GetByte
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Read_NBytes
@@ -612,14 +613,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[80]"></a>AT24C08Write_Byte</STRONG> (Thumb, 64 bytes, Stack size 16 bytes, at24c08.o(i.AT24C08Write_Byte))
+<P><STRONG><a name="[80]"></a>AT24C08Write_Byte</STRONG> (Thumb, 54 bytes, Stack size 16 bytes, at24c08.o(i.AT24C08Write_Byte))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = AT24C08Write_Byte &rArr; IIC_Wait_Ack_OK &rArr; Stop_IIC &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_NBytes
 </UL>
@@ -725,31 +726,31 @@ Global Symbols
 <P><STRONG><a name="[11]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, exti.o(i.EXTI0_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = EXTI0_IRQHandler &rArr; clear_screen &rArr; oled_sendorder
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetFlagStatus
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearFlag
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;clear_screen
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
 <P><STRONG><a name="[13]"></a>EXTI2_IRQHandler</STRONG> (Thumb, 154 bytes, Stack size 8 bytes, exti.o(i.EXTI2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EXTI2_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetFlagStatus
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearFlag
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
 <P><STRONG><a name="[14]"></a>EXTI3_IRQHandler</STRONG> (Thumb, 164 bytes, Stack size 8 bytes, exti.o(i.EXTI3_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = EXTI3_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<BR>[Calls]<UL><LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_GetFlagStatus
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI_ClearFlag
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
@@ -772,7 +773,7 @@ Global Symbols
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_init
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Init
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_out2in
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
 </UL>
 
 <P><STRONG><a name="[101]"></a>GPIO_PinAFConfig</STRONG> (Thumb, 70 bytes, Stack size 20 bytes, stm32f4xx_gpio.o(i.GPIO_PinAFConfig))
@@ -788,12 +789,12 @@ Global Symbols
 
 <P><STRONG><a name="[91]"></a>GPIO_ResetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_ResetBits))
 <BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_GetByte
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI3_IRQHandler
 <LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI2_IRQHandler
@@ -803,12 +804,12 @@ Global Symbols
 <P><STRONG><a name="[8e]"></a>GPIO_SetBits</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f4xx_gpio.o(i.GPIO_SetBits))
 <BR><BR>[Called By]<UL><LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_init
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_GetByte
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI0_IRQHandler
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_senddata
@@ -831,7 +832,7 @@ Global Symbols
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Read_DMP
 </UL>
 
-<P><STRONG><a name="[95]"></a>IIC_Init</STRONG> (Thumb, 46 bytes, Stack size 16 bytes, i2c.o(i.IIC_Init))
+<P><STRONG><a name="[95]"></a>IIC_Init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, i2c.o(i.IIC_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = IIC_Init &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
@@ -840,27 +841,27 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[98]"></a>IIC_Send_Ack</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, i2c.o(i.IIC_Send_Ack))
+<P><STRONG><a name="[7d]"></a>IIC_Send_Ack</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, i2c.o(i.IIC_Send_Ack))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = IIC_Send_Ack &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
-</UL>
-<BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Read_DMP
-</UL>
-
-<P><STRONG><a name="[7d]"></a>IIC_Send_NAck</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, i2c.o(i.IIC_Send_NAck))
-<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = IIC_Send_NAck &rArr; Pin_in2out &rArr; GPIO_Init
-</UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Read_Byte
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Read_DMP
+</UL>
+
+<P><STRONG><a name="[99]"></a>IIC_Send_NAck</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, i2c.o(i.IIC_Send_NAck))
+<BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = IIC_Send_NAck &rArr; Pin_in2out &rArr; GPIO_Init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
+</UL>
+<BR>[Called By]<UL><LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Read_DMP
 </UL>
 
 <P><STRONG><a name="[7a]"></a>IIC_SenddByte</STRONG> (Thumb, 108 bytes, Stack size 16 bytes, i2c.o(i.IIC_SenddByte))
@@ -868,7 +869,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_Byte
@@ -939,12 +940,12 @@ Global Symbols
 <P><STRONG><a name="[ad]"></a>MPU6050_Read_DMP</STRONG> (Thumb, 106 bytes, Stack size 24 bytes, mpu6050.o(i.MPU6050_Read_DMP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = MPU6050_Read_DMP &rArr; IIC_Wait_Ack_OK &rArr; Stop_IIC &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_GetByte
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mpu_init
@@ -959,11 +960,11 @@ Global Symbols
 <P><STRONG><a name="[ae]"></a>MPU6050_Write_DMP</STRONG> (Thumb, 96 bytes, Stack size 24 bytes, mpu6050.o(i.MPU6050_Write_DMP))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = MPU6050_Write_DMP &rArr; IIC_Wait_Ack_OK &rArr; Stop_IIC &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mpu_set_sensors
 <LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mpu_set_sample_rate
@@ -986,11 +987,11 @@ Global Symbols
 <P><STRONG><a name="[ac]"></a>MPU6050_Write_Data</STRONG> (Thumb, 52 bytes, Stack size 16 bytes, mpu6050.o(i.MPU6050_Write_Data))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = MPU6050_Write_Data &rArr; IIC_Wait_Ack_OK &rArr; Stop_IIC &rArr; Pin_in2out &rArr; GPIO_Init
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Init
 </UL>
@@ -1099,7 +1100,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_Byte
@@ -1114,7 +1115,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_SetBits
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Pin_in2out
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
@@ -1343,8 +1344,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[81]"></a>delay_ms</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, delay.o(i.delay_ms))
-<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_Byte
+<BR><BR>[Called By]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_Byte
 <LI><a href="#[14]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI3_IRQHandler
 <LI><a href="#[13]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI2_IRQHandler
 <LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI0_IRQHandler
@@ -1359,12 +1359,12 @@ Global Symbols
 
 <P><STRONG><a name="[93]"></a>delay_us</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, delay.o(i.delay_us))
 <BR><BR>[Called By]<UL><LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Get_DMP_Data
-<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Wait_Ack_OK
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_GetByte
 <LI><a href="#[ce]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_sendorder
 <LI><a href="#[cf]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;oled_senddata
@@ -1562,12 +1562,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5d]"></a>main</STRONG> (Thumb, 294 bytes, Stack size 40 bytes, main.o(i.main))
+<P><STRONG><a name="[5d]"></a>main</STRONG> (Thumb, 458 bytes, Stack size 40 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 376<LI>Call Chain = main &rArr; MPU6050_Get_DMP_Data &rArr; __hardfp_atan2 &rArr; atan &rArr; __hardfp_atan &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart_init
 <LI><a href="#[ea]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_init
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;NVIC_PriorityGroupConfig
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MPU6050_Init
@@ -1577,6 +1576,7 @@ Global Symbols
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_ResetBits
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Write_NBytes
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;AT24C08Read_NBytes
+<LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
@@ -1909,19 +1909,19 @@ Local Symbols
 <BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
 </UL>
 
-<P><STRONG><a name="[99]"></a>Pin_in2out</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, i2c.o(i.Pin_in2out))
+<P><STRONG><a name="[98]"></a>Pin_in2out</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, i2c.o(i.Pin_in2out))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = Pin_in2out &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
+<BR>[Called By]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stop_IIC
 <LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Start_IIC
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_SenddByte
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_NAck
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IIC_Send_Ack
 </UL>
 
-<P><STRONG><a name="[92]"></a>Pin_out2in</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, i2c.o(i.Pin_out2in))
+<P><STRONG><a name="[92]"></a>Pin_out2in</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, i2c.o(i.Pin_out2in))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = Pin_out2in &rArr; GPIO_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_Init

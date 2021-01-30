@@ -27,71 +27,11 @@ Project File Date:  01/29/2021
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\MDK 5\ARM\ARMCC\Bin'
 Build target 'Empty_Project'
-compiling pwm.c...
-compiling spi.c...
-compiling usart.c...
 compiling main.c...
-compiling ds18b20.c...
-compiling delay.c...
-compiling RTC.c...
-compiling oled.c...
-compiling led.c...
-compiling ESP8266.c...
-compiling exti.c...
-compiling AT24C08.c...
-compiling DHT11.c...
-compiling i2c.c...
-compiling sd.c...
-..\drive\sd.c(330): warning:  #177-D: variable "j"  was declared but never referenced
-  	u8 i,j;
-..\drive\sd.c(458): warning:  #177-D: variable "k"  was declared but never referenced
-  	u8 j,i,k;
-..\drive\sd.c: 2 warnings, 0 errors
-compiling GUI.c...
-..\drive\GUI.c(170): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "const char *restrict"
-  			printf(iot,Temp,shidu);
-..\drive\GUI.c: 1 warning, 0 errors
-compiling DMA.c...
-compiling lcd1602.c...
-..\drive\lcd1602.c(43): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_7,(lcd_order&0x80)>>7); 
-..\drive\lcd1602.c(44): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_6,(lcd_order&0x40)>>6); 
-..\drive\lcd1602.c(45): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_5,(lcd_order&0x20)>>5); 
-..\drive\lcd1602.c(46): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_4,(lcd_order&0x10)>>4); 
-..\drive\lcd1602.c(47): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_3,(lcd_order&0x08)>>3) ; 
-..\drive\lcd1602.c(48): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_2,(lcd_order&0x04)>>2); 
-..\drive\lcd1602.c(49): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_1,(lcd_order&0x02)>>1); 
-..\drive\lcd1602.c(50): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_0,lcd_order&0x01);
-..\drive\lcd1602.c(63): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_7,(lcd_data&0x80)>>7); 
-..\drive\lcd1602.c(64): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_6,(lcd_data&0x40)>>6); 
-..\drive\lcd1602.c(65): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_5,(lcd_data&0x20)>>5); 
-..\drive\lcd1602.c(66): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_4,(lcd_data&0x10)>>4); 
-..\drive\lcd1602.c(67): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_3,(lcd_data&0x08)>>3) ; 
-..\drive\lcd1602.c(68): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_2,(lcd_data&0x04)>>2); 
-..\drive\lcd1602.c(69): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_1,(lcd_data&0x02)>>1); 
-..\drive\lcd1602.c(70): warning:  #188-D: enumerated type mixed with another type
-      GPIO_WriteBit(GPIOB, GPIO_Pin_0,lcd_data&0x01);
-..\drive\lcd1602.c: 16 warnings, 0 errors
-compiling MPU6050.c...
-compiling inv_mpu.c...
 linking...
-Program Size: Code=23132 RO-data=3892 RW-data=192 ZI-data=10544  
+Program Size: Code=23332 RO-data=3892 RW-data=192 ZI-data=10232  
 FromELF: creating hex file...
-".\Objects\1.axf" - 0 Error(s), 19 Warning(s).
+".\Objects\1.axf" - 0 Error(s), 0 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -104,7 +44,7 @@ Package Vendor: Keil
   D:\MDK 5\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

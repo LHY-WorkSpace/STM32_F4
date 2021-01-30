@@ -22,7 +22,7 @@ void IIC_Init()
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_OUT;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
-	GPIO_Initstructure.GPIO_OType=GPIO_OType_OD;                
+	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;                
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
 	
 }
@@ -36,7 +36,7 @@ static void Pin_in2out(void)
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_OUT;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
-	GPIO_Initstructure.GPIO_OType=GPIO_OType_OD;                
+	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;                
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
 
 }
@@ -50,7 +50,7 @@ static void Pin_out2in(void)
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_IN;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
-	GPIO_Initstructure.GPIO_OType=GPIO_OType_OD;              
+	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;              
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
 
 }

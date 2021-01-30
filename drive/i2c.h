@@ -1,8 +1,7 @@
 #ifndef  _I2C_H_
 #define  _I2C_H_
 
-//#define u8unsigned char
-//#define u32 unsigned int 
+
  
 #define PORT_AHB                  RCC_AHB1Periph_GPIOB                                      //IO总线
 #define PORT_GROUP                GPIOB                                                     //IO端口组
