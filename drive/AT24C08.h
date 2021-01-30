@@ -14,24 +14,11 @@
 #define AT24C08_WRITE_DATA               0x00
 
 
-
 void AT24C08_init(void);
-uchar AT24C08Read_Byte(uchar block,uchar addr);
-void AT24C08Write_Byte(uchar block,uchar addr,uchar data);
-void AT24C08Read_NByte(uchar block,uchar addr,uchar n,uchar *data);
-void AT24C08Write_NByte(uchar block,uchar addr,uchar n,uchar *data);
-
-
-
-
-
-
-
-
-
-
-
-
+uchar AT24C08Read_Byte(uchar dev_addr,uchar Data_addr);
+void AT24C08Write_Byte(uchar dev_addr,uchar Data_addr,uchar data);
+void AT24C08Read_NBytes(uchar dev_addr,uchar addr,uchar length,uchar *data);
+void AT24C08Write_NBytes(uchar dev_addr,uchar addr,uchar length,uchar *data);
 
 
 
