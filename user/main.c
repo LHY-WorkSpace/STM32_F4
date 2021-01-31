@@ -1,6 +1,6 @@
 #include"IncludeFile.h"
 
-__align(4) u8 A[2048],B[2048];   //对齐的部分不能在栈里！！！
+__align(4) u8 A[1024],B[1024];   //对齐的部分不能在栈里！！！
 
 void MPU6050_Test()
 {
@@ -56,8 +56,15 @@ void SDIO_Test()
 	u16 k;
 	SD_ShowInfomation();
 	memset(A,0x51,sizeof(A));
- 	SD_WriteMultiBlocks(A,0, 512,sizeof(A)/512);  
- 	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
+
+		Programe_Start();
+ 		SD_WriteMultiBlocks(A,0, 512,sizeof(A)/512); 
+		printf("Times:%d us ",Programe_End_Us());	
+
+		Programe_Start();
+ 		SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);//块数参数不能为1 
+		printf("Times:%d us ",Programe_End_Us());	
+
 	for(k=0;k<sizeof(B);k++)
 	printf("Data %d : %x \r\n",k,B[k]);
 
@@ -75,21 +82,23 @@ int  main()
 	usart_init(115200);
 	led_init();
 	SD_Init();
-	IIC_Init();
-	MPU6050_Init();
+	// IIC_Init();
+	// // MPU6050_Init();
 
 
 
 
 
 
-	AT24C08_Test();
-	SDIO_Test();
+	// AT24C08_Test();
+	 SDIO_Test();
 	
 
 	while(1)
-	{
-		MPU6050_Test();
+	{	
+		// Programe_Start();
+		// MPU6050_Test();
+		// printf("Times:%d ms ",Programe_End()/1000);	
 		LED1_OFF;
 		delay_ms(100);
 		LED1_ON;

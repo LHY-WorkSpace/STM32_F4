@@ -257,10 +257,10 @@ u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 	unsigned char more;
 	float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;
 
-	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<10)
+	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<30)
 	{
 		i++;
-		delay_us(1);
+		delay_us(2);
 	}
 	
 				if(sensors&INV_WXYZ_QUAT)
