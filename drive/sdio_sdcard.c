@@ -705,47 +705,6 @@ SD_Error SD_ReadBlock(u8 *buf,long long addr,u16 blksize)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //SD卡读取多个块 
 //buf:读数据缓存区
 //addr:读取地址
@@ -761,7 +720,14 @@ SD_Error SD_ReadMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 	u32 timeout=SDIO_DATATIMEOUT;  
 	tempbuff=(u32*)buf;//转换为u32指针
 	
-  SDIO->DCTRL=0x0;		//数据控制寄存器清零(关DMA)   
+
+	if(nblks==1)
+	{
+		errorstatus=SD_ReadBlock(buf,addr,blksize);
+		return 	errorstatus;
+	}
+
+  	SDIO->DCTRL=0x0;		//数据控制寄存器清零(关DMA)   
 	if(CardType==SDIO_HIGH_CAPACITY_SD_CARD)//大容量卡
 	{
 		blksize=512;
@@ -792,7 +758,9 @@ SD_Error SD_ReadMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 		
 		if(errorstatus!=SD_OK)return errorstatus;   	//响应错误	 
 		
-	}else return SD_INVALID_PARAMETER;	  
+	}
+	else 
+	return SD_INVALID_PARAMETER;	  
 	
 	if(nblks>1)											//多块读  
 	{									    
@@ -1098,6 +1066,13 @@ SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks)
 	u32 tlen=nblks*blksize;				//总长度(字节)
 	u32 *tempbuff = (u32*)buf;  
   if(buf==NULL)return SD_INVALID_PARAMETER; //参数错误  
+
+	if(nblks==1)
+	{
+		errorstatus=SD_WriteBlock(buf,addr,blksize);
+		return 	errorstatus;
+	}
+
   SDIO->DCTRL=0x0;							//数据控制寄存器清零(关DMA)   
 	
 	SDIO_DataInitStructure.SDIO_DataBlockSize= 0; ;	//清除DPSM状态机配置	

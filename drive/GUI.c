@@ -154,8 +154,6 @@ Show_Humidity(75,2,shidu);
 Show_Temperature(20,2,Temp);
 
 
-
-
 			if(times==20)	
 			{
 			show_picture(111,0,16,16,upload);
@@ -170,7 +168,7 @@ Show_Temperature(20,2,Temp);
 			
 			
 			
-	//判断是否启动抽水//		
+			//判断是否启动抽水//		
 			if(shidu<Humidity_LOW)
 
 			{
@@ -264,16 +262,6 @@ show_picture(X_LOCATION+48,6,8,16,Num_To_LSB(Set_Time));
 }
 
 
-
-
-
-
-
-
-
-
-
-
 void Show_Temperature(u8 X_location,u8 Y_location,u8 Data)
 {
 
@@ -296,10 +284,58 @@ show_picture(X_location,Y_location+4,8,16,Num_To_MSB(Data));
 show_picture(X_location+8,Y_location+4,8,16,Num_To_LSB(Data));	
 show_picture(X_location+16,Y_location+4,16,16,baifenhao);	
 	
-
-
-	
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

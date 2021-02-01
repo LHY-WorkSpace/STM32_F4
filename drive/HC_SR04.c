@@ -52,22 +52,12 @@ void hcsr_gpio_init()
 		TIM_ICInitTypeDefinit.TIM_ICSelection=TIM_ICSelection_DirectTI;
 		TIM_ICInitTypeDefinit.TIM_ICPrescaler=TIM_ICPSC_DIV1;
 		TIM_ICInitTypeDefinit.TIM_ICFilter=0x00;
-		
+
 		TIM_ICInit(TIM3,&TIM_ICInitTypeDefinit);
 	
 
 
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 
 

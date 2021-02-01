@@ -1,26 +1,10 @@
 #include"IncludeFile.h"
 
 
-
 												//  PB13-------SCLK          PB15------SDA
 												//  PB12-------D/C           PB14------RST 
 
-
-
-
-
 #define play_speed           100
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -903,13 +887,23 @@ clear_screen();
 
 
 
-
-
-
 }
 
 
+void Draw_Point(u8 x,u8 y,u8 State)
+{
+	u8 pos,bx,temp=0;
+	if(x>127||y>63)
+		return;
+	pos=7-y/8; 
+	bx=y%8;     
+	temp=1<<(7-bx); 
+	if(t)
+		OLED_GRAM[x][pos]|=temp;  
+	else 
+		OLED_GRAM[x][pos]&=~temp;        
 
+}
 
 
 
