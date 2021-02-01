@@ -20,7 +20,7 @@ void Programe_Start(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	TIM_ITConfig(TIM6,TIM_IT_Update,DISABLE);
+	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
 	TIM_ARRPreloadConfig(TIM6,ENABLE);
 	TIM6->CNT = 0;
 	TIM_Cmd(TIM6,ENABLE);
@@ -45,7 +45,10 @@ return TIM_GetCounter(TIM6)/1000;
 }
 
 
-
+void Show_RunTime()
+{
+	printf("Run Time: %d ms",Run_Time);
+}
 
 
 void TIM6_DAC_IRQHandler()
@@ -54,11 +57,10 @@ void TIM6_DAC_IRQHandler()
 	
 		if(TIM_GetFlagStatus(TIM6,TIM_IT_Update)==1)
 		{
-			Run_Time=++Times_1ms;
+			Run_Time=(++Times_1ms)*50+(TIM6->CNT/1000);
 			TIM_Cmd(TIM6,DISABLE);
 
 		}
-
 
 TIM_ClearFlag(TIM6,TIM_IT_Update);
 

@@ -331,6 +331,12 @@ extern SD_CardInfo SDCardInfo;//SD卡信息
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //相关函数定义
 SD_Error SD_Init(void);
+SD_Error SD_ReadBlock(u8 *buf,long long addr,u16 blksize);  
+SD_Error SD_ReadMultiBlocks(u8 *buf,long long  addr,u16 blksize,u32 nblks);  
+SD_Error SD_WriteBlock(u8 *buf,long long addr,  u16 blksize);	
+SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks);
+
+
 void SDIO_Clock_Set(u8 clkdiv);
 
 SD_Error SD_PowerON(void);    
@@ -342,10 +348,6 @@ SD_Error SD_SetDeviceMode(u32 mode);
 SD_Error SD_SelectDeselect(u32 addr); 
 SD_Error SD_SendStatus(uint32_t *pcardstatus);
 SDCardState SD_GetState(void);
-SD_Error SD_ReadBlock(u8 *buf,long long addr,u16 blksize);  
-SD_Error SD_ReadMultiBlocks(u8 *buf,long long  addr,u16 blksize,u32 nblks);  
-SD_Error SD_WriteBlock(u8 *buf,long long addr,  u16 blksize);	
-SD_Error SD_WriteMultiBlocks(u8 *buf,long long addr,u16 blksize,u32 nblks);
 SD_Error SD_ProcessIRQSrc(void);
 
 void SD_DMA_Config(u32*mbuf,u32 bufsize,u32 dir);
