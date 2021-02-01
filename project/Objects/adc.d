@@ -58,7 +58,6 @@
 .\objects\adc.o: ..\drive\GUI.H
 .\objects\adc.o: ..\drive\DMA.h
 .\objects\adc.o: ..\drive\pwm.h
-.\objects\adc.o: ..\drive\ESP8266.h
 .\objects\adc.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\adc.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\adc.o: ..\user\FreeRTOSConfig.h

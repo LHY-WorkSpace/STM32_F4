@@ -23,6 +23,7 @@ void Programe_Start(void)
 	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
 	TIM_ARRPreloadConfig(TIM6,ENABLE);
 	TIM6->CNT = 0;
+	TIM_ClearFlag(TIM6,TIM_IT_Update);
 	TIM_Cmd(TIM6,ENABLE);
 	
 

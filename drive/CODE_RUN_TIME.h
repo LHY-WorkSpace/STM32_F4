@@ -9,6 +9,7 @@
 void Programe_Start(void);
 u16 Programe_End_Us(void);
 u16 Programe_End_Ms(void);
+void Show_RunTime(void);
 
 
 

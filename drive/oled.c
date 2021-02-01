@@ -6,7 +6,7 @@
 
 #define play_speed           100
 
-
+u8 OLED_GRAM[8][128];
 
 	
 /*          8*8                        */
@@ -121,37 +121,23 @@ u8 windows[]=
 	
 void show_All()
 {
-				oled_sendorder(0x21);           
-				oled_sendorder(0x00);	        
-				oled_sendorder(0x7f);	          
+				OLED_SetMode(0x21);           
+				OLED_SetMode(0x00);	        
+				OLED_SetMode(0x7f);	          
 				delay_us(50);                     
-				oled_sendorder(0x22);	            
-				oled_sendorder(0x00);	          	
-				oled_sendorder(0x07);           
+				OLED_SetMode(0x22);	            
+				OLED_SetMode(0x00);	          	
+				OLED_SetMode(0x07);           
 				delay_us(50);
 
 }
 
 
 
-void clear_screen()
+void OLED_ClearScreen(u8 Data)
 {
- u32 i;
-
-				oled_sendorder(0x21);           
-				oled_sendorder(0x00);	        
-				oled_sendorder(0x7f);	          
-				delay_us(50);                     
-				oled_sendorder(0x22);	            
-				oled_sendorder(0x00);	          	
-				oled_sendorder(0x07);           
-				delay_us(50);
-				
-				for(i=0;i<1024;i++)
-				{
-					oled_senddata(0x00);
-				}
-
+	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
+	OLED_UpdateGRAM();
 }
 
 //void oled_spi_configinit()
@@ -202,15 +188,12 @@ void clear_screen()
 
 //}
 
-void oled_spi_configinit()
+void OLED_SPI_Init()
 {
-	
-	
+
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2,ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 	
-
-
 	GPIO_InitTypeDef GPIOB_InitTypeDefinsture;
 	SPI_InitTypeDef SPI_InitTypeDefinsture;
 	
@@ -247,7 +230,7 @@ void oled_spi_configinit()
 
 	SPI_Cmd(SPI2 ,ENABLE);
 
-  //SPI_I2S_ITConfig(SPI1,SPI_I2S_IT_TXE,ENABLE);
+
 
 }
 
@@ -255,52 +238,45 @@ void oled_spi_configinit()
 
 
 
-void oled_init(void)
+void OLED_Init(void)
 {
 
+	OLED_SPI_Init();
+	OLED_RST_ON;
+	delay_ms(2);	
+	OLED_RST_OFF;
+	delay_ms(2);	
 
+    OLED_SetMode(0XA8);
+    OLED_SetMode(0X3F);
+    OLED_SetMode(0XD3);
+    OLED_SetMode(0X00);
+    OLED_SetMode(0X40);
+    OLED_SetMode(0Xd5);      //设置刷新频率和分频值
+    OLED_SetMode(0Xf1);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
+    OLED_SetMode(0XA0);      //A0--首列对应0      A1------首列对应127
+    OLED_SetMode(0XC0);
+    OLED_SetMode(0XDA);
+    OLED_SetMode(0X12);
+    OLED_SetMode(0X81);     //对比度设置
+    OLED_SetMode(0Xff);     //设置对比度值
+    OLED_SetMode(0XD9);
+    OLED_SetMode(0XF1);
+    OLED_SetMode(0XDB);
+    OLED_SetMode(0X30);
+    OLED_SetMode(0XA4);       //0xA4-正常      0XA5-全亮
+    OLED_SetMode(0XA6);       //0XA6-正常      0XA7-反相
+	OLED_SetMode(0x20);       /*设置显示模式                 参考：  https://blog.csdn.net/gengyuchao/article/details/86608037             */
+	OLED_SetMode(0x00);	      /*[页地址----10b    水平模式---00b     垂直模式---01b        */	
+	OLED_SetMode(0xc0);	    //0xc8---正常      0xc0------垂直反转  
+	OLED_SetMode(0xa1);				
+	OLED_SetMode(0x23);
+	OLED_SetMode(0x00);          //[5:4]--00禁用闪烁或淡出       10使能消退      11使能闪烁                 [3:0]-----0000(8帧)  0001(16帧)     0010(16帧)。。。。1111(128帧)
+	OLED_SetMode(0X8D);     //设置电荷泵
+	OLED_SetMode(0X14);      //0x14-----开启     0x10----关闭
+	OLED_SetMode(0XAf);
 
-	
-		oled_spi_configinit();
-		OLED_RST_ON;
-		delay_ms(10);	
-		OLED_RST_OFF;
-		delay_ms(10);	
-		
-
-    oled_sendorder(0XA8);
-    oled_sendorder(0X3F);
-    oled_sendorder(0XD3);
-    oled_sendorder(0X00);
-    oled_sendorder(0X40);
-    oled_sendorder(0Xd5);      //设置刷新频率和分频值
-    oled_sendorder(0Xf1);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
-    oled_sendorder(0XA0);      //A0--首列对应0      A1------首列对应127
-    oled_sendorder(0XC0);
-    oled_sendorder(0XDA);
-    oled_sendorder(0X12);
-    oled_sendorder(0X81);     //对比度设置
-    oled_sendorder(0Xff);     //设置对比度值
-    oled_sendorder(0XD9);
-    oled_sendorder(0XF1);
-    oled_sendorder(0XDB);
-    oled_sendorder(0X30);
-    oled_sendorder(0XA4);       //0xA4-正常      0XA5-全亮
-    oled_sendorder(0XA6);       //0XA6-正常      0XA7-反相
-		
-		
-//		oled_initMode(Horizontal_Mode);	
-		oled_sendorder(0x20);       /*设置显示模式                 参考：  https://blog.csdn.net/gengyuchao/article/details/86608037             */
-		oled_sendorder(0x00);	      /*[页地址----10b    水平模式---00b     垂直模式---01b        */	
-	  oled_sendorder(0xc8);	    //0xc8---正常      0xc0------垂直反转  
-		oled_sendorder(0xa1);				
-		oled_sendorder(0x23);
-		oled_sendorder(0x00);          //[5:4]--00禁用闪烁或淡出       10使能消退      11使能闪烁                 [3:0]-----0000(8帧)  0001(16帧)     0010(16帧)。。。。1111(128帧)
-    oled_sendorder(0X8D);     //设置电荷泵
-    oled_sendorder(0X14);      //0x14-----开启     0x10----关闭
-    oled_sendorder(0XAf);
-	
-	  clear_screen();	
+	OLED_ClearScreen(0x00);	
 
 }
 
@@ -310,14 +286,13 @@ void oled_init(void)
 
 void  display_position(u8 x,u8 y,u8 length)
 {
+		OLED_SetMode(0x21);                       //列地址 	
+		OLED_SetMode(0x00|x);	                    //起始地址 	 0-127
+		OLED_SetMode(0x00|(x+length*8)-1);	      //终止地址   
 
-		oled_sendorder(0x21);                       //列地址 	
-		oled_sendorder(0x00|x);	                    //起始地址 	 0-127
-		oled_sendorder(0x00|(x+length*8)-1);	      //终止地址   
-	
-		oled_sendorder(0x22);	                      //页地址	
-		oled_sendorder(0x00|y);	                    //起始地址	0-7
-		oled_sendorder(0x00|y);                     //终止地址
+		OLED_SetMode(0x22);	                      //页地址	
+		OLED_SetMode(0x00|y);	                    //起始地址	0-7
+		OLED_SetMode(0x00|y);                     //终止地址
  	
 
 }
@@ -327,16 +302,16 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      /
 
 	u8 i=0,j=x_length*(y_length>>3);
 	
-		oled_sendorder(0x21);                             //列地址 	
-		oled_sendorder(x_start);	                    //起始地址 	 0-127
-		oled_sendorder(x_length-1+x_start);	                      //终止地址   
+		OLED_SetMode(0x21);                             //列地址 	
+		OLED_SetMode(x_start);	                    //起始地址 	 0-127
+		OLED_SetMode(x_length-1+x_start);	                      //终止地址   
 	
-		oled_sendorder(0x22);	                           //页地址	
-		oled_sendorder(y_start);	                   //起始地址	0-7
-		oled_sendorder(((y_length>>3)-1)+y_start);                     //终止地址
+		OLED_SetMode(0x22);	                           //页地址	
+		OLED_SetMode(y_start);	                   //起始地址	0-7
+		OLED_SetMode(((y_length>>3)-1)+y_start);                     //终止地址
  	
    for(i=0;i<j;i++)
-	  oled_senddata(data[i]);
+	  OLED_SendData(data[i]);
 
 	
 
@@ -346,36 +321,50 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      /
 
 
 
-void oled_senddata(u8 Tdata)
+void OLED_SendData(u8 Tdata)
 {
 		OLED_DATA;
-
 		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);             //非中断模式
 		SPI_I2S_SendData(SPI2,Tdata);			
-    SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);		
-		delay_us(10);
+    	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);		
+//		delay_us(5);
 
 }
 
-void oled_sendorder(u8 Tdata)
+void OLED_SetMode(u8 Tdata)
 {
-	
 	OLED_ORDER;	
-
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            //非中断模式
-		SPI_I2S_SendData(SPI2,Tdata);			
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            //非中断模式
+	SPI_I2S_SendData(SPI2,Tdata);			
     SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-		delay_us(10);
+//	delay_us(5);
 
 }
 
-
-void set_OLED_frequence_div(u8 fre,u8 div)              //闪烁设置fre[0-f]  div[0-f] 
+/*
+设置扫描硬件频率：fre/div=越大越快，越小越闪屏
+fre:0x00-0xff
+div:0x00-0xff
+*/
+void OLED_SetScanFre(u8 fre,u8 div)    //闪烁设置fre[0-f]  div[0-f] 
 {
-    oled_sendorder(0Xd5);                 //设置刷新频率和分频值  
-    oled_sendorder(0X00|fre<<4|div);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
-
+    OLED_SetMode(0Xd5);                 //设置刷新频率和分频值  
+    OLED_SetMode(0X00|fre<<4|div);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
 }
+
+
+
+/*
+设置屏幕对比度(亮度)
+value:0x00-0xff
+*/
+void OLED_CetContrast(u8 value)   
+{
+    OLED_SetMode(0X81);           //对比度设置
+    OLED_SetMode(0X00|value);     //设置对比度值
+}
+
+
 
 
 void display_str_and_speed(char *word,u32 speed)
@@ -393,11 +382,9 @@ void display_str_and_speed(char *word,u32 speed)
 
 }
 
-void set_contrast(u8 value)    //value[00-ff]
-{
-    oled_sendorder(0X81);           //对比度设置
-    oled_sendorder(0X00|value);     //设置对比度值
-}
+
+
+
 
 
 
@@ -409,19 +396,19 @@ switch(number)
 		{
 	case 0:
 						for(i=0;i<8;i++)
-						oled_senddata(num0[i]);
+						OLED_SendData(num0[i]);
 						break ;
 	
 	
 	case 1:
 						for(i=0;i<8;i++)
-						oled_senddata(num1[i]);
+						OLED_SendData(num1[i]);
 						break ;
 	
 	
 	case 2:
 						for(i=0;i<8;i++)
-						oled_senddata(num2[i]);
+						OLED_SendData(num2[i]);
 						break ;
 	
 	
@@ -429,48 +416,48 @@ switch(number)
 	case 3:
 		
 					for(i=0;i<8;i++)
-					oled_senddata(num3[i]);
+					OLED_SendData(num3[i]);
 					break ;
 	
 	
 	case  4:
 		
 					for(i=0;i<8;i++)
-					oled_senddata(num4[i]);
+					OLED_SendData(num4[i]);
 					break ;
 	
 	
 	case 5:
 						for(i=0;i<8;i++)
-						oled_senddata(num5[i]);
+						OLED_SendData(num5[i]);
 						break ;
 		
 	
 	
 	case  6:
 						for(i=0;i<8;i++)
-						oled_senddata(num6[i]);
+						OLED_SendData(num6[i]);
 						break ;	
 	
 	
 	
 	case  7:
 						for(i=0;i<8;i++)
-						oled_senddata(num7[i]);
+						OLED_SendData(num7[i]);
 						break ;
 	
 	
 	
 	case 8:
 						for(i=0;i<8;i++)
-						oled_senddata(num8[i]);
+						OLED_SendData(num8[i]);
 						break ;
 	
 	
 	
 	case 9:
 						for(i=0;i<8;i++)
-						oled_senddata(num9[i]);
+						OLED_SendData(num9[i]);
 						break ;
 	
 	
@@ -489,19 +476,19 @@ switch(alphabet)
 
 	case '0':
 						for(i=0;i<8;i++)
-						oled_senddata(num0[i]);
+						OLED_SendData(num0[i]);
 						break ;
 	
 	
 	case '1':
 						for(i=0;i<8;i++)
-						oled_senddata(num1[i]);
+						OLED_SendData(num1[i]);
 						break ;
 	
 	
 	case '2':
 						for(i=0;i<8;i++)
-						oled_senddata(num2[i]);
+						OLED_SendData(num2[i]);
 						break ;
 	
 	
@@ -509,48 +496,48 @@ switch(alphabet)
 	case '3':
 		
 					for(i=0;i<8;i++)
-					oled_senddata(num3[i]);
+					OLED_SendData(num3[i]);
 					break ;
 	
 	
 	case  '4':
 		
 					for(i=0;i<8;i++)
-					oled_senddata(num4[i]);
+					OLED_SendData(num4[i]);
 					break ;
 	
 	
 	case '5':
 						for(i=0;i<8;i++)
-						oled_senddata(num5[i]);
+						OLED_SendData(num5[i]);
 						break ;
 		
 	
 	
 	case  '6':
 						for(i=0;i<8;i++)
-						oled_senddata(num6[i]);
+						OLED_SendData(num6[i]);
 						break ;	
 	
 	
 	
 	case  '7':
 						for(i=0;i<8;i++)
-						oled_senddata(num7[i]);
+						OLED_SendData(num7[i]);
 						break ;
 	
 	
 	
 	case '8':
 						for(i=0;i<8;i++)
-						oled_senddata(num8[i]);
+						OLED_SendData(num8[i]);
 						break ;
 	
 	
 	
 	case '9':
 						for(i=0;i<8;i++)
-						oled_senddata(num9[i]);
+						OLED_SendData(num9[i]);
 						break ;			
 			
 			
@@ -558,134 +545,134 @@ switch(alphabet)
 			
 			case 'A':
 						for(i=0;i<8;i++)
-						oled_senddata(charA [i]);
+						OLED_SendData(charA [i]);
 						break ;
 
 
 
 			case 'B':
 						for(i=0;i<8;i++)
-						oled_senddata(charB [i]);
+						OLED_SendData(charB [i]);
 						break ;				
 			
 			
 			
 			case 'C':
 						for(i=0;i<8;i++)
-						oled_senddata(charC [i]);
+						OLED_SendData(charC [i]);
 						break ;				
 			
 			
 			
 			case 'D':
 						for(i=0;i<8;i++)
-						oled_senddata(charD [i]);
+						OLED_SendData(charD [i]);
 						break ;			
 			
 			
 			case 'E':
 						for(i=0;i<8;i++)
-						oled_senddata(charE [i]);
+						OLED_SendData(charE [i]);
 						break ;				
 			
 			
 			case 'F':
 						for(i=0;i<8;i++)
-						oled_senddata(charF [i]);
+						OLED_SendData(charF [i]);
 						break ;				
 			
 			
 			case 'G':
 						for(i=0;i<8;i++)
-						oled_senddata(charG [i]);
+						OLED_SendData(charG [i]);
 						break ;				
 			
 			
 			case 'H':
 						for(i=0;i<8;i++)
-						oled_senddata(charH [i]);
+						OLED_SendData(charH [i]);
 						break ;				
 			
 			
 			
 			case 'I':
 						for(i=0;i<8;i++)
-						oled_senddata(charI [i]);
+						OLED_SendData(charI [i]);
 						break ;				
 			
 			
 			case 'J':
 						for(i=0;i<8;i++)
-						oled_senddata(charJ [i]);
+						OLED_SendData(charJ [i]);
 						break ;				
 			
 			
 			
 			case 'K':
 						for(i=0;i<8;i++)
-						oled_senddata(charK [i]);
+						OLED_SendData(charK [i]);
 						break ;				
 			
 			
 			case 'L':
 						for(i=0;i<8;i++)
-						oled_senddata(charL [i]);
+						OLED_SendData(charL [i]);
 						break ;				
 			
 			
 			
 			case 'M':
 						for(i=0;i<8;i++)
-						oled_senddata(charM [i]);
+						OLED_SendData(charM [i]);
 						break ;				
 			
 			
 			
 			case 'N':
 						for(i=0;i<8;i++)
-						oled_senddata(charN [i]);
+						OLED_SendData(charN [i]);
 						break ;				
 			
 			
 			case 'O':
 						for(i=0;i<8;i++)
-						oled_senddata(charO [i]);
+						OLED_SendData(charO [i]);
 						break ;				
 			
 			
 			
 			case 'P':
 						for(i=0;i<8;i++)
-						oled_senddata(charP [i]);
+						OLED_SendData(charP [i]);
 						break ;				
 			
 			case 'Q':
 						for(i=0;i<8;i++)
-						oled_senddata(charQ [i]);
+						OLED_SendData(charQ [i]);
 						break ;				
 			
 					
 			case 'R':
 						for(i=0;i<8;i++)
-						oled_senddata(charR [i]);
+						OLED_SendData(charR [i]);
 						break ;				
 			
 			
 			case 'S':
 						for(i=0;i<8;i++)
-						oled_senddata(charS [i]);
+						OLED_SendData(charS [i]);
 						break ;				
 			
 			
 			case 'T':
 						for(i=0;i<8;i++)
-						oled_senddata(charT [i]);
+						OLED_SendData(charT [i]);
 						break ;				
 			
 			
 			case 'U':
 						for(i=0;i<8;i++)
-						oled_senddata(charU [i]);
+						OLED_SendData(charU [i]);
 						break ;				
 			
 			
@@ -693,49 +680,49 @@ switch(alphabet)
 			
 			case 'V':
 							for(i=0;i<8;i++)
-						oled_senddata(charV [i]);
+						OLED_SendData(charV [i]);
 						break ;			
 			
 			case 'W':
 						for(i=0;i<8;i++)
-						oled_senddata(charW [i]);
+						OLED_SendData(charW [i]);
 						break ;				
 					
 			case 'X':
 						for(i=0;i<8;i++)
-						oled_senddata(charX [i]);
+						OLED_SendData(charX [i]);
 						break ;				
 			
 			
 			
 			case 'Y':
 						for(i=0;i<8;i++)
-						oled_senddata(charY [i]);
+						OLED_SendData(charY [i]);
 						break ;				
 			
 			case 'Z':
 						for(i=0;i<8;i++)
-						oled_senddata(charZ [i]);
+						OLED_SendData(charZ [i]);
 						break ;	
 			
 			case ' ':
 						for(i=0;i<8;i++)
-						oled_senddata(0X00);
+						OLED_SendData(0X00);
 						break ;	
 			
 			case	':' :	                    ////  :
 						for(i=0;i<8;i++)
-						oled_senddata(charcolom[i]);
+						OLED_SendData(charcolom[i]);
 						break ;	
 
 			case	'.' :	                    //     .
 						for(i=0;i<8;i++)
-						oled_senddata(point[i]);
+						OLED_SendData(point[i]);
 						break ;		
 			
 			default :
 						for(i=0;i<8;i++)
-						oled_senddata(point[i]);
+						OLED_SendData(point[i]);
 				      break;
 					
 			
@@ -752,17 +739,17 @@ void windows_open(u32 speed)
 {
 u32 i;
 	for(i=0;i<896;i++)
-	oled_senddata(windows[i]);
+	OLED_SendData(windows[i]);
 	
 	display_position(0,7,16);
 	
 	for(i=0;i<128;i++)
 	{
-	oled_senddata(0xff);
+	OLED_SendData(0xff);
 	delay_ms(speed);        //进度条速度
 
 	}
-	clear_screen();
+	OLED_ClearScreen(0x00);
 
 }
 
@@ -772,7 +759,7 @@ void tempure_unit(void)            //   温度单位   .C
 u8 i;
 		for(i=0;i<8;i++)
 		{
-	oled_senddata(char_tempure[i]);
+	OLED_SendData(char_tempure[i]);
 		
 		}
 }
@@ -789,9 +776,9 @@ void power_on_check_display(void)
 windows_open(10);                                //进度条速度
 delay_ms(500);
 
-clear_screen();
+OLED_ClearScreen(0x00);
 
-set_OLED_frequence_div(15,6);		
+OLED_SetScanFre(15,6);		
 delay_ms(500);
 
 //display_position(40,0,5);
@@ -827,7 +814,7 @@ delay_ms(500);
 //display_str_and_speed("OK",play_speed);
 //delay_ms(500);
 
-//clear_screen();	
+//OLED_ClearScreen();	
 
 //display_position(0,2,6);
 //display_str_and_speed("VOICE:",play_speed);
@@ -857,7 +844,7 @@ delay_ms(500);
 //display_str_and_speed("OK",play_speed);
 //delay_ms(500);
 
-//clear_screen();
+//OLED_ClearScreen();
 
 //display_position(1,8,4);
 //display_str_and_speed("LED:",play_speed);
@@ -868,12 +855,11 @@ delay_ms(500);
 ////delay_ms(500);
 
 
-clear_screen();	
+// OLED_ClearScreen();	
 
 
 
 //<-------此处检查完毕
-
 
 display_position(1,4,13);
 display_str_and_speed("ENTER SYSTEM:",play_speed);
@@ -882,15 +868,29 @@ delay_ms(500);
 display_position(105,4,2);
 display_str_and_speed("..",100);
 delay_ms(500);
-set_OLED_frequence_div(15,0);		                 
-clear_screen();	
-
-
+OLED_SetScanFre(15,0);		                 
+//OLED_ClearScreen();	
 
 }
 
 
-void Draw_Point(u8 x,u8 y,u8 State)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void OLED_Draw_Point(u8 x,u8 y,u8 t)
 {
 	u8 pos,bx,temp=0;
 	if(x>127||y>63)
@@ -899,17 +899,63 @@ void Draw_Point(u8 x,u8 y,u8 State)
 	bx=y%8;     
 	temp=1<<(7-bx); 
 	if(t)
-		OLED_GRAM[x][pos]|=temp;  
+		OLED_GRAM[pos][x]|=temp;  
 	else 
-		OLED_GRAM[x][pos]&=~temp;        
+		OLED_GRAM[pos][x]&=~temp;        
 
 }
 
 
 
 
+void OLED_UpdateGRAM()
+{
+	u8 i,j;
+	OLED_SetMode(0x21);           
+	OLED_SetMode(0x00);	        
+	OLED_SetMode(0x7f);	          
+	delay_us(5);                     
+	OLED_SetMode(0x22);	            
+	OLED_SetMode(0x00);	          	
+	OLED_SetMode(0x07);           
+	delay_us(5);
+
+	for(i=0;i<8;i++)
+	{
+		for(j=0;j<128;j++)
+		{
+			OLED_SendData(OLED_GRAM[i][j]);
+		}
+	}
+}
 
 
+
+
+
+//六角星
+void Boot_Animation(void)
+{
+		static u8 x=0,y=0;
+		for(x = 63;x>=18;x--){
+				OLED_Draw_Point(108-0.7*x,x,1);//Draw a diagonal line ≈√3/3
+				OLED_Draw_Point(17 +0.7*x,x,1);
+				y = 64-x;
+				OLED_Draw_Point(64-0.7*y,y,1);
+				OLED_Draw_Point(64+0.7*y,y,1);
+				delay_ms(2);
+			  	OLED_UpdateGRAM();
+		}
+		
+		for(x = 30;x <= 94;x++){
+				OLED_Draw_Point(125-x,47,1);
+				OLED_Draw_Point(x,18,1);
+				delay_ms(2);
+				OLED_UpdateGRAM();
+		}
+		delay_ms(100);
+		
+}
 
 
 

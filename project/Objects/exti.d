@@ -58,7 +58,6 @@
 .\objects\exti.o: ..\drive\GUI.H
 .\objects\exti.o: ..\drive\DMA.h
 .\objects\exti.o: ..\drive\pwm.h
-.\objects\exti.o: ..\drive\ESP8266.h
 .\objects\exti.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\exti.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\exti.o: ..\user\FreeRTOSConfig.h

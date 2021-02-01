@@ -1,6 +1,6 @@
 #include"IncludeFile.h"
 
-__align(4) u8 A[1024],B[1024];   //对齐的部分不能在栈里！！！
+__align(4) u8 A[512],B[2048];   //对齐的部分不能在栈里！！！
 
 void MPU6050_Test()
 {
@@ -55,15 +55,15 @@ void SDIO_Test()
 {
 	u16 k;
 	SD_ShowInfomation();
-	memset(A,0x51,sizeof(A));
+	memset(A,0x22,sizeof(A));
 
 		Programe_Start();
- 		SD_WriteMultiBlocks(A,0, 512,sizeof(A)/512); 
-		printf("Times:%d us ",Programe_End_Us());	
-
+ 		SD_WriteMultiBlocks(A,512, 512,sizeof(A)/512); 
+		printf("Times:%d us \r\n",Programe_End_Us());	
+		
 		Programe_Start();
- 		SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);//块数参数不能为1 
-		printf("Times:%d us ",Programe_End_Us());	
+ 		SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
+		printf("Times:%d us \r\n",Programe_End_Us());	
 
 	for(k=0;k<sizeof(B);k++)
 	printf("Data %d : %x \r\n",k,B[k]);
@@ -76,33 +76,54 @@ void SDIO_Test()
 
 int  main()
 {
-
-
+ 
+u8 x=0,y;
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
 	usart_init(115200);
 	led_init();
 	SD_Init();
-	// IIC_Init();
-	// // MPU6050_Init();
+	OLED_Init();
+	//IIC_Init();
+	//MPU6050_Init();
+	//windows_open(100);
 
 
 
 
 
 
-	// AT24C08_Test();
-	 SDIO_Test();
-	
+
+//Boot_Animation();
+
+
+
+	//OLED_SetScanFre(0xff,0);
 
 	while(1)
 	{	
-		// Programe_Start();
-		// MPU6050_Test();
-		// printf("Times:%d ms ",Programe_End()/1000);	
+	
 		LED1_OFF;
-		delay_ms(100);
+		delay_ms(10);
 		LED1_ON;
-		delay_ms(100);
+		delay_ms(10);
+		if(y)
+		{
+			x--;
+			if(x==0)
+				y=0;
+		}
+		else
+		{
+			x++;
+			if(x==0xff)
+				y=1;
+		}
+	//	printf("C %d\r\n",x);
+
+
+
+
+		
 
 	}
 

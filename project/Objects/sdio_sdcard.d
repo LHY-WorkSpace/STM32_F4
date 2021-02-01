@@ -58,7 +58,6 @@
 .\objects\sdio_sdcard.o: ..\drive\GUI.H
 .\objects\sdio_sdcard.o: ..\drive\DMA.h
 .\objects\sdio_sdcard.o: ..\drive\pwm.h
-.\objects\sdio_sdcard.o: ..\drive\ESP8266.h
 .\objects\sdio_sdcard.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\sdio_sdcard.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\sdio_sdcard.o: ..\user\FreeRTOSConfig.h

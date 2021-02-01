@@ -101,7 +101,7 @@ void EXTI0_IRQHandler(void)
 
 	LED1_OFF;
   Menu_Num++;
-	clear_screen();
+//	clear_screen();
 	if(Menu_Num>4)
 		Menu_Num=0;
 	

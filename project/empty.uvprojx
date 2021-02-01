@@ -939,11 +939,6 @@
               <FilePath>..\drive\RNG.c</FilePath>
             </File>
             <File>
-              <FileName>ESP8266.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\ESP8266.c</FilePath>
-            </File>
-            <File>
               <FileName>exti.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\drive\exti.c</FilePath>

@@ -58,7 +58,6 @@
 .\objects\led.o: ..\drive\GUI.H
 .\objects\led.o: ..\drive\DMA.h
 .\objects\led.o: ..\drive\pwm.h
-.\objects\led.o: ..\drive\ESP8266.h
 .\objects\led.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\led.o: ..\user\FreeRTOSConfig.h

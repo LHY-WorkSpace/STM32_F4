@@ -58,7 +58,6 @@
 .\objects\delay.o: ..\drive\GUI.H
 .\objects\delay.o: ..\drive\DMA.h
 .\objects\delay.o: ..\drive\pwm.h
-.\objects\delay.o: ..\drive\ESP8266.h
 .\objects\delay.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\delay.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\delay.o: ..\user\FreeRTOSConfig.h

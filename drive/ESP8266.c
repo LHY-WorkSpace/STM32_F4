@@ -171,17 +171,17 @@ memset(Wifi_Data,0,sizeof(Wifi_Data));
 }
 
 
-void Get_IP(char *str,char *temp)
-{
-	u8 i=0;
-	str+=24;
-	for(i=0;i<12;i++)
-	{
-	*(temp+i)=*(str+i);	
-	}
-	*(temp+11)='\0';
-	
-}	
+//void Get_IP(char *str,char *temp)
+//{
+//	u8 i=0;
+//	str+=24;
+//	for(i=0;i<12;i++)
+//	{
+//	*(temp+i)=*(str+i);	
+//	}
+//	*(temp+11)='\0';
+//	
+//}	
 
 
 

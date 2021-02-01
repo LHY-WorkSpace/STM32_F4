@@ -58,7 +58,6 @@
 .\objects\ds18b20.o: ..\drive\GUI.H
 .\objects\ds18b20.o: ..\drive\DMA.h
 .\objects\ds18b20.o: ..\drive\pwm.h
-.\objects\ds18b20.o: ..\drive\ESP8266.h
 .\objects\ds18b20.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\ds18b20.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\ds18b20.o: ..\user\FreeRTOSConfig.h
