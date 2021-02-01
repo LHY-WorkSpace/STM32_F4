@@ -28,7 +28,7 @@ void Programe_Start(void)
 
 }
 
-u32 Programe_End_Us()
+u16 Programe_End_Us()
 {
 
 return TIM_GetCounter(TIM6);
@@ -36,7 +36,7 @@ return TIM_GetCounter(TIM6);
 
 }
 
-u32 Programe_End_Ms()
+u16 Programe_End_Ms()
 {
 
 return TIM_GetCounter(TIM6)/1000;

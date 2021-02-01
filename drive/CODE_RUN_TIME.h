@@ -7,8 +7,8 @@
 
 
 void Programe_Start(void);
-u32 Programe_End(void);
-
+u16 Programe_End_Us(void);
+u16 Programe_End_Ms(void);
 
 
 
