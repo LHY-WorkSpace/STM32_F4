@@ -77,23 +77,26 @@ void SDIO_Test()
 int  main()
 {
  
-u8 x=0,y;
+u8 x,y,z;
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
 	usart_init(115200);
 	led_init();
 	SD_Init();
 	OLED_Init();
+	Rng_Init();
 	//IIC_Init();
 	//MPU6050_Init();
 	//windows_open(100);
 
 
-
-
-
+Programe_Start();
+// Rng_GetRadomData();
+ OLED_ClearScreen(0x00);
+printf("Run Time: %d us",Programe_End_Us());
 
 
 //Boot_Animation();
+
 
 
 
@@ -101,23 +104,32 @@ u8 x=0,y;
 
 	while(1)
 	{	
-	
+
+		// memset(qq,x,sizeof(qq));
+		// OLED_Data2GRAM(qq,1024);
+		// OLED_UpdateGRAM();
+		// OLED_Draw_Point(x,y,0);
+		// OLED_UpdateGRAM();
 		LED1_OFF;
-		delay_ms(10);
+		delay_ms(2);
 		LED1_ON;
-		delay_ms(10);
-		if(y)
-		{
-			x--;
-			if(x==0)
-				y=0;
-		}
-		else
-		{
-			x++;
-			if(x==0xff)
-				y=1;
-		}
+		delay_ms(2);
+
+
+
+
+		// if(y)
+		// {
+		// 	x--;
+		// 	if(x==0)
+		// 		y=0;
+		// }
+		// else
+		// {
+		// 	x++;
+		// 	if(x==0xff)
+		// 		y=1;
+		// }
 	//	printf("C %d\r\n",x);
 
 

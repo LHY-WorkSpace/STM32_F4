@@ -47,7 +47,8 @@ void OLED_UpdateGRAM(void);
 void OLED_Draw_Point(u8 x,u8 y,u8 t);
 void Boot_Animation(void);
 void OLED_SetScanFre(u8 fre,u8 div);   
-void OLED_CetContrast(u8 value);    
+void OLED_CetContrast(u8 value); 
+void OLED_Data2GRAM(u8 *Data,u16 length);   
 #endif
 
 

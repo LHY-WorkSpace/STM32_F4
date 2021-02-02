@@ -24,6 +24,7 @@
 #include "GUI.H"
 #include "DMA.h"  
 #include "pwm.h"
+#include "RNG.h"
 //#include "ESP8266.h"
 #include "FreeRTOS.h"
 #include "task.h"
@@ -36,4 +37,8 @@
 
 
 #endif
+
+extern u8 OLED_GRAM[8][128];
+extern u32 Radom;
+
 

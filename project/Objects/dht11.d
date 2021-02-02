@@ -58,6 +58,7 @@
 .\objects\dht11.o: ..\drive\GUI.H
 .\objects\dht11.o: ..\drive\DMA.h
 .\objects\dht11.o: ..\drive\pwm.h
+.\objects\dht11.o: ..\drive\RNG.h
 .\objects\dht11.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\dht11.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\dht11.o: ..\user\FreeRTOSConfig.h

@@ -289,7 +289,6 @@ void  display_position(u8 x,u8 y,u8 length)
 		OLED_SetMode(0x21);                       //列地址 	
 		OLED_SetMode(0x00|x);	                    //起始地址 	 0-127
 		OLED_SetMode(0x00|(x+length*8)-1);	      //终止地址   
-
 		OLED_SetMode(0x22);	                      //页地址	
 		OLED_SetMode(0x00|y);	                    //起始地址	0-7
 		OLED_SetMode(0x00|y);                     //终止地址
@@ -305,7 +304,7 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      /
 		OLED_SetMode(0x21);                             //列地址 	
 		OLED_SetMode(x_start);	                    //起始地址 	 0-127
 		OLED_SetMode(x_length-1+x_start);	                      //终止地址   
-	
+
 		OLED_SetMode(0x22);	                           //页地址	
 		OLED_SetMode(y_start);	                   //起始地址	0-7
 		OLED_SetMode(((y_length>>3)-1)+y_start);                     //终止地址
@@ -319,15 +318,13 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      /
 
 
 
-
-
 void OLED_SendData(u8 Tdata)
 {
 		OLED_DATA;
 		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);             //非中断模式
 		SPI_I2S_SendData(SPI2,Tdata);			
-    	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);		
-//		delay_us(5);
+    	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+		delay_us(2);	
 
 }
 
@@ -337,7 +334,7 @@ void OLED_SetMode(u8 Tdata)
 	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            //非中断模式
 	SPI_I2S_SendData(SPI2,Tdata);			
     SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-//	delay_us(5);
+	delay_us(2);
 
 }
 
@@ -929,7 +926,23 @@ void OLED_UpdateGRAM()
 	}
 }
 
+void OLED_Data2GRAM(u8 *Data,u16 length)
+{
+	u8 i,j;
+	u16 k=0;
 
+	if(length>1024)
+	return;
+
+	for(i=0;i<8;i++)
+	{
+		for(j=0;j<128;j++)
+		{
+			OLED_GRAM[i][j]=Data[k++];
+		}
+	}
+
+}
 
 
 

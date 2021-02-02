@@ -2,8 +2,8 @@
 #define     RNG_H
 
 
-void rng_init(void);
-
+void Rng_Init(void);
+u32 Rng_GetRadomData(void);
 #endif
 
 

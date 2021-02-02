@@ -58,6 +58,7 @@
 .\objects\oled.o: ..\drive\GUI.H
 .\objects\oled.o: ..\drive\DMA.h
 .\objects\oled.o: ..\drive\pwm.h
+.\objects\oled.o: ..\drive\RNG.h
 .\objects\oled.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\oled.o: ..\user\FreeRTOSConfig.h

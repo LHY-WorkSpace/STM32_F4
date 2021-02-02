@@ -58,6 +58,7 @@
 .\objects\lcd1602.o: ..\drive\GUI.H
 .\objects\lcd1602.o: ..\drive\DMA.h
 .\objects\lcd1602.o: ..\drive\pwm.h
+.\objects\lcd1602.o: ..\drive\RNG.h
 .\objects\lcd1602.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\lcd1602.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\lcd1602.o: ..\user\FreeRTOSConfig.h

@@ -58,6 +58,7 @@
 .\objects\spi.o: ..\drive\GUI.H
 .\objects\spi.o: ..\drive\DMA.h
 .\objects\spi.o: ..\drive\pwm.h
+.\objects\spi.o: ..\drive\RNG.h
 .\objects\spi.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\spi.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\spi.o: ..\user\FreeRTOSConfig.h
