@@ -40,15 +40,22 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data);      
 
 
 void OLED_Init(void);
-void OLED_ClearScreen(u8 Data);
 void OLED_SendData(u8 Tdata);
 void OLED_SetMode(u8 Tdata);
-void OLED_UpdateGRAM(void);
-void OLED_Draw_Point(u8 x,u8 y,u8 t);
-void Boot_Animation(void);
 void OLED_SetScanFre(u8 fre,u8 div);   
 void OLED_CetContrast(u8 value); 
-void OLED_Data2GRAM(u8 *Data,u16 length);   
+
+void OLED_ClearScreen(u8 Data);
+void OLED_UpdateGRAM(void);
+void OLED_Data2GRAM(u8 *Data,u16 length); 
+
+
+void OLED_Draw_Point(u8 x,u8 y,u8 t);
+void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2);
+void OLED_Draw_Circle(u8 x0,u8 y0,u8 r);
+void Boot_Animation(void);
+
+  
 #endif
 
 

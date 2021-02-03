@@ -1,4 +1,4 @@
-#include"IncludeFile.h"
+#include "IncludeFile.h"
 
 
 												//  PB13-------SCLK          PB15------SDA
@@ -134,11 +134,7 @@ void show_All()
 
 
 
-void OLED_ClearScreen(u8 Data)
-{
-	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
-	OLED_UpdateGRAM();
-}
+
 
 //void oled_spi_configinit()
 //{
@@ -881,12 +877,6 @@ OLED_SetScanFre(15,0);
 
 
 
-
-
-
-
-
-
 void OLED_Draw_Point(u8 x,u8 y,u8 t)
 {
 	u8 pos,bx,temp=0;
@@ -901,6 +891,17 @@ void OLED_Draw_Point(u8 x,u8 y,u8 t)
 		OLED_GRAM[pos][x]&=~temp;        
 
 }
+
+
+
+
+
+void OLED_ClearScreen(u8 Data)
+{
+	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
+	OLED_UpdateGRAM();
+}
+
 
 
 
@@ -926,6 +927,12 @@ void OLED_UpdateGRAM()
 	}
 }
 
+
+
+
+
+
+
 void OLED_Data2GRAM(u8 *Data,u16 length)
 {
 	u8 i,j;
@@ -944,7 +951,13 @@ void OLED_Data2GRAM(u8 *Data,u16 length)
 
 }
 
-void LCD_DrawLine(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2)
+
+
+
+
+
+
+void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2)
 {
 	unsigned int t; 
 	int xerr=0,yerr=0,delta_x,delta_y,distance; 
@@ -1007,11 +1020,33 @@ void LCD_DrawLine(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int
 	}  
 } 
 
+
+
+
+
+
+void OLED_Draw_Circle(u8 x0,u8 y0,u8 r) 
+{
+	u8 x,y;
+	for(x = 0;x <= 63;x++){
+		y = sqrt(pow(r,2)-pow(x-x0,2))+y0; //Ô²·½³Ì  x,y·´ÖÃ
+		OLED_Draw_Point(y,x,1);      //ÉÏ°ëÔ²
+		OLED_Draw_Point(63-y,x,1);   //ÏÂ°ëÔ²
+	}
+}
+
+
+
+
+
+
+
 //Áù½ÇÐÇ
 void Boot_Animation(void)
 {
 		static u8 x=0,y=0;
-		for(x = 63;x>=18;x--){
+		for(x = 63;x>=18;x--)
+		{
 				OLED_Draw_Point(108-0.7*x,x,1);//Draw a diagonal line ¡Ö¡Ì3/3
 				OLED_Draw_Point(17 +0.7*x,x,1);
 				y = 64-x;
@@ -1020,8 +1055,9 @@ void Boot_Animation(void)
 				delay_ms(2);
 			  	OLED_UpdateGRAM();
 		}
-		
-		for(x = 30;x <= 94;x++){
+		ss
+		for(x = 30;x <= 94;x++)
+		{
 				OLED_Draw_Point(125-x,47,1);
 				OLED_Draw_Point(x,18,1);
 				delay_ms(2);
