@@ -95,10 +95,6 @@ u8 DHT11_Init(void)
 
 
 
-
-
-
-
 u8 DHT11_Read_Byte(void)
 {
 	u8 Byte_Data=0,i=0,j=0;;
