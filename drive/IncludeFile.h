@@ -3,6 +3,7 @@
 
 #include "stm32f4xx.h"
 #include "string.h"
+#include "stdint.h"
 #include "arm_math.h"
 #include "math.h"
 #include "stdio.h"

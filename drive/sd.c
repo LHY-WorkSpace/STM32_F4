@@ -320,7 +320,7 @@ SD_error SD_CARD_Init()
 {
 	
 	SD_error error_type=SDIO_OK;
-	u8 i,j;
+	u8 i;
 	
 	 SD_powerON();
 
@@ -448,7 +448,7 @@ return error_type;
 
 SD_error SD_Write_Block(u32 *buffer,u32 Physical_Block_BaseAddr)
 {
-	u8 j,i,k;
+	u8 j,i;
 
 
 	CMD_Number_Argument_Responsetype(CMD16,BLOCK_SIZE,S_RESPONSE);                 //设置SD卡本次要写的数据长度

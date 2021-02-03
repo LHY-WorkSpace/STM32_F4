@@ -954,9 +954,6 @@ void OLED_Data2GRAM(u8 *Data,u16 length)
 
 
 
-
-
-
 void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2)
 {
 	unsigned int t; 
@@ -1023,12 +1020,11 @@ void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned i
 
 
 
-
-
 void OLED_Draw_Circle(u8 x0,u8 y0,u8 r) 
 {
 	u8 x,y;
-	for(x = 0;x <= 63;x++){
+	for(x = 0;x <= 63;x++)
+	{
 		y = sqrt(pow(r,2)-pow(x-x0,2))+y0; //圆方程  x,y反置
 		OLED_Draw_Point(y,x,1);      //上半圆
 		OLED_Draw_Point(63-y,x,1);   //下半圆
@@ -1036,10 +1032,44 @@ void OLED_Draw_Circle(u8 x0,u8 y0,u8 r)
 }
 
 
+void OLED_Draw_FullCircle(u16 x0,u16 y0,u8 r)
+{
+	s16 a,b;
+	s16 di;
+	a=0;b=r;	  
+	di=3-(r<<1);             //判断下个点位置的标志
+	while(a<=b)
+	{
+		s16 i = a,p = b;
 
+		while(i>0)
+		{		
+			OLED_Draw_Point(x0+b,y0-i,1);
+			OLED_Draw_Point(x0-i,y0+b,1);
+			i--;
+		}		
+		while(p>0)
+		{		
+			OLED_Draw_Point(x0-a,y0-p,1);
+			OLED_Draw_Point(x0-p,y0-a,1);
+			OLED_Draw_Point(x0+a,y0-p,1);
+			OLED_Draw_Point(x0-p,y0+a,1);
+			OLED_Draw_Point(x0+a,y0+p,1);
+			OLED_Draw_Point(x0+p,y0+a,1);
+			p--;
+		}
 
-
-
+		a++;
+		//Bresenham算法画圆    
+		if(di<0)di +=4*a+6;	  
+		else
+		{
+			di+=10+4*(a-b);   
+			b--;
+		} 						    
+	}
+	OLED_Draw_Point(x0,y0,1); //圆心坐标
+}
 
 //六角星
 void Boot_Animation(void)
@@ -1055,7 +1085,6 @@ void Boot_Animation(void)
 				delay_ms(2);
 			  	OLED_UpdateGRAM();
 		}
-		ss
 		for(x = 30;x <= 94;x++)
 		{
 				OLED_Draw_Point(125-x,47,1);

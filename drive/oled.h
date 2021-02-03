@@ -53,6 +53,7 @@ void OLED_Data2GRAM(u8 *Data,u16 length);
 void OLED_Draw_Point(u8 x,u8 y,u8 t);
 void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2);
 void OLED_Draw_Circle(u8 x0,u8 y0,u8 r);
+void OLED_Draw_FullCircle(u16 x0,u16 y0,u8 r);
 void Boot_Animation(void);
 
   
