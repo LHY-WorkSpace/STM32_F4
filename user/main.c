@@ -95,7 +95,7 @@ Programe_Start();
 printf("Run Time: %d us",Programe_End_Us());
 
 
-//Boot_Animation();
+Boot_Animation();
 
 
 

@@ -944,7 +944,68 @@ void OLED_Data2GRAM(u8 *Data,u16 length)
 
 }
 
+void LCD_DrawLine(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2)
+{
+	unsigned int t; 
+	int xerr=0,yerr=0,delta_x,delta_y,distance; 
+	int incx,incy,uRow,uCol; 
+	delta_x=x2-x1; //计算坐标增量 
+	delta_y=y2-y1; 
+	uRow=x1; 
+	uCol=y1; 
 
+	if(delta_x>0)
+	{
+		incx=1; //设置单步方向 
+	}		
+	else if(delta_x==0)
+	{
+		incx=0;//垂直线 
+	}
+	else 
+	{
+		incx=-1;delta_x=-delta_x;
+	} 
+
+	if(delta_y>0)
+	{
+		incy=1; 
+	}
+	else if(delta_y==0)
+	{
+		incy=0;
+	}//水平线 
+	else
+	{
+		incy=-1;
+		delta_y=-delta_y;
+	} 
+
+	if( delta_x>delta_y)
+	{
+		distance=delta_x; //选取基本增量坐标轴 
+	}
+	else 
+	{
+		distance=delta_y; 
+	}
+	for(t=0;t<=distance+1;t++ )//画线输出 
+	{  
+		OLED_Draw_Point(uRow,uCol,1);//画点 
+		xerr+=delta_x ; 
+		yerr+=delta_y ; 
+		if(xerr>distance) 
+		{ 
+			xerr-=distance; 
+			uRow+=incx; 
+		} 
+		if(yerr>distance) 
+		{ 
+			yerr-=distance; 
+			uCol+=incy; 
+		} 
+	}  
+} 
 
 //六角星
 void Boot_Animation(void)
