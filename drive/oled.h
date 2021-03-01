@@ -56,7 +56,7 @@ void OLED_Draw_Circle(u8 x0,u8 y0,u8 r);
 void OLED_Draw_FullCircle(u16 x0,u16 y0,u8 r);
 void Boot_Animation(void);
 
-  
+ void Test(void); 
 #endif
 
 

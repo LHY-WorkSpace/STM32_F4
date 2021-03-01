@@ -77,11 +77,11 @@ void SDIO_Test()
 int  main()
 {
  
-u8 x,y,z;
+u8 x=0,y=0,x1=0,y1=0;
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
 	usart_init(115200);
 	led_init();
-	SD_Init();
+	//SD_Init();
 	OLED_Init();
 	Rng_Init();
 	//IIC_Init();
@@ -89,18 +89,20 @@ u8 x,y,z;
 	//windows_open(100);
 
 
-Programe_Start();
-// Rng_GetRadomData();
- OLED_ClearScreen(0x00);
-printf("Run Time: %d us",Programe_End_Us());
-
-
-Boot_Animation();
+// Programe_Start();
+// // Rng_GetRadomData();
+//  OLED_ClearScreen(0x00);
+// printf("Run Time: %d us",Programe_End_Us());
 
 
 
 
-	//OLED_SetScanFre(0xff,0);
+
+	//OLED_Draw_Line(0, 0, 10,10);
+	Test();
+	//OLED_Draw_FullCircle(30,31,15);
+	Boot_Animation();
+	OLED_UpdateGRAM();
 
 	while(1)
 	{	
@@ -111,11 +113,19 @@ Boot_Animation();
 		// OLED_Draw_Point(x,y,0);
 		// OLED_UpdateGRAM();
 		LED1_OFF;
-		delay_ms(2);
+		delay_ms(200);
 		LED1_ON;
-		delay_ms(2);
+		delay_ms(200);
 
-
+		// // OLED_Draw_FullCircle(x,31,30);
+		// OLED_Draw_Line(0, 31, 127,31);
+		// OLED_Draw_Line(63, 0, 63,63);	
+		// y1=Rng_GetRadomData()%64;
+		// x1=x+5;
+		// // OLED_Draw_Point(x,y,1);
+		// OLED_Draw_Line(x, y, x1,y1);
+		// OLED_UpdateGRAM();
+ 
 
 
 		// if(y)

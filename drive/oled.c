@@ -10,16 +10,17 @@ u8 OLED_GRAM[8][128];
 
 	
 /*          8*8                        */
-u8 num0[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
-u8 num1[8]={0X00,0X00,0X42,0X42,0X7F,0X40,0X00,0X00};
-u8 num2[8]={0X00,0X00,0X7B,0X49,0X49,0X49,0X4F,0X00};
-u8 num3[8]={0X00,0X00,0X63,0X49,0X49,0X49,0X7F,0X00};
-u8 num4[8]={0X00,0X00,0X0F,0X08,0X7E,0X08,0X08,0X00};
-u8 num5[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X79,0X00};
-u8 num6[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X79,0X00};
-u8 num7[8]={0X00,0X00,0X01,0X01,0X7D,0X03,0X01,0X00};
-u8 num8[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X7F,0X00};
-u8 num9[8]={0X00,0X00,0X4F,0X49,0X49,0X49,0X7F,0X00};
+u8 num0[]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
+u8 num1[]={0X00,0X00,0X42,0X42,0X7F,0X40,0X00,0X00};
+u8 num2[]={0X00,0X00,0X7B,0X49,0X49,0X49,0X4F,0X00};
+u8 num3[]={0X00,0X00,0X63,0X49,0X49,0X49,0X7F,0X00};
+u8 num4[]={0X00,0X00,0X0F,0X08,0X7E,0X08,0X08,0X00};
+u8 num5[]={0X00,0X00,0X4F,0X49,0X49,0X49,0X79,0X00};
+u8 num6[]={0X00,0X00,0X7F,0X49,0X49,0X49,0X79,0X00};
+u8 num7[]={0X00,0X00,0X01,0X01,0X7D,0X03,0X01,0X00};
+u8 num8[]={0X00,0X00,0X7F,0X49,0X49,0X49,0X7F,0X00};
+u8 num9[]={0x00,0x00,0x00,0x10,0x10,0x18,0x28,0x28,0x24,0x3C,0x44,0x42,0x42,0xE7,0x00,0x00};
+
 
 
 
@@ -135,55 +136,6 @@ void show_All()
 
 
 
-
-//void oled_spi_configinit()
-//{
-//	
-//	
-//	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2,ENABLE);
-//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
-//	
-//	GPIO_InitTypeDef GPIOB_InitTypeDefinsture;
-//	SPI_InitTypeDef SPI_InitTypeDefinsture;
-//	
-//	GPIOB_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_13|GPIO_Pin_15;                 
-//	GPIOB_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_AF;                        
-//	GPIOB_InitTypeDefinsture.GPIO_Speed=GPIO_High_Speed;
-//	GPIOB_InitTypeDefinsture.GPIO_OType=GPIO_OType_PP;           
-//	GPIOB_InitTypeDefinsture.GPIO_PuPd=GPIO_PuPd_UP;
-
-//	
-//	GPIO_Init(GPIOB,&GPIOB_InitTypeDefinsture);
-//	
-//	GPIOB_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_12|GPIO_Pin_14;                
-//	GPIOB_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_OUT;
-//	GPIOB_InitTypeDefinsture.GPIO_Speed=GPIO_High_Speed;
-//	GPIOB_InitTypeDefinsture.GPIO_OType=GPIO_OType_PP;           
-//	GPIOB_InitTypeDefinsture.GPIO_PuPd=GPIO_PuPd_UP;
-//	
-//	GPIO_Init(GPIOB,&GPIOB_InitTypeDefinsture);
-//	
-//	GPIO_PinAFConfig(GPIOB,GPIO_PinSource13,GPIO_AF_SPI2);
-//	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_SPI2);	
-//	
-//	SPI_InitTypeDefinsture.SPI_Direction=SPI_Direction_2Lines_FullDuplex;
-//	SPI_InitTypeDefinsture.SPI_Mode=SPI_Mode_Master;
-//	SPI_InitTypeDefinsture.SPI_DataSize=SPI_DataSize_8b;
-//	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;
-//	SPI_InitTypeDefinsture.SPI_CPHA=SPI_CPHA_2Edge;
-//	SPI_InitTypeDefinsture.SPI_NSS=SPI_NSS_Soft;
-//	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_32;
-//	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
-//	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
-
-//	SPI_Init(SPI2,&SPI_InitTypeDefinsture);
-
-//	SPI_Cmd(SPI2 ,ENABLE);
-
-//  SPI_I2S_ITConfig(SPI2,SPI_I2S_IT_TXE,ENABLE);
-
-//}
-
 void OLED_SPI_Init()
 {
 
@@ -264,7 +216,7 @@ void OLED_Init(void)
     OLED_SetMode(0XA6);       //0XA6-正常      0XA7-反相
 	OLED_SetMode(0x20);       /*设置显示模式                 参考：  https://blog.csdn.net/gengyuchao/article/details/86608037             */
 	OLED_SetMode(0x00);	      /*[页地址----10b    水平模式---00b     垂直模式---01b        */	
-	OLED_SetMode(0xc0);	    //0xc8---正常      0xc0------垂直反转  
+	OLED_SetMode(0xc8);	    //0xc8---正常      0xc0------垂直反转  
 	OLED_SetMode(0xa1);				
 	OLED_SetMode(0x23);
 	OLED_SetMode(0x00);          //[5:4]--00禁用闪烁或淡出       10使能消退      11使能闪烁                 [3:0]-----0000(8帧)  0001(16帧)     0010(16帧)。。。。1111(128帧)
@@ -316,11 +268,11 @@ void show_picture(u8 x_start,u8 y_start,u8 x_length,u8 y_length,u8* data)      /
 
 void OLED_SendData(u8 Tdata)
 {
-		OLED_DATA;
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);             //非中断模式
-		SPI_I2S_SendData(SPI2,Tdata);			
-    	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-		delay_us(2);	
+	OLED_DATA;
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);             //非中断模式
+	SPI_I2S_SendData(SPI2,Tdata);			
+	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+
 
 }
 
@@ -330,7 +282,6 @@ void OLED_SetMode(u8 Tdata)
 	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            //非中断模式
 	SPI_I2S_SendData(SPI2,Tdata);			
     SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-	delay_us(2);
 
 }
 
@@ -867,7 +818,22 @@ OLED_SetScanFre(15,0);
 }
 
 
+void Test()
+{
+u8 i;
+	for(i=0;i<8;i++)
+	{
+	OLED_GRAM[0][i]|=charG[i];
+	OLED_GRAM[0][i+8]|=charH[i];
+	OLED_GRAM[0][i+16]|=charI[i];
+	OLED_GRAM[0][i+24]|=charJ[i];
+	OLED_GRAM[0][i+32]|=charK[i];
+	OLED_GRAM[0][i+40]|=charL[i];
+	}
 
+
+
+}
 
 
 
@@ -880,11 +846,12 @@ OLED_SetScanFre(15,0);
 void OLED_Draw_Point(u8 x,u8 y,u8 t)
 {
 	u8 pos,bx,temp=0;
+
 	if(x>127||y>63)
 		return;
-	pos=7-y/8; 
+	pos=y/8; 
 	bx=y%8;     
-	temp=1<<(7-bx); 
+	temp=1<<bx;
 	if(t)
 		OLED_GRAM[pos][x]|=temp;  
 	else 
@@ -899,7 +866,7 @@ void OLED_Draw_Point(u8 x,u8 y,u8 t)
 void OLED_ClearScreen(u8 Data)
 {
 	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
-	OLED_UpdateGRAM();
+	//OLED_UpdateGRAM();
 }
 
 
@@ -946,6 +913,8 @@ void OLED_Data2GRAM(u8 *Data,u16 length)
 		for(j=0;j<128;j++)
 		{
 			OLED_GRAM[i][j]=Data[k++];
+			if(k>length)
+			return;
 		}
 	}
 
@@ -1082,17 +1051,17 @@ void Boot_Animation(void)
 				y = 64-x;
 				OLED_Draw_Point(64-0.7*y,y,1);
 				OLED_Draw_Point(64+0.7*y,y,1);
-				delay_ms(2);
+				delay_ms(20);
 			  	OLED_UpdateGRAM();
 		}
 		for(x = 30;x <= 94;x++)
 		{
 				OLED_Draw_Point(125-x,47,1);
 				OLED_Draw_Point(x,18,1);
-				delay_ms(2);
+				delay_ms(20);
 				OLED_UpdateGRAM();
 		}
-		delay_ms(100);
+
 		
 }
 
