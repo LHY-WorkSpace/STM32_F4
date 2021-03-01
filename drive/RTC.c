@@ -59,7 +59,7 @@ void RTC_Config()
 		}		
 		if(retry==0)
 		  return;
-
+			
 		RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);		//设置RTC时钟(RTCCLK),选择LSE作为RTC时钟   
 		RCC_RTCCLKCmd(ENABLE);                  	//使能RTC时钟  	
 		RTC_InitStructure.RTC_AsynchPrediv = 0x7F;//RTC异步分频系数(1~0X7F)	
