@@ -149,7 +149,7 @@ void  DMA1_Start()
 		DMA_ClearFlag(DMA1_Stream4,DMA_FLAG_TCIF4);
 		//DMA_ClearITPendingBit(DMA1_Stream4,DMA_IT_TCIF4);
 		DMA_Cmd(DMA1_Stream4,DISABLE);
-	  DMA_SetCurrDataCounter(DMA1_Stream4,DMA_TIMES);
+	 	 DMA_SetCurrDataCounter(DMA1_Stream4,DMA_TIMES);
 		DMA_Cmd(DMA1_Stream4,ENABLE);
 
 }
