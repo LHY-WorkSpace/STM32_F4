@@ -276,15 +276,15 @@ Section Cross References
     dac.o(i.dac_init) refers to stm32f4xx_dac.o(i.DAC_Init) for DAC_Init
     dac.o(i.dac_init) refers to stm32f4xx_dac.o(i.DAC_Cmd) for DAC_Cmd
     dac.o(i.dac_output_V) refers to stm32f4xx_dac.o(i.DAC_SetChannel1Data) for DAC_SetChannel1Data
-    pwm.o(i.pwm_init) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
-    pwm.o(i.pwm_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
-    pwm.o(i.pwm_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
-    pwm.o(i.pwm_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
-    pwm.o(i.pwm_init) refers to stm32f4xx_tim.o(i.TIM_TimeBaseInit) for TIM_TimeBaseInit
-    pwm.o(i.pwm_init) refers to stm32f4xx_tim.o(i.TIM_OC4Init) for TIM_OC4Init
-    pwm.o(i.pwm_init) refers to stm32f4xx_tim.o(i.TIM_OC4PreloadConfig) for TIM_OC4PreloadConfig
-    pwm.o(i.pwm_init) refers to stm32f4xx_tim.o(i.TIM_ARRPreloadConfig) for TIM_ARRPreloadConfig
-    pwm.o(i.pwm_init) refers to stm32f4xx_tim.o(i.TIM_Cmd) for TIM_Cmd
+    pwm.o(i.PWM_init) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
+    pwm.o(i.PWM_init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
+    pwm.o(i.PWM_init) refers to stm32f4xx_gpio.o(i.GPIO_Init) for GPIO_Init
+    pwm.o(i.PWM_init) refers to stm32f4xx_gpio.o(i.GPIO_PinAFConfig) for GPIO_PinAFConfig
+    pwm.o(i.PWM_init) refers to stm32f4xx_tim.o(i.TIM_TimeBaseInit) for TIM_TimeBaseInit
+    pwm.o(i.PWM_init) refers to stm32f4xx_tim.o(i.TIM_OC4Init) for TIM_OC4Init
+    pwm.o(i.PWM_init) refers to stm32f4xx_tim.o(i.TIM_OC4PreloadConfig) for TIM_OC4PreloadConfig
+    pwm.o(i.PWM_init) refers to stm32f4xx_tim.o(i.TIM_ARRPreloadConfig) for TIM_ARRPreloadConfig
+    pwm.o(i.PWM_init) refers to stm32f4xx_tim.o(i.TIM_Cmd) for TIM_Cmd
     spi.o(i.SPI2_IRQHandler) refers to stm32f4xx_spi.o(i.SPI_I2S_GetITStatus) for SPI_I2S_GetITStatus
     spi.o(i.SPI2_IRQHandler) refers to stm32f4xx_spi.o(i.SPI_I2S_ClearITPendingBit) for SPI_I2S_ClearITPendingBit
     spi.o(i.SPI2_IRQHandler) refers to spi.o(.data) for i
@@ -2782,7 +2782,7 @@ Removing Unused input sections from the image.
     Removing pwm.o(.rev16_text), (4 bytes).
     Removing pwm.o(.revsh_text), (4 bytes).
     Removing pwm.o(.rrx_text), (6 bytes).
-    Removing pwm.o(i.pwm_init), (156 bytes).
+    Removing pwm.o(i.PWM_init), (156 bytes).
     Removing spi.o(.rev16_text), (4 bytes).
     Removing spi.o(.revsh_text), (4 bytes).
     Removing spi.o(.rrx_text), (6 bytes).

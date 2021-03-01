@@ -24,13 +24,13 @@ yyyy:password";
 
 
 //…Ë÷√±æµÿWIFI///
-char *CMD_RST="AT+RST\r\n";
-char *CMD_CWMODE="AT+CWMODE=3\r\n";
-char *CMD_CWSAP="AT+CWSAP=\"DEVICE1\",\"123456789\",6,3\r\n";
-char *CMD_CIFSR="AT+CIFSR\r\n";
-char *CMD_CIPMUX="AT+CIPMUX=1\r\n";
-char *CMD_CIPSERVER="AT+CIPSERVER=1,8080\r\n";
-char *CMD_CIPSEND="AT+CIPSEND=0,79\r\n";
+char CMD_RST[]="AT+RST\r\n";
+char CMD_CWMODE[]="AT+CWMODE=3\r\n";
+char CMD_CWSAP[]="AT+CWSAP=\"DEVICE1\",\"123456789\",6,3\r\n";
+char CMD_CIFSR[]="AT+CIFSR\r\n";
+char CMD_CIPMUX[]="AT+CIPMUX=1\r\n";
+char CMD_CIPSERVER[]="AT+CIPSERVER=1,8080\r\n";
+char CMD_CIPSEND[]="AT+CIPSEND=0,79\r\n";
 
 char Wifi_Name[]="WIFI:DEVICE1";
 char Wifi_Password[]="KEY:123456789";
@@ -39,11 +39,11 @@ char Local_IP[12];
 char Net_Name[15];
 char Net_Password[10];
 char Wifi_Data[300];
- u8 USED_FLAG;
+u8 USED_FLAG;
 
 
 
-void esp826_init(void)
+void ESP8266_init(void)
 {	
 	
 

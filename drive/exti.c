@@ -12,20 +12,17 @@ u8 Temperature_HIGH=25,Temperature_LOW=25,Humidity_HIGH=40,Humidity_LOW=40;
 void exti_init()
 {
 
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_EXTIT,ENABLE);
-		RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG,ENABLE);
-	
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE,ENABLE);	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_EXTIT,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE,ENABLE);	
 	 
-	  GPIO_InitTypeDef GPIOA_Initstruc;
-		GPIO_InitTypeDef GPIOC_Initstruc;
-	  GPIO_InitTypeDef GPIOE_Initstruc;
-	
+	GPIO_InitTypeDef GPIOA_Initstruc;
+	GPIO_InitTypeDef GPIOC_Initstruc;
+	GPIO_InitTypeDef GPIOE_Initstruc;
   	EXTI_InitTypeDef EXTI_Initstruct1;
-	
-	  NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 	
 	
 	GPIOA_Initstruc.GPIO_Pin=GPIO_Pin_2;
@@ -80,10 +77,6 @@ void exti_init()
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Init(&NVIC_InitStructure);
 
-
-
-
-
 	EXTI_ClearFlag(EXTI_Line2|EXTI_Line0|EXTI_Line3);
 
 
@@ -104,15 +97,9 @@ void EXTI0_IRQHandler(void)
 //	clear_screen();
 	if(Menu_Num>4)
 		Menu_Num=0;
-	
 
-	
-
-	
-
-
-}
-				EXTI_ClearFlag(EXTI_Line0);
+	}
+	EXTI_ClearFlag(EXTI_Line0);
 }
 
 void EXTI2_IRQHandler(void)                   //²Ëµ¥±êºÅ

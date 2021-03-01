@@ -20,65 +20,57 @@ void RTC_Set_Time(u8 hour,u8 minute,u8 second)
 }
 
 
-
-
 void RTC_Set_Date(u32 year,u8 month,u8 date,u8 week)
 {
 	RTC_DateTypeDef RTC_DateTypeDefinit;
 	
-
 	RTC_DateTypeDefinit.RTC_Year=year;
 	RTC_DateTypeDefinit.RTC_Month=month;
 	RTC_DateTypeDefinit.RTC_Date=date;
 	RTC_DateTypeDefinit.RTC_WeekDay=week ;	
-	
-	RTC_SetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
 
+	RTC_SetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
 
 }
 
-
-
-void RTC_configinit()
+void RTC_Config()
 {
 	RTC_InitTypeDef RTC_InitStructure;	
-	//u32 retry=0X1FFF; 
+	u8 retry=0xFF; 
 	u8 i;
-
+	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);//使能PWR时钟
 	PWR_BackupAccessCmd(ENABLE);
  
-	if(RTC_ReadBackupRegister(RTC_BKP_DR0)!=0x5050)
+	if(RTC_ReadBackupRegister(RTC_BKP_DR0)!=0x5A5A)  //未配置过
 	{	
-
 		RCC_LSEConfig(RCC_LSE_ON);//LSE 开启  
-		while (RCC_GetFlagStatus(RCC_FLAG_LSERDY) == RESET)	//检查指定的RCC标志位设置与否,等待低速晶振就绪	
+		while (retry!=RESET)	//检查指定的RCC标志位设置与否,等待低速晶振就绪	
 		{		
-			//retry++;	
-			for(i=0;i<10;i++)
-			delay_ms(10);		
+			if(RCC_GetFlagStatus(RCC_FLAG_LSERDY) == SET)
+			{
+				break;
+			}
+			else
+			{
+				delay_ms(2);	
+			}	
+			retry--;	
 		}		
-		//if(retry==0)
+		if(retry==0)
+		  return;
 
-		
 		RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);		//设置RTC时钟(RTCCLK),选择LSE作为RTC时钟   
 		RCC_RTCCLKCmd(ENABLE);                  	//使能RTC时钟  	
 		RTC_InitStructure.RTC_AsynchPrediv = 0x7F;//RTC异步分频系数(1~0X7F)	
 		RTC_InitStructure.RTC_SynchPrediv  = 0xFF;//RTC同步分频系数(0~7FFF)	
 		RTC_InitStructure.RTC_HourFormat   = RTC_HourFormat_24;//RTC设置为,24小时格式	
 		RTC_Init(&RTC_InitStructure); 	
-		RTC_Set_Time(17,56,48);	         //设置时间	
+		RTC_Set_Time(17,56,48);	        //设置时间	
 		RTC_Set_Date(18,10,16,2);		//设置日期 	
-		RTC_WriteBackupRegister(RTC_BKP_DR0,0x5050);
+		RTC_WriteBackupRegister(RTC_BKP_DR0,0x5A5A);
 		
-		//display_str_and_speed ("OK",10);
-	
 	} 
-	
-//     else
-//		display_str_and_speed("ERROR",10);
-	 
-		display_str_and_speed ("OK",10); 
 		
 
 }
