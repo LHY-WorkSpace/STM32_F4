@@ -83,7 +83,7 @@ u8 x=0,y=0,x1=0,y1=0;
 	led_init();
 	//SD_Init();
 	OLED_Init();
-	Rng_Init();
+	RNG_Init();
 	//IIC_Init();
 	//MPU6050_Init();
 	//windows_open(100);

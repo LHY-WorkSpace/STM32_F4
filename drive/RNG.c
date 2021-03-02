@@ -3,7 +3,7 @@
 u32 Radom;
 
 
-void Rng_Init()
+void RNG_Init()
 {
     RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_RNG,ENABLE);
     RNG_Cmd(ENABLE);
@@ -11,7 +11,7 @@ void Rng_Init()
 }
 
 
-u32 Rng_GetRadomData()
+u32 RHG_GetRadomData()
 {
     u8 times;
 	while((RNG_GetFlagStatus(RNG_FLAG_DRDY)!=SET)&&(times<10))
