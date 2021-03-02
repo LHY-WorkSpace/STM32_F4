@@ -4,6 +4,9 @@
 
 void Rng_Init(void);
 u32 Rng_GetRadomData(void);
+
+
+
 #endif
 
 
