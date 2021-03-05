@@ -1,37 +1,10 @@
-#include"IncludeFile.h"
+#include "IncludeFile.h"
 
-//#define u8unsigned char
-//#define u32 unsigned int 
 
- u8 hour,second,minute,month,date,week;
- u32 year;
+STM32_Time_t STM32_Time;
  
-void RTC_Set_Time(u8 hour,u8 minute,u8 second)
-{
-	RTC_TimeTypeDef RTC_TimeTypeDefinit;
-	
-	RTC_TimeTypeDefinit.RTC_Hours=hour;
-	RTC_TimeTypeDefinit.RTC_Minutes=minute ;
-	RTC_TimeTypeDefinit.RTC_Seconds=second ;
-	RTC_TimeTypeDefinit.RTC_H12=RTC_H12_PM;
-	
-	RTC_SetTime(RTC_Format_BIN,&RTC_TimeTypeDefinit);
+ 
 
-}
-
-
-void RTC_Set_Date(u32 year,u8 month,u8 date,u8 week)
-{
-	RTC_DateTypeDef RTC_DateTypeDefinit;
-	
-	RTC_DateTypeDefinit.RTC_Year=year;
-	RTC_DateTypeDefinit.RTC_Month=month;
-	RTC_DateTypeDefinit.RTC_Date=date;
-	RTC_DateTypeDefinit.RTC_WeekDay=week ;	
-
-	RTC_SetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
-
-}
 
 void RTC_Config()
 {
@@ -75,6 +48,59 @@ void RTC_Config()
 
 }
 
+void RTC_Set_Time(u8 hour,u8 minute,u8 second)
+{
+	RTC_TimeTypeDef RTC_TimeTypeDefinit;
+	
+	RTC_TimeTypeDefinit.RTC_Hours=hour;
+	RTC_TimeTypeDefinit.RTC_Minutes=minute ;
+	RTC_TimeTypeDefinit.RTC_Seconds=second ;
+	RTC_TimeTypeDefinit.RTC_H12=RTC_H12_PM;
+	
+	RTC_SetTime(RTC_Format_BIN,&RTC_TimeTypeDefinit);
+
+}
+
+
+void RTC_Set_Date(u8 year,u8 month,u8 date,u8 week)
+{
+	RTC_DateTypeDef RTC_DateTypeDefinit;
+
+	RTC_DateTypeDefinit.RTC_Year=year;
+	RTC_DateTypeDefinit.RTC_Month=month;
+	RTC_DateTypeDefinit.RTC_Date=date;
+	RTC_DateTypeDefinit.RTC_WeekDay=week ;	
+
+	RTC_SetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
+
+}
+
+
+
+void RTC_Get_Time(STM32_Time_t* STM32_Time)
+{
+	RTC_TimeTypeDef RTC_TimeTypeDefinit;
+
+	RTC_GetTime(RTC_Format_BIN,&RTC_TimeTypeDefinit);
+	
+	STM32_Time->hour=RTC_TimeTypeDefinit.RTC_Hours;
+	STM32_Time->minute=RTC_TimeTypeDefinit.RTC_Minutes;
+	STM32_Time->second=RTC_TimeTypeDefinit.RTC_Seconds;
+}
+
+
+
+void RTC_Get_Date(STM32_Time_t* STM32_Time)
+{
+	RTC_DateTypeDef RTC_DateTypeDefinit;
+
+	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
+	
+	STM32_Time->year=RTC_DateTypeDefinit.RTC_Year;
+	STM32_Time->month=RTC_DateTypeDefinit.RTC_Month;
+	STM32_Time->date=RTC_DateTypeDefinit.RTC_Date;
+	STM32_Time->date=RTC_DateTypeDefinit.RTC_WeekDay;
+}
 
 
 
