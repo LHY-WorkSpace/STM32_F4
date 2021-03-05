@@ -46,5 +46,5 @@
 
 extern u8 OLED_GRAM[8][128];
 extern u32 Radom;
-
+extern STM32_Time_t STM32_Time;
 
