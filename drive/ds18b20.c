@@ -151,16 +151,16 @@ void tempure_value_OLEDdisplay(char x,char y)
 
   	A1=wendu/100000;
 	display_position(x,y,5);		
-	display_num(A1);
+	//display_num(A1);
 	delay_ms (10);
 	
 	A2=wendu%100000/10000;		
-	display_num(A2);
+	//display_num(A2);
 	delay_ms (10);
-	display_char('.');	
+	// display_char('.');	
 	
 	A3=wendu%10000/1000;
-	display_num(A3);
+	//display_num(A3);
 	delay_ms (10);
 	
 	tempure_unit();
@@ -170,16 +170,16 @@ void tempure_value_OLEDdisplay(char x,char y)
 	{
 	
 	display_position(x,y,5);		
-	display_num(0);
+	//display_num(0);
 	delay_ms (10);
 	
 	
-	display_num(0);
+	//display_num(0);
 	delay_ms (10);
-	display_char('.');	
+	// display_char('.');	
 	
 
-	display_num(0);
+	//display_num(0);
 	delay_ms (10);
 	
 	tempure_unit();

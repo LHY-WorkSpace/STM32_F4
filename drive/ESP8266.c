@@ -70,15 +70,15 @@ void Set_Mode()
 	delay_ms(100);
 	Get_IP(Wifi_Data,Local_IP);        //Ã·»°IP
 	display_position(0,0,12);
-	display_str_and_speed(Wifi_Name,10);
+	//display_str_and_speed(Wifi_Name,10);
 	display_position(0,2,13);
-	display_str_and_speed(Wifi_Password,10);
+	//display_str_and_speed(Wifi_Password,10);
 	display_position(0,4,9);
-	display_str_and_speed(Port,10);
+	//display_str_and_speed(Port,10);
 	display_position(0,6,3);
-	display_str_and_speed("IP:",10);
+	//display_str_and_speed("IP:",10);
 	display_position(24,6,11);
-	display_str_and_speed(Local_IP,10);
+	//display_str_and_speed(Local_IP,10);
 	printf("%s",CMD_CIPMUX);
 	delay_ms(100);
 	printf("%s",CMD_CIPSERVER);
@@ -90,13 +90,13 @@ void Set_Mode()
 		{
 		USED_FLAG=1;
 		display_position(0,7,3);	
-		display_str_and_speed(":OK",10);
+		//display_str_and_speed(":OK",10);
     break;
 		}
 		else
 		{
 		display_position(0,7,3);	
-		display_str_and_speed(":XX",10);
+		//display_str_and_speed(":XX",10);
 	  USED_FLAG=1;
 		}
 		
@@ -106,9 +106,9 @@ void Set_Mode()
 //		{
 //		clear_screen();
 //		display_position(0,0,8);	
-//		display_str_and_speed("TIME OUT",1);
+//		//display_str_and_speed("TIME OUT",1);
 //		display_position(0,2,9);	
-//		display_str_and_speed("TRY RESET",1);
+//		//display_str_and_speed("TRY RESET",1);
 //		USED_FLAG=1;
 //		break;
 //		}
@@ -126,15 +126,15 @@ memset(Wifi_Data,0,sizeof(Wifi_Data));
 		{
 //		clear_screen();
 //		show_All();
-//		display_str_and_speed(Wifi_Data,100);			
+//		//display_str_and_speed(Wifi_Data,100);			
 			
 			
 //    Get_NetName(Wifi_Data,Net_Name);	
 //    Get_NetPassword(Wifi_Data,Net_Password);
 //		display_position(0,1,3);	
-//		display_str_and_speed(Net_Name,100);	
+//		//display_str_and_speed(Net_Name,100);	
 //		display_position(0,3,3);	
-//		display_str_and_speed(Net_Password,10);	
+//		//display_str_and_speed(Net_Password,10);	
 //		delay_ms(500);
 		USED_FLAG=1;			
     break;
@@ -153,14 +153,14 @@ memset(Wifi_Data,0,sizeof(Wifi_Data));
 		{
 			clear_screen();
 			show_All();
-			display_str_and_speed(Wifi_Data,100);
+			//display_str_and_speed(Wifi_Data,100);
 			
 	
 ////		display_position(0,1,16);	
-//		display_str_and_speed(Net_Name,100);	
+//		//display_str_and_speed(Net_Name,100);	
 ////		display_position(0,3,strlen(Net_Password));	
-//		display_str_and_speed(Net_Password,10);
-//				display_str_and_speed("OK",10);	
+//		//display_str_and_speed(Net_Password,10);
+//				//display_str_and_speed("OK",10);	
 			break;
 
 		}

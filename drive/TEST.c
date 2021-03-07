@@ -72,7 +72,7 @@ void SDIO_Test()
 
 }
 
-void RTC_Test()
+void RTC_ConfigInit()
 {
 		Programe_Start();
 		RTC_Get_Date(&STM32_Time);

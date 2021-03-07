@@ -13,7 +13,7 @@ STM32_Time_t STM32_Time;
  
 
 
-void RTC_Init()
+void RTC_ConfigInit()
 {
 	RTC_InitTypeDef RTC_InitStructure;	
 	u8 retry=0xFF; 
