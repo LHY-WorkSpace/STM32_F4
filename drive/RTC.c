@@ -13,7 +13,7 @@ STM32_Time_t STM32_Time;
  
 
 
-void RTC_Config()
+void RTC_Init()
 {
 	RTC_InitTypeDef RTC_InitStructure;	
 	u8 retry=0xFF; 
@@ -109,7 +109,7 @@ void RTC_Get_Date(STM32_Time_t* STM32_Time)
 	STM32_Time->date=RTC_DateTypeDefinit.RTC_Date;
 	STM32_Time->week=RTC_DateTypeDefinit.RTC_WeekDay;
 }
-
+/*
 void RTC_Set_Alarm(u8* Data,u8 length)
 {
 u8 SetBit=0;
@@ -174,7 +174,7 @@ u8 i;
 
 
 }
-
+*/
 
 
 
