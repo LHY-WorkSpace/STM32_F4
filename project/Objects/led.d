@@ -40,6 +40,7 @@
 .\objects\led.o: ..\CMSIS\core_cm4.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\led.o: ..\drive\SystemState.h
 .\objects\led.o: ..\drive\delay.h
 .\objects\led.o: ..\drive\usart.h
 .\objects\led.o: ..\drive\CODE_RUN_TIME.h
@@ -50,15 +51,16 @@
 .\objects\led.o: ..\drive\sd.h
 .\objects\led.o: ..\drive\sdio_sdcard.h
 .\objects\led.o: ..\drive\i2c.h
+.\objects\led.o: ..\drive\RTC.h
 .\objects\led.o: ..\drive\AT24C08.h
 .\objects\led.o: ..\drive\MPU6050.h
 .\objects\led.o: ..\drive\DHT11.h
 .\objects\led.o: ..\drive\ds18b20.h
 .\objects\led.o: ..\drive\oled.h
-.\objects\led.o: ..\drive\GUI.H
 .\objects\led.o: ..\drive\DMA.h
 .\objects\led.o: ..\drive\pwm.h
 .\objects\led.o: ..\drive\RNG.h
+.\objects\led.o: ..\drive\lcd1602.h
 .\objects\led.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\led.o: ..\user\FreeRTOSConfig.h
@@ -69,9 +71,8 @@
 .\objects\led.o: ..\FreeRTOS\include\mpu_wrappers.h
 .\objects\led.o: ..\FreeRTOS\include\task.h
 .\objects\led.o: ..\FreeRTOS\include\list.h
-.\objects\led.o: ..\drive\RTC.h
-.\objects\led.o: ..\SD\diskio.h
-.\objects\led.o: ..\SD\integer.h
-.\objects\led.o: ..\drive\lcd1602.h
 .\objects\led.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\led.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\led.o: ..\SD\diskio.h
+.\objects\led.o: ..\SD\integer.h
+.\objects\led.o: ..\drive\GUI.H

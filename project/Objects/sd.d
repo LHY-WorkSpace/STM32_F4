@@ -40,6 +40,7 @@
 .\objects\sd.o: ..\CMSIS\core_cm4.h
 .\objects\sd.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\sd.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\sd.o: ..\drive\SystemState.h
 .\objects\sd.o: ..\drive\delay.h
 .\objects\sd.o: ..\drive\usart.h
 .\objects\sd.o: ..\drive\CODE_RUN_TIME.h
@@ -50,15 +51,16 @@
 .\objects\sd.o: ..\drive\sd.h
 .\objects\sd.o: ..\drive\sdio_sdcard.h
 .\objects\sd.o: ..\drive\i2c.h
+.\objects\sd.o: ..\drive\RTC.h
 .\objects\sd.o: ..\drive\AT24C08.h
 .\objects\sd.o: ..\drive\MPU6050.h
 .\objects\sd.o: ..\drive\DHT11.h
 .\objects\sd.o: ..\drive\ds18b20.h
 .\objects\sd.o: ..\drive\oled.h
-.\objects\sd.o: ..\drive\GUI.H
 .\objects\sd.o: ..\drive\DMA.h
 .\objects\sd.o: ..\drive\pwm.h
 .\objects\sd.o: ..\drive\RNG.h
+.\objects\sd.o: ..\drive\lcd1602.h
 .\objects\sd.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\sd.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\sd.o: ..\user\FreeRTOSConfig.h
@@ -69,9 +71,8 @@
 .\objects\sd.o: ..\FreeRTOS\include\mpu_wrappers.h
 .\objects\sd.o: ..\FreeRTOS\include\task.h
 .\objects\sd.o: ..\FreeRTOS\include\list.h
-.\objects\sd.o: ..\drive\RTC.h
-.\objects\sd.o: ..\SD\diskio.h
-.\objects\sd.o: ..\SD\integer.h
-.\objects\sd.o: ..\drive\lcd1602.h
 .\objects\sd.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\sd.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\sd.o: ..\SD\diskio.h
+.\objects\sd.o: ..\SD\integer.h
+.\objects\sd.o: ..\drive\GUI.H

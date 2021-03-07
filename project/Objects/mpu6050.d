@@ -40,6 +40,7 @@
 .\objects\mpu6050.o: ..\CMSIS\core_cm4.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\mpu6050.o: ..\drive\SystemState.h
 .\objects\mpu6050.o: ..\drive\delay.h
 .\objects\mpu6050.o: ..\drive\usart.h
 .\objects\mpu6050.o: ..\drive\CODE_RUN_TIME.h
@@ -50,15 +51,16 @@
 .\objects\mpu6050.o: ..\drive\sd.h
 .\objects\mpu6050.o: ..\drive\sdio_sdcard.h
 .\objects\mpu6050.o: ..\drive\i2c.h
+.\objects\mpu6050.o: ..\drive\RTC.h
 .\objects\mpu6050.o: ..\drive\AT24C08.h
 .\objects\mpu6050.o: ..\drive\MPU6050.h
 .\objects\mpu6050.o: ..\drive\DHT11.h
 .\objects\mpu6050.o: ..\drive\ds18b20.h
 .\objects\mpu6050.o: ..\drive\oled.h
-.\objects\mpu6050.o: ..\drive\GUI.H
 .\objects\mpu6050.o: ..\drive\DMA.h
 .\objects\mpu6050.o: ..\drive\pwm.h
 .\objects\mpu6050.o: ..\drive\RNG.h
+.\objects\mpu6050.o: ..\drive\lcd1602.h
 .\objects\mpu6050.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\mpu6050.o: ..\user\FreeRTOSConfig.h
@@ -69,9 +71,8 @@
 .\objects\mpu6050.o: ..\FreeRTOS\include\mpu_wrappers.h
 .\objects\mpu6050.o: ..\FreeRTOS\include\task.h
 .\objects\mpu6050.o: ..\FreeRTOS\include\list.h
-.\objects\mpu6050.o: ..\drive\RTC.h
-.\objects\mpu6050.o: ..\SD\diskio.h
-.\objects\mpu6050.o: ..\SD\integer.h
-.\objects\mpu6050.o: ..\drive\lcd1602.h
 .\objects\mpu6050.o: ..\MPU6050DMP\inv_mpu.h
 .\objects\mpu6050.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\mpu6050.o: ..\SD\diskio.h
+.\objects\mpu6050.o: ..\SD\integer.h
+.\objects\mpu6050.o: ..\drive\GUI.H

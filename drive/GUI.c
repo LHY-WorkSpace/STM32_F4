@@ -157,7 +157,7 @@ Show_Temperature(20,2,Temp);
 			if(times==20)	
 			{
 			show_picture(111,0,16,16,upload);
-			printf(iot,Temp,shidu);
+//			printf(iot,Temp,shidu);
 			times=0;
 			delay_ms(700);
 			show_picture(111,0,16,16,Empty);

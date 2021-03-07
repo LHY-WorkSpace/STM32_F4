@@ -77,13 +77,15 @@ void SDIO_Test()
 int  main()
 {
  
-u8 x=0,y=0,x1=0,y1=0;
+//u8 x=0,y=0,x1=0,y1=0;
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
 	usart_init(115200);
 	led_init();
+	RTC_Config();
+
 	//SD_Init();
-	OLED_Init();
-	RNG_Init();
+	//OLED_Init();
+	//RNG_Init();
 	//IIC_Init();
 	//MPU6050_Init();
 	//windows_open(100);
@@ -99,10 +101,10 @@ u8 x=0,y=0,x1=0,y1=0;
 
 
 	//OLED_Draw_Line(0, 0, 10,10);
-	Test();
-	//OLED_Draw_FullCircle(30,31,15);
-	Boot_Animation();
-	OLED_UpdateGRAM();
+	// Test();
+	// //OLED_Draw_FullCircle(30,31,15);
+	// Boot_Animation();
+	// OLED_UpdateGRAM();
 
 	while(1)
 	{	
@@ -116,7 +118,11 @@ u8 x=0,y=0,x1=0,y1=0;
 		delay_ms(200);
 		LED1_ON;
 		delay_ms(200);
-
+		Programe_Start();
+		RTC_Get_Date(&STM32_Time);
+		RTC_Get_Time(&STM32_Time);
+		printf("Run Time: %d us",Programe_End_Us());
+		printf("Y:%d M:%d D:%d W:%d H:%d M:%d S:%d\r\n",STM32_Time.year,STM32_Time.month,STM32_Time.date,STM32_Time.week,STM32_Time.hour,STM32_Time.minute,STM32_Time.second);
 		// // OLED_Draw_FullCircle(x,31,30);
 		// OLED_Draw_Line(0, 31, 127,31);
 		// OLED_Draw_Line(63, 0, 63,63);	
