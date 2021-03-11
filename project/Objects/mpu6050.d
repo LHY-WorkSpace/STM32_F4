@@ -48,7 +48,6 @@
 .\objects\mpu6050.o: ..\drive\adc.h
 .\objects\mpu6050.o: ..\drive\led.h
 .\objects\mpu6050.o: ..\drive\exti.h
-.\objects\mpu6050.o: ..\drive\sd.h
 .\objects\mpu6050.o: ..\drive\sdio_sdcard.h
 .\objects\mpu6050.o: ..\drive\i2c.h
 .\objects\mpu6050.o: ..\drive\RTC.h

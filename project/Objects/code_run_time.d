@@ -48,7 +48,6 @@
 .\objects\code_run_time.o: ..\drive\adc.h
 .\objects\code_run_time.o: ..\drive\led.h
 .\objects\code_run_time.o: ..\drive\exti.h
-.\objects\code_run_time.o: ..\drive\sd.h
 .\objects\code_run_time.o: ..\drive\sdio_sdcard.h
 .\objects\code_run_time.o: ..\drive\i2c.h
 .\objects\code_run_time.o: ..\drive\RTC.h

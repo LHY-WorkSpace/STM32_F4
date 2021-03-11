@@ -19,7 +19,7 @@
 #include "adc.h"
 #include "led.h"
 #include "exti.h"
-#include "sd.h"
+// #include "sd.h"
 #include "sdio_sdcard.h"
 #include "i2c.h"
 #include "RTC.h"

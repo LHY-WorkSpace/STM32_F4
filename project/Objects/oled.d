@@ -48,7 +48,6 @@
 .\objects\oled.o: ..\drive\adc.h
 .\objects\oled.o: ..\drive\led.h
 .\objects\oled.o: ..\drive\exti.h
-.\objects\oled.o: ..\drive\sd.h
 .\objects\oled.o: ..\drive\sdio_sdcard.h
 .\objects\oled.o: ..\drive\i2c.h
 .\objects\oled.o: ..\drive\RTC.h

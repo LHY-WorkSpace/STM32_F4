@@ -48,7 +48,6 @@
 .\objects\at24c08.o: ..\drive\adc.h
 .\objects\at24c08.o: ..\drive\led.h
 .\objects\at24c08.o: ..\drive\exti.h
-.\objects\at24c08.o: ..\drive\sd.h
 .\objects\at24c08.o: ..\drive\sdio_sdcard.h
 .\objects\at24c08.o: ..\drive\i2c.h
 .\objects\at24c08.o: ..\drive\RTC.h

@@ -1,7 +1,7 @@
 #include "IncludeFile.h"
 
 
-__align(4) u8 A[512],B[2048];   //对齐的部分不能在栈里！！！
+__align(4) u8 A[1024],B[2048];   //对齐的部分不能在栈里！！！
 
 
 void MPU6050_Test()
@@ -56,16 +56,20 @@ void AT24C08_Test()
 void SDIO_Test()
 {
 	u16 k;
-	SD_ShowInfomation();
-	memset(A,0x22,sizeof(A));
 
-		Programe_Start();
- 		SD_WriteMultiBlocks(A,512, 512,sizeof(A)/512); 
-		Programe_End_Us();	
-		
-		Programe_Start();
- 		SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
-		Programe_End_Us();	
+	Programe_Start();
+	SD_ShowInfomation();
+	Programe_End_Us();
+
+	memset(A,0x5A,sizeof(A));
+
+	Programe_Start();
+	SD_WriteMultiBlocks(A,1024, 512,sizeof(A)/512); 
+	Programe_End_Us();	
+	
+	Programe_Start();
+	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
+	Programe_End_Us();	
 
 	for(k=0;k<sizeof(B);k++)
 	printf("Data %d : %x \r\n",k,B[k]);
@@ -81,6 +85,10 @@ void RTC_Test()
 		printf("Y:%d M:%d D:%d W:%d H:%d M:%d S:%d\r\n",STM32_Time.year,STM32_Time.month,STM32_Time.date,STM32_Time.week,STM32_Time.hour,STM32_Time.minute,STM32_Time.second);
 
 }
+
+
+
+
 void RNG_Test()
 {
 
@@ -92,3 +100,31 @@ void RNG_Test()
 
 	
 }
+
+void OLED_Test()
+{
+
+	OLED_ShowStrings(45,0,"OLED",4);
+	OLED_ShowStrings(10,1,"STM32F407VET6",13);	
+	OLED_ShowStrings(15,2,"0.96'-4-SPI",11);
+	OLED_ShowStrings(18,3,"Displaying",10);	
+	OLED_UpdateGRAM();	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

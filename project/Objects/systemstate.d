@@ -48,7 +48,6 @@
 .\objects\systemstate.o: ..\drive\adc.h
 .\objects\systemstate.o: ..\drive\led.h
 .\objects\systemstate.o: ..\drive\exti.h
-.\objects\systemstate.o: ..\drive\sd.h
 .\objects\systemstate.o: ..\drive\sdio_sdcard.h
 .\objects\systemstate.o: ..\drive\i2c.h
 .\objects\systemstate.o: ..\drive\RTC.h

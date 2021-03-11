@@ -954,11 +954,6 @@
               <FilePath>..\drive\i2c.c</FilePath>
             </File>
             <File>
-              <FileName>sd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\sd.c</FilePath>
-            </File>
-            <File>
               <FileName>GUI.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\drive\GUI.c</FilePath>

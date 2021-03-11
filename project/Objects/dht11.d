@@ -48,7 +48,6 @@
 .\objects\dht11.o: ..\drive\adc.h
 .\objects\dht11.o: ..\drive\led.h
 .\objects\dht11.o: ..\drive\exti.h
-.\objects\dht11.o: ..\drive\sd.h
 .\objects\dht11.o: ..\drive\sdio_sdcard.h
 .\objects\dht11.o: ..\drive\i2c.h
 .\objects\dht11.o: ..\drive\RTC.h

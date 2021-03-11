@@ -48,7 +48,6 @@
 .\objects\dma.o: ..\drive\adc.h
 .\objects\dma.o: ..\drive\led.h
 .\objects\dma.o: ..\drive\exti.h
-.\objects\dma.o: ..\drive\sd.h
 .\objects\dma.o: ..\drive\sdio_sdcard.h
 .\objects\dma.o: ..\drive\i2c.h
 .\objects\dma.o: ..\drive\RTC.h

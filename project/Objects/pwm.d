@@ -48,7 +48,6 @@
 .\objects\pwm.o: ..\drive\adc.h
 .\objects\pwm.o: ..\drive\led.h
 .\objects\pwm.o: ..\drive\exti.h
-.\objects\pwm.o: ..\drive\sd.h
 .\objects\pwm.o: ..\drive\sdio_sdcard.h
 .\objects\pwm.o: ..\drive\i2c.h
 .\objects\pwm.o: ..\drive\RTC.h

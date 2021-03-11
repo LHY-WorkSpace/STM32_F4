@@ -48,7 +48,6 @@
 .\objects\ds18b20.o: ..\drive\adc.h
 .\objects\ds18b20.o: ..\drive\led.h
 .\objects\ds18b20.o: ..\drive\exti.h
-.\objects\ds18b20.o: ..\drive\sd.h
 .\objects\ds18b20.o: ..\drive\sdio_sdcard.h
 .\objects\ds18b20.o: ..\drive\i2c.h
 .\objects\ds18b20.o: ..\drive\RTC.h

@@ -60,7 +60,6 @@
 ".\objects\exti.o"
 ".\objects\at24c08.o"
 ".\objects\i2c.o"
-".\objects\sd.o"
 ".\objects\gui.o"
 ".\objects\dht11.o"
 ".\objects\code_run_time.o"

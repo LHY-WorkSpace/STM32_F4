@@ -48,7 +48,6 @@
 .\objects\test.o: ..\drive\adc.h
 .\objects\test.o: ..\drive\led.h
 .\objects\test.o: ..\drive\exti.h
-.\objects\test.o: ..\drive\sd.h
 .\objects\test.o: ..\drive\sdio_sdcard.h
 .\objects\test.o: ..\drive\i2c.h
 .\objects\test.o: ..\drive\RTC.h

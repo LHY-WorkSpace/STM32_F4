@@ -48,7 +48,6 @@
 .\objects\lcd1602.o: ..\drive\adc.h
 .\objects\lcd1602.o: ..\drive\led.h
 .\objects\lcd1602.o: ..\drive\exti.h
-.\objects\lcd1602.o: ..\drive\sd.h
 .\objects\lcd1602.o: ..\drive\sdio_sdcard.h
 .\objects\lcd1602.o: ..\drive\i2c.h
 .\objects\lcd1602.o: ..\drive\RTC.h

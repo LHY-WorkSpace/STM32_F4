@@ -48,7 +48,6 @@
 .\objects\delay.o: ..\drive\adc.h
 .\objects\delay.o: ..\drive\led.h
 .\objects\delay.o: ..\drive\exti.h
-.\objects\delay.o: ..\drive\sd.h
 .\objects\delay.o: ..\drive\sdio_sdcard.h
 .\objects\delay.o: ..\drive\i2c.h
 .\objects\delay.o: ..\drive\RTC.h

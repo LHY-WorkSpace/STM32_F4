@@ -48,7 +48,6 @@
 .\objects\sdio_sdcard.o: ..\drive\adc.h
 .\objects\sdio_sdcard.o: ..\drive\led.h
 .\objects\sdio_sdcard.o: ..\drive\exti.h
-.\objects\sdio_sdcard.o: ..\drive\sd.h
 .\objects\sdio_sdcard.o: ..\drive\sdio_sdcard.h
 .\objects\sdio_sdcard.o: ..\drive\i2c.h
 .\objects\sdio_sdcard.o: ..\drive\RTC.h
