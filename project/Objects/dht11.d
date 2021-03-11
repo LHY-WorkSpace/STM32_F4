@@ -76,3 +76,4 @@
 .\objects\dht11.o: ..\SD\diskio.h
 .\objects\dht11.o: ..\SD\integer.h
 .\objects\dht11.o: ..\drive\GUI.H
+.\objects\dht11.o: ..\drive\TEST.h

@@ -45,7 +45,7 @@ void hcsr_gpio_init()
 		TIM_TimeBaseInit.TIM_CounterMode=TIM_CounterMode_Up;
 		TIM_TimeBaseInit.TIM_ClockDivision=TIM_CKD_DIV1;
 
-		TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInit);
+//		TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInit);
 	
 		TIM_ICInitTypeDefinit.TIM_Channel=TIM_Channel_1;
 		TIM_ICInitTypeDefinit.TIM_ICPolarity=TIM_ICPolarity_BothEdge;

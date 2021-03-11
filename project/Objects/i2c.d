@@ -76,3 +76,4 @@
 .\objects\i2c.o: ..\SD\diskio.h
 .\objects\i2c.o: ..\SD\integer.h
 .\objects\i2c.o: ..\drive\GUI.H
+.\objects\i2c.o: ..\drive\TEST.h

@@ -76,3 +76,4 @@
 .\objects\oled.o: ..\SD\diskio.h
 .\objects\oled.o: ..\SD\integer.h
 .\objects\oled.o: ..\drive\GUI.H
+.\objects\oled.o: ..\drive\TEST.h

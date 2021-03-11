@@ -76,3 +76,4 @@
 .\objects\sdio_sdcard.o: ..\SD\diskio.h
 .\objects\sdio_sdcard.o: ..\SD\integer.h
 .\objects\sdio_sdcard.o: ..\drive\GUI.H
+.\objects\sdio_sdcard.o: ..\drive\TEST.h

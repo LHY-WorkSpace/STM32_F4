@@ -76,3 +76,4 @@
 .\objects\ds18b20.o: ..\SD\diskio.h
 .\objects\ds18b20.o: ..\SD\integer.h
 .\objects\ds18b20.o: ..\drive\GUI.H
+.\objects\ds18b20.o: ..\drive\TEST.h

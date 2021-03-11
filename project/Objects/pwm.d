@@ -76,3 +76,4 @@
 .\objects\pwm.o: ..\SD\diskio.h
 .\objects\pwm.o: ..\SD\integer.h
 .\objects\pwm.o: ..\drive\GUI.H
+.\objects\pwm.o: ..\drive\TEST.h

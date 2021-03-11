@@ -2148,7 +2148,7 @@ int mpu_run_self_test(long *gyro, long *accel)
     mpu_get_sample_rate(&sample_rate);
     sensors_on = st.chip_cfg.sensors;
     mpu_get_fifo_config(&fifo_sensors);
-delay_ms
+
     /* For older chips, the self-test will be different. */
 #if defined MPU6050
     for (ii = 0; ii < tries; ii++)

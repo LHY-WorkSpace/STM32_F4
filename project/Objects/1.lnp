@@ -68,6 +68,8 @@
 ".\objects\sdio_sdcard.o"
 ".\objects\lcd1602.o"
 ".\objects\mpu6050.o"
+".\objects\systemstate.o"
+".\objects\test.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"

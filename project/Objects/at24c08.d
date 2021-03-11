@@ -76,3 +76,4 @@
 .\objects\at24c08.o: ..\SD\diskio.h
 .\objects\at24c08.o: ..\SD\integer.h
 .\objects\at24c08.o: ..\drive\GUI.H
+.\objects\at24c08.o: ..\drive\TEST.h

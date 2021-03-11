@@ -42,6 +42,8 @@
 #include "diskio.h"	
 #include "GUI.H"
 
+#include "TEST.h"
+
 #endif
 
 extern u8 OLED_GRAM[8][128];

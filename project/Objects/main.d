@@ -76,3 +76,4 @@
 .\objects\main.o: ..\SD\diskio.h
 .\objects\main.o: ..\SD\integer.h
 .\objects\main.o: ..\drive\GUI.H
+.\objects\main.o: ..\drive\TEST.h

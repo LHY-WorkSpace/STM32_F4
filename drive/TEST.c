@@ -1,5 +1,5 @@
 #include "IncludeFile.h"
-#include "TEST.h"
+
 
 __align(4) u8 A[512],B[2048];   //对齐的部分不能在栈里！！！
 
@@ -29,25 +29,25 @@ void AT24C08_Test()
  	AT24C08Read_NBytes(AT24C08_BLOCK1,0,256,B);
 	for(k=0;k<256;k++)
 	{
- 	printf("%d EE1:%d \r\n",k,B[k]);	
+ 	printf("%d EE1:%x \r\n",k,B[k]);	
 	}
 
  	AT24C08Read_NBytes(AT24C08_BLOCK2,0,256,B);
 	for(k=0;k<256;k++)
 	{
- 	printf("%d EE2:%d \r\n",k,B[k]);	
+ 	printf("%d EE2:%x \r\n",k,B[k]);	
 	}
 
 	AT24C08Read_NBytes(AT24C08_BLOCK3,0,256,B);
 	for(k=0;k<256;k++)
 	{
- 	printf("%d EE3:%d \r\n",k,B[k]);	
+ 	printf("%d EE3:%x \r\n",k,B[k]);	
 	}
 
 	AT24C08Read_NBytes(AT24C08_BLOCK4,0,256,B);
 	for(k=0;k<256;k++)
 	{
- 	printf("%d EE4:%d \r\n",k,B[k]);	
+ 	printf("%d EE4:%x \r\n",k,B[k]);	
 	}
 
 
@@ -61,23 +61,23 @@ void SDIO_Test()
 
 		Programe_Start();
  		SD_WriteMultiBlocks(A,512, 512,sizeof(A)/512); 
-		printf("Times:%d us \r\n",Programe_End_Us());	
+		Programe_End_Us();	
 		
 		Programe_Start();
  		SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
-		printf("Times:%d us \r\n",Programe_End_Us());	
+		Programe_End_Us();	
 
 	for(k=0;k<sizeof(B);k++)
 	printf("Data %d : %x \r\n",k,B[k]);
 
 }
 
-void RTC_ConfigInit()
+void RTC_Test()
 {
 		Programe_Start();
 		RTC_Get_Date(&STM32_Time);
 		RTC_Get_Time(&STM32_Time);
-		printf("Run Time: %d us\r\n",Programe_End_Us());
+		Programe_End_Us();
 		printf("Y:%d M:%d D:%d W:%d H:%d M:%d S:%d\r\n",STM32_Time.year,STM32_Time.month,STM32_Time.date,STM32_Time.week,STM32_Time.hour,STM32_Time.minute,STM32_Time.second);
 
 }

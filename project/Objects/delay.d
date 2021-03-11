@@ -76,3 +76,4 @@
 .\objects\delay.o: ..\SD\diskio.h
 .\objects\delay.o: ..\SD\integer.h
 .\objects\delay.o: ..\drive\GUI.H
+.\objects\delay.o: ..\drive\TEST.h

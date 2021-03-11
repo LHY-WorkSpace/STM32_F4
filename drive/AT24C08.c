@@ -36,7 +36,7 @@ void AT24C08Write_Byte(u8 dev_addr,u8 Data_addr,u8 data)
 	IIC_SenddByte(data);	
 	IIC_Wait_Ack_OK();
 	Stop_IIC();
-	delay_ms(3);  
+	delay_us(2);  
 }
 
 

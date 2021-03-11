@@ -76,3 +76,4 @@
 .\objects\rtc.o: ..\SD\diskio.h
 .\objects\rtc.o: ..\SD\integer.h
 .\objects\rtc.o: ..\drive\GUI.H
+.\objects\rtc.o: ..\drive\TEST.h

@@ -76,3 +76,4 @@
 .\objects\lcd1602.o: ..\SD\diskio.h
 .\objects\lcd1602.o: ..\SD\integer.h
 .\objects\lcd1602.o: ..\drive\GUI.H
+.\objects\lcd1602.o: ..\drive\TEST.h

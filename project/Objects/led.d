@@ -76,3 +76,4 @@
 .\objects\led.o: ..\SD\diskio.h
 .\objects\led.o: ..\SD\integer.h
 .\objects\led.o: ..\drive\GUI.H
+.\objects\led.o: ..\drive\TEST.h
