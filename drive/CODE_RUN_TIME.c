@@ -30,19 +30,15 @@ void Programe_Start(void)
 
 }
 
-u16 Programe_End_Us()
+void  Programe_End_Us()
 {
 
-return TIM_GetCounter(TIM6);
-
-
+	printf("Time:%d us\r\n",TIM_GetCounter(TIM6));
 }
 
-u16 Programe_End_Ms()
+void  Programe_End_Ms()
 {
-
-return TIM_GetCounter(TIM6)/1000;
-
+	printf("Time:%d us\r\n",TIM_GetCounter(TIM6)/1000);
 
 }
 

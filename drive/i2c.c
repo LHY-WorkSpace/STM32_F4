@@ -58,11 +58,11 @@ void Start_IIC(void)
 		Pin_in2out();
 		IIC_SDA_HIGH;
 		IIC_SCL_HIGH;
-	 	delay_us(2);
+	 	delay_us(1);
 		IIC_SDA_LOW;
-	 	delay_us(2);
+	 	delay_us(1);
 	  	IIC_SCL_LOW;
-		delay_us(2);
+		delay_us(1);
 
 }
 
@@ -72,13 +72,13 @@ void Stop_IIC(void)
 
 	Pin_in2out();
 	IIC_SCL_LOW;
-	delay_us(2);
+	delay_us(1);
 	IIC_SDA_LOW;
-	delay_us(2);
+	delay_us(1);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	delay_us(1);
 	IIC_SDA_HIGH;
-	delay_us(2);
+	delay_us(1);
 	
 
 
@@ -93,13 +93,13 @@ void IIC_Send_Ack(void)
 	
 	IIC_SCL_LOW;
 	Pin_in2out();
-	delay_us(2);	
+	delay_us(1);	
 	IIC_SDA_LOW;
-	delay_us(2);
+	delay_us(1);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	delay_us(1);
 	IIC_SCL_LOW;
-	delay_us(2);
+	delay_us(1);
 }
 
 
@@ -109,13 +109,13 @@ void IIC_Send_NAck(void)
 
 	IIC_SCL_LOW;
 	Pin_in2out();
-	delay_us(2);
+	delay_us(1);
 	IIC_SDA_HIGH;
-	delay_us(2);
+	delay_us(1);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	delay_us(1);
 	IIC_SCL_LOW;
-	delay_us(2);
+	delay_us(1);
 
 }
 

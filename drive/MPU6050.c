@@ -20,7 +20,7 @@ static struct hal_s hal = {0};
 
 u8 get_ms(unsigned long *count)
 {
-	delay_ms(10);
+	delay_ms(5);
 	return 0;
 }
 
@@ -103,7 +103,7 @@ void MPU6050_Write_Data(u8 Reg,u8 data)
 	IIC_SenddByte(data);	
 	IIC_Wait_Ack_OK();
 	Stop_IIC();
-	delay_ms(5); 
+	delay_us(1); 
 }
 
 
@@ -127,7 +127,7 @@ u8 MPU6050_Write_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 		data++;
 	}
  	Stop_IIC();
-	delay_ms(2);
+	delay_us(1);
 	return 0;
 
 }

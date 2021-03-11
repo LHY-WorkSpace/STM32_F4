@@ -971,7 +971,6 @@ void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 		{
 			x=0;
 			y++;
-
 		}
 		OLED_ShowChar(x,y,&CharModel[PositionBuff[i]][0]);
 		x+=8;

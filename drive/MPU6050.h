@@ -148,8 +148,8 @@ u8 MPU6050_DMP_Init(void);
 u8 MPU6050_Write_DMP(u8 devices_addr,u8 COMMOND,u8 length,u8  *data);
 u8  MPU6050_Read_DMP(u8 devices_addr,u8 COMMOND,u8 length,u8  *data);
 u8  get_ms(unsigned long *count);
-unsigned short inv_row_2_scale(const signed char *row);
-static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx);
+u16 inv_row_2_scale(const signed char *row);
+static u16 inv_orientation_matrix_to_scalar(const signed char *mtx);
 void run_self_test(void);	
 u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll);
 

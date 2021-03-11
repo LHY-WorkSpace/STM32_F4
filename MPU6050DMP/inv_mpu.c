@@ -715,7 +715,7 @@ int mpu_init()
     data[0] = BIT_RESET;
     if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 1, data))
         return -1;
-    delay_ms(10);
+    delay_ms(2);
 
     /* Wake up chip. */
     data[0] = 0x00;
@@ -1061,7 +1061,7 @@ int mpu_reset_fifo(void)
         data = BIT_FIFO_RST | BIT_DMP_RST;
         if (i2c_write(st.hw->addr, st.reg->user_ctrl, 1, &data))
             return -1;
-        delay_ms(50);
+        delay_ms(10);
         data = BIT_DMP_EN | BIT_FIFO_EN;
         if (st.chip_cfg.sensors & INV_XYZ_COMPASS)
             data |= BIT_AUX_IF_EN;
@@ -1086,7 +1086,7 @@ int mpu_reset_fifo(void)
             data = BIT_FIFO_EN | BIT_AUX_IF_EN;
         if (i2c_write(st.hw->addr, st.reg->user_ctrl, 1, &data))
             return -1;
-        delay_ms(50);
+        delay_ms(10);
         if (st.chip_cfg.int_enable)
             data = BIT_DATA_RDY_EN;
         else
@@ -1610,7 +1610,7 @@ int mpu_set_sensors(unsigned char sensors)
 
     st.chip_cfg.sensors = sensors;
     st.chip_cfg.lp_accel_mode = 0;
-    delay_ms(50);
+    delay_ms(10);
     return 0;
 }
 
@@ -1989,7 +1989,7 @@ static int get_st_biases(long *gyro, long *accel, unsigned char hw_test)
     data[1] = 0;
     if (i2c_write(st.hw->addr, st.reg->pwr_mgmt_1, 2, data))
         return -1;
-    delay_ms(200);
+    delay_ms(50);
     data[0] = 0;
     if (i2c_write(st.hw->addr, st.reg->int_enable, 1, data))
         return -1;
@@ -2004,7 +2004,7 @@ static int get_st_biases(long *gyro, long *accel, unsigned char hw_test)
     data[0] = BIT_FIFO_RST | BIT_DMP_RST;
     if (i2c_write(st.hw->addr, st.reg->user_ctrl, 1, data))
         return -1;
-    delay_ms(15);
+    delay_ms(10);
     data[0] = st.test->reg_lpf;
     if (i2c_write(st.hw->addr, st.reg->lpf, 1, data))
         return -1;
@@ -2025,7 +2025,7 @@ static int get_st_biases(long *gyro, long *accel, unsigned char hw_test)
     if (i2c_write(st.hw->addr, st.reg->accel_cfg, 1, data))
         return -1;
     if (hw_test)
-        delay_ms(200);
+        delay_ms(50);
 
     /* Fill FIFO for test.wait_ms milliseconds. */
     data[0] = BIT_FIFO_EN;
@@ -2148,7 +2148,7 @@ int mpu_run_self_test(long *gyro, long *accel)
     mpu_get_sample_rate(&sample_rate);
     sensors_on = st.chip_cfg.sensors;
     mpu_get_fifo_config(&fifo_sensors);
-
+delay_ms
     /* For older chips, the self-test will be different. */
 #if defined MPU6050
     for (ii = 0; ii < tries; ii++)
