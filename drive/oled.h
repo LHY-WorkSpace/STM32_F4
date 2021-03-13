@@ -10,18 +10,22 @@
 #define  OLED_DATA   GPIO_SetBits(GPIOB,GPIO_Pin_12)	            //数据
 #define  OLED_ORDER   GPIO_ResetBits(GPIOB,GPIO_Pin_12)	           //命令
 
-#define  Horizontal_Mode    0x00            
-#define  Page_Mode          0x02
-#define	 Vertical_Mode      0x01
 
+
+
+#define Twink_Mode    0x30      //闪烁模式
+#define Hidden_Mode   0x20      //消退模式
+
+
+
+//左右滚屏
 #define  SCROLL_L          0x27            
 #define  SCROLL_R          0x26
-
+//左右和垂直向上滚屏
 #define  SCROLL_VR          0x29            
 #define  SCROLL_VL          0x2A
 
-#define  Vertical_reversal_Disable        0xc8
-#define	 Vertical_reversal_Enble          0xc0
+
 
 
 
@@ -46,7 +50,10 @@ void OLED_Init(void);
 void OLED_SendData(u8 Tdata);
 void OLED_SetMode(u8 Tdata);
 void OLED_SetScanFre(u8 fre,u8 div);   
-void OLED_CetContrast(u8 value); 
+void OLED_SetContrast(u8 value); 
+void OLED_SetTwinkMode(u8 Mode,u8 Speed);
+
+
 void OLED_Scroll_LR(u8 Direction,u8 FrameFrq,u8 PageStart,u8 PageEnd);
 void OLED_Scroll_Vx(u8 Direction,u8 FrameFrq,u8 Offset,u8 PageStart,u8 PageEnd);
 void OLED_ClearScreen(u8 Data);

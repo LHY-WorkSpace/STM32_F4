@@ -150,7 +150,7 @@ void tempure_value_OLEDdisplay(char x,char y)
 		
 
   	A1=wendu/100000;
-	display_position(x,y,5);		
+	//display_position(x,y,5);		
 	//display_num(A1);
 	delay_ms (10);
 	
@@ -169,7 +169,7 @@ void tempure_value_OLEDdisplay(char x,char y)
 	else
 	{
 	
-	display_position(x,y,5);		
+	//display_position(x,y,5);		
 	//display_num(0);
 	delay_ms (10);
 	

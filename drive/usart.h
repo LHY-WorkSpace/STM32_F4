@@ -1,14 +1,31 @@
-#ifndef     USART_H
-#define     USART_H
+#ifndef     __USART_H__
+#define     __USART_H__
 
 
-//#define u8unsigned char
-//#define u32 unsigned int 
+
+#define  USART_DATA_8bit     USART_WordLength_8b
+#define  USART_DATA_9bit     USART_WordLength_9b
 
 
-void usart_init(unsigned int bode);
-void send_data(u32 data);
-int fputc(int ch, FILE* stream);
+#define  USART_STOP_1bit      USART_StopBits_1
+#define  USART_STOP_0_5bit    USART_StopBits_0_5
+#define  USART_STOP_2bit      USART_StopBits_2
+#define  USART_STOP_1_5bit    USART_StopBits_1_5
+
+
+#define  USART_PARTYT_NO     USART_Parity_No
+#define  USART_PARTYT_ODD    USART_Parity_Odd
+#define  USART_PARTYT_EVEN   USART_Parity_Even
+
+
+
+//	PA9-TX1
+//	PA10-RX1
+void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);   
+
+
+void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
+
 int fputc(int ch, FILE* stream);
 #endif
 
