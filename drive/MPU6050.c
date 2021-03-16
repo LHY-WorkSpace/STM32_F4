@@ -67,7 +67,7 @@ static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 
 
 
-
+//¶ÁĞ´ËÙÂÊ210Khz
 u8 MPU6050_Read_Data(u8 Reg)
 {
 	u8 DATA=0;

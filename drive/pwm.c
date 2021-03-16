@@ -29,9 +29,9 @@ void PWM_Init(u16 Period,u16 PluseWide)
 	TIM_TimeBaseInit(TIM4,&TIM_TimeBaseInitsruc);
 	
 
-	TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_PWM1;///???????
+	TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_PWM1;
 	TIM_OCInitTypestuc.TIM_OutputState=TIM_OutputState_Enable;
-	TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_High;/////??????
+	TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_High;
 	TIM_OC4Init(TIM4,&TIM_OCInitTypestuc);
 
 
@@ -43,14 +43,36 @@ void PWM_Init(u16 Period,u16 PluseWide)
 }
 
 
-void PWM_SetPluseWdie(TIM_TypeDef* TIMx,u16 PluseWide)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//设置脉宽(us)
+void PWM_SetPluseWdie(TIM_TypeDef* TIMx,u32 PluseWide)
 {
 	TIMx->CCR4 = PluseWide-1;
 }
-
-void PWM_SetPlusePeriod(TIM_TypeDef* TIMx,u16 PlusePeriod)
+//设置周期(us)
+void PWM_SetPlusePeriod(TIM_TypeDef* TIMx,u32 PlusePeriod)
 {
-	TIMx->CCR4 = PlusePeriod-1;
+	TIMx->ARR = PlusePeriod-1;
 }
 
 

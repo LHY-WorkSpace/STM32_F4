@@ -4,7 +4,7 @@ void AT24C08_init(void)
 {
 	IIC_Init();
 }
-
+//¶ÁĞ´ËÙÂÊ145Khz
 u8 AT24C08Read_Byte(u8 dev_addr,u8 Data_addr)
 {
 	u8 DATA=0;

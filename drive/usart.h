@@ -18,6 +18,13 @@
 #define  USART_PARTYT_EVEN   USART_Parity_Even
 
 
+#define USART1_MODE_A
+#define USART2_MODE_A   
+
+
+
+
+
 
 //	PA9-TX1
 //	PA10-RX1
