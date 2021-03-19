@@ -33,6 +33,7 @@
 #include "RNG.h"
 //#include "ESP8266.h"
 #include "lcd1602.h"
+#include "Timer.h"
 
 //”¶”√≤„
 #include "FreeRTOS.h"

@@ -60,6 +60,7 @@
 .\objects\led.o: ..\drive\pwm.h
 .\objects\led.o: ..\drive\RNG.h
 .\objects\led.o: ..\drive\lcd1602.h
+.\objects\led.o: ..\drive\Timer.h
 .\objects\led.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\led.o: ..\user\FreeRTOSConfig.h

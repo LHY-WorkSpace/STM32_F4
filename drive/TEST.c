@@ -103,11 +103,16 @@ void RNG_Test()
 
 void OLED_Test()
 {
+ static u8  i=0;
+char s[1];
 
-	OLED_ShowStrings(25,0,"OLED Blue",9);
-	OLED_ShowStrings(10,1,"STM32F407VET6",13);	
-	OLED_ShowStrings(15,2,"0.96'-4-SPI",11);
-	OLED_ShowStrings(18,3,"Di²âlaying",10);	
+	if(i>=50)
+		i=0;
+	s[0]='!'+i;
+	OLED_ShowStrings(0,1,s,1);
+	
+	i++;
+
 	OLED_UpdateGRAM();	
 
 

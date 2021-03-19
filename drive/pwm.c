@@ -44,26 +44,6 @@ void PWM_Init(u16 Period,u16 PluseWide)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //ÉèÖÃÂö¿í(us)
 void PWM_SetPluseWdie(TIM_TypeDef* TIMx,u32 PluseWide)
 {

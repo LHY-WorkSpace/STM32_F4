@@ -60,6 +60,7 @@
 .\objects\exti.o: ..\drive\pwm.h
 .\objects\exti.o: ..\drive\RNG.h
 .\objects\exti.o: ..\drive\lcd1602.h
+.\objects\exti.o: ..\drive\Timer.h
 .\objects\exti.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\exti.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\exti.o: ..\user\FreeRTOSConfig.h
