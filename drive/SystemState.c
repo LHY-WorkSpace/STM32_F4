@@ -1,43 +1,46 @@
-#include"IncludeFile.h"
+#include "IncludeFile.h"
 
 
 
 
+//设备状态列表，顺序与 SystemState_n 一致
+u8 DeviceStateList[DEVICES_NUM];
 
 
 
-void System_GetState(u16 State)
+// Device:  SystemState_n  中的成员
+// State:   SystemState_n  中的成员对应的设备状态枚举列表
+u8 System_GetState(u8 Device,u8 State)
 {
 
-
-
+	if( (DeviceStateList[Device]&State) != State )
+	{
+		return  RESET;
+	}
+	else
+	{
+		return  SET;
+	}
 
 }
 
 
-
-
-void System_SetState(u16 State)
+// Device:  SystemState_n  中的成员
+// State:   SystemState_n  中的成员对应的设备状态枚举列表
+void System_SetState(u8 Device,u8 State)
 {
 
-
-
-
-
+    DeviceStateList[Device] |= State;
 
 }
 
 
-
-
-void System_ResetState(u16 State)
+// Device:  SystemState_n  中的成员
+// State:   SystemState_n  中的成员对应的设备状态枚举列表
+void System_ResetState(u8 Device,u8 State)
 {
 
-
-
-
-
-
-
+    DeviceStateList[Device] &= (~State);
+    
 }
 
