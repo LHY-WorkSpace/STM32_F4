@@ -36,7 +36,8 @@ typedef enum
     Task_50ms=0x04,
     Task_100ms=0x08,
     Task_200ms=0x10,
-    Task_500ms=0x20
+    Task_500ms=0x20,
+    Task_1s=0x40
 
 }Task_TimeFlag_n;
 

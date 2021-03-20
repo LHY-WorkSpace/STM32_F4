@@ -1,4 +1,4 @@
-#include"IncludeFile.h"
+#include "IncludeFile.h"
 
 
 
@@ -18,10 +18,27 @@ void led_init()
 	GPIOB_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
 	GPIO_Init(GPIOB,&GPIOB_Initstruc);
 
-   WATER_OFF;
-	 FAN_OFF;
 
 }
+
+void Led_Test()
+{
+static u8 i=0;
+
+	if(i)
+	{
+		LED1_OFF;
+	}
+	else
+	{
+		LED1_ON;
+	}
+
+	i=~i;
+
+}
+
+
 
 
 //void lcd_write_data(u32 dat)

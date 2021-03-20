@@ -3,7 +3,7 @@
 
 static u8 Time_Cnt=0;
 
-//5ms中断一次
+//10ms中断一次
 void Timer9_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
@@ -14,10 +14,8 @@ void Timer9_Init()
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitStr.TIM_Period=10000;
-	TIM_TimeBaseInitStr.TIM_Prescaler=84-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
-
-
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
 	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=0;
@@ -41,11 +39,9 @@ void Timer10_Init()
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitStr.TIM_Period=10000;                    //未开启预装载，此值无用，只是写入一个值而已
-	TIM_TimeBaseInitStr.TIM_Prescaler=84-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
 
-    //TIM_ARRPreloadConfig(TIM10,ENABLE);
-    //TIM_ITConfig(TIM10,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM10,DISABLE);
    
 }
@@ -70,9 +66,10 @@ void delay_ms(u16 nus)
     TIM10->CNT = 0;
     TIM_Cmd(TIM10,ENABLE);
     for(i=0;i<nus;i++)
-    {
-        while (TIM10->CNT < 1000); 
+    {   
         TIM10->CNT = 0;
+        while (TIM10->CNT < 1000); 
+        
     }
     TIM_Cmd(TIM10,DISABLE);
 
@@ -128,6 +125,10 @@ void TIM1_BRK_TIM9_IRQHandler()
             if( Time_Cnt % 50 == 0 )   
             {
                System_SetState(Task_TimeFlag,Task_500ms); 
+            }
+            if( Time_Cnt % 100 == 0 )   
+            {
+               System_SetState(Task_TimeFlag,Task_1s); 
             }
         }
 
