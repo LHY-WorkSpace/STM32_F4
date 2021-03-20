@@ -16,73 +16,64 @@ int  main()
 	Timer9_Init();
 	while(1)
 	{	
-		switch(Task_Flag)
+		switch(System_GetState(Task_TimeFlag,0xFF))
 		{
-			case 0:
-				LED1_ON;
-			break;
-			case 1:
-				LED1_OFF;
-			break;
 
-			case 2:
-				RTC_Test();
+			case Task_10ms:
+			{
+			printf("Task_10ms\r\n");	
+
+			}
+			System_ResetState(Task_TimeFlag,Task_10ms);	
 			break;
 
-			case 3:
-				MPU6050_Test();
+			case Task_30ms|Task_10ms:
+			{
+			
+
+			}
+			System_ResetState(Task_TimeFlag,Task_30ms);	
 			break;
 
-			case 4:
-				OLED_Test();
+			case Task_50ms|Task_10ms:
+			{
+				
+
+			}
+			System_ResetState(Task_TimeFlag,Task_50ms);	
 			break;
 
-			case 5:
-				printf("USART--1\r\n");
+			case Task_100ms|Task_10ms:
+			{
+				
+
+			}
+			System_ResetState(Task_TimeFlag,Task_100ms);	
 			break;
 
-			case 6:
-				printf("USART--2\r\n");
+			case Task_200ms|Task_10ms:
+			{
+				
+			}
+			System_ResetState(Task_TimeFlag,Task_200ms);	
 			break;
 
-			case 7:
-				printf("USART--3\r\n");
-			break;
+			case Task_500ms|Task_10ms:
+			{
+			
 
-			case 8:
-				printf("USART--4\r\n");
-			break;
-
-			case 9:
-				printf("USART--5\r\n");
-			break;
-
-			case 10:
-				printf("USART--6\r\n");
-			break;
-
-			case 11:
-				printf("ERROR!!!!!!\r\n");
-			break;
-
-
+			}
+			System_ResetState(Task_TimeFlag,Task_500ms);	
 			default:
-			  break;
+			
+			  	break;
 		}
 
 
 
-
-		
-
-
-
-
-
-
-
-
 	}
+
+
 
 
 

@@ -22,10 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include "inv_mpu.h"
-#include "MPU6050.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "delay.h"
+#include "IncludeFile.h"
 
 
 

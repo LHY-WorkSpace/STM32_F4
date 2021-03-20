@@ -12,6 +12,10 @@ u8 DeviceStateList[DEVICES_NUM];
 // State:   SystemState_n  中的成员对应的设备状态枚举列表
 u8 System_GetState(u8 Device,u8 State)
 {
+	if( State == 0xff )
+	{
+		return DeviceStateList[Device];
+	}
 
 	if( (DeviceStateList[Device]&State) != State )
 	{
@@ -43,4 +47,15 @@ void System_ResetState(u8 Device,u8 State)
     DeviceStateList[Device] &= (~State);
     
 }
+
+
+
+
+
+
+
+
+
+
+
 

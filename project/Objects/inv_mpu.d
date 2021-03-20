@@ -4,8 +4,7 @@
 .\objects\inv_mpu.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\inv_mpu.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
 .\objects\inv_mpu.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
-.\objects\inv_mpu.o: ..\MPU6050DMP\inv_mpu.h
-.\objects\inv_mpu.o: ..\drive\MPU6050.h
+.\objects\inv_mpu.o: ..\drive\IncludeFile.h
 .\objects\inv_mpu.o: ..\user\stm32f4xx.h
 .\objects\inv_mpu.o: ..\CMSIS\core_cm4.h
 .\objects\inv_mpu.o: ..\CMSIS\core_cmInstr.h
@@ -40,5 +39,42 @@
 .\objects\inv_mpu.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\inv_mpu.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\inv_mpu.o: ..\lib\inc\stm32f4xx_fsmc.h
-.\objects\inv_mpu.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\inv_mpu.o: ..\CMSIS\arm_math.h
+.\objects\inv_mpu.o: ..\CMSIS\core_cm4.h
+.\objects\inv_mpu.o: ..\drive\SystemState.h
 .\objects\inv_mpu.o: ..\drive\delay.h
+.\objects\inv_mpu.o: ..\drive\usart.h
+.\objects\inv_mpu.o: ..\drive\CODE_RUN_TIME.h
+.\objects\inv_mpu.o: ..\drive\dac.h
+.\objects\inv_mpu.o: ..\drive\adc.h
+.\objects\inv_mpu.o: ..\drive\led.h
+.\objects\inv_mpu.o: ..\drive\exti.h
+.\objects\inv_mpu.o: ..\drive\sdio_sdcard.h
+.\objects\inv_mpu.o: ..\drive\i2c.h
+.\objects\inv_mpu.o: ..\drive\RTC.h
+.\objects\inv_mpu.o: ..\drive\AT24C08.h
+.\objects\inv_mpu.o: ..\drive\MPU6050.h
+.\objects\inv_mpu.o: ..\drive\DHT11.h
+.\objects\inv_mpu.o: ..\drive\ds18b20.h
+.\objects\inv_mpu.o: ..\drive\oled.h
+.\objects\inv_mpu.o: ..\drive\DMA.h
+.\objects\inv_mpu.o: ..\drive\pwm.h
+.\objects\inv_mpu.o: ..\drive\RNG.h
+.\objects\inv_mpu.o: ..\drive\lcd1602.h
+.\objects\inv_mpu.o: ..\drive\Timer.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\inv_mpu.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\inv_mpu.o: ..\user\FreeRTOSConfig.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\projdefs.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\portable.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\inv_mpu.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\task.h
+.\objects\inv_mpu.o: ..\FreeRTOS\include\list.h
+.\objects\inv_mpu.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\inv_mpu.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\inv_mpu.o: ..\SD\diskio.h
+.\objects\inv_mpu.o: ..\SD\integer.h
+.\objects\inv_mpu.o: ..\drive\GUI.H
+.\objects\inv_mpu.o: ..\drive\TEST.h
