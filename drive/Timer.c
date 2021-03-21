@@ -4,7 +4,7 @@
 static u8 Time_Cnt=0;
 
 //10ms中断一次
-void Timer9_Init()
+void TaskTimer_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
     NVIC_InitTypeDef  NVIC_Initstr;
@@ -29,8 +29,8 @@ void Timer9_Init()
    
 }
 
-//10ms中断一次
-void Timer10_Init()
+//10ms计数一次
+void Delay_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
 
@@ -74,17 +74,6 @@ void delay_ms(u16 nus)
     TIM_Cmd(TIM10,DISABLE);
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -7,11 +7,9 @@ void led_init()
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
-	
 	GPIO_InitTypeDef GPIOB_Initstruc;
 
-	
-	GPIOB_Initstruc.GPIO_Pin=GPIO_Pin_9|GPIO_Pin_6|GPIO_Pin_5;
+	GPIOB_Initstruc.GPIO_Pin=GPIO_Pin_9;
 	GPIOB_Initstruc.GPIO_Mode=GPIO_Mode_OUT;
 	GPIOB_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;
 	GPIOB_Initstruc.GPIO_OType=GPIO_OType_PP;           
@@ -28,10 +26,12 @@ static u8 i=0;
 	if(i)
 	{
 		LED1_OFF;
+		delay_us(20);
 	}
 	else
 	{
 		LED1_ON;
+		delay_ms(20);
 	}
 
 	i=~i;
