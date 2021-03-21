@@ -25,7 +25,7 @@ void PID_init()
 	pid.Kd = 0.3;
 }
 
-
+//参数为目标值
 float PID_realize(float speed)
 {
 	float incrementSpeed;
@@ -40,7 +40,7 @@ float PID_realize(float speed)
 
 
 u8 lc=0,i=0;
-
+float pitch,yaw,roll; 
 
 
 
@@ -52,6 +52,10 @@ void Task_List()
 			
 			if( System_GetState(Task_TimeFlag,Task_10ms) == SET )
 			{
+				
+				
+				//lc=(u8)PID_realize(60.0);
+				MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 
 				System_ResetState(Task_TimeFlag,Task_10ms);
 			}
@@ -68,7 +72,10 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_50ms) == SET )
 			{
 				
-
+				OLED_Draw_Point(i,(u8)(10+pitch),1);
+				OLED_Draw_Point(i,(u8)(30+yaw),1);
+				OLED_Draw_Point(i++,(u8)(50+roll),1);
+				OLED_UpdateGRAM();
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
 
@@ -83,13 +90,7 @@ void Task_List()
 
 			if( System_GetState(Task_TimeFlag,Task_200ms) == SET )
 			{
-				float pitch,yaw,roll; 
-				MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
-				//lc=(u8)PID_realize(60.0);
-				OLED_Draw_Point(i,(u8)(10+pitch),1);
-				OLED_Draw_Point(i,(u8)(30+yaw),1);
-				OLED_Draw_Point(i++,(u8)(50+roll),1);
-				OLED_UpdateGRAM();
+
 				System_ResetState(Task_TimeFlag,Task_200ms);	
 			}
 
