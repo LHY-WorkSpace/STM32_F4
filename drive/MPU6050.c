@@ -194,6 +194,7 @@ static void run_self_test()
 
 void MPU6050_Init(void)
 {
+	IIC_Init();
 	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
 	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
 	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
