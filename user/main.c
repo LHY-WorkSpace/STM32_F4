@@ -41,7 +41,7 @@ float PID_realize(float speed)
 
 u8 lc=0,i=0;
 float pitch,yaw,roll; 
-
+char gg[7];
 
 
 
@@ -56,7 +56,7 @@ void Task_List()
 				
 				//lc=(u8)PID_realize(60.0);
 				MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
-
+				// PWM_SetPluseWdie(TIM4,(u16)(1500+10*pitch));
 				System_ResetState(Task_TimeFlag,Task_10ms);
 			}
 				
@@ -64,7 +64,7 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_30ms) == SET )
 			{
 			
-
+				
 				System_ResetState(Task_TimeFlag,Task_30ms);	
 			}
 
@@ -72,10 +72,20 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_50ms) == SET )
 			{
 				
-				OLED_Draw_Point(i,(u8)(10+pitch),1);
-				OLED_Draw_Point(i,(u8)(30+yaw),1);
-				OLED_Draw_Point(i++,(u8)(50+roll),1);
-				OLED_UpdateGRAM();
+				// if(i>127)
+				// {
+				// 	i=0;
+				// 	OLED_ClearScreen(0x00);
+				// }
+					
+				// OLED_Draw_Point(i,(u8)(10+pitch),1);
+				// OLED_Draw_Point(i,(u8)(30+yaw),1);
+				// OLED_Draw_Point(i++,(u8)(50+roll),1);
+				memset(gg,0x00,sizeof(gg));
+				sprintf(gg,"%.2f",yaw);
+				OLED_ShowStrings(0,0,gg,sizeof(gg));
+				 OLED_UpdateGRAM();
+				
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
 
@@ -83,13 +93,14 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_100ms) == SET )
 			{
 				
-				printf("Task_10ms\r\n");
+				//printf("Task_10ms\r\n");
 				System_ResetState(Task_TimeFlag,Task_100ms);	
 			}
 
 
 			if( System_GetState(Task_TimeFlag,Task_200ms) == SET )
 			{
+
 
 				System_ResetState(Task_TimeFlag,Task_200ms);	
 			}
@@ -98,18 +109,14 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_500ms) == SET )
 			{
 			
-				Led_Test();
+				//Led_Test();
 				System_ResetState(Task_TimeFlag,Task_500ms);	
 			}
 
 			if( System_GetState(Task_TimeFlag,Task_1s) == SET )
 			{
 			
-			if(P>2500)	
-				P=500;
 				
-				PWM_SetPluseWdie(TIM4,P);
-				P+=500;
 				System_ResetState(Task_TimeFlag,Task_1s);	
 			}
 

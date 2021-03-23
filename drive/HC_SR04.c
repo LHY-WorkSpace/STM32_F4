@@ -20,7 +20,6 @@ void HC_SR04_Init()
 		GPIO_InitTypeDefinit.GPIO_Speed=GPIO_Speed_50MHz;
 		GPIO_InitTypeDefinit.GPIO_OType=GPIO_OType_PP;          
 		GPIO_InitTypeDefinit.GPIO_PuPd=GPIO_PuPd_UP;	
-
 		GPIO_Init(GPIOA,&GPIO_InitTypeDefinit);
 		
 		GPIO_InitTypeDefinit.GPIO_Pin=GPIO_Pin_2;                           //echo--------PA2-CH3
@@ -28,11 +27,9 @@ void HC_SR04_Init()
 		GPIO_InitTypeDefinit.GPIO_Speed=GPIO_Speed_50MHz;
 		GPIO_InitTypeDefinit.GPIO_OType=GPIO_OType_PP;          
 		GPIO_InitTypeDefinit.GPIO_PuPd=GPIO_PuPd_UP;		
-		
 		GPIO_Init(GPIOA,&GPIO_InitTypeDefinit);	
 		
-		GPIO_PinAFConfig(GPIOC,GPIO_PinSource6,GPIO_AF_TIM2);
-	
+		GPIO_PinAFConfig(GPIOA,GPIO_PinSource2,GPIO_AF_TIM2);
 	
 		TIM_TimeBaseInit.TIM_Prescaler=84-1;
 		TIM_TimeBaseInit.TIM_Period=30000;	
@@ -41,7 +38,7 @@ void HC_SR04_Init()
 		TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInit);
 	
 		TIM_ICInitTypeDefinit.TIM_Channel=TIM_Channel_3;
-		TIM_ICInitTypeDefinit.TIM_ICPolarity=TIM_ICPolarity_BothEdge;
+		TIM_ICInitTypeDefinit.TIM_ICPolarity=TIM_ICPolarity_Rising;
 		TIM_ICInitTypeDefinit.TIM_ICSelection=TIM_ICSelection_DirectTI;
 		TIM_ICInitTypeDefinit.TIM_ICPrescaler=TIM_ICPSC_DIV1;
 		TIM_ICInitTypeDefinit.TIM_ICFilter=0x00;
@@ -51,13 +48,10 @@ void HC_SR04_Init()
 
 
 
-
-
-
 }
 
 
-
+TIM_SelectInputTrigger(TIM3,);
 
 
 

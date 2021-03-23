@@ -41,7 +41,7 @@ void Delay_Init()
 	TIM_TimeBaseInitStr.TIM_Period=10000;                    //未开启预装载，此值无用，只是写入一个值而已
 	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
-
+    TIM_ARRPreloadConfig(TIM9,DISABLE);
     TIM_Cmd(TIM10,DISABLE);
    
 }

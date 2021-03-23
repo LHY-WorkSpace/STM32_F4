@@ -25,7 +25,7 @@ void PWM_Init(u16 Period,u16 PluseWide)
 
 	TIM_TimeBaseInitsruc.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitsruc.TIM_Prescaler=84-1;         /////APB1=42Mhz     
-	TIM_TimeBaseInitsruc.TIM_Period=20000-1;
+	TIM_TimeBaseInitsruc.TIM_Period=20000-1;          //ÖÜÆÚ20ms
 	TIM_TimeBaseInit(TIM4,&TIM_TimeBaseInitsruc);
 	
 
