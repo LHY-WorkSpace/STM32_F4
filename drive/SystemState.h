@@ -90,7 +90,14 @@ typedef enum
 
 }Dev_MPU6050State_n;
 
+typedef enum 
+{
+    F_HCSR04_Init_OK=0x01,
+    F_HCSR04_HIGH=0x02,
+    F_HCSR04_LOW=0x04,
+    F_HCSR04_DataReady=0x08
 
+}Dev_HCSR04State_n;
 
 
 /*
@@ -104,6 +111,7 @@ typedef enum
     Dev_SD,
     Dev_AT24C,
     Dev_MPU6050,
+    Dev_HCSR04
         
 
 }SystemState_n;

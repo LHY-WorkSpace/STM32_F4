@@ -62,6 +62,7 @@
 .\objects\inv_mpu.o: ..\drive\RNG.h
 .\objects\inv_mpu.o: ..\drive\lcd1602.h
 .\objects\inv_mpu.o: ..\drive\Timer.h
+.\objects\inv_mpu.o: ..\drive\HC_SR04.h
 .\objects\inv_mpu.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\inv_mpu.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\inv_mpu.o: ..\user\FreeRTOSConfig.h

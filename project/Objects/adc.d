@@ -61,6 +61,7 @@
 .\objects\adc.o: ..\drive\RNG.h
 .\objects\adc.o: ..\drive\lcd1602.h
 .\objects\adc.o: ..\drive\Timer.h
+.\objects\adc.o: ..\drive\HC_SR04.h
 .\objects\adc.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\adc.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\adc.o: ..\user\FreeRTOSConfig.h

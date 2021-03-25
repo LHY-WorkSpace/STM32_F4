@@ -61,6 +61,7 @@
 .\objects\oled.o: ..\drive\RNG.h
 .\objects\oled.o: ..\drive\lcd1602.h
 .\objects\oled.o: ..\drive\Timer.h
+.\objects\oled.o: ..\drive\HC_SR04.h
 .\objects\oled.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\oled.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\oled.o: ..\user\FreeRTOSConfig.h

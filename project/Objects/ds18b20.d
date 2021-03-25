@@ -61,6 +61,7 @@
 .\objects\ds18b20.o: ..\drive\RNG.h
 .\objects\ds18b20.o: ..\drive\lcd1602.h
 .\objects\ds18b20.o: ..\drive\Timer.h
+.\objects\ds18b20.o: ..\drive\HC_SR04.h
 .\objects\ds18b20.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\ds18b20.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\ds18b20.o: ..\user\FreeRTOSConfig.h

@@ -61,6 +61,7 @@
 .\objects\delay.o: ..\drive\RNG.h
 .\objects\delay.o: ..\drive\lcd1602.h
 .\objects\delay.o: ..\drive\Timer.h
+.\objects\delay.o: ..\drive\HC_SR04.h
 .\objects\delay.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\delay.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\delay.o: ..\user\FreeRTOSConfig.h

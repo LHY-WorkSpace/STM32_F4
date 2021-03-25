@@ -61,6 +61,7 @@
 .\objects\mpu6050.o: ..\drive\RNG.h
 .\objects\mpu6050.o: ..\drive\lcd1602.h
 .\objects\mpu6050.o: ..\drive\Timer.h
+.\objects\mpu6050.o: ..\drive\HC_SR04.h
 .\objects\mpu6050.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\mpu6050.o: ..\user\FreeRTOSConfig.h

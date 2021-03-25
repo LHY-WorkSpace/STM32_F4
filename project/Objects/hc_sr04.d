@@ -48,7 +48,6 @@
 .\objects\hc_sr04.o: ..\drive\adc.h
 .\objects\hc_sr04.o: ..\drive\led.h
 .\objects\hc_sr04.o: ..\drive\exti.h
-.\objects\hc_sr04.o: ..\drive\sd.h
 .\objects\hc_sr04.o: ..\drive\sdio_sdcard.h
 .\objects\hc_sr04.o: ..\drive\i2c.h
 .\objects\hc_sr04.o: ..\drive\RTC.h
@@ -61,6 +60,8 @@
 .\objects\hc_sr04.o: ..\drive\pwm.h
 .\objects\hc_sr04.o: ..\drive\RNG.h
 .\objects\hc_sr04.o: ..\drive\lcd1602.h
+.\objects\hc_sr04.o: ..\drive\Timer.h
+.\objects\hc_sr04.o: ..\drive\HC_SR04.h
 .\objects\hc_sr04.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\hc_sr04.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\hc_sr04.o: ..\user\FreeRTOSConfig.h

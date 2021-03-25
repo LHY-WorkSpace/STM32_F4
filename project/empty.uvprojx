@@ -1008,6 +1008,11 @@
               <FileType>5</FileType>
               <FilePath>..\drive\Timer.h</FilePath>
             </File>
+            <File>
+              <FileName>HC_SR04.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\HC_SR04.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

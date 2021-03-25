@@ -70,6 +70,7 @@
 ".\objects\systemstate.o"
 ".\objects\test.o"
 ".\objects\timer.o"
+".\objects\hc_sr04.o"
 ".\objects\croutine.o"
 ".\objects\event_groups.o"
 ".\objects\list.o"

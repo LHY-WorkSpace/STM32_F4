@@ -22,19 +22,22 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 G:\STM32_F4\project\empty.uvprojx
-Project File Date:  03/19/2021
+Project File Date:  03/24/2021
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\MDK 5\ARM\ARMCC\Bin'
 Build target 'Empty_Project'
 compiling main.c...
+..\user\main.c(112): warning:  #223-D: function "Led_Test" declared implicitly
+  				Led_Test();
 ..\user\main.c(51): warning:  #177-D: variable "P"  was declared but never referenced
   		static u16 P=0;
-..\user\main.c: 1 warning, 0 errors
+..\user\main.c: 2 warnings, 0 errors
+compiling HC_SR04.c...
 linking...
-Program Size: Code=26040 RO-data=3896 RW-data=1736 ZI-data=10392  
+Program Size: Code=21348 RO-data=3656 RW-data=168 ZI-data=10392  
 FromELF: creating hex file...
-".\Objects\1.axf" - 0 Error(s), 1 Warning(s).
+".\Objects\1.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -47,7 +50,7 @@ Package Vendor: Keil
   D:\MDK 5\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:03
 </pre>
 </body>
 </html>

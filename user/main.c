@@ -55,7 +55,7 @@ void Task_List()
 				
 				
 				//lc=(u8)PID_realize(60.0);
-				MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
+				// MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 				// PWM_SetPluseWdie(TIM4,(u16)(1500+10*pitch));
 				System_ResetState(Task_TimeFlag,Task_10ms);
 			}
@@ -81,10 +81,10 @@ void Task_List()
 				// OLED_Draw_Point(i,(u8)(10+pitch),1);
 				// OLED_Draw_Point(i,(u8)(30+yaw),1);
 				// OLED_Draw_Point(i++,(u8)(50+roll),1);
-				memset(gg,0x00,sizeof(gg));
-				sprintf(gg,"%.2f",yaw);
-				OLED_ShowStrings(0,0,gg,sizeof(gg));
-				 OLED_UpdateGRAM();
+				// memset(gg,0x00,sizeof(gg));
+				// sprintf(gg,"%.2f",yaw);
+				// OLED_ShowStrings(0,0,gg,sizeof(gg));
+				//  OLED_UpdateGRAM();
 				
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
@@ -93,7 +93,7 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_100ms) == SET )
 			{
 				
-				//printf("Task_10ms\r\n");
+				HCSR04_GetData();
 				System_ResetState(Task_TimeFlag,Task_100ms);	
 			}
 
@@ -109,7 +109,8 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_500ms) == SET )
 			{
 			
-				//Led_Test();
+				Led_Test();
+				HCSR04_StartMeasure();
 				System_ResetState(Task_TimeFlag,Task_500ms);	
 			}
 
@@ -154,12 +155,18 @@ int  main()
 	RTC_ConfigInit();
 	MPU6050_Init();
 	TaskTimer_Init();
-	PWM_Init(1,1);
+	//PWM_Init(1,1);
 	PID_init();
+	HC_SR04_Init();
+
+
+
+
 
 	while(1)
 	{	
 		Task_List();	
+
 	}
 
 

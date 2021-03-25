@@ -34,6 +34,7 @@
 //#include "ESP8266.h"
 #include "lcd1602.h"
 #include "Timer.h"
+#include "HC_SR04.h"
 
 //”¶”√≤„
 #include "FreeRTOS.h"

@@ -6,12 +6,12 @@
 #define  TRIG_L  GPIO_ResetBits(GPIOA,GPIO_Pin_3)
 #define  TRIG_H  GPIO_SetBits(GPIOA,GPIO_Pin_3)
 
-void start_measure(void);
-u32 get_distance();
+void HC_SR04_Init(void);
+void HCSR04_StartMeasure(void);
+u16 HCSR04_GetData(void);
 
 
-
-#endfif
+#endif
 
 
 

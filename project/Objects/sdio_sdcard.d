@@ -61,6 +61,7 @@
 .\objects\sdio_sdcard.o: ..\drive\RNG.h
 .\objects\sdio_sdcard.o: ..\drive\lcd1602.h
 .\objects\sdio_sdcard.o: ..\drive\Timer.h
+.\objects\sdio_sdcard.o: ..\drive\HC_SR04.h
 .\objects\sdio_sdcard.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\sdio_sdcard.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\sdio_sdcard.o: ..\user\FreeRTOSConfig.h
