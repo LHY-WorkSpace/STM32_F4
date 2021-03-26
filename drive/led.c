@@ -21,7 +21,7 @@ void led_init()
 
 void Led_Test()
 {
-static u8 i=0;
+	static u8 i=0;
 
 	if(i)
 	{

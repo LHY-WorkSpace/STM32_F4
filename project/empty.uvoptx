@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>143</LineNumber>
+          <LineNumber>97</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134226942</Address>
+          <Address>134227532</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,23 +173,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\drive\HC_SR04.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../drive/HC_SR04.c\143</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>115</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134226838</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\drive\HC_SR04.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\1\../drive/HC_SR04.c\115</Expression>
+          <Expression>\\1\../drive/HC_SR04.c\97</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -273,6 +257,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>Distance</ItemText>
         </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>Dis</ItemText>
+        </Ww>
+        <Ww>
+          <count>17</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>DeviceStateList</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
@@ -326,7 +320,7 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\TIM2</Name>
+          <Name>System Viewer\TIM14</Name>
           <WinId>35905</WinId>
         </Entry>
       </SystemViewers>

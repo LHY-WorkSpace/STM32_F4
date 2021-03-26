@@ -3,12 +3,11 @@
 
 
 
-#define  TRIG_L  GPIO_ResetBits(GPIOA,GPIO_Pin_3)
-#define  TRIG_H  GPIO_SetBits(GPIOA,GPIO_Pin_3)
+#define  TRIG_L  GPIO_ResetBits(GPIOA,GPIO_Pin_4)
+#define  TRIG_H  GPIO_SetBits(GPIOA,GPIO_Pin_4)
 
 void HC_SR04_Init(void);
-void HCSR04_StartMeasure(void);
-u16 HCSR04_GetData(void);
+void HCSR04_GetData(float* Data);
 
 
 #endif

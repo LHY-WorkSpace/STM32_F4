@@ -40,7 +40,7 @@ float PID_realize(float speed)
 
 
 u8 lc=0,i=0;
-float pitch,yaw,roll; 
+float pitch,yaw,roll,Dis; 
 char gg[7];
 
 
@@ -64,7 +64,8 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_30ms) == SET )
 			{
 			
-				
+				HCSR04_GetData(&Dis);
+
 				System_ResetState(Task_TimeFlag,Task_30ms);	
 			}
 
@@ -84,7 +85,7 @@ void Task_List()
 				// memset(gg,0x00,sizeof(gg));
 				// sprintf(gg,"%.2f",yaw);
 				// OLED_ShowStrings(0,0,gg,sizeof(gg));
-				//  OLED_UpdateGRAM();
+				  OLED_UpdateGRAM();
 				
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
@@ -93,7 +94,9 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_100ms) == SET )
 			{
 				
-				HCSR04_GetData();
+				
+				sprintf(gg,"%6.2f",Dis); //6列符号=3位整数+1点+2位小数
+				OLED_ShowStrings(0,0,gg,6);
 				System_ResetState(Task_TimeFlag,Task_100ms);	
 			}
 
@@ -109,15 +112,14 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_500ms) == SET )
 			{
 			
+				
 				Led_Test();
-				HCSR04_StartMeasure();
 				System_ResetState(Task_TimeFlag,Task_500ms);	
 			}
 
 			if( System_GetState(Task_TimeFlag,Task_1s) == SET )
 			{
 			
-				
 				System_ResetState(Task_TimeFlag,Task_1s);	
 			}
 

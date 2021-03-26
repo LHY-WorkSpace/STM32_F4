@@ -40,6 +40,6 @@
 // void lcd_write_data(u32 dat);
 // void lcd_write_order(u32 ord);
 // void lcd_init(void);
-void	led_init(void);
-
+void led_init(void);
+void Led_Test(void);
 #endif
