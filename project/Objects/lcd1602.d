@@ -51,17 +51,18 @@
 .\objects\lcd1602.o: ..\drive\sdio_sdcard.h
 .\objects\lcd1602.o: ..\drive\i2c.h
 .\objects\lcd1602.o: ..\drive\RTC.h
+.\objects\lcd1602.o: ..\drive\Timer.h
+.\objects\lcd1602.o: ..\drive\DMA.h
+.\objects\lcd1602.o: ..\drive\pwm.h
+.\objects\lcd1602.o: ..\drive\RNG.h
 .\objects\lcd1602.o: ..\drive\AT24C08.h
 .\objects\lcd1602.o: ..\drive\MPU6050.h
 .\objects\lcd1602.o: ..\drive\DHT11.h
 .\objects\lcd1602.o: ..\drive\ds18b20.h
 .\objects\lcd1602.o: ..\drive\oled.h
-.\objects\lcd1602.o: ..\drive\DMA.h
-.\objects\lcd1602.o: ..\drive\pwm.h
-.\objects\lcd1602.o: ..\drive\RNG.h
 .\objects\lcd1602.o: ..\drive\lcd1602.h
-.\objects\lcd1602.o: ..\drive\Timer.h
 .\objects\lcd1602.o: ..\drive\HC_SR04.h
+.\objects\lcd1602.o: ..\drive\PID.h
 .\objects\lcd1602.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\lcd1602.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\lcd1602.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\lcd1602.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\lcd1602.o: ..\SD\diskio.h
 .\objects\lcd1602.o: ..\SD\integer.h
+.\objects\lcd1602.o: ..\SD\ff.h
+.\objects\lcd1602.o: ..\SD\ffconf.h
 .\objects\lcd1602.o: ..\drive\GUI.H
 .\objects\lcd1602.o: ..\drive\TEST.h

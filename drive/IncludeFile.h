@@ -11,7 +11,7 @@
 #include "SystemState.h"
 
 
-//Çý¶¯²ã
+//Ð¾Æ¬Çý¶¯²ã
 #include "delay.h"
 #include "usart.h"
 #include "CODE_RUN_TIME.h"
@@ -23,18 +23,24 @@
 #include "sdio_sdcard.h"
 #include "i2c.h"
 #include "RTC.h"
+#include "Timer.h"
+#include "DMA.h"  
+#include "pwm.h"
+#include "RNG.h"
+
+
+
+//Æ÷¼þÇý¶¯²ã
 #include "AT24C08.h"
 #include "MPU6050.h"
 #include "DHT11.h"
 #include "ds18b20.h"
 #include "oled.h"
-#include "DMA.h"  
-#include "pwm.h"
-#include "RNG.h"
 //#include "ESP8266.h"
 #include "lcd1602.h"
-#include "Timer.h"
 #include "HC_SR04.h"
+#include "PID.h"
+
 
 //Ó¦ÓÃ²ã
 #include "FreeRTOS.h"
@@ -42,6 +48,7 @@
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "diskio.h"	
+#include "ff.h"	
 #include "GUI.H"
 #include "TEST.h"
 

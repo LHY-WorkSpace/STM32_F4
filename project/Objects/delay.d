@@ -51,17 +51,18 @@
 .\objects\delay.o: ..\drive\sdio_sdcard.h
 .\objects\delay.o: ..\drive\i2c.h
 .\objects\delay.o: ..\drive\RTC.h
+.\objects\delay.o: ..\drive\Timer.h
+.\objects\delay.o: ..\drive\DMA.h
+.\objects\delay.o: ..\drive\pwm.h
+.\objects\delay.o: ..\drive\RNG.h
 .\objects\delay.o: ..\drive\AT24C08.h
 .\objects\delay.o: ..\drive\MPU6050.h
 .\objects\delay.o: ..\drive\DHT11.h
 .\objects\delay.o: ..\drive\ds18b20.h
 .\objects\delay.o: ..\drive\oled.h
-.\objects\delay.o: ..\drive\DMA.h
-.\objects\delay.o: ..\drive\pwm.h
-.\objects\delay.o: ..\drive\RNG.h
 .\objects\delay.o: ..\drive\lcd1602.h
-.\objects\delay.o: ..\drive\Timer.h
 .\objects\delay.o: ..\drive\HC_SR04.h
+.\objects\delay.o: ..\drive\PID.h
 .\objects\delay.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\delay.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\delay.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\delay.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\delay.o: ..\SD\diskio.h
 .\objects\delay.o: ..\SD\integer.h
+.\objects\delay.o: ..\SD\ff.h
+.\objects\delay.o: ..\SD\ffconf.h
 .\objects\delay.o: ..\drive\GUI.H
 .\objects\delay.o: ..\drive\TEST.h

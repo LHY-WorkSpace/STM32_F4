@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1187,6 +1187,31 @@
               <FileName>inv_mpu_dmp_motion_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MPU6050DMP\inv_mpu_dmp_motion_driver.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FATFS</GroupName>
+          <Files>
+            <File>
+              <FileName>diskio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SD\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SD\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffsystem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SD\ffsystem.c</FilePath>
+            </File>
+            <File>
+              <FileName>ffunicode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SD\ffunicode.c</FilePath>
             </File>
           </Files>
         </Group>

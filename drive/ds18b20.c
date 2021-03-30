@@ -123,8 +123,7 @@ int ds18B20_init(char CMD)
 	return flag;
 	
 }	
-	
-	
+/*
 void tempure_value_OLEDdisplay(char x,char y)
 {
 	u32 LSB,MSB,A1,A2,A3;
@@ -190,7 +189,7 @@ void tempure_value_OLEDdisplay(char x,char y)
 	//	return A1*100+A2*10+A3;      需要返回温度时用
 
 }	
-	
+*/
 void Get_Temperature(u8 *Temperature)
 {
 	u8 LSB,MSB;

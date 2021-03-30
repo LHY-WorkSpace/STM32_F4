@@ -11,7 +11,10 @@ extern "C" {
 
 #include "integer.h"
 
-
+/* Definitions of physical drive number for each drive */
+#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
+#define DEV_SD		1	/* Example: Map MMC/SD card to physical drive 1 */
+#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
 /* Status of Disk Functions */
 typedef BYTE	DSTATUS;
 

@@ -51,17 +51,18 @@
 .\objects\code_run_time.o: ..\drive\sdio_sdcard.h
 .\objects\code_run_time.o: ..\drive\i2c.h
 .\objects\code_run_time.o: ..\drive\RTC.h
+.\objects\code_run_time.o: ..\drive\Timer.h
+.\objects\code_run_time.o: ..\drive\DMA.h
+.\objects\code_run_time.o: ..\drive\pwm.h
+.\objects\code_run_time.o: ..\drive\RNG.h
 .\objects\code_run_time.o: ..\drive\AT24C08.h
 .\objects\code_run_time.o: ..\drive\MPU6050.h
 .\objects\code_run_time.o: ..\drive\DHT11.h
 .\objects\code_run_time.o: ..\drive\ds18b20.h
 .\objects\code_run_time.o: ..\drive\oled.h
-.\objects\code_run_time.o: ..\drive\DMA.h
-.\objects\code_run_time.o: ..\drive\pwm.h
-.\objects\code_run_time.o: ..\drive\RNG.h
 .\objects\code_run_time.o: ..\drive\lcd1602.h
-.\objects\code_run_time.o: ..\drive\Timer.h
 .\objects\code_run_time.o: ..\drive\HC_SR04.h
+.\objects\code_run_time.o: ..\drive\PID.h
 .\objects\code_run_time.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\code_run_time.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\code_run_time.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\code_run_time.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\code_run_time.o: ..\SD\diskio.h
 .\objects\code_run_time.o: ..\SD\integer.h
+.\objects\code_run_time.o: ..\SD\ff.h
+.\objects\code_run_time.o: ..\SD\ffconf.h
 .\objects\code_run_time.o: ..\drive\GUI.H
 .\objects\code_run_time.o: ..\drive\TEST.h

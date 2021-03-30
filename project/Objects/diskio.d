@@ -1,7 +1,5 @@
 .\objects\diskio.o: ..\SD\diskio.c
-.\objects\diskio.o: ..\SD\diskio.h
-.\objects\diskio.o: ..\SD\integer.h
-.\objects\diskio.o: ..\drive\sdio_sdcard.h
+.\objects\diskio.o: ..\drive\IncludeFile.h
 .\objects\diskio.o: ..\user\stm32f4xx.h
 .\objects\diskio.o: ..\CMSIS\core_cm4.h
 .\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdint.h
@@ -37,3 +35,49 @@
 .\objects\diskio.o: ..\lib\inc\stm32f4xx_dac.h
 .\objects\diskio.o: ..\lib\inc\stm32f4xx_dcmi.h
 .\objects\diskio.o: ..\lib\inc\stm32f4xx_fsmc.h
+.\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\string.h
+.\objects\diskio.o: ..\CMSIS\arm_math.h
+.\objects\diskio.o: ..\CMSIS\core_cm4.h
+.\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
+.\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\diskio.o: ..\drive\SystemState.h
+.\objects\diskio.o: ..\drive\delay.h
+.\objects\diskio.o: ..\drive\usart.h
+.\objects\diskio.o: ..\drive\CODE_RUN_TIME.h
+.\objects\diskio.o: ..\drive\dac.h
+.\objects\diskio.o: ..\drive\adc.h
+.\objects\diskio.o: ..\drive\led.h
+.\objects\diskio.o: ..\drive\exti.h
+.\objects\diskio.o: ..\drive\sdio_sdcard.h
+.\objects\diskio.o: ..\drive\i2c.h
+.\objects\diskio.o: ..\drive\RTC.h
+.\objects\diskio.o: ..\drive\Timer.h
+.\objects\diskio.o: ..\drive\DMA.h
+.\objects\diskio.o: ..\drive\pwm.h
+.\objects\diskio.o: ..\drive\RNG.h
+.\objects\diskio.o: ..\drive\AT24C08.h
+.\objects\diskio.o: ..\drive\MPU6050.h
+.\objects\diskio.o: ..\drive\DHT11.h
+.\objects\diskio.o: ..\drive\ds18b20.h
+.\objects\diskio.o: ..\drive\oled.h
+.\objects\diskio.o: ..\drive\lcd1602.h
+.\objects\diskio.o: ..\drive\HC_SR04.h
+.\objects\diskio.o: ..\drive\PID.h
+.\objects\diskio.o: ..\FreeRTOS\include\FreeRTOS.h
+.\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
+.\objects\diskio.o: ..\user\FreeRTOSConfig.h
+.\objects\diskio.o: ..\FreeRTOS\include\projdefs.h
+.\objects\diskio.o: ..\FreeRTOS\include\portable.h
+.\objects\diskio.o: ..\FreeRTOS\include\deprecated_definitions.h
+.\objects\diskio.o: ..\FreeRTOS\portable\portmacro.h
+.\objects\diskio.o: ..\FreeRTOS\include\mpu_wrappers.h
+.\objects\diskio.o: ..\FreeRTOS\include\task.h
+.\objects\diskio.o: ..\FreeRTOS\include\list.h
+.\objects\diskio.o: ..\MPU6050DMP\inv_mpu.h
+.\objects\diskio.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
+.\objects\diskio.o: ..\SD\diskio.h
+.\objects\diskio.o: ..\SD\integer.h
+.\objects\diskio.o: ..\SD\ff.h
+.\objects\diskio.o: ..\SD\ffconf.h
+.\objects\diskio.o: ..\drive\GUI.H
+.\objects\diskio.o: ..\drive\TEST.h

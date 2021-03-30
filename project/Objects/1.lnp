@@ -82,6 +82,10 @@
 ".\objects\port.o"
 ".\objects\inv_mpu.o"
 ".\objects\inv_mpu_dmp_motion_driver.o"
+".\objects\diskio.o"
+".\objects\ff.o"
+".\objects\ffsystem.o"
+".\objects\ffunicode.o"
 --library_type=microlib --strict --scatter ".\Objects\1.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

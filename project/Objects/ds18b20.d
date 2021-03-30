@@ -51,17 +51,18 @@
 .\objects\ds18b20.o: ..\drive\sdio_sdcard.h
 .\objects\ds18b20.o: ..\drive\i2c.h
 .\objects\ds18b20.o: ..\drive\RTC.h
+.\objects\ds18b20.o: ..\drive\Timer.h
+.\objects\ds18b20.o: ..\drive\DMA.h
+.\objects\ds18b20.o: ..\drive\pwm.h
+.\objects\ds18b20.o: ..\drive\RNG.h
 .\objects\ds18b20.o: ..\drive\AT24C08.h
 .\objects\ds18b20.o: ..\drive\MPU6050.h
 .\objects\ds18b20.o: ..\drive\DHT11.h
 .\objects\ds18b20.o: ..\drive\ds18b20.h
 .\objects\ds18b20.o: ..\drive\oled.h
-.\objects\ds18b20.o: ..\drive\DMA.h
-.\objects\ds18b20.o: ..\drive\pwm.h
-.\objects\ds18b20.o: ..\drive\RNG.h
 .\objects\ds18b20.o: ..\drive\lcd1602.h
-.\objects\ds18b20.o: ..\drive\Timer.h
 .\objects\ds18b20.o: ..\drive\HC_SR04.h
+.\objects\ds18b20.o: ..\drive\PID.h
 .\objects\ds18b20.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\ds18b20.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\ds18b20.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\ds18b20.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\ds18b20.o: ..\SD\diskio.h
 .\objects\ds18b20.o: ..\SD\integer.h
+.\objects\ds18b20.o: ..\SD\ff.h
+.\objects\ds18b20.o: ..\SD\ffconf.h
 .\objects\ds18b20.o: ..\drive\GUI.H
 .\objects\ds18b20.o: ..\drive\TEST.h

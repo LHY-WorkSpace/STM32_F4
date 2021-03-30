@@ -1,4 +1,4 @@
-#include"IncludeFile.h" 
+#include "IncludeFile.h" 
 
 /*用于sdio初始化的结构体*/
 SDIO_InitTypeDef SDIO_InitStructure;
@@ -53,10 +53,8 @@ SD_Error SD_Init(void)
 	SD_Error errorstatus=SD_OK;	 
   	u8 clkdiv=0;
 	
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_DMA2, ENABLE);//使能GPIOC,GPIOD DMA2时钟
-	
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SDIO, ENABLE);//SDIO时钟使能
-	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_DMA2, ENABLE);//使能GPIOC,GPIOD DMA2时钟
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SDIO, ENABLE);//SDIO时钟使能
 	RCC_APB2PeriphResetCmd(RCC_APB2Periph_SDIO, ENABLE);//SDIO复位
 	
 	
@@ -69,16 +67,16 @@ SD_Error SD_Init(void)
 
 	
 	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_2;
-  GPIO_Init(GPIOD, &GPIO_InitStructure);//PD2复用功能输出
+	GPIO_Init(GPIOD, &GPIO_InitStructure);//PD2复用功能输出
 	
 	 //引脚复用映射设置
 	GPIO_PinAFConfig(GPIOC,GPIO_PinSource8,GPIO_AF_SDIO); //PC8,AF12
-  GPIO_PinAFConfig(GPIOC,GPIO_PinSource9,GPIO_AF_SDIO);
-  GPIO_PinAFConfig(GPIOC,GPIO_PinSource10,GPIO_AF_SDIO);
-  GPIO_PinAFConfig(GPIOC,GPIO_PinSource11,GPIO_AF_SDIO);
-  GPIO_PinAFConfig(GPIOC,GPIO_PinSource12,GPIO_AF_SDIO);	
-  GPIO_PinAFConfig(GPIOD,GPIO_PinSource2,GPIO_AF_SDIO);	
-	
+	GPIO_PinAFConfig(GPIOC,GPIO_PinSource9,GPIO_AF_SDIO);
+	GPIO_PinAFConfig(GPIOC,GPIO_PinSource10,GPIO_AF_SDIO);
+	GPIO_PinAFConfig(GPIOC,GPIO_PinSource11,GPIO_AF_SDIO);
+	GPIO_PinAFConfig(GPIOC,GPIO_PinSource12,GPIO_AF_SDIO);	
+	GPIO_PinAFConfig(GPIOD,GPIO_PinSource2,GPIO_AF_SDIO);	
+		
 	RCC_APB2PeriphResetCmd(RCC_APB2Periph_SDIO, DISABLE);//SDIO结束复位
 		
  	//SDIO外设寄存器设置为默认值 			   

@@ -51,17 +51,18 @@
 .\objects\mpu6050.o: ..\drive\sdio_sdcard.h
 .\objects\mpu6050.o: ..\drive\i2c.h
 .\objects\mpu6050.o: ..\drive\RTC.h
+.\objects\mpu6050.o: ..\drive\Timer.h
+.\objects\mpu6050.o: ..\drive\DMA.h
+.\objects\mpu6050.o: ..\drive\pwm.h
+.\objects\mpu6050.o: ..\drive\RNG.h
 .\objects\mpu6050.o: ..\drive\AT24C08.h
 .\objects\mpu6050.o: ..\drive\MPU6050.h
 .\objects\mpu6050.o: ..\drive\DHT11.h
 .\objects\mpu6050.o: ..\drive\ds18b20.h
 .\objects\mpu6050.o: ..\drive\oled.h
-.\objects\mpu6050.o: ..\drive\DMA.h
-.\objects\mpu6050.o: ..\drive\pwm.h
-.\objects\mpu6050.o: ..\drive\RNG.h
 .\objects\mpu6050.o: ..\drive\lcd1602.h
-.\objects\mpu6050.o: ..\drive\Timer.h
 .\objects\mpu6050.o: ..\drive\HC_SR04.h
+.\objects\mpu6050.o: ..\drive\PID.h
 .\objects\mpu6050.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\mpu6050.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\mpu6050.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\mpu6050.o: ..\SD\diskio.h
 .\objects\mpu6050.o: ..\SD\integer.h
+.\objects\mpu6050.o: ..\SD\ff.h
+.\objects\mpu6050.o: ..\SD\ffconf.h
 .\objects\mpu6050.o: ..\drive\GUI.H
 .\objects\mpu6050.o: ..\drive\TEST.h

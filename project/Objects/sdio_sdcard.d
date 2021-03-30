@@ -51,17 +51,18 @@
 .\objects\sdio_sdcard.o: ..\drive\sdio_sdcard.h
 .\objects\sdio_sdcard.o: ..\drive\i2c.h
 .\objects\sdio_sdcard.o: ..\drive\RTC.h
+.\objects\sdio_sdcard.o: ..\drive\Timer.h
+.\objects\sdio_sdcard.o: ..\drive\DMA.h
+.\objects\sdio_sdcard.o: ..\drive\pwm.h
+.\objects\sdio_sdcard.o: ..\drive\RNG.h
 .\objects\sdio_sdcard.o: ..\drive\AT24C08.h
 .\objects\sdio_sdcard.o: ..\drive\MPU6050.h
 .\objects\sdio_sdcard.o: ..\drive\DHT11.h
 .\objects\sdio_sdcard.o: ..\drive\ds18b20.h
 .\objects\sdio_sdcard.o: ..\drive\oled.h
-.\objects\sdio_sdcard.o: ..\drive\DMA.h
-.\objects\sdio_sdcard.o: ..\drive\pwm.h
-.\objects\sdio_sdcard.o: ..\drive\RNG.h
 .\objects\sdio_sdcard.o: ..\drive\lcd1602.h
-.\objects\sdio_sdcard.o: ..\drive\Timer.h
 .\objects\sdio_sdcard.o: ..\drive\HC_SR04.h
+.\objects\sdio_sdcard.o: ..\drive\PID.h
 .\objects\sdio_sdcard.o: ..\FreeRTOS\include\FreeRTOS.h
 .\objects\sdio_sdcard.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stddef.h
 .\objects\sdio_sdcard.o: ..\user\FreeRTOSConfig.h
@@ -76,5 +77,7 @@
 .\objects\sdio_sdcard.o: ..\MPU6050DMP\inv_mpu_dmp_motion_driver.h
 .\objects\sdio_sdcard.o: ..\SD\diskio.h
 .\objects\sdio_sdcard.o: ..\SD\integer.h
+.\objects\sdio_sdcard.o: ..\SD\ff.h
+.\objects\sdio_sdcard.o: ..\SD\ffconf.h
 .\objects\sdio_sdcard.o: ..\drive\GUI.H
 .\objects\sdio_sdcard.o: ..\drive\TEST.h

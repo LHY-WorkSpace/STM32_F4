@@ -7,12 +7,7 @@
 /* storage control modules to the FatFs module with a defined API.       */
 /*-----------------------------------------------------------------------*/
 
-#include "diskio.h"		/* FatFs lower layer API */
-#include "sd.h"
-/* Definitions of physical drive number for each drive */
-#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 0 */
-#define DEV_SD		1	/* Example: Map MMC/SD card to physical drive 1 */
-#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
+#include "IncludeFile.h"
 
 
 /*-----------------------------------------------------------------------*/
@@ -23,7 +18,7 @@ DSTATUS disk_status (
 	BYTE pdrv		/* Physical drive nmuber to identify the drive */
 )
 {
-	DSTATUS stat;
+	DSTATUS stat = RES_OK;
 	//int result;----------------------------------------------------------
 
 	switch (pdrv) {
@@ -61,23 +56,29 @@ DSTATUS disk_initialize (
 	BYTE pdrv				/* Physical drive nmuber to identify the drive */
 )
 {
-	DSTATUS stat;
+	u8 Sta;
 
 	switch (pdrv) {
 	case DEV_RAM :
 
-		return stat;
+		return Sta;
 
 	case DEV_SD :
-		
-         SD_CARD_Init();
-         stat=RES_OK;
-	
-		return stat;
+
+        Sta =  SD_Init();
+
+		if( Sta != SD_OK )
+		{
+			return RES_ERROR;
+		}
+		else
+		{
+			return RES_OK;
+		}
 
 	case DEV_USB :
 
-		return stat;
+		return Sta;
 	}
 	return STA_NOINIT;
 }
@@ -95,7 +96,7 @@ DRESULT disk_read (
 	UINT count		/* Number of sectors to read */
 )
 {
-	DRESULT res;
+	u8 Sta;
 //	DWORD Physical_sector;
 //	int result;-----------------------------------------------------------
 
@@ -103,38 +104,27 @@ DRESULT disk_read (
 //	Physical_sector=(2048+sector)*512;
 	
 	
-	switch (pdrv) {
+	switch (pdrv) 
+	{
 	case DEV_RAM :
-		// translate the arguments here
-
-		//result = RAM_disk_read(buff, sector, count);-----------------------------------------------
-
-		// translate the reslut code here
-
-		return res;
+		return RES_NOTRDY;
 
 	case DEV_SD :
-		// translate the arguments here
 
-		//result = MMC_disk_read(buff, sector, count);--------------------------------------------
-	
-//	SD_Read_Block(buff,Physical_sector,1);
-	
-	
-	
-	
-    res=RES_OK;
-	
-		return res;
+			Sta = SD_ReadDisk(buff, sector,count); 
+
+			if( Sta != SD_OK )
+			{
+				return RES_ERROR;
+			}
+			else
+			{
+				return RES_OK;
+			}
+			
 
 	case DEV_USB :
-		// translate the arguments here
-
-		//result = USB_disk_read(buff, sector, count);------------------------------------------
-
-		// translate the reslut code here
-
-		return res;
+				return RES_ERROR;
 	}
 
 	return RES_PARERR;
@@ -153,37 +143,31 @@ DRESULT disk_write (
 	UINT count			/* Number of sectors to write */
 )
 {
-	DRESULT res;
-//	int result;----------------------------------------------------------
+	u8 Sta;
+
 
 	switch (pdrv)
 		{
-	case DEV_RAM :
-		// translate the arguments here
+		case DEV_RAM :
 
-	//	result = RAM_disk_write(buff, sector, count);------------------------------------------
+			return RES_NOTRDY;
+		case DEV_SD :
 
-		// translate the reslut code here
+			Sta = SD_WriteDisk( (u8*) buff, sector, count); 
 
-		return res;
+			if( Sta != SD_OK )
+			{
+				return RES_ERROR;
+			}
+			else
+			{
+				return RES_OK;
+			}
 
-	case DEV_SD :
-		// translate the arguments here
+		case DEV_USB :
 
-	//	result = MMC_disk_write(buff, sector, count);----------------------------------------------
 
-		// translate the reslut code here
-
-		return res;
-
-	case DEV_USB :
-		// translate the arguments here
-
-		// result = USB_disk_write(buff, sector, count);----------------------------------------
-
-		// translate the reslut code here
-
-		return res;
+			return RES_NOTRDY;
 	}
 
 	return RES_PARERR;
@@ -213,10 +197,23 @@ DRESULT disk_ioctl (
 		return res;
 
 	case DEV_SD :
-
-		// Process of the command for the MMC/SD card
-
-		return res;
+			switch ( cmd )
+			{			//fatfs????cmd??
+				case GET_SECTOR_COUNT:	//sector count, ??sect_cnt
+					*(DWORD*)buff = (SDCardInfo.CardCapacity/SDCardInfo.CardBlockSize);
+					return RES_OK;
+				case GET_SECTOR_SIZE:	//sector size, ??block size(SD),??bytes
+					*(DWORD*)buff = 512;
+					return RES_OK;
+				case GET_BLOCK_SIZE:	//block size, ????????SD2.0???8192??? 1
+					*(DWORD*)buff = 1;	//??? sector(FatFs)
+					return RES_OK;
+				case CTRL_SYNC:			//???????FatFs?????????????
+					return RES_OK;
+			}
+		default:
+			printf( "No device %d.\n", pdrv );
+			break;
 
 	case DEV_USB :
 
