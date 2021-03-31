@@ -86,6 +86,8 @@ u8 Sta;
 u32 ss;
 char Data[100];
 u8 work[512];
+DIR dp;		
+FILINFO fno;
 
 int  main()
 {
@@ -101,12 +103,22 @@ int  main()
 	disk_initialize(DEV_SD);
 
 	
-	Sta=f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
+	//Sta=f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
 	Sta=f_mount(&fs,"1:",1);
-	Sta=f_open(&fils,"1:/123.txt",FA_READ|FA_WRITE|FA_OPEN_EXISTING);
-	Sta=f_read(&fils,Data,5,&ss);
+	Sta=f_opendir(&dp,"1:");
+
+	for(u8 i=0;i<5;i++)
+	{
+	Sta=f_readdir(&dp,&fno);
+	OLED_ShowStrings(0,i,fno.fname,16);
+	OLED_ShowStrings(0,7,(char*)('0'+Sta),2);
+	}
+
+
+	//Sta=f_open(&fils,"1:/123.txt",FA_READ|FA_WRITE|FA_OPEN_EXISTING);
+	//Sta=f_read(&fils,Data,15,&ss);
 	Sta=f_close(&fils);
-	OLED_ShowStrings(0,0,Data,5);
+	
 	OLED_UpdateGRAM();
 	while(1)
 	{	
