@@ -81,3 +81,4 @@
 .\objects\dma.o: ..\SD\ffconf.h
 .\objects\dma.o: ..\drive\GUI.H
 .\objects\dma.o: ..\drive\TEST.h
+.\objects\dma.o: ..\drive\FileOperate.h

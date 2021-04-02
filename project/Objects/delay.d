@@ -81,3 +81,4 @@
 .\objects\delay.o: ..\SD\ffconf.h
 .\objects\delay.o: ..\drive\GUI.H
 .\objects\delay.o: ..\drive\TEST.h
+.\objects\delay.o: ..\drive\FileOperate.h

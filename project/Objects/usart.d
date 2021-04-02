@@ -81,3 +81,4 @@
 .\objects\usart.o: ..\SD\ffconf.h
 .\objects\usart.o: ..\drive\GUI.H
 .\objects\usart.o: ..\drive\TEST.h
+.\objects\usart.o: ..\drive\FileOperate.h

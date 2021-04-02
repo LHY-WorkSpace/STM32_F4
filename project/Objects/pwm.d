@@ -81,3 +81,4 @@
 .\objects\pwm.o: ..\SD\ffconf.h
 .\objects\pwm.o: ..\drive\GUI.H
 .\objects\pwm.o: ..\drive\TEST.h
+.\objects\pwm.o: ..\drive\FileOperate.h

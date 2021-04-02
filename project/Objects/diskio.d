@@ -81,3 +81,4 @@
 .\objects\diskio.o: ..\SD\ffconf.h
 .\objects\diskio.o: ..\drive\GUI.H
 .\objects\diskio.o: ..\drive\TEST.h
+.\objects\diskio.o: ..\drive\FileOperate.h

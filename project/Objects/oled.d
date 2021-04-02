@@ -81,3 +81,4 @@
 .\objects\oled.o: ..\SD\ffconf.h
 .\objects\oled.o: ..\drive\GUI.H
 .\objects\oled.o: ..\drive\TEST.h
+.\objects\oled.o: ..\drive\FileOperate.h

@@ -81,3 +81,4 @@
 .\objects\i2c.o: ..\SD\ffconf.h
 .\objects\i2c.o: ..\drive\GUI.H
 .\objects\i2c.o: ..\drive\TEST.h
+.\objects\i2c.o: ..\drive\FileOperate.h

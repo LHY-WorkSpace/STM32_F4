@@ -81,3 +81,4 @@
 .\objects\dht11.o: ..\SD\ffconf.h
 .\objects\dht11.o: ..\drive\GUI.H
 .\objects\dht11.o: ..\drive\TEST.h
+.\objects\dht11.o: ..\drive\FileOperate.h

@@ -1013,6 +1013,11 @@
               <FileType>1</FileType>
               <FilePath>..\drive\HC_SR04.c</FilePath>
             </File>
+            <File>
+              <FileName>FileOperate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\drive\FileOperate.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

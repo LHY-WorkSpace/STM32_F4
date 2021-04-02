@@ -81,3 +81,4 @@
 .\objects\mpu6050.o: ..\SD\ffconf.h
 .\objects\mpu6050.o: ..\drive\GUI.H
 .\objects\mpu6050.o: ..\drive\TEST.h
+.\objects\mpu6050.o: ..\drive\FileOperate.h

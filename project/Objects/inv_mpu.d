@@ -82,3 +82,4 @@
 .\objects\inv_mpu.o: ..\SD\ffconf.h
 .\objects\inv_mpu.o: ..\drive\GUI.H
 .\objects\inv_mpu.o: ..\drive\TEST.h
+.\objects\inv_mpu.o: ..\drive\FileOperate.h

@@ -81,3 +81,4 @@
 .\objects\ds18b20.o: ..\SD\ffconf.h
 .\objects\ds18b20.o: ..\drive\GUI.H
 .\objects\ds18b20.o: ..\drive\TEST.h
+.\objects\ds18b20.o: ..\drive\FileOperate.h

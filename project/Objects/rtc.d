@@ -81,3 +81,4 @@
 .\objects\rtc.o: ..\SD\ffconf.h
 .\objects\rtc.o: ..\drive\GUI.H
 .\objects\rtc.o: ..\drive\TEST.h
+.\objects\rtc.o: ..\drive\FileOperate.h

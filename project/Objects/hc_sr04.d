@@ -81,3 +81,4 @@
 .\objects\hc_sr04.o: ..\SD\ffconf.h
 .\objects\hc_sr04.o: ..\drive\GUI.H
 .\objects\hc_sr04.o: ..\drive\TEST.h
+.\objects\hc_sr04.o: ..\drive\FileOperate.h
