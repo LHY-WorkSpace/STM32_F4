@@ -9,6 +9,16 @@ float pitch,yaw,roll,Dis;
 char gg[7];
 
 
+u8 Sta;
+u32 ss;
+u8 Data[1024];
+
+
+char asd[]="´´½¨ By STM32";
+char tt[]="SD-RW!";
+u16 times=0;
+
+
 
 
 void Task_List()
@@ -33,6 +43,14 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_50ms) == SET )
 			{
 				
+				// if(times>=8758)
+				// {
+				// 	Sta=f_close(&fils);
+				// }
+				// Sta=f_read(&fils,Data,1024,&ss);
+				// OLED_Data2GRAM(Data,1024);
+				// OLED_UpdateGRAM();
+				// times++;
 				
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
@@ -78,18 +96,9 @@ void Task_List()
 
 
 
+u32 size;
 
 
-FATFS fs;
-FIL fils;
-u8 Sta;
-u32 ss;
-u8 Data[1024];
-u8 work[512];
-DIR dp;		
-FILINFO fno;
-char asd[]="Build By STM32";
-char tt[]="SD-RW!";
 
 int  main()
 {
@@ -102,20 +111,32 @@ int  main()
 	led_init();
 	OLED_Init();
 	TaskTimer_Init();
-	disk_initialize(DEV_SD);
+	File_FATFSInit();
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD");
+	File_CreateNewFile("1:/SD/Data.c");
+	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",9);
+	File_ReadData("1:/SD/Data.c",Data,9);
+	size=File_GetFileSize("1:/STM32.c");
+	OLED_ShowStrings(0,0,(char *)Data,12);
+	OLED_UpdateGRAM();
 
+
+	/*
 	
-	//Sta=f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
 	Sta=f_mount(&fs,"1:",1);
-	Sta=f_opendir(&dp,"1:");
-	for(u8 i=0;i<5;i++)
-	{
-		Sta=f_readdir(&dp,&fno); 
-		OLED_ShowStrings(0,i,fno.fname,16);
-		OLED_ShowStrings(0,7,(char*)('0'+Sta),2);
-	}
+	Sta=
+	f_mkdir("1:/.STM32");
+	// for(u8 i=0;i<5;i++)
+	// {
+	// Sta=f_readdir(&dp,&fno); 
+	// 	OLED_ShowStrings(0,i,fno.fname,16);
+	// 	OLED_ShowStrings(0,7,(char*)('0'+Sta),2);
+	// }
 
-
+	f_unmount();
+	f_rmdir();
+	f_rmdir();
 	Sta=f_open(&fils,"1:/STM32.txt",FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
 	if(Sta==FR_EXIST)
 	{
@@ -123,16 +144,17 @@ int  main()
 			if(Sta==FR_OK)
 			{
 				Sta=f_write(&fils,asd,sizeof(asd),&ss);
-				Sta=f_write(&fils,tt,sizeof(tt),&ss);
+				//Sta=f_write(&fils,tt,sizeof(tt),&ss);
 			}
 	}
 	Sta=f_close(&fils);
 	Sta=f_open(&fils,"1:/STM32.txt",FA_READ|FA_WRITE|FA_OPEN_EXISTING);
 	Sta=f_read(&fils,Data,30,&ss);
 	Sta=f_close(&fils);
-	OLED_ShowStrings(0,0,(char *)Data,sizeof(asd)+sizeof(tt));
-	OLED_UpdateGRAM();
+
 	
+
+	*/
 	while(1)
 	{	
 		Task_List();	
