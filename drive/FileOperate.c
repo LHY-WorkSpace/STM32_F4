@@ -103,7 +103,7 @@ u8 File_ReadData(const char* Path,u8* Data,u16 Length)
      return sta;
 }
 
-
+f_size()
 
 u8 File_WriteData(const char* Path,u8* Data,u16 Length)
 {
@@ -154,17 +154,16 @@ void File_GetFileNameList(void)
 
 }
 
-
-
-
-
-void File_Delete()
+u8 File_Rename(const char* path_old, const char* path_new)
 {
+    return f_rename( path_old, path_new);
+}
 
 
 
-
-    
+u8 File_Delete(const char* path)
+{
+    return f_unlink(path);
 }
 
 
