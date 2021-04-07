@@ -41,7 +41,7 @@
 .\objects\test.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\test.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\test.o: ..\drive\SystemState.h
-.\objects\test.o: ..\drive\delay.h
+.\objects\test.o: ..\drive\Timer.h
 .\objects\test.o: ..\drive\usart.h
 .\objects\test.o: ..\drive\CODE_RUN_TIME.h
 .\objects\test.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\test.o: ..\drive\sdio_sdcard.h
 .\objects\test.o: ..\drive\i2c.h
 .\objects\test.o: ..\drive\RTC.h
-.\objects\test.o: ..\drive\Timer.h
 .\objects\test.o: ..\drive\DMA.h
 .\objects\test.o: ..\drive\pwm.h
 .\objects\test.o: ..\drive\RNG.h

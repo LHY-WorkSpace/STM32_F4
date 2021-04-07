@@ -41,7 +41,7 @@
 .\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\pwm.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\pwm.o: ..\drive\SystemState.h
-.\objects\pwm.o: ..\drive\delay.h
+.\objects\pwm.o: ..\drive\Timer.h
 .\objects\pwm.o: ..\drive\usart.h
 .\objects\pwm.o: ..\drive\CODE_RUN_TIME.h
 .\objects\pwm.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\pwm.o: ..\drive\sdio_sdcard.h
 .\objects\pwm.o: ..\drive\i2c.h
 .\objects\pwm.o: ..\drive\RTC.h
-.\objects\pwm.o: ..\drive\Timer.h
 .\objects\pwm.o: ..\drive\DMA.h
 .\objects\pwm.o: ..\drive\pwm.h
 .\objects\pwm.o: ..\drive\RNG.h

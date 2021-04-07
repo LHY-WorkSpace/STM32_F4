@@ -17,6 +17,20 @@ static u32 DataPointer;
 //初始化文件系统
 u8 File_FATFSInit()
 {
+    
+		GPIO_InitTypeDef GPIOA_Initstruc;
+        	
+		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
+
+		GPIOA_Initstruc.GPIO_Pin=GPIO_Pin_8;
+		GPIOA_Initstruc.GPIO_Mode=GPIO_Mode_IN;
+		GPIOA_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
+		GPIOA_Initstruc.GPIO_OType=GPIO_OType_PP; 
+	  	GPIOA_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;           
+		GPIO_Init(GPIOA,&GPIOA_Initstruc);
+
+
+
     return disk_initialize(DEV_SD);
 }
 

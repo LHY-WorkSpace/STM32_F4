@@ -164,7 +164,7 @@ void USART1_IRQHandler()
 	// 	USART1_Buffer[RX_Point] = USART_ReceiveData(USART1);
 	// 	RX_Point++;		
 	// }
-	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+	USART_ClearITPendingBit(USART1,USART_IT_RXNE|USART_IT_TC);
 }
 
 

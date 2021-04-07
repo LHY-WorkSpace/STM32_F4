@@ -99,6 +99,17 @@ typedef enum
 
 }Dev_HCSR04State_n;
 
+typedef enum 
+{
+    F_SDCard_Init_OK=0x01,
+    F_SDCard_Inside=0x02,
+    F_HCSR0LOW=0x04,
+    F_HCSR0ataReady=0x08
+
+}Dev_SD_CardState_n;
+
+
+
 
 /*
 设备枚举列表，个数超出 DEVICES_NUM 时，需修改 DEVICES_NUM 的值
@@ -111,7 +122,8 @@ typedef enum
     Dev_SD,
     Dev_AT24C,
     Dev_MPU6050,
-    Dev_HCSR04
+    Dev_HCSR04,
+    Dev_SD_Card
         
 
 }SystemState_n;

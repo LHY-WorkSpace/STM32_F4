@@ -41,7 +41,7 @@
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\mpu6050.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\mpu6050.o: ..\drive\SystemState.h
-.\objects\mpu6050.o: ..\drive\delay.h
+.\objects\mpu6050.o: ..\drive\Timer.h
 .\objects\mpu6050.o: ..\drive\usart.h
 .\objects\mpu6050.o: ..\drive\CODE_RUN_TIME.h
 .\objects\mpu6050.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\mpu6050.o: ..\drive\sdio_sdcard.h
 .\objects\mpu6050.o: ..\drive\i2c.h
 .\objects\mpu6050.o: ..\drive\RTC.h
-.\objects\mpu6050.o: ..\drive\Timer.h
 .\objects\mpu6050.o: ..\drive\DMA.h
 .\objects\mpu6050.o: ..\drive\pwm.h
 .\objects\mpu6050.o: ..\drive\RNG.h

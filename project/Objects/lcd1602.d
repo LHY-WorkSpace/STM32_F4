@@ -41,7 +41,7 @@
 .\objects\lcd1602.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\lcd1602.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\lcd1602.o: ..\drive\SystemState.h
-.\objects\lcd1602.o: ..\drive\delay.h
+.\objects\lcd1602.o: ..\drive\Timer.h
 .\objects\lcd1602.o: ..\drive\usart.h
 .\objects\lcd1602.o: ..\drive\CODE_RUN_TIME.h
 .\objects\lcd1602.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\lcd1602.o: ..\drive\sdio_sdcard.h
 .\objects\lcd1602.o: ..\drive\i2c.h
 .\objects\lcd1602.o: ..\drive\RTC.h
-.\objects\lcd1602.o: ..\drive\Timer.h
 .\objects\lcd1602.o: ..\drive\DMA.h
 .\objects\lcd1602.o: ..\drive\pwm.h
 .\objects\lcd1602.o: ..\drive\RNG.h

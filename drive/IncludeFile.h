@@ -12,18 +12,16 @@
 
 
 //Ð¾Æ¬Çý¶¯²ã
-#include "delay.h"
+#include "Timer.h"
 #include "usart.h"
 #include "CODE_RUN_TIME.h"
 #include "dac.h"
 #include "adc.h"
 #include "led.h"
 #include "exti.h"
-// #include "sd.h"
 #include "sdio_sdcard.h"
 #include "i2c.h"
 #include "RTC.h"
-#include "Timer.h"
 #include "DMA.h"  
 #include "pwm.h"
 #include "RNG.h"

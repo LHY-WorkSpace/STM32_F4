@@ -41,7 +41,7 @@
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\led.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\led.o: ..\drive\SystemState.h
-.\objects\led.o: ..\drive\delay.h
+.\objects\led.o: ..\drive\Timer.h
 .\objects\led.o: ..\drive\usart.h
 .\objects\led.o: ..\drive\CODE_RUN_TIME.h
 .\objects\led.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\led.o: ..\drive\sdio_sdcard.h
 .\objects\led.o: ..\drive\i2c.h
 .\objects\led.o: ..\drive\RTC.h
-.\objects\led.o: ..\drive\Timer.h
 .\objects\led.o: ..\drive\DMA.h
 .\objects\led.o: ..\drive\pwm.h
 .\objects\led.o: ..\drive\RNG.h

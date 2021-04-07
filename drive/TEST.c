@@ -86,7 +86,21 @@ void RTC_Test()
 
 }
 
+void SD_Test()
+{
+	u8 Data[20];
 
+	File_FATFSInit();
+	File_MountDisk("1:");
+	File_Mkdir("1:/SD");
+	File_OpenDir("1:/SD");
+	File_CreateNewFile("1:/SD/Data.c");
+	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",10,0);
+	File_WriteData("1:/SD/Data.c",(u8*)"add Test",9,10);
+	File_ReadData("1:/SD/Data.c",Data,10,10);
+	File_CloseDir();
+
+}
 
 
 void RNG_Test()
@@ -104,7 +118,7 @@ void RNG_Test()
 void OLED_Test()
 {
  static u8  i=0;
-char s[1];
+	char s[1];
 
 	if(i>=50)
 		i=0;

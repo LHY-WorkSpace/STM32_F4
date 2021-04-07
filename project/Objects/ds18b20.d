@@ -41,7 +41,7 @@
 .\objects\ds18b20.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\ds18b20.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\ds18b20.o: ..\drive\SystemState.h
-.\objects\ds18b20.o: ..\drive\delay.h
+.\objects\ds18b20.o: ..\drive\Timer.h
 .\objects\ds18b20.o: ..\drive\usart.h
 .\objects\ds18b20.o: ..\drive\CODE_RUN_TIME.h
 .\objects\ds18b20.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\ds18b20.o: ..\drive\sdio_sdcard.h
 .\objects\ds18b20.o: ..\drive\i2c.h
 .\objects\ds18b20.o: ..\drive\RTC.h
-.\objects\ds18b20.o: ..\drive\Timer.h
 .\objects\ds18b20.o: ..\drive\DMA.h
 .\objects\ds18b20.o: ..\drive\pwm.h
 .\objects\ds18b20.o: ..\drive\RNG.h

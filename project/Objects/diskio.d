@@ -41,7 +41,7 @@
 .\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\diskio.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\diskio.o: ..\drive\SystemState.h
-.\objects\diskio.o: ..\drive\delay.h
+.\objects\diskio.o: ..\drive\Timer.h
 .\objects\diskio.o: ..\drive\usart.h
 .\objects\diskio.o: ..\drive\CODE_RUN_TIME.h
 .\objects\diskio.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\diskio.o: ..\drive\sdio_sdcard.h
 .\objects\diskio.o: ..\drive\i2c.h
 .\objects\diskio.o: ..\drive\RTC.h
-.\objects\diskio.o: ..\drive\Timer.h
 .\objects\diskio.o: ..\drive\DMA.h
 .\objects\diskio.o: ..\drive\pwm.h
 .\objects\diskio.o: ..\drive\RNG.h

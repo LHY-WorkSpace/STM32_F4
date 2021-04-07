@@ -42,7 +42,7 @@
 .\objects\inv_mpu.o: ..\CMSIS\arm_math.h
 .\objects\inv_mpu.o: ..\CMSIS\core_cm4.h
 .\objects\inv_mpu.o: ..\drive\SystemState.h
-.\objects\inv_mpu.o: ..\drive\delay.h
+.\objects\inv_mpu.o: ..\drive\Timer.h
 .\objects\inv_mpu.o: ..\drive\usart.h
 .\objects\inv_mpu.o: ..\drive\CODE_RUN_TIME.h
 .\objects\inv_mpu.o: ..\drive\dac.h
@@ -52,7 +52,6 @@
 .\objects\inv_mpu.o: ..\drive\sdio_sdcard.h
 .\objects\inv_mpu.o: ..\drive\i2c.h
 .\objects\inv_mpu.o: ..\drive\RTC.h
-.\objects\inv_mpu.o: ..\drive\Timer.h
 .\objects\inv_mpu.o: ..\drive\DMA.h
 .\objects\inv_mpu.o: ..\drive\pwm.h
 .\objects\inv_mpu.o: ..\drive\RNG.h

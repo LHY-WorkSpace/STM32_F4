@@ -41,7 +41,7 @@
 .\objects\exti.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\exti.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\exti.o: ..\drive\SystemState.h
-.\objects\exti.o: ..\drive\delay.h
+.\objects\exti.o: ..\drive\Timer.h
 .\objects\exti.o: ..\drive\usart.h
 .\objects\exti.o: ..\drive\CODE_RUN_TIME.h
 .\objects\exti.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\exti.o: ..\drive\sdio_sdcard.h
 .\objects\exti.o: ..\drive\i2c.h
 .\objects\exti.o: ..\drive\RTC.h
-.\objects\exti.o: ..\drive\Timer.h
 .\objects\exti.o: ..\drive\DMA.h
 .\objects\exti.o: ..\drive\pwm.h
 .\objects\exti.o: ..\drive\RNG.h

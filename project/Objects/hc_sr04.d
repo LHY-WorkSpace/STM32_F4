@@ -41,7 +41,7 @@
 .\objects\hc_sr04.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\math.h
 .\objects\hc_sr04.o: D:\MDK 5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\hc_sr04.o: ..\drive\SystemState.h
-.\objects\hc_sr04.o: ..\drive\delay.h
+.\objects\hc_sr04.o: ..\drive\Timer.h
 .\objects\hc_sr04.o: ..\drive\usart.h
 .\objects\hc_sr04.o: ..\drive\CODE_RUN_TIME.h
 .\objects\hc_sr04.o: ..\drive\dac.h
@@ -51,7 +51,6 @@
 .\objects\hc_sr04.o: ..\drive\sdio_sdcard.h
 .\objects\hc_sr04.o: ..\drive\i2c.h
 .\objects\hc_sr04.o: ..\drive\RTC.h
-.\objects\hc_sr04.o: ..\drive\Timer.h
 .\objects\hc_sr04.o: ..\drive\DMA.h
 .\objects\hc_sr04.o: ..\drive\pwm.h
 .\objects\hc_sr04.o: ..\drive\RNG.h
