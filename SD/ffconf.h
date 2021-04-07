@@ -97,7 +97,7 @@
 */
 
 
-#define FF_USE_LFN		0
+#define FF_USE_LFN		1      //暂时支持长文件名，内部FLASH不够的情况下在考虑放在外边  使能的话增加约 17KB 的代码
 #define FF_MAX_LFN		255
 /* The FF_USE_LFN switches the support for LFN (long file name).
 /
