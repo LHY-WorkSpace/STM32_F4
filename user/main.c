@@ -25,14 +25,6 @@ void Task_List()
 			if( System_GetState(Task_TimeFlag,Task_50ms) == SET )
 			{
 				
-				// if(times>=8758)
-				// {
-				// 	Sta=f_close(&fils);
-				// }
-				// Sta=f_read(&fils,Data,1024,&ss);
-				// OLED_Data2GRAM(Data,1024);
-				// OLED_UpdateGRAM();
-				// times++;
 				
 				System_ResetState(Task_TimeFlag,Task_50ms);	
 			}
@@ -71,7 +63,6 @@ void Task_List()
 
 }
 
-u32 size;
 
 
 
@@ -86,6 +77,8 @@ int  main()
 	TaskTimer_Init();
 	SD_Test();
 
+
+vTaskStartScheduler();
 
 	while(1)
 	{	

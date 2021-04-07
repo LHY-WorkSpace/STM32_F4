@@ -9,6 +9,10 @@ void SDIO_Test(void);
 void AT24C08_Test(void);
 void MPU6050_Test(void);
 void OLED_Test(void);
+void SD_Test(void);
+
+
+
 
 #endif
 
