@@ -106,10 +106,15 @@ int  main()
 	TaskTimer_Init();
 	File_FATFSInit();
 	File_MountDisk("1:");
+	File_Mkdir("1:/SD");
 	File_OpenDir("1:/SD");
 	File_CreateNewFile("1:/SD/Data.c");
-	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",9);
-	File_ReadData("1:/SD/Data.c",Data,9);
+	File_CreateNewFile("1:/SD/del.c");
+	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",10,0);
+	File_WriteData("1:/SD/Data.c",(u8*)"add Test",9,10);
+	File_ReadData("1:/SD/Data.c",Data,10,10);
+	File_Delete("1:/SD/Data.c");
+	File_WriteData("1:/SD/del.c",Data,10,0);
 	size=File_GetFileSize("1:/STM32.c");
 	OLED_ShowStrings(0,0,(char *)Data,12);
 	OLED_UpdateGRAM();
