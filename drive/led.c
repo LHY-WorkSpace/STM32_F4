@@ -19,24 +19,7 @@ void led_init()
 
 }
 
-void Led_Test()
-{
-	static u8 i=0;
 
-	if(i)
-	{
-		LED1_OFF;
-		delay_us(20);
-	}
-	else
-	{
-		LED1_ON;
-		delay_ms(20);
-	}
-
-	i=~i;
-
-}
 
 
 

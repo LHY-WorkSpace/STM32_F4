@@ -5,7 +5,7 @@
 static FATFS fs;
 static FIL fils;
 static DIR dp;		
-static FILINFO fno;
+// static FILINFO fno;
 static u32 DataPointer;
 
 
@@ -28,6 +28,9 @@ u8 File_FATFSInit()
 		GPIOA_Initstruc.GPIO_OType=GPIO_OType_PP; 
 	  	GPIOA_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;           
 		GPIO_Init(GPIOA,&GPIOA_Initstruc);
+
+
+        
 
 
 

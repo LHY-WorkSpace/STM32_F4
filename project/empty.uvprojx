@@ -1171,16 +1171,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>README</GroupName>
-          <Files>
-            <File>
-              <FileName>笔记.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\笔记.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>DMP</GroupName>
           <Files>
             <File>

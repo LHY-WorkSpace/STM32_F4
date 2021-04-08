@@ -63,6 +63,38 @@ void Task_List()
 
 }
 
+void OLED_Task()
+{
+	while(1)
+	{
+		OLED_Test();
+		vTaskDelay(100);
+	}
+}
+
+
+void LED_Task()
+{
+	while(1)
+	{
+		Led_Test();
+		vTaskDelay(100);
+	}
+}
+
+
+void Task_Init()
+{
+
+	xTaskCreate( OLED_Task,"OLED",30,NULL,5,NULL);
+	xTaskCreate( LED_Task,"LED",10,NULL,5,NULL);
+
+
+
+
+}
+
+
 
 
 
@@ -75,22 +107,31 @@ int  main()
 	led_init();
 	OLED_Init();
 	TaskTimer_Init();
-	SD_Test();
 
 
-vTaskStartScheduler();
+	Task_Init();
 
+	vTaskStartScheduler();
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 	while(1)
 	{	
 		Task_List();	
 
 	}
+*/
 
-
-
-
-
-	
 }	
 
 	
