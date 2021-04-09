@@ -68,7 +68,7 @@ void OLED_Task()
 	while(1)
 	{
 		OLED_Test();
-		vTaskDelay(100);
+		vTaskDelay(500);
 	}
 }
 
@@ -78,7 +78,7 @@ void LED_Task()
 	while(1)
 	{
 		Led_Test();
-		vTaskDelay(100);
+		vTaskDelay(500);
 	}
 }
 

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\1.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\1.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Thu Apr 08 22:57:53 2021
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060960: Last Updated: Fri Apr 09 21:40:05 2021
 <BR><P>
 <H3>Maximum Stack Usage =        224 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -14,9 +14,7 @@ Mutually Recursive functions
 </H3> <LI><a href="#[1d]">ADC_IRQHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1d]">ADC_IRQHandler</a><BR>
  <LI><a href="#[5]">BusFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[5]">BusFault_Handler</a><BR>
  <LI><a href="#[3]">HardFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3]">HardFault_Handler</a><BR>
- <LI><a href="#[61]">LED_Task</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[61]">LED_Task</a><BR>
  <LI><a href="#[4]">MemManage_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[4]">MemManage_Handler</a><BR>
- <LI><a href="#[60]">OLED_Task</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[60]">OLED_Task</a><BR>
  <LI><a href="#[6]">UsageFault_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[6]">UsageFault_Handler</a><BR>
 </UL>
 <P>
@@ -615,15 +613,11 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f40_41xxx.o(RESET)
 </UL>
-<P><STRONG><a name="[61]"></a>LED_Task</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.LED_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 64 + In Cycle
-<LI>Call Chain = LED_Task &rArr;  LED_Task (Cycle)
+<P><STRONG><a name="[61]"></a>LED_Task</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.LED_Task))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = LED_Task &rArr; vTaskDelay &rArr; xTaskResumeAll &rArr; xTaskIncrementTick
 </UL>
 <BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Led_Test
-<LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Task
-</UL>
-<BR>[Called By]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Task
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.Task_Init)
 </UL>
@@ -731,15 +725,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Test
 </UL>
 
-<P><STRONG><a name="[60]"></a>OLED_Task</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(i.OLED_Task))
-<BR><BR>[Stack]<UL><LI>Max Depth = 128 + In Cycle
-<LI>Call Chain = OLED_Task &rArr;  OLED_Task (Cycle)
+<P><STRONG><a name="[60]"></a>OLED_Task</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, main.o(i.OLED_Task))
+<BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = OLED_Task &rArr; OLED_Test &rArr; OLED_ShowStrings &rArr; OLED_ShowChar
 </UL>
 <BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vTaskDelay
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Test
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Task
-</UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OLED_Task
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.Task_Init)
 </UL>
