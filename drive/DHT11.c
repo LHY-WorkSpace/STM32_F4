@@ -5,7 +5,6 @@
 #define  DHT11_OUT_LOW    0
 
 
-
 #define DHT11_IO_STATE GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_4)
 
 
