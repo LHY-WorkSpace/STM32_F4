@@ -20,7 +20,8 @@
 #define	Bit_15	0x8000
 
 
-
+#define  HIGH   1
+#define  LOW    0
 
 //设备个数：20个+1时间标志
 #define DEVICES_NUM       21

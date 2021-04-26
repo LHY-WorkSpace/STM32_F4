@@ -3,6 +3,8 @@
         "*.C": "c",
         "includefile.h": "c",
         "lcd1602.h": "c",
-        "code_run_time.h": "c"
+        "code_run_time.h": "c",
+        "systemstate.h": "c",
+        "stm32f4xx.h": "c"
     }
 }
