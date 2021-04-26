@@ -6,14 +6,23 @@
 void Task_List()
 {
 
-			
+
+
+
+
+/*
+
+循环里添加各种标志查询，用于后边各种任务置位
+例如显示状态等，收发状态等
+
+*/
+
 			if( System_GetState(Task_TimeFlag,Task_10ms) == SET )
 			{
 
 				System_ResetState(Task_TimeFlag,Task_10ms);
 			}
 				
-
 			if( System_GetState(Task_TimeFlag,Task_30ms) == SET )
 			{
 			

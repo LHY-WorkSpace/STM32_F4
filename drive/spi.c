@@ -1,7 +1,5 @@
 #include"IncludeFile.h"
 
-//#define u8unsigned char
-//#define u32 unsigned int 
 
 
 

@@ -1,7 +1,6 @@
 #include"IncludeFile.h"
 
-//#define u8unsigned char
-//#define u32 unsigned int 
+
 
 
 /*
@@ -157,18 +156,18 @@ void IIC_SenddByte(u8 data)
 	{
 		IIC_SCL_LOW;
 		delay_us(2);
-			if(data&0x80)	
-			{
+		if(data&0x80)	
+		{
 			IIC_SDA_HIGH;
-			}
-			else
-			{
+		}
+		else
+		{
 			IIC_SDA_LOW;
-			}
-		   data<<=1;
-			delay_us(2);
-			IIC_SCL_HIGH;
-			delay_us(2);
+		}
+		data<<=1;
+		delay_us(2);
+		IIC_SCL_HIGH;
+		//delay_us(2);
 	}
     IIC_SCL_LOW;                     
     delay_us(2);

@@ -1,8 +1,7 @@
 #ifndef   LED_H
 #define   LED_H
 #include "stm32f4xx.h"
-//#define u8unsigned char
-//#define u32 unsigned int 
+
 
 
 
@@ -27,8 +26,6 @@
 
 #define  FAN_OFF  GPIO_SetBits(GPIOB,GPIO_Pin_5)
 #define  FAN_ON  GPIO_ResetBits(GPIOB,GPIO_Pin_5)
-
-
 
 #define  WATER_OFF  GPIO_SetBits(GPIOB,GPIO_Pin_6)
 #define  WATER_ON  GPIO_ResetBits(GPIOB,GPIO_Pin_6)

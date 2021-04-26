@@ -1,6 +1,5 @@
 #include"IncludeFile.h"
-//#define u8unsigned char
-//#define u32 unsigned int 
+
 
 
 void dac_init()

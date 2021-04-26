@@ -104,12 +104,19 @@ typedef enum
 {
     F_SDCard_Init_OK=0x01,
     F_SDCard_Inside=0x02,
-    F_HCSR0LOW=0x04,
-    F_HCSR0ataReady=0x08
+    F_SDCard_ReadOK=0x04,
+    F_SDCard_WriteOK=0x08
 
 }Dev_SD_CardState_n;
 
+typedef enum 
+{
+    F_ESP8266_Init_OK=0x01,
+    F_ESP8266_SendOK=0x02,
+    F_ESP8266_GetOK=0x04,
+    F_ESP8266_Init=0x08
 
+}Dev_SD_CardState_n;
 
 
 /*

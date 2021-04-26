@@ -1,7 +1,7 @@
 #include"IncludeFile.h"
 
-//#define u32 unsigned int
-//#define u8unsigned char
+
+
 
 #define IP_START  	       "@!"
 #define IP_END     	       "!@"
@@ -190,17 +190,17 @@ void Get_NetName(char *str,char *temp)
 {
 	while(*str!='\0')
 	{
-	if((*str==*IP_begin)&&*(str+1)==*(IP_begin+1))	
-	{
-	str+=2;
-	while((*str!=*IP_end)&&*(str+1)!=*(IP_end+1))
-	{
-	*temp=*str;
-	temp++;
-	str++;
-	}
-	}
-	str++;
+		if((*str==*IP_begin)&&*(str+1)==*(IP_begin+1))	
+		{
+		str+=2;
+			while((*str!=*IP_end)&&*(str+1)!=*(IP_end+1))
+			{
+				*temp=*str;
+				temp++;
+				str++;
+			}
+		}
+		str++;
 	}
 }	
 
@@ -210,18 +210,17 @@ void Get_NetPassword(char *str,char *temp)
 
 	while(*str!='\0')
 	{
-	
-	if((*str==*password_begin)&&*(str+1)==*(password_begin+1))	
-	{
-	str+=2;
-	while((*str!=*password_end)&&*(str+1)!=*(password_end+1))
-	{
-	*temp=*str;
-	temp++;
-	str++;
-	}
-	}
-	str++;
+		if((*str==*password_begin)&&*(str+1)==*(password_begin+1))	
+		{
+			str+=2;
+			while((*str!=*password_end)&&*(str+1)!=*(password_end+1))
+			{
+				*temp=*str;
+				temp++;
+				str++;
+			}
+		}
+		str++;
 	}
 
 }

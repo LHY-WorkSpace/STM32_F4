@@ -2,8 +2,7 @@
 #define  OLED_H
 #include "stm32f4xx.h"
 
-//#define u8unsigned char
-//#define u32 unsigned int 
+
 	
 #define  OLED_RST_OFF   GPIO_SetBits(GPIOB,GPIO_Pin_14)	              //复位关
 #define  OLED_RST_ON   GPIO_ResetBits(GPIOB,GPIO_Pin_14)	            //复位开

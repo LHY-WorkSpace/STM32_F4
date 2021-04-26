@@ -47,42 +47,29 @@ void DHT11_IO_OUT(u8 DHT11_IO_CMD)
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 u8 DHT11_Init(void)
 {
     u8 DHT11_ACK=0,j=0;
 	
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
-			DHT11_IO_OUT(DHT11_OUT_LOW);	            //拉低总线20ms，
-			delay_ms(20);
-	
-			DHT11_IO_OUT(DHT11_OUT_HIGH);	            //拉高30us,用于主机转换IO
-			//delay_us(30);
-			DHT11_IO_IN();                            //主机转换IO
+		DHT11_IO_OUT(DHT11_OUT_LOW);	            //拉低总线20ms，
+		delay_ms(20);
+		DHT11_IO_OUT(DHT11_OUT_HIGH);	            //拉高30us,用于主机转换IO
+		DHT11_IO_IN();                            //主机转换IO
+
     	while(DHT11_IO_STATE==HIGH&&j<230)
-			{
+		{
 			j++;
 			delay_us(2);
-			}
-			//delay_us(30);                             //等待电阻拉高
-			if(DHT11_IO_STATE==LOW)                    //总线为低，应答成功
-				DHT11_ACK=1;
-			else
-				DHT11_ACK=0;
-			  delay_us(170);                          //DHT拉高准备传输
+		}
+		if(DHT11_IO_STATE==LOW)                    //总线为低，应答成功
+			DHT11_ACK=1;
+		else
+			DHT11_ACK=0;
+			delay_us(170);                          //DHT拉高准备传输
 
-			return DHT11_ACK;
+		return DHT11_ACK;
 
 }
 
@@ -99,24 +86,23 @@ u8 DHT11_Read_Byte(void)
 for(i=0;i<8;i++)
 	{
           while(DHT11_IO_STATE==LOW&&j<200)				//检测到高电平时	
-          {
-						j++;
-						delay_us(2);
-					
-					}				
-						delay_us(35);
-						Byte_Data=Byte_Data<<1;
-						if(DHT11_IO_STATE==HIGH)
-						{
-							Byte_Data+=1;
-							delay_us(50);
-						}
-						else
-						{
-						 Byte_Data+=0;
-							delay_us(10);
+		{
+			j++;
+			delay_us(2);	
+		}				
+		delay_us(35);
+		Byte_Data=Byte_Data<<1;
+		if(DHT11_IO_STATE==HIGH)
+		{
+			Byte_Data+=1;
+			delay_us(50);
+		}
+		else
+		{
+			Byte_Data+=0;
+			delay_us(10);
 
-						}
+		}
 	}
 
 return Byte_Data;

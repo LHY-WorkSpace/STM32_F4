@@ -90,21 +90,20 @@ return 0;
 
 
 
-
-
 //File Operate   文件操作
-//创建新文件
+//创建新文件,如果已存在，则删除重新创建
 u8 File_CreateNewFile(const char* Path)
 {
     u8 sta;
 
-    sta=f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
+    sta = f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
 
-    if( sta == FR_OK)
+    if( sta == FR_EXIST)
     {
-        f_close(&fils);	
-			
+        sta = f_unlink(path);
+        sta = f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
     }
+    f_close(&fils);	
     return sta;
 }
 
