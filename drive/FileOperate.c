@@ -100,7 +100,7 @@ u8 File_CreateNewFile(const char* Path)
 
     if( sta == FR_EXIST)
     {
-        sta = f_unlink(path);
+        sta = f_unlink(Path);
         sta = f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
     }
     f_close(&fils);	

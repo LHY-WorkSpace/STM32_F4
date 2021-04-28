@@ -658,7 +658,6 @@ void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned i
 
 
 
-
 void OLED_Draw_Circle(u8 x0,u8 y0,u8 r) 
 {
 	u8 x,y;
@@ -731,7 +730,6 @@ void Boot_Animation(void)
 				delay_ms(20);
 				OLED_UpdateGRAM();
 		}
-
 		
 }
 
@@ -789,12 +787,11 @@ void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 			x=0;
 			y++;
 			if(y>3)
-				y=0;
+				y=0; 
 		}
 		OLED_ShowChar(x,y,&CharModel[PositionBuff[i]][0]);
 		x+=8;
 	}
-
 
 }
 

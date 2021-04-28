@@ -116,7 +116,7 @@ typedef enum
     F_ESP8266_GetOK=0x04,
     F_ESP8266_Init=0x08
 
-}Dev_SD_CardState_n;
+}Dev_ESP8266State_n;
 
 
 /*
@@ -131,7 +131,8 @@ typedef enum
     Dev_AT24C,
     Dev_MPU6050,
     Dev_HCSR04,
-    Dev_SD_Card
+    Dev_SD_Card,
+    Dev_ESP8266
         
 
 }SystemState_n;

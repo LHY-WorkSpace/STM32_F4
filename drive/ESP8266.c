@@ -2,7 +2,6 @@
 
 
 
-
 #define IP_START  	       "@!"
 #define IP_END     	       "!@"
 #define PASSWORD_START     "#!"
@@ -43,10 +42,10 @@ u8 USED_FLAG;
 
 
 
-void ESP8266_init(void)
+void ESP8266_Init(void)
 {	
 	
-
+	
 	
 	
 	
