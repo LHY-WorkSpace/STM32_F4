@@ -23,14 +23,17 @@
 
 
 
+#define BUFFER_SIZE      (1024)
+
+
+// typedef struct 
+// {
+//     /* data */
+// };
 
 
 
-//	PA9-TX1
-//	PA10-RX1
 void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);   
-
-
 void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
 
 int fputc(int ch, FILE* stream);

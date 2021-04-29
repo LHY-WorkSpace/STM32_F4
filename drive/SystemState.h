@@ -114,7 +114,7 @@ typedef enum
     F_ESP8266_Init_OK=0x01,
     F_ESP8266_SendOK=0x02,
     F_ESP8266_GetOK=0x04,
-    F_ESP8266_Init=0x08
+    F_ESP8266_Connect=0x08
 
 }Dev_ESP8266State_n;
 

@@ -58,23 +58,20 @@ void exti_init()
 	
 	NVIC_InitStructure.NVIC_IRQChannel=EXTI0_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=7;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority=2;
 	NVIC_Init(&NVIC_InitStructure);
-
 
 	NVIC_InitStructure.NVIC_IRQChannel=EXTI2_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=7;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority=2;
 	NVIC_Init(&NVIC_InitStructure);
 
-
-	
 	NVIC_InitStructure.NVIC_IRQChannel=EXTI3_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=7;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority=2;
 	NVIC_Init(&NVIC_InitStructure);
 
 	EXTI_ClearFlag(EXTI_Line2|EXTI_Line0|EXTI_Line3);
@@ -85,16 +82,12 @@ void exti_init()
 
 void EXTI0_IRQHandler(void)              
 {
-			
-	delay_ms(200);
-
 	 if(EXTI_GetFlagStatus(EXTI_Line0)==SET)
 	{		
 		
 
 	LED1_OFF;
   Menu_Num++;
-//	clear_screen();
 	if(Menu_Num>4)
 		Menu_Num=0;
 
@@ -104,79 +97,45 @@ void EXTI0_IRQHandler(void)
 
 void EXTI2_IRQHandler(void)                   //菜单标号
 {
-		delay_ms(200);
+
    	if(EXTI_GetFlagStatus(EXTI_Line2)==SET)
 	{
-
-	LED1_ON;
-					switch (Menu_Num)
+		LED1_ON;
+			switch (Menu_Num)
 				{
 
-								case 1:
-								{
-							
-			          Temperature_HIGH++;
-									if(Temperature_HIGH==99)
-								Temperature_HIGH=0;
-									
-									
-								
-								break;
-								}
-									
-								case 2:
-								{
-								
-								
-               Temperature_LOW++;
-								if(Temperature_LOW==99)
-								Temperature_LOW=0;
-								
-								
-								break;
-								}
+				case 1:
+				{
+					Temperature_HIGH++;
+						if(Temperature_HIGH==99)
+					Temperature_HIGH=0;
+				break;
+				}
+				case 2:
+				{
+					Temperature_LOW++;
+					if(Temperature_LOW==99)
+					Temperature_LOW=0;
+				break;
+				}
 
-								case 3:
-								{
-								
-                Humidity_HIGH++;
-								if(Humidity_HIGH==99)
-								Humidity_HIGH=0;
-
-								
-								break;
-								}
-								
-								case 4:
-								{
-								
-						     Humidity_LOW++;		
-								if(Humidity_LOW==99)
-								Humidity_LOW=0;
-								
-								break;
-								}
-//						   case 5:
-//								{
-//								
-//						     Set_Time++;		
-//								if(Set_Time==30)
-//								Set_Time=0;
-//								
-//								break;
-//								}
-		
+				case 3:
+				{
+					Humidity_HIGH++;
+					if(Humidity_HIGH==99)
+					Humidity_HIGH=0;
+				break;
+				}
 				
-				
-				
-				
+				case 4:
+				{
+					Humidity_LOW++;		
+					if(Humidity_LOW==99)
+					Humidity_LOW=0;
+				break;
+				}
+			
 			}
-
-
-	
-
-	
-
 	}
 			EXTI_ClearFlag(EXTI_Line2);
 }
@@ -184,7 +143,7 @@ void EXTI2_IRQHandler(void)                   //菜单标号
 void EXTI3_IRQHandler(void)
 {  
 		
-  	delay_ms(200);
+
    	if(EXTI_GetFlagStatus(EXTI_Line3)==SET)
 	{		
       LED1_ON;

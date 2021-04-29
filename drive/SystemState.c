@@ -4,7 +4,7 @@
 
 
 //设备状态列表，顺序与 SystemState_n 一致
-u8 DeviceStateList[DEVICES_NUM];
+static volatile u8 DeviceStateList[DEVICES_NUM];
 
 
 

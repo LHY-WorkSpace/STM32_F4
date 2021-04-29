@@ -1,9 +1,9 @@
-#include"IncludeFile.h"
+#include "IncludeFile.h"
 
 
 
-u8 USART1_Buffer[200];
-u8 RX_Point,TX_Point;
+u8 USART1_Buffer[1500];
+u16 RX_Point,TX_Point;
 
 /*
 	USART1_MODE_A : PA9-TX1 
@@ -14,7 +14,7 @@ u8 RX_Point,TX_Point;
 */
 void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 {
-		
+	
 	GPIO_InitTypeDef USART_GPIO_Init;
 	USART_InitTypeDef USART1_Initstruc;
 	NVIC_InitTypeDef  NVIC_Initstr;
@@ -40,7 +40,8 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	#endif
 
 		USART_GPIO_Init.GPIO_Mode=GPIO_Mode_AF;                           
-		//USART_GPIO_Init.GPIO_PuPd=GPIO_PuPd_UP;
+		USART_GPIO_Init.GPIO_PuPd=GPIO_PuPd_UP;
+		USART_GPIO_Init.GPIO_Speed=GPIO_Speed_50MHz;
 
 	#ifdef USART1_MODE_A
 		GPIO_Init(GPIOA,&USART_GPIO_Init);
@@ -68,7 +69,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART1,USART_IT_RXNE|USART_FLAG_TC,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -108,6 +109,7 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 
 		USART_GPIO_Init.GPIO_Mode=GPIO_Mode_AF;                           
 		USART_GPIO_Init.GPIO_PuPd=GPIO_PuPd_UP;
+		USART_GPIO_Init.GPIO_Speed=GPIO_Speed_50MHz;
 
 	#ifdef USART2_MODE_A
 		GPIO_Init(GPIOD,&USART_GPIO_Init);
@@ -129,13 +131,13 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART_Init(USART2,&USART2_Initstruc);
 	
 	NVIC_Initstr.NVIC_IRQChannel=USART2_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=0;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=1;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART2,0x3ff);
-	USART_ITConfig(USART2,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART2,USART_IT_RXNE|USART_FLAG_TC,ENABLE);
 	USART_Cmd(USART2,ENABLE);	
 }
 
@@ -147,7 +149,10 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 */
 int fputc(int ch, FILE* stream)          
 {			
-	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
+	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET))
+	{
+
+	}
     USART_SendData(USART1, (unsigned char) ch);
 	USART_ClearFlag(USART1,USART_FLAG_TC);
     return ch;
@@ -157,26 +162,36 @@ int fputc(int ch, FILE* stream)
 
 void USART1_IRQHandler()
 {
-	// if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
-	// {
-	// 	if( RX_Point > 199 )
-	// 		RX_Point = 0;	
-	// 	USART1_Buffer[RX_Point] = USART_ReceiveData(USART1);
-	// 	RX_Point++;		
-	// }
+	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
+	{
+		if( RX_Point >= 1500 )
+		{
+			RX_Point = 0;	
+		}
+		USART1_Buffer[RX_Point] = USART_ReceiveData(USART1);
+		RX_Point++;		
+	}
+	if(USART_GetITStatus(USART1,USART_IT_TC)!=RESET)
+	{
+		if( TX_Point >= 1500 )
+		{
+			TX_Point = 0;	
+		}
+		USART_SendData(USART1,USART1_Buffer[TX_Point] );
+		TX_Point++;		
+	}
 	USART_ClearITPendingBit(USART1,USART_IT_RXNE|USART_IT_TC);
 }
 
 
+
+
+
+
+
 void USART2_IRQHandler()
 {
-	// if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
-	// {
-	// 	if( RX_Point > 199 )
-	// 		RX_Point = 0;	
-	// 	USART1_Buffer[RX_Point] = USART_ReceiveData(USART2);
-	// 	RX_Point++;		
-	// }
+
 	USART_ClearITPendingBit(USART2,USART_IT_RXNE|USART_IT_TC);
 }
 

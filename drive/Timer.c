@@ -18,8 +18,8 @@ void TaskTimer_Init()
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=0;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=3;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
