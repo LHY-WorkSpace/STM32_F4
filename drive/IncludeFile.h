@@ -28,6 +28,7 @@
 
 
 
+
 //器件驱动层
 #include "AT24C08.h"
 #include "MPU6050.h"
@@ -43,6 +44,7 @@
 //应用层
 #include "FreeRTOS.h"
 #include "task.h"
+#include "queue.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "diskio.h"	
@@ -50,6 +52,7 @@
 #include "GUI.H"
 #include "TEST.h"
 #include "FileOperate.h"
+#include "IAP.h"
 
 
 

@@ -5,6 +5,8 @@
         "lcd1602.h": "c",
         "code_run_time.h": "c",
         "systemstate.h": "c",
-        "stm32f4xx.h": "c"
+        "stm32f4xx.h": "c",
+        "freertos.h": "c",
+        "task.h": "c"
     }
 }

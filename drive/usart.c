@@ -25,7 +25,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 		if(Parity!=USART_PARTYT_NO)
 		{
 			Parity=USART_PARTYT_NO;
-			//return;                   //8位数据必须无校验，9位数据任意校验
+            //8位数据必须无校验，9位数据任意校验
 		}
 	}
 
