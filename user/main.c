@@ -100,22 +100,23 @@ static u8 i=0;
 		if(i)
 		{
 			LED1_OFF;
-			vTaskDelay(20);
+			vTaskDelay(500);
+			printf("LED¹Ø\r\n");
 		}
 		else
 		{
 			LED1_ON;
-			vTaskDelay(20);
+			vTaskDelay(500);
+			printf("LED¿ª\r\n");
 		}
 
 		i=~i;
-		vTaskDelay(500);
 	}
 }
 
 void Task_Init()
 {
-	xTaskCreate( (TaskFunction_t)OLED_Task,"OLED",30,NULL,5,NULL);
+	//xTaskCreate( (TaskFunction_t)OLED_Task,"OLED",30,NULL,5,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",10,NULL,5,NULL);
 }
 
@@ -131,19 +132,19 @@ int  main()
 	TaskTimer_Init();
 
 
-	Task_Init();
+	// Task_Init();
 
 
 
-	vTaskStartScheduler();
+	// vTaskStartScheduler();
 
-/*
+
 	while(1)
 	{	
 		Task_List();	
 
 	}
-*/
+
 
 }	
 	

@@ -138,13 +138,15 @@ void Led_Test()
 
 	if(i)
 	{
-		LED1_OFF;
-		delay_us(20);
+			LED1_OFF;
+			delay_ms(500);
+			printf("LED¹Ø\r\n");
 	}
 	else
 	{
-		LED1_ON;
-		delay_ms(20);
+			LED1_ON;
+			delay_ms(500);
+			printf("LED¿ª\r\n");
 	}
 
 	i=~i;
