@@ -2,76 +2,6 @@
 
 
 
-
-void Task_List()
-{
-
-
-
-
-
-/*
-
-循环里添加各种标志查询，用于后边各种任务置位
-例如显示状态等，收发状态等
-
-*/
-
-			if( System_GetState(Task_TimeFlag,Task_10ms) == SET )
-			{
-
-				System_ResetState(Task_TimeFlag,Task_10ms);
-			}
-				
-			if( System_GetState(Task_TimeFlag,Task_30ms) == SET )
-			{
-			
-
-				System_ResetState(Task_TimeFlag,Task_30ms);	
-			}
-
-
-			if( System_GetState(Task_TimeFlag,Task_50ms) == SET )
-			{
-				
-				
-				System_ResetState(Task_TimeFlag,Task_50ms);	
-			}
-
-
-			if( System_GetState(Task_TimeFlag,Task_100ms) == SET )
-			{
-				
-				
-				System_ResetState(Task_TimeFlag,Task_100ms);	
-			}
-
-
-			if( System_GetState(Task_TimeFlag,Task_200ms) == SET )
-			{
-
-
-				System_ResetState(Task_TimeFlag,Task_200ms);	
-			}
-
-
-			if( System_GetState(Task_TimeFlag,Task_500ms) == SET )
-			{
-			
-				
-				Led_Test();
-				System_ResetState(Task_TimeFlag,Task_500ms);	
-			}
-
-			if( System_GetState(Task_TimeFlag,Task_1s) == SET )
-			{
-				//OLED_ClearScreen(0x00);
-				System_ResetState(Task_TimeFlag,Task_1s);	
-			}
-
-
-}
-
 void OLED_Task(void)
 {
 static u8  i=0;
@@ -92,7 +22,8 @@ char s[1];
 
 void LED_Task(void)
 {
-static u8 i=0;
+// static 
+u8 i=0;
 
 	while(1)
 	{
@@ -114,36 +45,105 @@ static u8 i=0;
 	}
 }
 
+
+
+void USART_Task_1_()
+{
+
+	while(1)
+	{
+		printf("Task_1 \r\n");
+	}
+
+
+}
+
+void USART_Task_2_()
+{
+
+	while(1)
+	{
+		printf("Task_2 \r\n");
+	}
+
+
+}
+
+void USART_Task_3_()
+{
+
+	while(1)
+	{
+		printf("Task_3 \r\n");
+	}
+
+
+}
+
+void USART_Task_4_()
+{
+
+	while(1)
+	{
+		printf("Task_4 \r\n");
+	}
+
+
+}
+void USART_Task_5_()
+{
+
+	while(1)
+	{
+		printf("Task_5 \r\n");
+	}
+
+
+}
+
+
+
+
+
+
+
+
 void Task_Init()
 {
-	//xTaskCreate( (TaskFunction_t)OLED_Task,"OLED",30,NULL,5,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",30,NULL,5,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",30,NULL,5,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",30,NULL,5,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",200,NULL,5,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",200,NULL,5,NULL);
+
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",10,NULL,5,NULL);
+
 }
 
 
 int  main()
 {
 
- 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	
+ 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
-	TaskTimer_Init();
+	//TaskTimer_Init();
 
 
-	// Task_Init();
+	Task_Init();
 
 
 
-	// vTaskStartScheduler();
+	vTaskStartScheduler();
 
 
-	while(1)
-	{	
-		Task_List();	
+	// while(1)
+	// {	
+	// 	Task_List();	
 
-	}
+	// }
 
 
 }	
