@@ -431,8 +431,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>user</GroupName>
+          <GroupName>User</GroupName>
           <Files>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\FreeRTOSConfig.h</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -473,15 +478,10 @@
               <FileType>5</FileType>
               <FilePath>..\user\system_stm32f4xx.h</FilePath>
             </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\FreeRTOSConfig.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>lib</GroupName>
+          <GroupName>Lib</GroupName>
           <Files>
             <File>
               <FileName>misc.h</FileName>
@@ -881,147 +881,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DRIVER</GroupName>
-          <Files>
-            <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>ds18b20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\ds18b20.c</FilePath>
-            </File>
-            <File>
-              <FileName>oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>RTC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\RTC.c</FilePath>
-            </File>
-            <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>RNG.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\RNG.c</FilePath>
-            </File>
-            <File>
-              <FileName>exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>AT24C08.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\AT24C08.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\GUI.c</FilePath>
-            </File>
-            <File>
-              <FileName>DHT11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\DHT11.c</FilePath>
-            </File>
-            <File>
-              <FileName>CODE_RUN_TIME.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\CODE_RUN_TIME.c</FilePath>
-            </File>
-            <File>
-              <FileName>DMA.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\DMA.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdio_sdcard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\sdio_sdcard.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd1602.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\lcd1602.c</FilePath>
-            </File>
-            <File>
-              <FileName>MPU6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\MPU6050.c</FilePath>
-            </File>
-            <File>
-              <FileName>SystemState.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\SystemState.c</FilePath>
-            </File>
-            <File>
-              <FileName>TEST.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\TEST.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\Timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\drive\Timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>HC_SR04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\HC_SR04.c</FilePath>
-            </File>
-            <File>
-              <FileName>FileOperate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\FileOperate.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOS/inc</GroupName>
+          <GroupName>FreeRTOS</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -1108,11 +968,21 @@
               <FileType>5</FileType>
               <FilePath>..\FreeRTOS\include\timers.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOS/src</GroupName>
-          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\FreeRTOS\portable\portmacro.h</FilePath>
+            </File>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
@@ -1151,62 +1021,157 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeRTOS/port</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\FreeRTOS\portable\portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>DMP</GroupName>
-          <Files>
-            <File>
-              <FileName>inv_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MPU6050DMP\inv_mpu.c</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MPU6050DMP\inv_mpu_dmp_motion_driver.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FATFS</GroupName>
+          <GroupName>Module</GroupName>
           <Files>
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\diskio.c</FilePath>
+              <FilePath>..\Module\SD\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\diskio.h</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ff.c</FilePath>
+              <FilePath>..\Module\SD\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffconf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\ffconf.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ffsystem.c</FilePath>
+              <FilePath>..\Module\SD\ffsystem.c</FilePath>
             </File>
             <File>
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ffunicode.c</FilePath>
+              <FilePath>..\Module\SD\ffunicode.c</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\integer.h</FilePath>
+            </File>
+            <File>
+              <FileName>dmpKey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\dmpKey.h</FilePath>
+            </File>
+            <File>
+              <FileName>dmpmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\dmpmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu_dmp_motion_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu_dmp_motion_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>IAP</GroupName>
+          <Files>
+            <File>
+              <FileName>CODE_RUN_TIME.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\CODE_RUN_TIME.c</FilePath>
+            </File>
+            <File>
+              <FileName>CODE_RUN_TIME.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\CODE_RUN_TIME.h</FilePath>
+            </File>
+            <File>
+              <FileName>IAP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\IAP.c</FilePath>
+            </File>
+            <File>
+              <FileName>IAP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\IAP.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\sdio_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sdcard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\sdio_sdcard.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\system_stm32f4xx.h</FilePath>
+            </File>
+            <File>
+              <FileName>IncludeFile.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\drive\IncludeFile.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1545,7 +1510,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,ARM_MATH_CM4, __FPU_PRESENT, __FPU_USED, __CC_ARM</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\lib\inc;..\user;..\drive;..\SD;..\FreeRTOS\include;..\FreeRTOS\portable;..\FreeRTOS\source;..\MPU6050DMP;..\GRBL\inc;..\USB_Driver;..\USB_Driver\MSC</IncludePath>
+              <IncludePath>..\CMSIS;..\Module\IAP;..\Module\SD;..\lib\inc;..\lib\src;..\drive</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1637,12 +1602,68 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>user</GroupName>
+          <GroupName>User</GroupName>
           <Files>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\user\FreeRTOSConfig.h</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\user\main.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
             <File>
               <FileName>main.h</FileName>
@@ -1679,15 +1700,10 @@
               <FileType>5</FileType>
               <FilePath>..\user\system_stm32f4xx.h</FilePath>
             </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\user\FreeRTOSConfig.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>lib</GroupName>
+          <GroupName>Lib</GroupName>
           <Files>
             <File>
               <FileName>misc.h</FileName>
@@ -2087,147 +2103,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DRIVER</GroupName>
-          <Files>
-            <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>dac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\dac.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>ds18b20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\ds18b20.c</FilePath>
-            </File>
-            <File>
-              <FileName>oled.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\oled.c</FilePath>
-            </File>
-            <File>
-              <FileName>RTC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\RTC.c</FilePath>
-            </File>
-            <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\led.c</FilePath>
-            </File>
-            <File>
-              <FileName>RNG.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\RNG.c</FilePath>
-            </File>
-            <File>
-              <FileName>exti.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\exti.c</FilePath>
-            </File>
-            <File>
-              <FileName>AT24C08.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\AT24C08.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\GUI.c</FilePath>
-            </File>
-            <File>
-              <FileName>DHT11.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\DHT11.c</FilePath>
-            </File>
-            <File>
-              <FileName>CODE_RUN_TIME.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\CODE_RUN_TIME.c</FilePath>
-            </File>
-            <File>
-              <FileName>DMA.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\DMA.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdio_sdcard.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\sdio_sdcard.c</FilePath>
-            </File>
-            <File>
-              <FileName>lcd1602.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\lcd1602.c</FilePath>
-            </File>
-            <File>
-              <FileName>MPU6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\MPU6050.c</FilePath>
-            </File>
-            <File>
-              <FileName>SystemState.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\SystemState.c</FilePath>
-            </File>
-            <File>
-              <FileName>TEST.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\TEST.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\Timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\drive\Timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>HC_SR04.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\HC_SR04.c</FilePath>
-            </File>
-            <File>
-              <FileName>FileOperate.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\drive\FileOperate.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOS/inc</GroupName>
+          <GroupName>FreeRTOS</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -2314,11 +2190,21 @@
               <FileType>5</FileType>
               <FilePath>..\FreeRTOS\include\timers.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOS/src</GroupName>
-          <Files>
+            <File>
+              <FileName>heap_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\heap_4.c</FilePath>
+            </File>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\portable\port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\FreeRTOS\portable\portmacro.h</FilePath>
+            </File>
             <File>
               <FileName>croutine.c</FileName>
               <FileType>1</FileType>
@@ -2357,62 +2243,157 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>FreeRTOS/port</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\heap_4.c</FilePath>
-            </File>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\FreeRTOS\portable\port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\FreeRTOS\portable\portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>DMP</GroupName>
-          <Files>
-            <File>
-              <FileName>inv_mpu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MPU6050DMP\inv_mpu.c</FilePath>
-            </File>
-            <File>
-              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MPU6050DMP\inv_mpu_dmp_motion_driver.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FATFS</GroupName>
+          <GroupName>Module</GroupName>
           <Files>
             <File>
               <FileName>diskio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\diskio.c</FilePath>
+              <FilePath>..\Module\SD\diskio.c</FilePath>
+            </File>
+            <File>
+              <FileName>diskio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\diskio.h</FilePath>
             </File>
             <File>
               <FileName>ff.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ff.c</FilePath>
+              <FilePath>..\Module\SD\ff.c</FilePath>
+            </File>
+            <File>
+              <FileName>ff.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\ff.h</FilePath>
+            </File>
+            <File>
+              <FileName>ffconf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\ffconf.h</FilePath>
             </File>
             <File>
               <FileName>ffsystem.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ffsystem.c</FilePath>
+              <FilePath>..\Module\SD\ffsystem.c</FilePath>
             </File>
             <File>
               <FileName>ffunicode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\SD\ffunicode.c</FilePath>
+              <FilePath>..\Module\SD\ffunicode.c</FilePath>
+            </File>
+            <File>
+              <FileName>integer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\SD\integer.h</FilePath>
+            </File>
+            <File>
+              <FileName>dmpKey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\dmpKey.h</FilePath>
+            </File>
+            <File>
+              <FileName>dmpmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\dmpmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu.h</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu_dmp_motion_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>inv_mpu_dmp_motion_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\MPU6050DMP\inv_mpu_dmp_motion_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>IAP</GroupName>
+          <Files>
+            <File>
+              <FileName>CODE_RUN_TIME.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\CODE_RUN_TIME.c</FilePath>
+            </File>
+            <File>
+              <FileName>CODE_RUN_TIME.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\CODE_RUN_TIME.h</FilePath>
+            </File>
+            <File>
+              <FileName>IAP.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\IAP.c</FilePath>
+            </File>
+            <File>
+              <FileName>IAP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\IAP.h</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\main.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sdcard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\sdio_sdcard.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdio_sdcard.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\sdio_sdcard.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f4xx_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\stm32f4xx_it.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\IAP\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f4xx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\IAP\system_stm32f4xx.h</FilePath>
+            </File>
+            <File>
+              <FileName>IncludeFile.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\drive\IncludeFile.h</FilePath>
             </File>
           </Files>
         </Group>
