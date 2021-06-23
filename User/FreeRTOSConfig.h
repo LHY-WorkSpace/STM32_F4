@@ -104,7 +104,14 @@ function. */
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
 INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY			5
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY			5      
+
+
+/*
+configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY  到  configLIBRARY_LOWEST_INTERRUPT_PRIORITY 之间的中断优先级受RTOS控制，即临界区可控的中断等级，可调用 xxxx_FromISR()函数
+0 到  （configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY - 1）之间的优先级不受RTOS控制，不可调用 xxxx_FromISR()函数
+
+*/
 
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */

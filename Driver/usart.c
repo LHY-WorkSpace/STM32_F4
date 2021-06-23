@@ -69,7 +69,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+	//USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -149,11 +149,11 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 */
 int fputc(int ch, FILE* stream)          
 {		
-	USART_SendData(USART1, (unsigned char) ch);	
+
 	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET))
 	{
-
 	}
+	USART_SendData(USART1, (unsigned char) ch);	
 	USART_ClearFlag(USART1,USART_FLAG_TC);
     return ch;
 }

@@ -2,6 +2,11 @@
 
 
 
+
+TaskHandle_t  Task_1_Handle;
+QueueHandle_t Queue_Handle;
+
+
 void OLED_Task(void)
 {
 static u8  i=0;
@@ -20,39 +25,28 @@ char s[1];
 }
 
 
-void LED_Task(void)
-{
-// static 
-u8 i=0;
 
-	while(1)
-	{
-
-		if(i)
-		{
-			LED1_OFF;
-			vTaskDelay(500);
-			printf("LED关\r\n");
-		}
-		else
-		{
-			LED1_ON;
-			vTaskDelay(500);
-			printf("LED开\r\n");
-		}
-
-		i=~i;
-	}
-}
 
 
 
 void USART_Task_1_()
 {
-
+u8 DataR[15];
+u8 i;
 	while(1)
 	{
-		printf("Task_1 \r\n");
+		taskENTER_CRITICAL();
+		printf("Task_1 Delate \r\n");
+		taskEXIT_CRITICAL();
+		// xQueueReceive(Queue_Handle,DataR,10);
+		// vPortEnterCritical();
+		// for(i=0;i<sizeof(DataR);i++)
+		// {
+		// 	printf("Receive %d: %x \r\n",i,DataR[i]);
+		// }
+		// vPortExitCritical();
+		// vTaskDelete(NULL);
+		taskYIELD();
 	}
 
 
@@ -64,6 +58,8 @@ void USART_Task_2_()
 	while(1)
 	{
 		printf("Task_2 \r\n");
+		//vTaskDelay(100);
+		taskYIELD();
 	}
 
 
@@ -75,6 +71,8 @@ void USART_Task_3_()
 	while(1)
 	{
 		printf("Task_3 \r\n");
+		//vTaskDelay(100);
+		taskYIELD();
 	}
 
 
@@ -86,16 +84,25 @@ void USART_Task_4_()
 	while(1)
 	{
 		printf("Task_4 \r\n");
+		//vTaskDelay(100);
+		taskYIELD();
 	}
 
 
 }
 void USART_Task_5_()
 {
-
+TickType_t Time;
+UBaseType_t pro;
+	Time=xTaskGetTickCount();
 	while(1)
 	{
-		printf("Task_5 \r\n");
+		pro=uxTaskPriorityGet(Task_1_Handle);
+		taskENTER_CRITICAL();
+		printf("Task_5 == %d\r\n",pro);
+		taskEXIT_CRITICAL();
+		//vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+		taskYIELD();
 	}
 
 
@@ -105,18 +112,47 @@ void USART_Task_5_()
 
 
 
+void LED_Task(void)
+{
+// static 
+// u8 i=0;
+// u8 k=0;
+// u8 Data[15];
+TickType_t Time;
+
+	Time=xTaskGetTickCount();
+	while(1)
+	{
+		
+		LED1_ON;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_OFF;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_ON;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_OFF;
+		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
+
+
+
+		// k++;
+		// memset(Data,0x12,sizeof(Data));
+		// xQueueSendToBack(Queue_Handle,Data,10);
+		// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
+	}
+}
+
 
 
 
 void Task_Init()
 {
-	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",30,NULL,5,NULL);
-	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",30,NULL,5,NULL);
-	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",30,NULL,5,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",200,NULL,5,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",200,NULL,5,NULL);
-
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",10,NULL,5,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
+	xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,9,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,8,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,7,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,10,NULL);
 
 }
 
@@ -132,18 +168,28 @@ int  main()
 	//TaskTimer_Init();
 
 
-	Task_Init();
 
+	// Queue_Handle = xQueueCreate(10,10);
+	Task_Init();
 
 
 	vTaskStartScheduler();
 
 
-	// while(1)
-	// {	
-	// 	Task_List();	
-
-	// }
+	while(1)
+	{	
+		//Task_List();	
+		// LED1_ON;
+		// delay_us(2);
+		// LED1_OFF;
+		// delay_us(2);
+		// LED1_ON;
+		// delay_ms(100);
+		// LED1_OFF;
+		// delay_ms(200);
+		// delay_ms(500);
+		// delay_ms(500);
+	}
 
 
 }	
@@ -159,6 +205,17 @@ void Function_list()
 
 	切换相关:
 		1.立即切换任务，调用这个函数的任务会进入就绪态			taskYIELD()
+
+
+	延时相关：
+		TickType_t Time;
+		Time=xTaskGetTickCount();
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);周期执行
+		vTaskDelay(100);非周期执行，延时可能被打断而导致边长
+
+
+
+
 		
 }
 */
