@@ -2,9 +2,22 @@
 
 
 
+typedef struct 
+{
+	u8 Dev_ID;
+	u8 Dev_Data[10];
+}QueueBuff_t;
 
+QueueBuff_t QueueBuff[5];
 TaskHandle_t  Task_1_Handle;
 QueueHandle_t Queue_Handle;
+
+
+
+
+
+
+
 
 
 void OLED_Task(void)
@@ -31,21 +44,15 @@ char s[1];
 
 void USART_Task_1_()
 {
-u8 DataR[15];
-u8 i;
+
 	while(1)
 	{
+		QueueBuff[0].Dev_ID=1;
+		memset(QueueBuff[0].Dev_Data,0x11,sizeof(QueueBuff[0].Dev_Data));
+		xQueueSendToBack(Queue_Handle,QueueBuff[0].Dev_Data,0);
 		taskENTER_CRITICAL();
-		printf("Task_1 Delate \r\n");
+		printf("Task_1 \r\n");
 		taskEXIT_CRITICAL();
-		// xQueueReceive(Queue_Handle,DataR,10);
-		// vPortEnterCritical();
-		// for(i=0;i<sizeof(DataR);i++)
-		// {
-		// 	printf("Receive %d: %x \r\n",i,DataR[i]);
-		// }
-		// vPortExitCritical();
-		// vTaskDelete(NULL);
 		taskYIELD();
 	}
 
@@ -57,8 +64,12 @@ void USART_Task_2_()
 
 	while(1)
 	{
+		QueueBuff[1].Dev_ID=2;
+		memset(QueueBuff[1].Dev_Data,0x22,sizeof(QueueBuff[1].Dev_Data));
+		xQueueSendToBack(Queue_Handle,QueueBuff[1].Dev_Data,0);
+		taskENTER_CRITICAL();
 		printf("Task_2 \r\n");
-		//vTaskDelay(100);
+		taskEXIT_CRITICAL();
 		taskYIELD();
 	}
 
@@ -70,8 +81,12 @@ void USART_Task_3_()
 
 	while(1)
 	{
+		QueueBuff[2].Dev_ID=33;
+		memset(QueueBuff[2].Dev_Data,0x33,sizeof(QueueBuff[2].Dev_Data));
+		xQueueSendToBack(Queue_Handle,QueueBuff[2].Dev_Data,0);
+		taskENTER_CRITICAL();
 		printf("Task_3 \r\n");
-		//vTaskDelay(100);
+		taskEXIT_CRITICAL();
 		taskYIELD();
 	}
 
@@ -83,8 +98,9 @@ void USART_Task_4_()
 
 	while(1)
 	{
+		taskENTER_CRITICAL();
 		printf("Task_4 \r\n");
-		//vTaskDelay(100);
+		taskEXIT_CRITICAL();
 		taskYIELD();
 	}
 
@@ -93,31 +109,42 @@ void USART_Task_4_()
 void USART_Task_5_()
 {
 TickType_t Time;
-UBaseType_t pro;
-	Time=xTaskGetTickCount();
 	while(1)
 	{
-		pro=uxTaskPriorityGet(Task_1_Handle);
 		taskENTER_CRITICAL();
-		printf("Task_5 == %d\r\n",pro);
+		printf("Task_5 \r\n");
 		taskEXIT_CRITICAL();
-		//vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 		taskYIELD();
 	}
 
 
 }
 
+void Queue_Task()
+{
+QueueBuff_t QueueTemp;
 
+	while(1)
+	{
+
+		xQueueReceive(Queue_Handle,&QueueTemp,100/portTICK_RATE_MS);
+		taskENTER_CRITICAL();
+		printf("Task %d   Data %x\r\n", QueueTemp.Dev_ID , QueueTemp.Dev_Data[0]);
+		taskEXIT_CRITICAL();
+		taskYIELD();
+		
+	}
+
+
+
+	
+}
 
 
 
 void LED_Task(void)
 {
-// static 
-// u8 i=0;
-// u8 k=0;
-// u8 Data[15];
+
 TickType_t Time;
 
 	Time=xTaskGetTickCount();
@@ -133,8 +160,6 @@ TickType_t Time;
 		LED1_OFF;
 		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
 
-
-
 		// k++;
 		// memset(Data,0x12,sizeof(Data));
 		// xQueueSendToBack(Queue_Handle,Data,10);
@@ -148,12 +173,12 @@ TickType_t Time;
 void Task_Init()
 {
 	xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
-	xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,9,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,8,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,7,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,10,NULL);
-
+	xTaskCreate( (TaskFunction_t)Queue_Task,"Queue",100,NULL,11,NULL);
 }
 
 
@@ -169,7 +194,7 @@ int  main()
 
 
 
-	// Queue_Handle = xQueueCreate(10,10);
+	Queue_Handle = xQueueCreate(1,sizeof(QueueBuff_t));
 	Task_Init();
 
 
