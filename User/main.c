@@ -22,18 +22,26 @@ QueueHandle_t Queue_Handle;
 
 void OLED_Task(void)
 {
-static u8  i=0;
-char s[1];
-
+u8 buff[1024];
+BaseType_t states;
+u16 i=0;
 	while(1)
 	{
-			if(i>=50)
-				i=0;
-			s[0]='!'+i;
-			OLED_ShowStrings(0,1,s,1);
+
+		//OLED_Test();
+
+		states = xQueueReceive(Queue_Handle,buff,100/portTICK_RATE_MS);
+		if( states == pdPASS)
+		{
+			OLED_Data2GRAM(buff,sizeof(buff));
+			OLED_ShowNumber(0,0,i);
+			OLED_UpdateGRAM();
 			i++;
-			OLED_UpdateGRAM();	
-			vTaskDelay(500);
+		}
+		//taskENTER_CRITICAL();
+		
+		//taskEXIT_CRITICAL();
+
 	}
 }
 
@@ -146,6 +154,7 @@ void LED_Task(void)
 {
 
 TickType_t Time;
+u16 i=0;
 
 	Time=xTaskGetTickCount();
 	while(1)
@@ -158,7 +167,7 @@ TickType_t Time;
 		LED1_ON;
 		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
 		LED1_OFF;
-		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,1000/portTICK_PERIOD_MS);
 
 		// k++;
 		// memset(Data,0x12,sizeof(Data));
@@ -167,18 +176,49 @@ TickType_t Time;
 	}
 }
 
+void SDCard_Task()
+{
+	u8 buff[1024];
+	u32 i=0;
+	u16 Frames=0;
+	TickType_t Time;
+
+	Time=xTaskGetTickCount();
+
+	File_FATFSInit();
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD");
+	while(1)
+	{
+		File_ReadData("1:/SD/Data.bin",buff,sizeof(buff),i);
+		OLED_Data2GRAM(buff,sizeof(buff));
+		OLED_ShowNumber(0,0,Frames);
+		OLED_UpdateGRAM();
+		i+=sizeof(buff);
+		Frames++;
+		vTaskDelayUntil(&Time,20/portTICK_PERIOD_MS);
+	}
+
+	File_CloseDir();
+
+
+}
+
+
+
+
 
 
 
 void Task_Init()
 {
-	xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
-	xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
+	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)Queue_Task,"Queue",100,NULL,11,NULL);
+	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,11,NULL);
 }
 
 
@@ -186,15 +226,16 @@ int  main()
 {
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
-	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	USART1_Init(128000,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
+	File_FATFSInit();
 	//TaskTimer_Init();
 
 
 
-	Queue_Handle = xQueueCreate(5,sizeof(QueueBuff_t));
+	Queue_Handle = xQueueCreate(5,1024);
 	Task_Init();
 
 

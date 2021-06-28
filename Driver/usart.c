@@ -2,8 +2,9 @@
 
 
 
-u8 USART1_Buffer[1500];
+u8 USART1_Buffer[1024];
 u16 RX_Point,TX_Point;
+extern QueueHandle_t Queue_Handle;
 
 /*
 	USART1_MODE_A : PA9-TX1 
@@ -63,13 +64,13 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART_Init(USART1,&USART1_Initstruc);
 	
 	NVIC_Initstr.NVIC_IRQChannel=USART1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=8;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=7;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	//USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -166,6 +167,12 @@ void USART1_IRQHandler()
 	{
 		USART1_Buffer[RX_Point] = USART_ReceiveData(USART1);
 		RX_Point++;	
+		if(RX_Point == 1024)
+		{
+			xQueueSendFromISR(Queue_Handle,USART1_Buffer,NULL);
+			//xQueueSendFromISR
+			RX_Point = 0;
+		}
 //		RX_Point=RX_Point%DATA_BUFFER; //×Ô¶¯×ªÈ¦
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 	}

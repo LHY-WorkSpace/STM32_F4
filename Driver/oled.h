@@ -64,6 +64,7 @@ void OLED_TurnOFF(void);
 
 void OLED_ShowChar(u8 x,u8 y,u8* Data);
 void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length);
+void OLED_ShowNumber(u8 x,u8 y,u16 Num);
 
 
 void OLED_Draw_Point(u8 x,u8 y,u8 t);

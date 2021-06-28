@@ -550,11 +550,11 @@ void OLED_UpdateGRAM()
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
-	delay_us(5);                
+	delay_us(10);                
 	OLED_SetMode(0x22);	            
 	OLED_SetMode(0x00);	          	
 	OLED_SetMode(0x07);           
-	delay_us(5);
+	delay_us(10);
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)
@@ -741,7 +741,7 @@ void OLED_ShowChar(u8 x,u8 y,u8* Data)
 	for(k=0;k<2;k++)
 	{
 		for(l=0;l<8;l++)
-			OLED_GRAM[7-k-y*2][l+x]=Data[k*8+l];          //或关系待验证
+			OLED_GRAM[7-k-y*2][l+x] = Data[k*8+l];          //或关系待验证
 	}
 
 }
@@ -794,7 +794,18 @@ void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 	}
 
 }
-
+void OLED_ShowNumber(u8 x,u8 y,u16 Num)
+{
+char Temp[8];
+u8 i;
+	sprintf(Temp,"%d",Num);
+	for(i=0;i<sizeof(Temp);i++)
+	{
+		if(Temp[i] == '\0' )
+		break;
+	}
+	OLED_ShowStrings(x,y,Temp,i);
+}
 
 // /*          8*8                        */
 // u8 num0[]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
