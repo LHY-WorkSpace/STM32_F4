@@ -49,7 +49,7 @@ void USART_Task_1_()
 	{
 		QueueBuff[0].Dev_ID=1;
 		memset(QueueBuff[0].Dev_Data,0x11,sizeof(QueueBuff[0].Dev_Data));
-		xQueueSendToBack(Queue_Handle,QueueBuff[0].Dev_Data,0);
+		xQueueSendToBack(Queue_Handle,&QueueBuff[0],0);
 		taskENTER_CRITICAL();
 		printf("Task_1 \r\n");
 		taskEXIT_CRITICAL();
@@ -66,7 +66,7 @@ void USART_Task_2_()
 	{
 		QueueBuff[1].Dev_ID=2;
 		memset(QueueBuff[1].Dev_Data,0x22,sizeof(QueueBuff[1].Dev_Data));
-		xQueueSendToBack(Queue_Handle,QueueBuff[1].Dev_Data,0);
+		xQueueSendToBack(Queue_Handle,&QueueBuff[1],0);
 		taskENTER_CRITICAL();
 		printf("Task_2 \r\n");
 		taskEXIT_CRITICAL();
@@ -81,9 +81,9 @@ void USART_Task_3_()
 
 	while(1)
 	{
-		QueueBuff[2].Dev_ID=33;
+		QueueBuff[2].Dev_ID=3;
 		memset(QueueBuff[2].Dev_Data,0x33,sizeof(QueueBuff[2].Dev_Data));
-		xQueueSendToBack(Queue_Handle,QueueBuff[2].Dev_Data,0);
+		xQueueSendToBack(Queue_Handle,&QueueBuff[2],0);
 		taskENTER_CRITICAL();
 		printf("Task_3 \r\n");
 		taskEXIT_CRITICAL();
@@ -194,7 +194,7 @@ int  main()
 
 
 
-	Queue_Handle = xQueueCreate(1,sizeof(QueueBuff_t));
+	Queue_Handle = xQueueCreate(5,sizeof(QueueBuff_t));
 	Task_Init();
 
 
