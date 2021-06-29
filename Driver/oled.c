@@ -741,7 +741,7 @@ void OLED_ShowChar(u8 x,u8 y,u8* Data)
 	for(k=0;k<2;k++)
 	{
 		for(l=0;l<8;l++)
-			OLED_GRAM[7-k-y*2][l+x] = Data[k*8+l];          //或关系待验证
+			OLED_GRAM[7-k-y*2][l+x]  = Data[k*8+l];          //或关系待验证
 	}
 
 }

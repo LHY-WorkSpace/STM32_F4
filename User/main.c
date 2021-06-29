@@ -153,26 +153,20 @@ QueueBuff_t QueueTemp;
 void LED_Task(void)
 {
 
-TickType_t Time;
-u16 i=0;
+	TickType_t Time;
+	u16 Frames=0;
 
 	Time=xTaskGetTickCount();
 	while(1)
-	{
-		
+	{	
 		LED1_ON;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
 		LED1_OFF;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
 		LED1_ON;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
 		LED1_OFF;
-		vTaskDelayUntil(&Time,1000/portTICK_PERIOD_MS);
-
-		// k++;
-		// memset(Data,0x12,sizeof(Data));
-		// xQueueSendToBack(Queue_Handle,Data,10);
-		// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
+		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
 	}
 }
 
@@ -196,7 +190,7 @@ void SDCard_Task()
 		OLED_UpdateGRAM();
 		i+=sizeof(buff);
 		Frames++;
-		vTaskDelayUntil(&Time,20/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
 	}
 
 	File_CloseDir();
@@ -205,7 +199,8 @@ void SDCard_Task()
 }
 
 
-
+xQueueSendFromISR();
+xQueueSend();
 
 
 
@@ -217,8 +212,8 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,11,NULL);
+	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
+	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,10,NULL);
 }
 
 

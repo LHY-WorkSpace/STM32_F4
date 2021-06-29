@@ -170,7 +170,6 @@ void USART1_IRQHandler()
 		if(RX_Point == 1024)
 		{
 			xQueueSendFromISR(Queue_Handle,USART1_Buffer,NULL);
-			//xQueueSendFromISR
 			RX_Point = 0;
 		}
 //		RX_Point=RX_Point%DATA_BUFFER; //×Ô¶¯×ªÈ¦
