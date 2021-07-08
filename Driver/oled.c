@@ -804,9 +804,10 @@ Bit:Êý×ÖÎ»Êý
 */
 void OLED_ShowNumber(u8 x,u8 y,u16 Num,u8 Bit)
 {
-char Temp[8];
-char ShiftTemp[8];
-u8 i;
+	char Temp[8];
+	char ShiftTemp[8];
+	u8 i;
+
 	sprintf(Temp,"%d",Num);
 	memset(ShiftTemp,' ',sizeof(ShiftTemp));
 	for(i=0;i<sizeof(Temp);i++)
@@ -817,6 +818,89 @@ u8 i;
 	memcpy(&ShiftTemp[Bit-i],Temp,i);
 	OLED_ShowStrings(x,y,ShiftTemp,Bit);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // /*          8*8                        */
 // u8 num0[]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};

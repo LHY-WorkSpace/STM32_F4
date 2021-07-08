@@ -207,13 +207,13 @@ void Clock_Task()
 	while (1)
 	{
 		RTC_Get_Time(&STM32_Time);
-		// OLED_ShowNumber(60,0,STM32_Time.hour,2);
-		// OLED_ShowNumber(80,0,STM32_Time.minute,2);
+		OLED_ShowNumber(60,0,STM32_Time.hour,2);
+		OLED_ShowNumber(80,0,STM32_Time.minute,2);
 		OLED_ShowNumber(20,0,STM32_Time.second,2);
-		// OLED_ShowNumber(0,0,STM32_Time.year,2);
-		// OLED_ShowNumber(20,0,STM32_Time.month,2);
-		// OLED_ShowNumber(40,0,STM32_Time.date,2);
-		//OLED_UpdateGRAM();	
+		OLED_ShowNumber(0,0,STM32_Time.year,2);
+		OLED_ShowNumber(20,0,STM32_Time.month,2);
+		OLED_ShowNumber(40,0,STM32_Time.date,2);
+		OLED_UpdateGRAM();	
 		vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
 
 	}
