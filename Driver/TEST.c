@@ -79,7 +79,6 @@ void SDIO_Test()
 void RTC_Test()
 {
 		Programe_Start();
-		RTC_Get_Date(&STM32_Time);
 		RTC_Get_Time(&STM32_Time);
 		Programe_End_Us();
 		printf("Y:%d M:%d D:%d W:%d H:%d M:%d S:%d\r\n",STM32_Time.year,STM32_Time.month,STM32_Time.date,STM32_Time.week,STM32_Time.hour,STM32_Time.minute,STM32_Time.second);

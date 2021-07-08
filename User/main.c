@@ -34,7 +34,7 @@ u16 i=0;
 		if( states == pdPASS)
 		{
 			OLED_Data2GRAM(buff,sizeof(buff));
-			OLED_ShowNumber(0,0,i);
+			OLED_ShowNumber(0,0,i,8);
 			OLED_UpdateGRAM();
 			i++;
 		}
@@ -186,7 +186,7 @@ void SDCard_Task()
 	{
 		File_ReadData("1:/SD/Data.bin",buff,sizeof(buff),i);
 		OLED_Data2GRAM(buff,sizeof(buff));
-		OLED_ShowNumber(0,0,Frames);
+		OLED_ShowNumber(0,0,Frames,5);
 		OLED_UpdateGRAM();
 		i+=sizeof(buff);
 		Frames++;
@@ -197,10 +197,36 @@ void SDCard_Task()
 
 
 }
+void Clock_Task()
+{
+	TickType_t Time;
+	STM32_Time_t STM32_Time;
+
+	Time=xTaskGetTickCount();
+
+	while (1)
+	{
+		RTC_Get_Time(&STM32_Time);
+		// OLED_ShowNumber(60,0,STM32_Time.hour,2);
+		// OLED_ShowNumber(80,0,STM32_Time.minute,2);
+		OLED_ShowNumber(20,0,STM32_Time.second,2);
+		// OLED_ShowNumber(0,0,STM32_Time.year,2);
+		// OLED_ShowNumber(20,0,STM32_Time.month,2);
+		// OLED_ShowNumber(40,0,STM32_Time.date,2);
+		//OLED_UpdateGRAM();	
+		vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
+
+	}
 
 
-xQueueSendFromISR();
-xQueueSend();
+
+
+
+
+
+
+}
+
 
 
 
@@ -213,7 +239,8 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 }
 
 
@@ -225,7 +252,8 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
-	File_FATFSInit();
+	RTC_ConfigInit();
+	// File_FATFSInit();
 	//TaskTimer_Init();
 
 

@@ -794,17 +794,28 @@ void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 	}
 
 }
-void OLED_ShowNumber(u8 x,u8 y,u16 Num)
+
+
+
+
+/*
+Bit:数字位数
+向右对齐，超出的位数部分不显示
+*/
+void OLED_ShowNumber(u8 x,u8 y,u16 Num,u8 Bit)
 {
 char Temp[8];
+char ShiftTemp[8];
 u8 i;
 	sprintf(Temp,"%d",Num);
+	memset(ShiftTemp,' ',sizeof(ShiftTemp));
 	for(i=0;i<sizeof(Temp);i++)
 	{
 		if(Temp[i] == '\0' )
 		break;
 	}
-	OLED_ShowStrings(x,y,Temp,i);
+	memcpy(&ShiftTemp[Bit-i],Temp,i);
+	OLED_ShowStrings(x,y,ShiftTemp,Bit);
 }
 
 // /*          8*8                        */

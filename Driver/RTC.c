@@ -4,7 +4,7 @@
 
 
 
-const u8 STM32_RTCDefault[]={21,1,1,5,0,0,0};
+const u8 STM32_RTCDefault[]={21,11,11,5,15,20,55};
 
 
 
@@ -88,27 +88,34 @@ void RTC_Set_Date(u8 year,u8 month,u8 date,u8 week)
 void RTC_Get_Time(STM32_Time_t* STM32_Time)
 {
 	RTC_TimeTypeDef RTC_TimeTypeDefinit;
+	RTC_DateTypeDef RTC_DateTypeDefinit;
 
+	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
 	RTC_GetTime(RTC_Format_BIN,&RTC_TimeTypeDefinit);
 	
 	STM32_Time->hour=RTC_TimeTypeDefinit.RTC_Hours;
 	STM32_Time->minute=RTC_TimeTypeDefinit.RTC_Minutes;
 	STM32_Time->second=RTC_TimeTypeDefinit.RTC_Seconds;
-}
-
-
-
-void RTC_Get_Date(STM32_Time_t* STM32_Time)
-{
-	RTC_DateTypeDef RTC_DateTypeDefinit;
-
-	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
-	
 	STM32_Time->year=RTC_DateTypeDefinit.RTC_Year;
 	STM32_Time->month=RTC_DateTypeDefinit.RTC_Month;
 	STM32_Time->date=RTC_DateTypeDefinit.RTC_Date;
 	STM32_Time->week=RTC_DateTypeDefinit.RTC_WeekDay;
+
 }
+
+
+
+// void RTC_Get_Date(STM32_Time_t* STM32_Time)
+// {
+// 	RTC_DateTypeDef RTC_DateTypeDefinit;
+
+// 	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
+	
+// 	STM32_Time->year=RTC_DateTypeDefinit.RTC_Year;
+// 	STM32_Time->month=RTC_DateTypeDefinit.RTC_Month;
+// 	STM32_Time->date=RTC_DateTypeDefinit.RTC_Date;
+// 	STM32_Time->week=RTC_DateTypeDefinit.RTC_WeekDay;
+// }
 /*
 void RTC_Set_Alarm(u8* Data,u8 length)
 {
