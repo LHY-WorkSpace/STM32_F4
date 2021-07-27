@@ -48,7 +48,21 @@ void System_ResetState(u8 Device,u8 State)
     
 }
 
+void SystemDown()
+{
+	while(1)
+	{		
+		LED1_ON;
+		delay_ms(100);
+		LED1_OFF;
+		delay_ms(100);
+		LED1_ON;
+		delay_ms(100);
+		LED1_OFF;
+		delay_ms(100);
 
+	}
+}
 
 
 

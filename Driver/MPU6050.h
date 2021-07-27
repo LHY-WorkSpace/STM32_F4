@@ -24,11 +24,11 @@
 /*
     (采样频率)         GYR_OUTPUT_FREQUENCY(陀螺仪输出频率)
 GYR_SAMPLE_FREQUENCY = ---------------------------------    =200HZ
-											  (1 + SMPTR_DIV(8 bit unsigned))
+						(1 + SMPTR_DIV(8 bit unsigned))
 
 GYR_OUTPUT_FREQUENCY:        depend on DLPF[2:0]
                               DLPF = 0 or 7    GYR_OUTPUT_FREQUENCY=8khz
-															DLPF = others	   GYR_OUTPUT_FREQUENCY=1khz         USE THIS**
+							  DLPF = others	   GYR_OUTPUT_FREQUENCY=1khz         USE THIS**
 
 
 GYR_OUTPUT_FREQUENCY > 2*DLPF_SAMPLE_RATE
@@ -36,7 +36,7 @@ GYR_OUTPUT_FREQUENCY > 2*DLPF_SAMPLE_RATE
 
 */
 #define   MPU6050_SMPTR_DIV_REG                 0X19
-#define   MPU6050_SMPTR_DIV                     0X04                 //采样频率  200hz
+#define   MPU6050_SMPTR_DIV                     0X01                 //采样频率  500hz
 
 /*
 
@@ -45,7 +45,7 @@ CONFIGURATION      7  6 |5  4  3 | 2  1  0
 
 */
 #define   MPU6050_CONFIGURATION_REG             0X1A                //FSYNC DLPF配置寄存器
-#define   MPU6050_DLPF_CFG                      0X02                //低通滤波器配置参数     DLPF_SAMPLE_RATE~100HZ
+#define   MPU6050_DLPF_CFG                      0X01                //低通滤波器配置参数     DLPF_SAMPLE_RATE~100HZ
 
 
 
@@ -90,7 +90,7 @@ PWR1_CONFIG:    DEVICES_REST     = bit[7]       RESET bit  (复位后自动清零)
 
 #define   MPU6050_GYR_XOUT_L                    0X44
 #define   MPU6050_GYR_XOUT_H                    0X43
-#define   MPU6050_GYR_YOUT_L              		  0X46
+#define   MPU6050_GYR_YOUT_L              		0X46
 #define   MPU6050_GYR_YOUT_H                    0X45
 #define   MPU6050_GYR_ZOUT_L                    0X48
 #define   MPU6050_GYR_ZOUT_H                    0X47

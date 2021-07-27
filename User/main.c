@@ -35,7 +35,7 @@ u16 i=0;
 		{
 			OLED_Data2GRAM(buff,sizeof(buff));
 			OLED_ShowNumber(0,0,i,8);
-			OLED_UpdateGRAM();
+			
 			i++;
 		}
 		//taskENTER_CRITICAL();
@@ -103,26 +103,37 @@ void USART_Task_3_()
 
 void USART_Task_4_()
 {
+	float pitch,yaw,roll;
+	TickType_t Time;
+
+	Time=xTaskGetTickCount();
 
 	while(1)
 	{
+
 		taskENTER_CRITICAL();
-		printf("Task_4 \r\n");
+		MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 		taskEXIT_CRITICAL();
-		taskYIELD();
+		OLED_ShowNumber(0,2,(u8)pitch,3);
+		OLED_ShowNumber(30,2,(u8)yaw,3);
+		OLED_ShowNumber(60,2,(u8)roll,3);
+		vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
 	}
 
 
 }
 void USART_Task_5_()
 {
-TickType_t Time;
+	TickType_t Time;
+
+	Time=xTaskGetTickCount();
 	while(1)
 	{
-		taskENTER_CRITICAL();
-		printf("Task_5 \r\n");
-		taskEXIT_CRITICAL();
-		taskYIELD();
+		// taskENTER_CRITICAL();
+		// printf("Task_5 \r\n");
+		// taskEXIT_CRITICAL();
+		OLED_UpdateGRAM();
+		vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
 	}
 
 
@@ -152,9 +163,7 @@ QueueBuff_t QueueTemp;
 
 void LED_Task(void)
 {
-
 	TickType_t Time;
-	u16 Frames=0;
 
 	Time=xTaskGetTickCount();
 	while(1)
@@ -169,6 +178,9 @@ void LED_Task(void)
 		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
 	}
 }
+
+
+
 
 void SDCard_Task()
 {
@@ -187,16 +199,18 @@ void SDCard_Task()
 		File_ReadData("1:/SD/Data.bin",buff,sizeof(buff),i);
 		OLED_Data2GRAM(buff,sizeof(buff));
 		OLED_ShowNumber(0,0,Frames,5);
-		OLED_UpdateGRAM();
 		i+=sizeof(buff);
 		Frames++;
 		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
 	}
 
-	File_CloseDir();
-
-
+//	File_CloseDir();
 }
+
+
+
+
+
 void Clock_Task()
 {
 	TickType_t Time;
@@ -209,11 +223,11 @@ void Clock_Task()
 		RTC_Get_Time(&STM32_Time);
 		OLED_ShowNumber(60,0,STM32_Time.hour,2);
 		OLED_ShowNumber(80,0,STM32_Time.minute,2);
-		OLED_ShowNumber(20,0,STM32_Time.second,2);
+		OLED_ShowNumber(100,0,STM32_Time.second,2);
 		OLED_ShowNumber(0,0,STM32_Time.year,2);
 		OLED_ShowNumber(20,0,STM32_Time.month,2);
 		OLED_ShowNumber(40,0,STM32_Time.date,2);
-		OLED_UpdateGRAM();	
+			
 		vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
 
 	}
@@ -236,12 +250,18 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
 	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
-	// xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	// xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,12,NULL);
+	//xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
 	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",2048,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 }
+
+
+
+
+
+
 
 
 int  main()
@@ -253,32 +273,15 @@ int  main()
 	led_init();
 	OLED_Init();
 	RTC_ConfigInit();
+	MPU6050_Init();
 	// File_FATFSInit();
 	//TaskTimer_Init();
-
-
 
 	Queue_Handle = xQueueCreate(5,1024);
 	Task_Init();
 
-
 	vTaskStartScheduler();
-
-
-	while(1)
-	{	
-		//Task_List();	
-		// LED1_ON;
-		// delay_us(2);
-		// LED1_OFF;
-		// delay_us(2);
-		// LED1_ON;
-		// delay_ms(100);
-		// LED1_OFF;
-		// delay_ms(200);
-		// delay_ms(500);
-		// delay_ms(500);
-	}
+	SystemDown();
 
 
 }	

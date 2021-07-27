@@ -6,7 +6,7 @@ static FATFS fs;
 static FIL fils;
 static DIR dp;		
 // static FILINFO fno;
-static u32 DataPointer;
+
 
 
 
@@ -112,6 +112,7 @@ u8 File_CreateNewFile(const char* Path)
 u8 File_ReadData(const char* Path,u8* Data,u16 Length,u32 Offset)
 {
     u8 sta;
+    u32 DataPointer;
 
     sta=f_open(&fils,Path,FA_READ|FA_OPEN_EXISTING);
 
@@ -133,6 +134,7 @@ u8 File_ReadData(const char* Path,u8* Data,u16 Length,u32 Offset)
 u8 File_WriteData(const char* Path,u8* Data,u16 Length,u32 Offset)
 {
     u8 sta;
+    u32 DataPointer;
 
     sta=f_open(&fils,Path,FA_WRITE|FA_OPEN_EXISTING);
      
