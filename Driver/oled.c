@@ -161,7 +161,7 @@ void OLED_SPI_Init()
 	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;
 	SPI_InitTypeDefinsture.SPI_CPHA=SPI_CPHA_2Edge;
 	SPI_InitTypeDefinsture.SPI_NSS=SPI_NSS_Soft;
-	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_8;        //5.33Mhz
+	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_4;  
 	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
 	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
@@ -540,21 +540,38 @@ void OLED_ClearScreen(u8 Data)
 	OLED_UpdateGRAM();
 }
 
-
+// void OLED_UpdateGRAM()
+// {
+// 	u8 i,j;
+// OLED_SetMode(0x20); 
+// OLED_SetMode(0x02);	 
+// 	for(i=0;i<8;i++)
+// 	{
+// 		OLED_SetMode(0xb0+i);	            
+// 		OLED_SetMode(0x00);	          	
+// 		OLED_SetMode(0x10); 
+// 		delay_us(5);
+// 		for(j=0;j<128;j++)
+// 		{
+// 			OLED_SendData(OLED_GRAM[i][j]);
+// 		}
+// 	}
+// }
 
 
 
 void OLED_UpdateGRAM()
 {
 	u8 i,j;
-	OLED_SetMode(0x21);           
-	OLED_SetMode(0x00);	        
-	OLED_SetMode(0x7f);
-	delay_us(10);                
+	// OLED_SetMode(0x20); 
+	// OLED_SetMode(0x00); 
 	OLED_SetMode(0x22);	            
 	OLED_SetMode(0x00);	          	
 	OLED_SetMode(0x07);           
-	delay_us(10);
+	OLED_SetMode(0x21);           
+	OLED_SetMode(0x00);	        
+	OLED_SetMode(0x7f);
+	delay_us(5);  
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)
