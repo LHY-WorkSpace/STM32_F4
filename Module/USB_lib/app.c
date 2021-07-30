@@ -21,7 +21,6 @@
 
 /* Includes ------------------------------------------------------------------ */
 #include "usbd_msc_core.h"
-#include "usbd_usr.h"
 #include "usbd_desc.h"
 
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
@@ -93,36 +92,6 @@ __ALIGN_BEGIN USB_OTG_CORE_HANDLE USB_OTG_dev __ALIGN_END;
   * @param  None
   * @retval None
   */
-int main(void)
-{
-  __IO uint32_t i = 0;
-
-  /* !< At this stage the microcontroller clock setting is already configured,
-   * this is done through SystemInit() function which is called from startup
-   * file (startup_stm32fxxx_xx.s) before to branch to application main. To
-   * reconfigure the default setting of SystemInit() function, refer to
-   * system_stm32fxxx.c file */
-
-  USBD_Init(&USB_OTG_dev,
-#ifdef USE_USB_OTG_HS
-            USB_OTG_HS_CORE_ID,
-#else
-            USB_OTG_FS_CORE_ID,
-#endif
-            &USR_desc, &USBD_MSC_cb, &USR_cb);
-
-  while (1)
-  {
-    if (i++ == 0x100000)
-    {
-      STM_EVAL_LEDToggle(LED1);
-      STM_EVAL_LEDToggle(LED2);
-      STM_EVAL_LEDToggle(LED3);
-      STM_EVAL_LEDToggle(LED4);
-      i = 0;
-    }
-  }
-}
 
 #ifdef USE_FULL_ASSERT
 /**

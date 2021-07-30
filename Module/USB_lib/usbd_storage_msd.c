@@ -21,7 +21,7 @@
 
 /* Includes ------------------------------------------------------------------ */
 #include "usbd_msc_mem.h"
-
+#include "sdio_sdcard.h"
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
