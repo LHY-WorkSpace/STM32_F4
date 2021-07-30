@@ -54,6 +54,7 @@
 #include "FileOperate.h"
 #include "usbd_core.h"
 #include "usb_bsp.h"
+#include "usbd_usr.h"
 
 
 

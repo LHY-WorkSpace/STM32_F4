@@ -13,8 +13,12 @@ TaskHandle_t  Task_1_Handle;
 QueueHandle_t Queue_Handle;
 
 
-
-
+	USB_OTG_CORE_HANDLE pdev;
+	USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
+	USBD_DEVICE pDevice;                 
+	USBD_Class_cb_TypeDef class_cb;
+//	USBD_Usr_cb_TypeDef usr_cb;
+extern  USBD_Usr_cb_TypeDef USR_cb;
 
 
 
@@ -234,13 +238,9 @@ void Clock_Task()
 
 void USB_Task()
 {
-	USB_OTG_CORE_HANDLE pdev;
-	USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
-	USBD_DEVICE pDevice;                 
-	USBD_Class_cb_TypeDef class_cb;
-	USBD_Usr_cb_TypeDef usr_cb;
 
-	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &usr_cb);
+
+	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &USR_cb);
 //           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
 }
 
@@ -277,6 +277,7 @@ int  main()
 	//RTC_ConfigInit();
 	//MPU6050_Init();
 	File_FATFSInit();
+	USB_Task();
 	//TaskTimer_Init();
 
 	Queue_Handle = xQueueCreate(5,1024);
