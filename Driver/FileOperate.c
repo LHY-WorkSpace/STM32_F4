@@ -29,11 +29,6 @@ u8 File_FATFSInit()
 	  	GPIOA_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;           
 		GPIO_Init(GPIOA,&GPIOA_Initstruc);
 
-
-        
-
-
-
     return disk_initialize(DEV_SD);
 }
 

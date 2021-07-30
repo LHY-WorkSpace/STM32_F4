@@ -306,8 +306,7 @@ void Function_list()
 		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);周期执行
 		vTaskDelay(100);非周期执行，延时可能被打断而导致边长
 
-
-..\Module\USB_lib\usb_lib\usb_regs.h(79): error:  #20: identifier "__IO" is undefined
+..\Module\USB_lib\usbd_storage_msd.c(118): error:  #147-D: declaration is incompatible with "int8_t STORAGE_GetCapacity(uint8_t, uint32_t *, uint16_t *)" (declared at line 106 of "..\Module\USB_lib\usbd_storage_msd.h")
 
 		
 }

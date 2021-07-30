@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "usb_conf.h": "c",
-        "usbd_msc_mem.h": "c"
+        "usbd_msc_mem.h": "c",
+        "sdio_sdcard.h": "c",
+        "usb_dcd_int.h": "c"
     }
 }
