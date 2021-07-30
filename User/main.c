@@ -199,7 +199,7 @@ void SDCard_Task()
 		OLED_Data2GRAM(buff,sizeof(buff));
 		//OLED_ShowNumber(0,0,Frames,5);
 		i+=sizeof(buff);
-		//Frames++;
+		Frames++;
 		OLED_UpdateGRAM();
 		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
 	}
@@ -241,7 +241,7 @@ void USB_Task()
 	USBD_Usr_cb_TypeDef usr_cb;
 
 	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &usr_cb);
-
+//           https://blog.csdn.net/zhengnianli/article/details/113931569  
 }
 
 

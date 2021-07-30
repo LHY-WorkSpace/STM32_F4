@@ -1272,11 +1272,6 @@
           <GroupName>USB</GroupName>
           <Files>
             <File>
-              <FileName>app.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\USB_lib\app.c</FilePath>
-            </File>
-            <File>
               <FileName>usb_bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\USB_lib\usb_bsp.c</FilePath>
