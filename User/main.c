@@ -308,7 +308,7 @@ void Function_list()
 
 ..\Module\USB_lib\usbd_storage_msd.c(118): error:  #147-D: declaration is incompatible with "int8_t STORAGE_GetCapacity(uint8_t, uint32_t *, uint16_t *)" (declared at line 106 of "..\Module\USB_lib\usbd_storage_msd.h")
 
-		
+.\Objects\1.axf: Error: L6218E: Undefined symbol USB_OTG_CoreInit (referred from usb_dcd.o).		
 }
 */
 

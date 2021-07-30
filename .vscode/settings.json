@@ -3,6 +3,8 @@
         "usb_conf.h": "c",
         "usbd_msc_mem.h": "c",
         "sdio_sdcard.h": "c",
-        "usb_dcd_int.h": "c"
+        "usb_dcd_int.h": "c",
+        "usb_dcd.h": "c",
+        "usb_bsp.h": "c"
     }
 }
