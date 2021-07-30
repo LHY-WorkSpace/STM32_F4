@@ -229,19 +229,16 @@ void Clock_Task()
 		OLED_ShowNumber(40,0,STM32_Time.date,2);
 		OLED_UpdateGRAM();	
 		vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
-
 	}
+}
 
+void USB_Task()
+{
 
-
-
-
-
+USBD_Init();
 
 
 }
-
-
 
 
 
@@ -305,10 +302,7 @@ void Function_list()
 		Time=xTaskGetTickCount();
 		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);周期执行
 		vTaskDelay(100);非周期执行，延时可能被打断而导致边长
-
-..\Module\USB_lib\usbd_storage_msd.c(118): error:  #147-D: declaration is incompatible with "int8_t STORAGE_GetCapacity(uint8_t, uint32_t *, uint16_t *)" (declared at line 106 of "..\Module\USB_lib\usbd_storage_msd.h")
-
-.\Objects\1.axf: Error: L6218E: Undefined symbol USB_OTG_CoreInit (referred from usb_dcd.o).		
+		
 }
 */
 

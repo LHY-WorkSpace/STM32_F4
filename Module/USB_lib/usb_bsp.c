@@ -272,21 +272,22 @@ void USB_OTG_BSP_EnableInterrupt(USB_OTG_CORE_HANDLE * pdev)
 * @param  usec : Value of delay required in micro sec
 * @retval None
 */
-#if defined (USE_STM322xG_EVAL)
-     /* This value is set for SYSCLK = 120 MHZ, User can adjust this value
-      * depending on used SYSCLK frequency */
-#define count_us   40
+// #if defined (USE_STM322xG_EVAL)
+//      /* This value is set for SYSCLK = 120 MHZ, User can adjust this value
+//       * depending on used SYSCLK frequency */
+// #define count_us   40
 
-#elif defined(USE_STM324xG_EVAL) || defined(USE_STM324x9I_EVAL)
-    /* This value is set for SYSCLK = 168 MHZ, User can adjust this value
-     * depending on used SYSCLK frequency */
+// #elif defined(USE_STM324xG_EVAL) || defined(USE_STM324x9I_EVAL)
+//     /* This value is set for SYSCLK = 168 MHZ, User can adjust this value
+//      * depending on used SYSCLK frequency */
+// #define count_us   55
+
+// #else                           /* defined (USE_STM3210C_EVAL) */
+//     /* This value is set for SYSCLK = 72 MHZ, User can adjust this value
+//      * depending on used SYSCLK frequency */
+// #define count_us   12
+// #endif
 #define count_us   55
-
-#else                           /* defined (USE_STM3210C_EVAL) */
-    /* This value is set for SYSCLK = 72 MHZ, User can adjust this value
-     * depending on used SYSCLK frequency */
-#define count_us   12
-#endif
 void USB_OTG_BSP_uDelay(const uint32_t usec)
 {
   uint32_t count = count_us * usec;
