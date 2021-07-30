@@ -234,10 +234,13 @@ void Clock_Task()
 
 void USB_Task()
 {
+	USB_OTG_CORE_HANDLE pdev;
+	USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
+	USBD_DEVICE pDevice;                 
+	USBD_Class_cb_TypeDef class_cb;
+	USBD_Usr_cb_TypeDef usr_cb;
 
-USBD_Init();
-
-
+	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &usr_cb);
 
 }
 

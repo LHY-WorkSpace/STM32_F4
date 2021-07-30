@@ -26,18 +26,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usb_conf.h"
 
-/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
-  * @{
-  */
-  
-/** @defgroup USBD_CONF
-  * @brief This file is the device library configuration file
-  * @{
-  */ 
-
-/** @defgroup USBD_CONF_Exported_Defines
-  * @{
-  */ 
 
 
 #define USBD_CFG_MAX_NUM           1
