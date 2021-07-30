@@ -241,7 +241,7 @@ void USB_Task()
 	USBD_Usr_cb_TypeDef usr_cb;
 
 	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &usr_cb);
-//           https://blog.csdn.net/zhengnianli/article/details/113931569  
+//           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
 }
 
 
