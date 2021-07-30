@@ -373,7 +373,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,ARM_MATH_CM4, __FPU_PRESENT, __FPU_USED, __CC_ARM,USE_EMBEDDED_PHY</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver</IncludePath>
+              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1292,14 +1292,29 @@
               <FilePath>..\Module\USB_lib\usb_conf.h</FilePath>
             </File>
             <File>
+              <FileName>usb_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\USB_lib\usb_core.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_core.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\USB_lib\usb_core.h</FilePath>
             </File>
             <File>
+              <FileName>usb_dcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\USB_lib\usb_dcd.c</FilePath>
+            </File>
+            <File>
               <FileName>usb_dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\USB_lib\usb_dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_dcd_int.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\USB_lib\usb_dcd_int.h</FilePath>
             </File>
             <File>
               <FileName>usb_defines.h</FileName>
@@ -1417,9 +1432,9 @@
               <FilePath>..\Module\USB_lib\usbd_storage_msd.c</FilePath>
             </File>
             <File>
-              <FileName>usbd_storage_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\USB_lib\usbd_storage_template.c</FilePath>
+              <FileName>usbd_storage_msd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\USB_lib\usbd_storage_msd.h</FilePath>
             </File>
           </Files>
         </Group>
