@@ -13,12 +13,30 @@ TaskHandle_t  Task_1_Handle;
 QueueHandle_t Queue_Handle;
 
 
-	USB_OTG_CORE_HANDLE pdev;
-	USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
-	USBD_DEVICE pDevice;                 
-	USBD_Class_cb_TypeDef class_cb;
-//	USBD_Usr_cb_TypeDef usr_cb;
+//	USBD_DEVICE pDevice;                 
+//USBD_Class_cb_TypeDef class_cb;
+//USBD_Usr_cb_TypeDef usr_cb;
+
+
+
+USB_OTG_CORE_HANDLE pdev;
+USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
 extern  USBD_Usr_cb_TypeDef USR_cb;
+extern  USBD_Class_cb_TypeDef  USBD_MSC_cb;
+extern  USBD_DEVICE USR_desc; 
+
+
+
+
+void USB_Task()
+{
+
+	USBD_Init(&pdev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
+//           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
+}
+
+
+
 
 
 
@@ -236,13 +254,7 @@ void Clock_Task()
 	}
 }
 
-void USB_Task()
-{
 
-
-	USBD_Init(&pdev,coreID,&pDevice,&class_cb, &USR_cb);
-//           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
-}
 
 
 
