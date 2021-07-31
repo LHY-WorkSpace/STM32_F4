@@ -120,10 +120,10 @@ int8_t STORAGE_GetCapacity(uint8_t lun, uint32_t * block_num,uint32_t * block_si
 
   SD_GetCardInfo(&SDCardInfo);
 
-  if (SD_GetState() != 0)
-  {
-    return (-1);
-  }
+  // if (SD_GetState() != 0)
+  // {
+  //   return (-1);
+  // }
 
   *block_size = 512;
   *block_num = SDCardInfo.CardCapacity / 512;
@@ -148,11 +148,11 @@ int8_t STORAGE_IsReady(uint8_t lun)
     last_status = 0;
   }
 
-  if (SD_GetState() != 0)
-  {
-    last_status = -1;
-    return (-1);
-  }
+  // if (SD_GetState() != 0)
+  // {
+  //   last_status = -1;
+  //   return (-1);
+  // }
   return (0);
 }
 
@@ -182,7 +182,7 @@ int8_t STORAGE_Read(uint8_t lun,
   {
     return -1;
   }
-  while (SD_GetState() != SD_CARD_TRANSFER);
+  //while (SD_GetState() != SD_CARD_TRANSFER);
 
   return 0;
 }
@@ -203,7 +203,7 @@ int8_t STORAGE_Write(uint8_t lun,
   {
     return -1;
   }
-  while (SD_GetState() != SD_CARD_TRANSFER);
+ // while (SD_GetState() != SD_CARD_TRANSFER);
 
   return (0);
 }

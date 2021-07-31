@@ -22,6 +22,7 @@
 /* Includes ------------------------------------------------------------------ */
 #include "usbd_usr.h"
 #include <stdio.h>
+#include "IncludeFile.h"
 /** @addtogroup USBD_USER
   * @{
   */
@@ -162,7 +163,10 @@ void USBD_USR_Init(void)
 //   LCD_DisplayStringLine(LCD_PIXEL_HEIGHT - 42, USER_INFORMATION1);
 //   LCD_DisplayStringLine(LCD_PIXEL_HEIGHT - 30, USER_INFORMATION2);
 //   LCD_SetTextColor(LCD_LOG_DEFAULT_COLOR);
-
+char SS[]="USB FS MSC Device";
+OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
 }
 
 /**
@@ -185,6 +189,12 @@ void USBD_USR_DeviceReset(uint8_t speed)
   //   LCD_LOG_SetFooter((uint8_t *) "     USB Device Library V1.2.1  [??]");
 
   // }
+char SS[]="USB Device Library V1.2.1";
+OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
+
+
 }
 
 
@@ -196,6 +206,10 @@ void USBD_USR_DeviceReset(uint8_t speed)
 void USBD_USR_DeviceConfigured(void)
 {
  // LCD_UsrLog("> MSC Interface started.\n");
+char SS[]="MSC Interface started";
+OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
 
 }
 
@@ -207,6 +221,10 @@ void USBD_USR_DeviceConfigured(void)
 void USBD_USR_DeviceSuspended(void)
 {
  // LCD_UsrLog("> Device In suspend mode.\n");
+ char SS[]="Device In suspend mode";
+ OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
 }
 
 
@@ -229,6 +247,10 @@ void USBD_USR_DeviceResumed(void)
 void USBD_USR_DeviceConnected(void)
 {
  // LCD_UsrLog("> USB Device Connected.\n");
+  char SS[]="USB Device Connected";
+OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
 }
 
 
@@ -241,6 +263,10 @@ void USBD_USR_DeviceConnected(void)
 void USBD_USR_DeviceDisconnected(void)
 {
  /// LCD_UsrLog("> USB Device Disconnected.\n");
+char SS[]="USB Device Disconnected";
+OLED_ClearScreen(0x00);
+OLED_ShowStrings(0,0,SS,strlen(SS));
+OLED_UpdateGRAM();
 }
 
 /**

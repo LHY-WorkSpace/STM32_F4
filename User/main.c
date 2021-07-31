@@ -17,9 +17,10 @@ QueueHandle_t Queue_Handle;
 //USBD_Class_cb_TypeDef class_cb;
 //USBD_Usr_cb_TypeDef usr_cb;
 
-
-
-USB_OTG_CORE_HANDLE pdev;
+__ALIGN_BEGIN 
+USB_OTG_CORE_HANDLE USB_OTG_dev 
+__ALIGN_END;
+//USB_OTG_CORE_HANDLE pdev;
 USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
 extern  USBD_Usr_cb_TypeDef USR_cb;
 extern  USBD_Class_cb_TypeDef  USBD_MSC_cb;
@@ -31,7 +32,8 @@ extern  USBD_DEVICE USR_desc;
 void USB_Task()
 {
 
-	USBD_Init(&pdev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
+	USBD_Init(&USB_OTG_dev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
+
 //           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
 }
 
@@ -269,7 +271,7 @@ void Task_Init()
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,12,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -291,14 +293,14 @@ int  main()
 	OLED_Init();
 	//RTC_ConfigInit();
 	//MPU6050_Init();
-	File_FATFSInit();
+	//File_FATFSInit();
 	USB_Task();
 	//TaskTimer_Init();
 
-	Queue_Handle = xQueueCreate(5,1024);
-	Task_Init();
+	// Queue_Handle = xQueueCreate(5,1024);
+	// Task_Init();
 
-	vTaskStartScheduler();
+	// vTaskStartScheduler();
 	SystemDown();
 
 
