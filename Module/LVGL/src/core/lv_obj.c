@@ -97,7 +97,7 @@ void lv_init(void)
     /*Initialize the misc modules*/
     lv_mem_init();
 
-    _lv_timer_core_init();
+    _lv_timer_core_init() ;
 
     _lv_fs_init();
 
