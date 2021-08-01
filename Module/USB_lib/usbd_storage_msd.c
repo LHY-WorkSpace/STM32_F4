@@ -99,10 +99,10 @@ __IO uint32_t count = 0;
 
 int8_t STORAGE_Init(uint8_t lun)
 {
-  if (SD_Init() != 0)
-  {
-    return (-1);
-  }
+  // if (SD_Init() != 0)
+  // {
+  //   return (-1);
+  // }
 
   return (0);
 
@@ -144,7 +144,7 @@ int8_t STORAGE_IsReady(uint8_t lun)
 
   if (last_status < 0)
   {
-    SD_Init();
+    //SD_Init();
     last_status = 0;
   }
 

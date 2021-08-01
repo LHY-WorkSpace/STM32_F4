@@ -55,7 +55,8 @@
 #include "usbd_core.h"
 #include "usb_bsp.h"
 #include "usbd_usr.h"
-
+#include "usbd_msc_core.h"
+#include "usbd_desc.h"
 
 
 
@@ -70,6 +71,7 @@
 extern u8 OLED_GRAM[8][128];
 extern u32 Radom;
 extern STM32_Time_t STM32_Time;
+
 
 
 

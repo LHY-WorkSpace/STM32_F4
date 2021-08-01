@@ -11,7 +11,7 @@ void MPU6050_Test(void);
 void OLED_Test(void);
 void SD_Test(void);
 void Led_Test(void);
-
+void USB_Task(void);
 
 
 #endif
