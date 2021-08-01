@@ -114,7 +114,6 @@ void USART_Task_4_()
 
 	while(1)
 	{
-
 		taskENTER_CRITICAL();
 		MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 		taskEXIT_CRITICAL();
