@@ -91,15 +91,13 @@ void USART_Task_2_()
 void USART_Task_3_()
 {
 
+	TickType_t Time;
+	Time=xTaskGetTickCount();
+	lv_init();
 	while(1)
 	{
-		QueueBuff[2].Dev_ID=3;
-		memset(QueueBuff[2].Dev_Data,0x33,sizeof(QueueBuff[2].Dev_Data));
-		xQueueSendToBack(Queue_Handle,&QueueBuff[2],0);
-		taskENTER_CRITICAL();
-		printf("Task_3 \r\n");
-		taskEXIT_CRITICAL();
-		taskYIELD();
+		lv_tick_inc(1);
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
 
