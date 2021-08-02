@@ -49,7 +49,7 @@
 //	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
 //	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
-//	SPI_Init(SPI1,&SPI_InitTypeDefinsture);
+	//SPI_Init(SPI1,&SPI_InitTypeDefinsture);
 
 
 

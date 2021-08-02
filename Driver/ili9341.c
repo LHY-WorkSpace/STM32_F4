@@ -36,68 +36,137 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
+#include"IncludeFile.h"
 #include "ili9341.h"
 
-/** @addtogroup BSP
-  * @{
-  */ 
 
-/** @addtogroup Components
-  * @{
-  */ 
-  
-/** @addtogroup ILI9341
-  * @brief This file provides a set of functions needed to drive the 
-  *        ILI9341 LCD.
-  * @{
-  */
 
-/** @defgroup ILI9341_Private_TypesDefinitions
-  * @{
-  */ 
-/**
-  * @}
-  */ 
+void LCD_SPI_Init()
+{
+	
+	
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
+	
+	
+	GPIO_InitTypeDef GPIO_InitTypeDefinsture;
+	SPI_InitTypeDef SPI_InitTypeDefinsture;
 
-/** @defgroup ILI9341_Private_Defines
-  * @{
-  */
-/**
-  * @}
-  */ 
-  
-/** @defgroup ILI9341_Private_Macros
-  * @{
-  */
-/**
-  * @}
-  */  
+	
+	GPIO_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_5|GPIO_Pin_7;                 // PA5---SCLK       PA7-----SDA
+	GPIO_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_AF;                         //PA0-------D/C           PA4------RST
+//	GPIO_InitTypeDefinsture.GPIO_Speed=GPIO_Speed_50MHz;
+//	GPIO_InitTypeDefinsture.GPIO_OType=GPIO_OType_PP;           
+	GPIO_InitTypeDefinsture.GPIO_PuPd=GPIO_PuPd_UP;
+	
+	GPIO_Init(GPIOA,&GPIO_InitTypeDefinsture);
+	
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource5,GPIO_AF_SPI1);
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource7,GPIO_AF_SPI1);
+	
+	GPIO_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_0|GPIO_Pin_4;                
+	GPIO_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_OUT;
+	GPIO_InitTypeDefinsture.GPIO_Speed=GPIO_Speed_50MHz;
+	GPIO_InitTypeDefinsture.GPIO_OType=GPIO_OType_PP;           
+	GPIO_InitTypeDefinsture.GPIO_PuPd=GPIO_PuPd_UP;
+	
+	GPIO_Init(GPIOA,&GPIO_InitTypeDefinsture);
+	
+	SPI_InitTypeDefinsture.SPI_Direction=SPI_Direction_2Lines_FullDuplex;
+	SPI_InitTypeDefinsture.SPI_Mode=SPI_Mode_Master;
+	SPI_InitTypeDefinsture.SPI_DataSize=SPI_DataSize_8b;
+	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;
+	SPI_InitTypeDefinsture.SPI_CPHA=SPI_CPHA_2Edge;
+	SPI_InitTypeDefinsture.SPI_NSS=SPI_NSS_Soft;
+	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_256;
+	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
+	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
-/** @defgroup ILI9341_Private_Variables
-  * @{
-  */ 
+	SPI_Init(SPI1,&SPI_InitTypeDefinsture);
 
-/**
-  * @}
-  */ 
-  
-/** @defgroup ILI9341_Private_FunctionPrototypes
-  * @{
-  */
+	SPI_Cmd(SPI1,ENABLE);
 
-/**
-  * @}
-  */ 
-  
-/** @defgroup ILI9341_Private_Functions
-  * @{
-  */   
 
-/**
-  * @brief  Power on the LCD.
-  * @param  None
-  * @retval None
-  */
+	SPI_I2S_SendData(SPI1,0X00);
+}
+
+
+
+
+ void LCD_IO_Init()
+  {
+
+
+!!!!
+    /* Configure NCS in Output Push-Pull mode */
+    LCD_WRX_GPIO_CLK_ENABLE();
+    GPIO_InitStructure.Pin     = LCD_WRX_PIN;
+    GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStructure.Pull    = GPIO_NOPULL;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    HAL_GPIO_Init(LCD_WRX_GPIO_PORT, &GPIO_InitStructure);
+    
+    LCD_RDX_GPIO_CLK_ENABLE();
+    GPIO_InitStructure.Pin     = LCD_RDX_PIN;
+    GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStructure.Pull    = GPIO_NOPULL;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    HAL_GPIO_Init(LCD_RDX_GPIO_PORT, &GPIO_InitStructure);
+    
+    /* Configure the LCD Control pins ----------------------------------------*/
+    LCD_NCS_GPIO_CLK_ENABLE();
+    
+    /* Configure NCS in Output Push-Pull mode */
+    GPIO_InitStructure.Pin     = LCD_NCS_PIN;
+    GPIO_InitStructure.Mode    = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStructure.Pull    = GPIO_NOPULL;
+    GPIO_InitStructure.Speed   = GPIO_SPEED_FAST;
+    HAL_GPIO_Init(LCD_NCS_GPIO_PORT, &GPIO_InitStructure);
+!!!
+
+
+  LCD_CS_LOW();
+  LCD_CS_HIGH();
+
+  LCD_SPI_Init();
+
+  }
+
+
+
+
+u32 SPIx_Read(u8 Bytes)
+{
+  u8 DataBufff[4];
+  u8 i;
+
+  for(i=0;i<Bytes;i++)
+  {
+      while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            
+      SPI_I2S_SendData(SPI2,DataBufff[i]);			
+      SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+  }
+
+  return (u32*)DataBufff;
+}
+
+
+
+
+void SPIx_Write(u16 Tdata)
+{
+
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            
+	SPI_I2S_SendData(SPI2,Tdata);			
+	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+
+}
+
+
+
+
+
+
 void ili9341_Init(void)
 {
   /* Initialize ILI9341 low level bus layer ----------------------------------*/
@@ -251,7 +320,15 @@ void ili9341_DisplayOff(void)
   */
 void ili9341_WriteReg(uint8_t LCD_Reg)
 {
-  LCD_IO_WriteReg(LCD_Reg);
+  /* Reset WRX to send command */
+  LCD_WRX_LOW();
+  
+  /* Reset LCD control line(/CS) and Send command */
+  LCD_CS_LOW();
+  SPIx_Write(LCD_Reg);
+  
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
 }
 
 /**
@@ -261,7 +338,15 @@ void ili9341_WriteReg(uint8_t LCD_Reg)
   */
 void ili9341_WriteData(uint16_t RegValue)
 {
-  LCD_IO_WriteData(RegValue);
+  /* Set WRX to send data */
+  LCD_WRX_HIGH();
+  
+  /* Reset LCD control line(/CS) and Send data */  
+  LCD_CS_LOW();
+  SPIx_Write(RegValue);
+  
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
 }
 
 /**
@@ -272,10 +357,94 @@ void ili9341_WriteData(uint16_t RegValue)
   */
 uint32_t ili9341_ReadData(uint16_t RegValue, uint8_t ReadSize)
 {
-  /* Read a max of 4 bytes */
-  return (LCD_IO_ReadData(RegValue, ReadSize));
+  uint32_t readvalue = 0;
+
+  /* Select: Chip Select low */
+  LCD_CS_LOW();
+
+  /* Reset WRX to send command */
+  LCD_WRX_LOW();
+  
+  SPIx_Write(RegValue);
+  
+  readvalue = SPIx_Read(ReadSize);
+
+  /* Set WRX to send data */
+  LCD_WRX_HIGH();
+
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
+  
+  return readvalue;
 }
 
+void LCD_IO_WriteData(uint16_t RegValue) 
+{
+  /* Set WRX to send data */
+  LCD_WRX_HIGH();
+  
+  /* Reset LCD control line(/CS) and Send data */  
+  LCD_CS_LOW();
+  SPIx_Write(RegValue);
+  
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
+}
+
+/**
+  * @brief  Writes register address.
+  */
+void LCD_IO_WriteReg(uint8_t Reg) 
+{
+  /* Reset WRX to send command */
+  LCD_WRX_LOW();
+  
+  /* Reset LCD control line(/CS) and Send command */
+  LCD_CS_LOW();
+  SPIx_Write(Reg);
+  
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
+}
+
+/**
+  * @brief  Reads register value.
+  * @param  RegValue Address of the register to read
+  * @param  ReadSize Number of bytes to read
+  * @retval Content of the register value
+  */
+uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize) 
+{
+  uint32_t readvalue = 0;
+
+  /* Select: Chip Select low */
+  LCD_CS_LOW();
+
+  /* Reset WRX to send command */
+  LCD_WRX_LOW();
+  
+  SPIx_Write(RegValue);
+  
+  readvalue = SPIx_Read(ReadSize);
+
+  /* Set WRX to send data */
+  LCD_WRX_HIGH();
+
+  /* Deselect: Chip Select high */
+  LCD_CS_HIGH();
+  
+  return readvalue;
+}
+
+
+
+
+
+
+void LCD_Delay (uint16_t delay)
+{
+   delay_ms(delay);
+}
 /**
   * @}
   */ 

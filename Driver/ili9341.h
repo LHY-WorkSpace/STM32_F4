@@ -47,32 +47,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 
-/** @addtogroup BSP
-  * @{
-  */ 
 
-/** @addtogroup Components
-  * @{
-  */ 
-  
-/** @addtogroup ILI9341
-  * @{
-  */
-
-/** @defgroup ILI9341_Exported_Types
-  * @{
-  */
-/**
-  * @}
-  */ 
-
-/** @defgroup ILI9341_Exported_Constants
-  * @{
-  */
-
-/** 
-  * @brief ILI9341 chip IDs  
-  */ 
 #define ILI9341_ID                  0x9341
 
 /** 
@@ -197,6 +172,28 @@
 /* Size of read registers */
 #define LCD_READ_ID4_SIZE        3      /* Size of Read ID4 */
 
+
+
+
+
+
+/*################################ LCD #######################################*/
+/* Chip Select macro definition */
+#define LCD_CS_LOW()       HAL_GPIO_WritePin(LCD_NCS_GPIO_PORT, LCD_NCS_PIN, GPIO_PIN_RESET)
+#define LCD_CS_HIGH()      HAL_GPIO_WritePin(LCD_NCS_GPIO_PORT, LCD_NCS_PIN, GPIO_PIN_SET)
+
+/* Set WRX High to send data */
+#define LCD_WRX_LOW()      HAL_GPIO_WritePin(LCD_WRX_GPIO_PORT, LCD_WRX_PIN, GPIO_PIN_RESET)
+#define LCD_WRX_HIGH()     HAL_GPIO_WritePin(LCD_WRX_GPIO_PORT, LCD_WRX_PIN, GPIO_PIN_SET)
+
+/* Set WRX High to send data */
+#define LCD_RDX_LOW()      HAL_GPIO_WritePin(LCD_RDX_GPIO_PORT, LCD_RDX_PIN, GPIO_PIN_RESET)
+#define LCD_RDX_HIGH()     HAL_GPIO_WritePin(LCD_RDX_GPIO_PORT, LCD_RDX_PIN, GPIO_PIN_SET)
+
+
+
+
+
 /**
   * @}
   */
@@ -217,7 +214,7 @@ void     LCD_IO_Init(void);
 void     LCD_IO_WriteData(uint16_t RegValue);
 void     LCD_IO_WriteReg(uint8_t Reg);
 uint32_t LCD_IO_ReadData(uint16_t RegValue, uint8_t ReadSize);
-void     LCD_Delay (uint32_t delay);
+void     LCD_Delay (uint16_t delay);
       
 #ifdef __cplusplus
 }
