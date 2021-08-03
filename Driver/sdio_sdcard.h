@@ -1,7 +1,7 @@
 #ifndef __SDIO_SDCARD_H
 #define __SDIO_SDCARD_H																			   
 #include "stm32f4xx.h" 													   
-
+#include "sdio_sdcard.h"
 
 //SDIO相关标志位,拷贝自:stm32f4xx_sdio.h
 #define SDIO_FLAG_CCRCFAIL                  ((uint32_t)0x00000001)

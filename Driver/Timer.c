@@ -42,7 +42,7 @@ void Delay_Init()
 	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
     TIM_ARRPreloadConfig(TIM9,DISABLE);
-    TIM_Cmd(TIM10,DISABLE);
+    TIM_Cmd(TIM10,ENABLE);
    
 }
 
@@ -55,7 +55,7 @@ void delay_us(u16 nus)
     TIM10->CNT = 0;
     TIM_Cmd(TIM10,ENABLE);
     while (TIM10->CNT < nus);
-    TIM_Cmd(TIM10,DISABLE);
+    // TIM_Cmd(TIM10,DISABLE);
 
 }
 //×î´ó2^16ms
@@ -71,7 +71,7 @@ void delay_ms(u16 nus)
         while (TIM10->CNT < 1000); 
         
     }
-    TIM_Cmd(TIM10,DISABLE);
+    // TIM_Cmd(TIM10,DISABLE);
 
 }
 

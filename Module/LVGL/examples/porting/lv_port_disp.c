@@ -129,6 +129,7 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
+    TFT_Init();
 }
 
 /*Flush the content of the internal buffer the specific area on the display

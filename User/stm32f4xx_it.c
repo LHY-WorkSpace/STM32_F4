@@ -24,7 +24,7 @@
 /* Includes ------------------------------------------------------------------ */
 #include "stm32f4xx_it.h"
 #include "main.h"
-
+#include "usb_core.h"
 /* Private typedef ----------------------------------------------------------- */
 /* Private define ------------------------------------------------------------ */
 /* Private macro ------------------------------------------------------------- */
@@ -188,11 +188,11 @@ void OTG_HS_EP1_OUT_IRQHandler(void)
   * @param  None
   * @retval None
   */
-void SDIO_IRQHandler(void)
-{
-  /* Process All SDIO Interrupt Sources */
-  SD_ProcessIRQSrc();
-}
+// void SDIO_IRQHandler(void)
+// {
+//   /* Process All SDIO Interrupt Sources */
+//   SD_ProcessIRQSrc();
+// }
 #endif
 
 /******************************************************************************/

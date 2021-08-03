@@ -19,8 +19,8 @@ u8 convert_from_bytes_to_power_of_two(u16 NumberOfBytes);
 
 static u8 CardType=SDIO_STD_CAPACITY_SD_CARD_V1_1;		//SD卡类型（默认为1.x卡）
 static u32 CSD_Tab[4],CID_Tab[4],RCA=0;					//SD卡CSD,CID以及相对地址(RCA)数据
-static u8 DeviceMode=SD_DMA_MODE;		   				//工作模式,注意,工作模式必须通过SD_SetDeviceMode,后才算数.这里只是定义一个默认的模式(SD_DMA_MODE)
 static u8 StopCondition=0; 								//是否发送停止传输标志位,DMA多块读写的时候用到  
+static u8 DeviceMode=SD_POLLING_MODE;		   				//工作模式,注意,工作模式必须通过SD_SetDeviceMode,后才算数.这里只是定义一个默认的模式(SD_DMA_MODE)
 volatile SD_Error TransferError=SD_OK;					//数据传输错误标志,DMA读写时使用	    
 volatile u8 TransferEnd=0;								//传输结束标志,DMA读写时使用
 SD_CardInfo SDCardInfo;									//SD卡信息
@@ -82,8 +82,8 @@ SD_Error SD_Init(void)
  	//SDIO外设寄存器设置为默认值 			   
 	SDIO_Register_Deinit();
 	
-  NVIC_InitStructure.NVIC_IRQChannel = SDIO_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=1;//抢占优先级3
+    NVIC_InitStructure.NVIC_IRQChannel = SDIO_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=5;//抢占优先级3
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority =0;		//子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器、
@@ -1564,8 +1564,10 @@ SD_Error SD_SendStatus(uint32_t *pcardstatus)
 SDCardState SD_GetState(void)
 {
 	u32 resp1=0;
-	if(SD_SendStatus(&resp1)!=SD_OK)return SD_CARD_ERROR;
-	else return (SDCardState)((resp1>>9) & 0x0F);
+	if(SD_SendStatus(&resp1)!=SD_OK)
+	return SD_CARD_ERROR;
+	else 
+	return (SDCardState)((resp1>>9) & 0x0F);
 }
 //查找SD卡的SCR寄存器值
 //rca:卡相对地址

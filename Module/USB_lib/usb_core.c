@@ -410,7 +410,7 @@ USB_OTG_STS USB_OTG_CoreInit(USB_OTG_CORE_HANDLE *pdev)
 #endif
 
     USB_OTG_WRITE_REG32 (&pdev->regs.GREGS->GCCFG, gccfg.d32);
-    USB_OTG_BSP_mDelay(20);
+    USB_OTG_BSP_mDelay(2);
   }
   /* case the HS core is working in FS mode */
   if(pdev->cfg.dma_enable == 1)
@@ -572,7 +572,7 @@ USB_OTG_STS USB_OTG_SetCurrentMode(USB_OTG_CORE_HANDLE *pdev , uint8_t mode)
   }
 
   USB_OTG_WRITE_REG32(&pdev->regs.GREGS->GUSBCFG, usbcfg.d32);
-  USB_OTG_BSP_mDelay(50);
+  USB_OTG_BSP_mDelay(5);
   return status;
 }
 
@@ -2026,7 +2026,7 @@ void USB_OTG_ActiveRemoteWakeup(USB_OTG_CORE_HANDLE *pdev)
       dctl.d32 = 0;
       dctl.b.rmtwkupsig = 1;
       USB_OTG_MODIFY_REG32(&pdev->regs.DREGS->DCTL, 0, dctl.d32);
-      USB_OTG_BSP_mDelay(5);
+      USB_OTG_BSP_mDelay(2);
       USB_OTG_MODIFY_REG32(&pdev->regs.DREGS->DCTL, dctl.d32, 0 );
     }
   }

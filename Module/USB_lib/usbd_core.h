@@ -27,7 +27,7 @@
 #include "usb_dcd.h"
 #include "usbd_def.h"
 #include "usbd_conf.h"
-
+#include "sdio_sdcard.h"
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */

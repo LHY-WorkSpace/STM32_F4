@@ -2,6 +2,7 @@
 
 
 
+
 typedef struct 
 {
 	u8 Dev_ID;
@@ -13,27 +14,8 @@ TaskHandle_t  Task_1_Handle;
 QueueHandle_t Queue_Handle;
 
 
-//	USBD_DEVICE pDevice;                 
-//USBD_Class_cb_TypeDef class_cb;
-//USBD_Usr_cb_TypeDef usr_cb;
 
 
-
-USB_OTG_CORE_HANDLE pdev;
-USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
-extern  USBD_Usr_cb_TypeDef USR_cb;
-extern  USBD_Class_cb_TypeDef  USBD_MSC_cb;
-extern  USBD_DEVICE USR_desc; 
-
-
-
-
-void USB_Task()
-{
-
-	USBD_Init(&pdev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
-//           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
-}
 
 
 
@@ -44,23 +26,26 @@ void USB_Task()
 
 void OLED_Task(void)
 {
-u8 buff[1024];
-BaseType_t states;
-u16 i=0;
+	//u8 buff[1024];
+	// BaseType_t states;
+	u16 i=0;
+	TickType_t Time;		
+	Time=xTaskGetTickCount();
 	while(1)
 	{
 
-		//OLED_Test();
-
-		states = xQueueReceive(Queue_Handle,buff,100/portTICK_RATE_MS);
-		if( states == pdPASS)
-		{
-			OLED_Data2GRAM(buff,sizeof(buff));
-			OLED_ShowNumber(0,0,i,8);
-			i++;
-		}
+		// states = xQueueReceive(Queue_Handle,buff,100/portTICK_RATE_MS);
+		// if( states == pdPASS)
+		// {
+		// 	OLED_Data2GRAM(buff,sizeof(buff));
+		// 	OLED_ShowNumber(0,0,i,8);
+		// 	i++;
+		// }
 		//taskENTER_CRITICAL();
-		
+		OLED_ShowNumber(0,2,i,8);
+		i++;
+		OLED_UpdateGRAM();
+		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
 		//taskEXIT_CRITICAL();
 
 	}
@@ -106,15 +91,13 @@ void USART_Task_2_()
 void USART_Task_3_()
 {
 
+	TickType_t Time;
+	Time=xTaskGetTickCount();
+	lv_init();
 	while(1)
 	{
-		QueueBuff[2].Dev_ID=3;
-		memset(QueueBuff[2].Dev_Data,0x33,sizeof(QueueBuff[2].Dev_Data));
-		xQueueSendToBack(Queue_Handle,&QueueBuff[2],0);
-		taskENTER_CRITICAL();
-		printf("Task_3 \r\n");
-		taskEXIT_CRITICAL();
-		taskYIELD();
+		lv_tick_inc(1);
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
 
@@ -129,7 +112,6 @@ void USART_Task_4_()
 
 	while(1)
 	{
-
 		taskENTER_CRITICAL();
 		MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 		taskEXIT_CRITICAL();
@@ -268,9 +250,9 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	//xTaskCreate( (TaskFunction_t)USART_Task_5_,"USART",100,NULL,12,NULL);
+	xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -292,11 +274,11 @@ int  main()
 	OLED_Init();
 	//RTC_ConfigInit();
 	//MPU6050_Init();
-	File_FATFSInit();
+	//File_FATFSInit();
 	USB_Task();
 	//TaskTimer_Init();
 
-	Queue_Handle = xQueueCreate(5,1024);
+	// Queue_Handle = xQueueCreate(5,1024);
 	Task_Init();
 
 	vTaskStartScheduler();
