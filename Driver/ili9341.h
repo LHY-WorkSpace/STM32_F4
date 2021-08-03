@@ -179,17 +179,16 @@
 
 /*################################ LCD #######################################*/
 /* Chip Select macro definition */
-#define LCD_CS_LOW()       HAL_GPIO_WritePin(LCD_NCS_GPIO_PORT, LCD_NCS_PIN, GPIO_PIN_RESET)
-#define LCD_CS_HIGH()      HAL_GPIO_WritePin(LCD_NCS_GPIO_PORT, LCD_NCS_PIN, GPIO_PIN_SET)
+#define LCD_CS_LOW()       GPIO_ResetBits(GPIOB,GPIO_Pin_9)
+#define LCD_CS_HIGH()      GPIO_SetBits(GPIOB,GPIO_Pin_9)
 
 /* Set WRX High to send data */
-#define LCD_WRX_LOW()      HAL_GPIO_WritePin(LCD_WRX_GPIO_PORT, LCD_WRX_PIN, GPIO_PIN_RESET)
-#define LCD_WRX_HIGH()     HAL_GPIO_WritePin(LCD_WRX_GPIO_PORT, LCD_WRX_PIN, GPIO_PIN_SET)
+#define LCD_WRX_LOW()      GPIO_ResetBits(GPIOB,GPIO_Pin_9)
+#define LCD_WRX_HIGH()     GPIO_SetBits(GPIOB,GPIO_Pin_9)
 
 /* Set WRX High to send data */
-#define LCD_RDX_LOW()      HAL_GPIO_WritePin(LCD_RDX_GPIO_PORT, LCD_RDX_PIN, GPIO_PIN_RESET)
-#define LCD_RDX_HIGH()     HAL_GPIO_WritePin(LCD_RDX_GPIO_PORT, LCD_RDX_PIN, GPIO_PIN_SET)
-
+#define LCD_RDX_LOW()      GPIO_ResetBits(GPIOB,GPIO_Pin_9)
+#define LCD_RDX_HIGH()     GPIO_SetBits(GPIOB,GPIO_Pin_9)
 
 
 

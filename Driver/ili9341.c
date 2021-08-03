@@ -54,7 +54,7 @@ void LCD_SPI_Init()
 
 	
 	GPIO_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_5|GPIO_Pin_7;                 // PA5---SCLK       PA7-----SDA
-	GPIO_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_AF;                         //PA0-------D/C           PA4------RST
+	GPIO_InitTypeDefinsture.GPIO_Mode=GPIO_Mode_AF;                         //PA0-------D/C     PA4------RST
 //	GPIO_InitTypeDefinsture.GPIO_Speed=GPIO_Speed_50MHz;
 //	GPIO_InitTypeDefinsture.GPIO_OType=GPIO_OType_PP;           
 	GPIO_InitTypeDefinsture.GPIO_PuPd=GPIO_PuPd_UP;
