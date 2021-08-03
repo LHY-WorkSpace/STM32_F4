@@ -313,7 +313,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1017,6 +1017,21 @@
               <FileName>WDOG.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\WDOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>FONT.H</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Driver\FONT.H</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Driver\lcd.h</FilePath>
             </File>
           </Files>
         </Group>
