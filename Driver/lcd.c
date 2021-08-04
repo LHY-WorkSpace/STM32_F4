@@ -144,8 +144,7 @@ void LCD_Scan_Dir(u8 dir)
 			case 7:dir=2;break;	     
 		}
 	} 
-	if(lcddev.id==0x9341||lcddev.id==0X6804||lcddev.id==0X5310||lcddev.id==0X5510||lcddev.id==0X1963)//9341/6804/5310/5510/1963,特殊处理
-	{
+
 		switch(dir)
 		{
 			case L2R_U2D://从左到右,从上到下
@@ -173,10 +172,8 @@ void LCD_Scan_Dir(u8 dir)
 				regval|=(1<<7)|(1<<6)|(1<<5); 
 				break;	 
 		}
-		if(lcddev.id==0X5510)dirreg=0X3600;
-		else dirreg=0X36;
- 		if((lcddev.id!=0X5310)&&(lcddev.id!=0X5510)&&(lcddev.id!=0X1963))regval|=0X08;//5310/5510/1963不需要BGR   
-		if(lcddev.id==0X6804)regval|=0x02;//6804的BIT6和9341的反了	   
+		dirreg=0X36;
+		regval|=0X08;//5310/5510/1963不需要BGR    
 		LCD_WriteReg(dirreg,regval);
 		if(lcddev.id!=0X1963)//1963不做坐标处理
 		{
@@ -198,58 +195,15 @@ void LCD_Scan_Dir(u8 dir)
 				}
 			}  
 		}
-		if(lcddev.id==0X5510)
-		{
-			LCD_WR_REG(lcddev.setxcmd);LCD_WR_DATA(0); 
-			LCD_WR_REG(lcddev.setxcmd+1);LCD_WR_DATA(0); 
-			LCD_WR_REG(lcddev.setxcmd+2);LCD_WR_DATA((lcddev.width-1)>>8); 
-			LCD_WR_REG(lcddev.setxcmd+3);LCD_WR_DATA((lcddev.width-1)&0XFF); 
-			LCD_WR_REG(lcddev.setycmd);LCD_WR_DATA(0); 
-			LCD_WR_REG(lcddev.setycmd+1);LCD_WR_DATA(0); 
-			LCD_WR_REG(lcddev.setycmd+2);LCD_WR_DATA((lcddev.height-1)>>8); 
-			LCD_WR_REG(lcddev.setycmd+3);LCD_WR_DATA((lcddev.height-1)&0XFF);
-		}else
-		{
-			LCD_WR_REG(lcddev.setxcmd); 
-			LCD_WR_DATA(0);LCD_WR_DATA(0);
-			LCD_WR_DATA((lcddev.width-1)>>8);LCD_WR_DATA((lcddev.width-1)&0XFF);
-			LCD_WR_REG(lcddev.setycmd); 
-			LCD_WR_DATA(0);LCD_WR_DATA(0);
-			LCD_WR_DATA((lcddev.height-1)>>8);LCD_WR_DATA((lcddev.height-1)&0XFF);  
-		}
-  	}else 
-	{
-		switch(dir)
-		{
-			case L2R_U2D://从左到右,从上到下
-				regval|=(1<<5)|(1<<4)|(0<<3); 
-				break;
-			case L2R_D2U://从左到右,从下到上
-				regval|=(0<<5)|(1<<4)|(0<<3); 
-				break;
-			case R2L_U2D://从右到左,从上到下
-				regval|=(1<<5)|(0<<4)|(0<<3);
-				break;
-			case R2L_D2U://从右到左,从下到上
-				regval|=(0<<5)|(0<<4)|(0<<3); 
-				break;	 
-			case U2D_L2R://从上到下,从左到右
-				regval|=(1<<5)|(1<<4)|(1<<3); 
-				break;
-			case U2D_R2L://从上到下,从右到左
-				regval|=(1<<5)|(0<<4)|(1<<3); 
-				break;
-			case D2U_L2R://从下到上,从左到右
-				regval|=(0<<5)|(1<<4)|(1<<3); 
-				break;
-			case D2U_R2L://从下到上,从右到左
-				regval|=(0<<5)|(0<<4)|(1<<3); 
-				break;	 
-		} 
-		dirreg=0X03;
-		regval|=1<<12; 
-		LCD_WriteReg(dirreg,regval);
-	}
+
+		LCD_WR_REG(lcddev.setxcmd); 
+		LCD_WR_DATA(0);LCD_WR_DATA(0);
+		LCD_WR_DATA((lcddev.width-1)>>8);LCD_WR_DATA((lcddev.width-1)&0XFF);
+		LCD_WR_REG(lcddev.setycmd); 
+		LCD_WR_DATA(0);LCD_WR_DATA(0);
+		LCD_WR_DATA((lcddev.height-1)>>8);LCD_WR_DATA((lcddev.height-1)&0XFF);  
+
+
 }     
 //画点
 //x,y:坐标
