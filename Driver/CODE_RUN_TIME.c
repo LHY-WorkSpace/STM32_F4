@@ -20,15 +20,37 @@ void Programe_Start(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	//TIM_ITConfig(TIM6,TIM_IT_Update,DISABLE);
-	//TIM_ClearFlag(TIM6,TIM_IT_Update);
+	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
+	TIM_ClearFlag(TIM6,TIM_IT_Update);
 	TIM_ARRPreloadConfig(TIM6,ENABLE);
 	TIM6->CNT = 0;
 
-	TIM_Cmd(TIM6,ENABLE);
+	TIM_Cmd(TIM6,DISABLE);
 	
 
 }
+
+void Programe_Start()
+{
+	TIM_Cmd(TIM6,DISABLE);
+	TIM6->CNT = 0;
+	TIM_Cmd(TIM6,ENABLE);
+}
+
+u16 Programe_End()
+{
+
+
+
+
+
+
+
+}
+
+
+
+
 
 void  Programe_End_Us()
 {
@@ -57,11 +79,9 @@ void TIM6_DAC_IRQHandler()
 		{
 			Run_Time=(++Times_1ms)*50+(TIM6->CNT/1000);
 			TIM_Cmd(TIM6,DISABLE);
-
 		}
 
-TIM_ClearFlag(TIM6,TIM_IT_Update);
-
+	TIM_ClearFlag(TIM6,TIM_IT_Update);
 
 }
 

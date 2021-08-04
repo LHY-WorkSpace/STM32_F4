@@ -286,7 +286,7 @@ int  main()
 
  	u16 x=0;
 	u8 lcd_id[12];				//存放LCD ID字符串
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置系统中断优先级分组2
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);//设置系统中断优先级分组2
 	Delay_Init();
  	LCD_Init();           //初始化LCD FSMC接口
 	POINT_COLOR=RED;      //画笔颜色：红色
@@ -308,7 +308,10 @@ int  main()
 		// 	case 10:LCD_Clear(LGRAY);break;
 		// 	case 11:LCD_Clear(BROWN);break;
 		// }
+	 	Programe_Start();
 		LCD_Clear(x);
+		//printf("Run Time: %d ms",Run_Time);
+		sprintf((char*)lcd_id,"RunTime: %d ms",Run_Time);//将LCD ID打印到lcd_id数组。
 		POINT_COLOR=RED;	  
 		LCD_ShowString(30,40,210,24,24,"Explorer STM32F4");	
 		LCD_ShowString(30,70,200,16,16,"TFTLCD TEST");
