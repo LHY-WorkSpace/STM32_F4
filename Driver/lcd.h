@@ -2,6 +2,35 @@
 #define __LCD_H		
 #include "stdlib.h" 
 
+
+
+
+/*
+PB15--BL
+PD 0--D2
+PD 1--D3
+PD 4--LCD_RD
+PD 5--LCD_WR
+PD 8--D13
+PD 9--D14
+PD 10--D15
+PD 14--D0
+PD 15--D1
+PE 7--D4
+PE 8--D5
+PE 9--D6
+PE 10--D7
+PE 11--D8
+PE 12--D9
+PE 13--D10
+PE 14--D11
+PE 15--D12
+PD 11--LCD_RS
+PD 7--LCD_CS
+*/
+
+
+
 //LCD重要参数集
 typedef struct  
 {										    

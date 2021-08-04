@@ -539,6 +539,31 @@ void LCD_Clear(u16 color)
 		LCD->LCD_RAM=color;	
 	}
 }  
+
+// void LCD_ShowPicture()
+// {
+// 	u32 index=0;      
+// 	u32 totalpoint=lcddev.width;
+// 	u16 x=0,y=0;
+// 	Data_Buff DataTemp;				//存放LCD ID字符串
+// 	u32 P=0;
+// 	totalpoint*=lcddev.height; 			//得到总点数
+// 	LCD_SetCursor(0x00,0x0000);	//设置光标位置 
+// 	LCD_WriteRAM_Prepare();     		//开始写入GRAM
+
+// 	for(y=0;y<320;y++)
+// 	{
+// 		File_ReadData("1:/SD/Data.bmp",DataTemp.Data_8,2,P);
+// 		P+=480;		
+// 		for(x=0;x<240;x++)
+// 		{
+// 			//LCD_Fast_DrawPoint(x,y,DataTemp.Data_16);
+// 			LCD->LCD_RAM=DataTemp.Data_16;	
+// 		}
+// 	}
+// } 
+
+
 //在指定区域内填充单个颜色
 //(sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex-sx+1)*(ey-sy+1)   
 //color:要填充的颜色
@@ -756,7 +781,7 @@ void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
     {       
         if(x>=width){x=x0;y+=size;}
         if(y>=height)break;//退出
-        LCD_ShowChar(x,y,*p,size,0);
+        LCD_ShowChar(x,y,*p,size,1);
         x+=size/2;
         p++;
     }  
