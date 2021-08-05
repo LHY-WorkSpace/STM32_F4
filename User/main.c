@@ -15,7 +15,11 @@ QueueHandle_t Queue_Handle;
 
 
 
-
+typedef union
+{
+	u8 Data_8[480];
+	u16 Data_16[240];
+}Data_Buff;
 
 
 
@@ -275,7 +279,7 @@ int  main()
 	// //RTC_ConfigInit();
 	// //MPU6050_Init();
 	// //File_FATFSInit();
-	// USB_Task();
+	//USB_Task();
 	// //TaskTimer_Init();
 
 	// // Queue_Handle = xQueueCreate(5,1024);
@@ -284,42 +288,33 @@ int  main()
 	// vTaskStartScheduler();
 	// SystemDown();
 
- 	u16 x=0;
-	u8 lcd_id[12];				//存放LCD ID字符串
+ 	u16 x=0,y=0;
+	Data_Buff DataTemp;				//存放LCD ID字符串
+	u32 P=0;
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);//设置系统中断优先级分组2
 	Delay_Init();
+	File_FATFSInit();
  	LCD_Init();           //初始化LCD FSMC接口
+	// USB_Task();
+	led_init();
 	POINT_COLOR=RED;      //画笔颜色：红色
-	//sprintf((char*)lcd_id,"LCD ID:%04X",lcddev.id);//将LCD ID打印到lcd_id数组。				 	
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD");
+
+	for(y=0;y<320;y++)
+	{
+		File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
+		P+=480;		
+		for(x=0;x<240;x++)
+		{
+			LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+		}
+	}			 	
   	while(1) 
-	{		 
-		// switch(x)
-		// {
-		// 	case 0:LCD_Clear(WHITE);break;
-		// 	case 1:LCD_Clear(BLACK);break;
-		// 	case 2:LCD_Clear(BLUE);break;
-		// 	case 3:LCD_Clear(RED);break;
-		// 	case 4:LCD_Clear(MAGENTA);break;
-		// 	case 5:LCD_Clear(GREEN);break;
-		// 	case 6:LCD_Clear(CYAN);break; 
-		// 	case 7:LCD_Clear(YELLOW);break;
-		// 	case 8:LCD_Clear(BRRED);break;
-		// 	case 9:LCD_Clear(GRAY);break;
-		// 	case 10:LCD_Clear(LGRAY);break;
-		// 	case 11:LCD_Clear(BROWN);break;
-		// }
-	 	Programe_Start();
-		LCD_Clear(x);
-		//printf("Run Time: %d ms",Run_Time);
-		sprintf((char*)lcd_id,"RunTime: %d ms",Run_Time);//将LCD ID打印到lcd_id数组。
-		POINT_COLOR=RED;	  
-		LCD_ShowString(30,40,210,24,24,"Explorer STM32F4");	
-		LCD_ShowString(30,70,200,16,16,"TFTLCD TEST");
-		LCD_ShowString(30,90,200,16,16,"ATOM@ALIENTEK");
- 		LCD_ShowString(30,110,200,16,16,lcd_id);		//显示LCD ID	      					 
-		LCD_ShowString(30,130,200,12,12,"2014/5/4");	      					 
-	  	x++;
-		delay_ms(10);	
+	{	
+
+	SystemDown();
+
 	} 
 
 
