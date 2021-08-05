@@ -104,7 +104,7 @@ u8 File_CreateNewFile(const char* Path)
 
 
 //读取数据
-u8 File_ReadData(const char* Path,u8* Data,u16 Length,u32 Offset)
+u8 File_ReadData(const char* Path,u8* Data,u32 Length,u32 Offset)
 {
     u8 sta;
     u32 DataPointer;
@@ -126,7 +126,7 @@ u8 File_ReadData(const char* Path,u8* Data,u16 Length,u32 Offset)
 
 
 //写入数据
-u8 File_WriteData(const char* Path,u8* Data,u16 Length,u32 Offset)
+u8 File_WriteData(const char* Path,u8* Data,u32 Length,u32 Offset)
 {
     u8 sta;
     u32 DataPointer;
