@@ -11,7 +11,7 @@
  *********************/
 #include "lv_port_disp_template.h"
 #include "../../lvgl.h"
-
+#include "lcd.h"
 /*********************
  *      DEFINES
  *********************/
@@ -129,7 +129,8 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
-    TFT_Init();
+    //TFT_Init();
+    LCD_Init();           //初始化LCD FSMC接口
 }
 
 /*Flush the content of the internal buffer the specific area on the display
@@ -145,6 +146,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         for(x = area->x1; x <= area->x2; x++) {
             /*Put a pixel to the display. For example:*/
             /*put_px(x, y, *color_p)*/
+            LCD_Fast_DrawPoint(x,y,*color_p);
             color_p++;
         }
     }
