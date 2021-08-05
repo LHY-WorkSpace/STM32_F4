@@ -30,23 +30,14 @@ void Programe_Start(void)
 
 }
 
-void Programe_Start()
+void Programe_Start1()
 {
 	TIM_Cmd(TIM6,DISABLE);
 	TIM6->CNT = 0;
 	TIM_Cmd(TIM6,ENABLE);
 }
 
-u16 Programe_End()
-{
 
-
-
-
-
-
-
-}
 
 
 

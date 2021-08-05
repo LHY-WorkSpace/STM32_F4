@@ -15,11 +15,7 @@ QueueHandle_t Queue_Handle;
 
 
 
-typedef union
-{
-	u8 Data_8[480];
-	u16 Data_16[240];
-}Data_Buff;
+
 
 
 
@@ -301,15 +297,21 @@ int  main()
 	File_MountDisk("1:");
 	File_OpenDir("1:/SD");
 
-	for(y=0;y<320;y++)
-	{
-		File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
-		P+=480;		
-		for(x=0;x<240;x++)
-		{
-			LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
-		}
-	}			 	
+	// for(y=0;y<320;y++)
+	// {
+	// 	File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
+	// 	P+=480;		
+	// 	for(x=0;x<240;x++)
+	// 	{
+	// 		LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+	// 	}
+	// }	
+
+
+	LCD_ShowPicture();
+
+
+
   	while(1) 
 	{	
 

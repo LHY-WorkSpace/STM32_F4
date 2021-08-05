@@ -30,6 +30,12 @@ PD 7--LCD_CS
 */
 
 
+typedef union
+{
+	u8 Data_8[15360];
+	u16 Data_16[7680];
+}Data_Buff;
+
 
 //LCD重要参数集
 typedef struct  
@@ -124,6 +130,10 @@ void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode);						//显示一个字符
 void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size);  						//显示一个数字
 void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode);				//显示 数字
 void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p);		//显示一个字符串,12/16字体
+
+
+void LCD_ShowPicture(void);
+
 
 void LCD_WriteReg(u16 LCD_Reg, u16 LCD_RegValue);
 u16 LCD_ReadReg(u16 LCD_Reg);
