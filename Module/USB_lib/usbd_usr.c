@@ -114,8 +114,8 @@ void USBD_USR_Init(void)
 {
 char SS[]="USB FS MSC Device";
  
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 }
 
 /**
@@ -128,8 +128,8 @@ void USBD_USR_DeviceReset(uint8_t speed)
 
 char SS[]="USB Device Library V1.2.1";
  
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 
 
 }
@@ -145,8 +145,8 @@ void USBD_USR_DeviceConfigured(void)
 
 char SS[]="MSC Interface started";
  
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 
 }
 
@@ -160,8 +160,8 @@ void USBD_USR_DeviceSuspended(void)
 
  char SS[]="Device In suspend mode";
   
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 }
 
 
@@ -186,8 +186,8 @@ void USBD_USR_DeviceConnected(void)
 
 char SS[]="USB Device Connected";
  
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 }
 
 
@@ -202,8 +202,8 @@ void USBD_USR_DeviceDisconnected(void)
 
 char SS[]="USB Device Disconnected";
  
-OLED_ShowStrings(0,0,SS,strlen(SS));
-OLED_UpdateGRAM();
+// OLED_ShowStrings(0,0,SS,strlen(SS));
+// OLED_UpdateGRAM();
 }
 
 /**

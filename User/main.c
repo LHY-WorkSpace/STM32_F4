@@ -288,33 +288,41 @@ int  main()
  	u16 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
 	u32 P=0;
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);//设置系统中断优先级分组2
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
 	Delay_Init();
 	File_FATFSInit();
  	LCD_Init();           //初始化LCD FSMC接口
-	// USB_Task();
+
 	led_init();
 	POINT_COLOR=RED;      //画笔颜色：红色
 	File_MountDisk("1:");
 	File_OpenDir("1:/SD");
-
-	// for(y=0;y<320;y++)
-	// {
-	// 	File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
-	// 	P+=480;		
-	// 	for(x=0;x<240;x++)
-	// 	{
-	// 		LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
-	// 	}
-	// }	
+	USB_Task();
 
 
-	LCD_ShowPicture();
 
 
+	//LCD_ShowPicture();
+	//LCD_Clear(RED);
+
+	//
 
   	while(1) 
 	{	
+
+	if( FR_NO_FILE!=File_GetFileSize("1:/SD/Data.bin"))
+	{
+		for(y=0;y<320;y++)
+		{
+			File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
+			P+=480;		
+			for(x=0;x<240;x++)
+			{
+				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+			}
+		}
+	File_Delete("1:/SD/Data.bin");
+	}
 
 	SystemDown();
 
