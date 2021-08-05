@@ -568,7 +568,7 @@ void LCD_ShowPicture()
 
 	totalpoint=File_GetFileSize("1:/SD/Data.bin");
 
-	File_ReadData("1:/SD/Data.bin",(u8*)LCD->LCD_RAM,totalpoint,P);
+	File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
 
 ////////////////////////////////////////////////////////////
 
