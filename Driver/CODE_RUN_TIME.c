@@ -20,8 +20,8 @@ void Programe_Start(void)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority=0;
 	NVIC_Init(&NVIC_InitStructure);
 	
-	TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
-	TIM_ClearFlag(TIM6,TIM_IT_Update);
+	//TIM_ITConfig(TIM6,TIM_IT_Update,ENABLE);
+	//TIM_ClearFlag(TIM6,TIM_IT_Update);
 	TIM_ARRPreloadConfig(TIM6,ENABLE);
 	TIM6->CNT = 0;
 
