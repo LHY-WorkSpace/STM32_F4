@@ -6,7 +6,16 @@
 
 
 /*
-PB15--BL
+´¥Ãþ
+PA4--Touch_CS
+PA5--SPI_CLK
+PA6--MISO
+PA7--MOSI
+
+PE3--Touch_IT
+PE4--SD_CS
+
+PE5--BL
 PD 0--D2
 PD 1--D3
 PD 4--LCD_RD

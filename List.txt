@@ -16,7 +16,10 @@ https://blog.csdn.net/yyyyyyyyyysz/article/details/96774504
 
 
 
-
+修改PCB黑色背景的方法：
+1.点一下黑色背景
+2.按下2，在右键，选择修改形状或调整顶点，调整好大小后，右键
+3.按3退出该模式
 
 
 
