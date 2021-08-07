@@ -292,17 +292,16 @@ int  main()
 	Delay_Init();
 	File_FATFSInit();
  	LCD_Init();           //初始化LCD FSMC接口
-
 	led_init();
 	POINT_COLOR=RED;      //画笔颜色：红色
 	File_MountDisk("1:");
 	File_OpenDir("1:/SD");
-	USB_Task();
+	//USB_Task();
 
 
 
 
-	//LCD_ShowPicture();
+	LCD_ShowPicture();
 	//LCD_Clear(RED);
 
 	//
@@ -310,19 +309,19 @@ int  main()
   	while(1) 
 	{	
 
-	if( FR_NO_FILE!=File_GetFileSize("1:/SD/Data.bin"))
-	{
-		for(y=0;y<320;y++)
-		{
-			File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
-			P+=480;		
-			for(x=0;x<240;x++)
-			{
-				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
-			}
-		}
-	File_Delete("1:/SD/Data.bin");
-	}
+	// if( FR_NO_FILE!=File_GetFileSize("1:/SD/Data.bin"))
+	// {
+	// 	for(y=0;y<320;y++)
+	// 	{
+	// 		File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,480,P);
+	// 		P+=480;		
+	// 		for(x=0;x<240;x++)
+	// 		{
+	// 			LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+	// 		}
+	// 	}
+	// File_Delete("1:/SD/Data.bin");
+	// }
 
 	SystemDown();
 

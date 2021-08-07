@@ -548,27 +548,28 @@ void LCD_ShowPicture()
 	Data_Buff DataTemp;				//存放LCD ID字符串
 	u32 P=0;
 	//totalpoint*=lcddev.height; 			//得到总点数
-	LCD_SetCursor(0x00,0x0000);	//设置光标位置 
+	//LCD_SetCursor(0x00,0x0000);	//设置光标位置 
+	LCD_Set_Window(0,0,240,320);
 	LCD_WriteRAM_Prepare();     		//开始写入GRAM
 ////////////////////////////////////////////////////////////
-	for(index=0;index<10;index++)
-	{
-		//File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,15360,15360*index);
-		for(y=0;y<320;y++)
-		{
-			for(x=0;x<240;x++)
-			{
-				File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,1,totalpoint);
-				//LCD_Fast_DrawPoint(x,y,DataTemp.Data_16);
-				LCD->LCD_RAM=DataTemp.Data_16[totalpoint++];	
-			}
-		}
-	}
+	// for(index=0;index<10;index++)
+	// {
+	// 	//File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,15360,15360*index);
+	// 	for(y=0;y<320;y++)
+	// 	{
+	// 		for(x=0;x<240;x++)
+	// 		{
+	// 			File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,1,totalpoint);
+	// 			//LCD_Fast_DrawPoint(x,y,DataTemp.Data_16);
+	// 			LCD->LCD_RAM=DataTemp.Data_16[totalpoint++];	
+	// 		}
+	// 	}
+	// }
 ////////////////////////////////////////////////////////////
 
-	// totalpoint=File_GetFileSize("1:/SD/Data.bin");
+	totalpoint=File_GetFileSize("1:/SD/Data.bin");
 
-	// File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
+	File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
 
 ////////////////////////////////////////////////////////////
 
