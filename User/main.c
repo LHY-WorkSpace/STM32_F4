@@ -326,13 +326,7 @@ int  main()
 
 	SystemDown();
 
-	} 
-
-
-
-
-
-
+	}
 }	
 	
 /*
