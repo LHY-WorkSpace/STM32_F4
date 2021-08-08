@@ -1,7 +1,7 @@
 #include"IncludeFile.h"
 
 
-                             //PB8 --------DATE
+                             //PC8 --------DATE
 
 static void GPIO_Out(u8 state)
 {
