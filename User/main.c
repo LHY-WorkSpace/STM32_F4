@@ -285,9 +285,7 @@ int  main()
 	// vTaskStartScheduler();
 	// SystemDown();
 
- 	u16 x=0,y=0;
-	Data_Buff DataTemp;				//存放LCD ID字符串
-	u32 P=0;
+	u8 P=0;
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
 	Delay_Init();
 	File_FATFSInit();
@@ -301,7 +299,7 @@ int  main()
 
 
 
-	LCD_ShowPicture();
+	//LCD_ShowPicture();
 	//LCD_Clear(RED);
 
 	//
@@ -310,6 +308,8 @@ int  main()
 	{	
 
 	SystemDown();
+	LCD_SSD_BackLightSet(P);
+	P++;
 
 	}
 }	
