@@ -571,7 +571,7 @@ void OLED_UpdateGRAM()
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
-	delay_us(5);  
+	delay_us(2);  
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)

@@ -9,9 +9,11 @@
 /*********************
  *      INCLUDES
  *********************/
+#include "IncludeFile.h"
 #include "lv_port_disp_template.h"
 #include "../../lvgl.h"
 #include "lcd.h"
+
 /*********************
  *      DEFINES
  *********************/
@@ -100,8 +102,8 @@ void lv_port_disp_init(void)
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = 480;
-    disp_drv.ver_res = 320;
+    disp_drv.hor_res = 128;
+    disp_drv.ver_res = 64;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = disp_flush;
@@ -130,7 +132,8 @@ static void disp_init(void)
 {
     /*You code here*/
     //TFT_Init();
-    LCD_Init();           //初始化LCD FSMC接口
+    //LCD_Init();           //初始化LCD FSMC接口
+    OLED_Init();
 }
 
 /*Flush the content of the internal buffer the specific area on the display

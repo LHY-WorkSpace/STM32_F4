@@ -15,15 +15,6 @@ QueueHandle_t Queue_Handle;
 
 
 
-
-
-
-
-
-
-
-
-
 void OLED_Task(void)
 {
 	//u8 buff[1024];
@@ -41,11 +32,12 @@ void OLED_Task(void)
 		// 	OLED_ShowNumber(0,0,i,8);
 		// 	i++;
 		// }
-		//taskENTER_CRITICAL();
-		OLED_ShowNumber(0,2,i,8);
+		// taskENTER_CRITICAL();
+		//OLED_ShowNumber(0,2,i,8);
+		OLED_Draw_FullCircle(63,32,i/100);
 		i++;
 		OLED_UpdateGRAM();
-		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
 		//taskEXIT_CRITICAL();
 
 	}
@@ -268,50 +260,34 @@ void Task_Init()
 int  main()
 {
 
- 	// NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
-	// USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
-	// Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
-	// led_init();
-	// OLED_Init();
-	// //RTC_ConfigInit();
-	// //MPU6050_Init();
-	// //File_FATFSInit();
-	//USB_Task();
-	// //TaskTimer_Init();
-
-	// // Queue_Handle = xQueueCreate(5,1024);
-	// Task_Init();
-
-	// vTaskStartScheduler();
-	// SystemDown();
-
-	u8 P=0;
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
-	Delay_Init();
-	File_FATFSInit();
- 	LCD_Init();           //初始化LCD FSMC接口
+ 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
+	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	POINT_COLOR=RED;      //画笔颜色：红色
-	File_MountDisk("1:");
-	File_OpenDir("1:/SD");
+	OLED_Init();
+	// File_MountDisk("1:");
+	// File_OpenDir("1:/SD");
+	// LCD_Init();           //初始化LCD FSMC接口
+	//RTC_ConfigInit();
+	//MPU6050_Init();
+	//File_FATFSInit();
 	//USB_Task();
+	//TaskTimer_Init();
+	// lv_init();
+	// lv_port_disp_init();
 
+
+
+
+	// Queue_Handle = xQueueCreate(5,1024);
+	Task_Init();
+	vTaskStartScheduler();
+	SystemDown();
 
 
 
 	//LCD_ShowPicture();
 	//LCD_Clear(RED);
-
-	//
-
-  	while(1) 
-	{	
-
-	SystemDown();
-	LCD_SSD_BackLightSet(P);
-	P++;
-
-	}
 }	
 	
 /*
