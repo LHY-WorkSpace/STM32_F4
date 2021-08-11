@@ -544,34 +544,60 @@ void LCD_ShowPicture()
 {
 	u8 index=0;      
 	u32 totalpoint=0;
-	u16 x=0,y=0;
+	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
 	u32 P=0;
 	//totalpoint*=lcddev.height; 			//得到总点数
-	//LCD_SetCursor(0x00,0x0000);	//设置光标位置 
-	LCD_Set_Window(0,0,240,320);
-	LCD_WriteRAM_Prepare();     		//开始写入GRAM
-////////////////////////////////////////////////////////////
-	// for(index=0;index<10;index++)
-	// {
-	// 	//File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,15360,15360*index);
-	// 	for(y=0;y<320;y++)
-	// 	{
-	// 		for(x=0;x<240;x++)
-	// 		{
-	// 			File_ReadData("1:/SD/Data.bin",DataTemp.Data_8,1,totalpoint);
-	// 			//LCD_Fast_DrawPoint(x,y,DataTemp.Data_16);
-	// 			LCD->LCD_RAM=DataTemp.Data_16[totalpoint++];	
-	// 		}
-	// 	}
-	// }
-////////////////////////////////////////////////////////////
-
-	totalpoint=File_GetFileSize("1:/SD/Data.bin");
-
-	File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
+	 LCD_SetCursor(0x00,0x0000);	//设置光标位置 
+	// LCD_Set_Window(0,0,240,320);
+	 LCD_WriteRAM_Prepare();     		//开始写入GRAM
 
 ////////////////////////////////////////////////////////////
+
+	// totalpoint=File_GetFileSize("1:/SD/Data.bin");
+
+	// File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
+
+////////////////////////////////////////////////////////////
+
+		for(y=0;y<320;y++)
+		{
+			File_ReadData("1:/SD/Data_1.bin",DataTemp.Data_8,480,P);
+			P+=480;		
+			for(x=0;x<240;x++)
+			{
+				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+			}
+		}
+
+		delay_ms(500);
+		P=0;
+		for(y=0;y<320;y++)
+		{
+			File_ReadData("1:/SD/Data_2.bin",DataTemp.Data_8,480,P);
+			P+=480;		
+			for(x=0;x<240;x++)
+			{
+				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+			}
+		}
+
+		delay_ms(500);
+
+		LCD_Display_Dir(1);
+		LCD_SetCursor(0x00,0x0000);	//设置光标位置 
+		LCD_WriteRAM_Prepare();     		//开始写入GRAM
+		P=0;
+		for(y=0;y<240;y++)
+		{
+			File_ReadData("1:/SD/Data_3.bin",DataTemp.Data_8,640,P);
+			P+=640;		
+			for(x=0;x<320;x++)
+			{
+				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
+			}
+		}
+//////////////////////////////////////////////////////////////////
 
 } 
 
