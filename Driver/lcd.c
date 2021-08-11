@@ -542,8 +542,7 @@ void LCD_Clear(u16 color)
 
 void LCD_ShowPicture()
 {
-	u8 index=0;      
-	u32 totalpoint=0;
+    
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//´æ·ÅLCD ID×Ö·û´®
 	u32 P=0;
