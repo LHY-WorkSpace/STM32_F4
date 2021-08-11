@@ -91,15 +91,15 @@ void USART_Task_2_()
 void USART_Task_3_()
 {
 
-	// TickType_t Time;
-	// Time=xTaskGetTickCount();
-	// lv_init();
-	// lv_port_disp_init();
-	// while(1)
-	// {
-	// 	lv_tick_inc(1);
-	// 	vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
-	// }
+	TickType_t Time;
+	Time=xTaskGetTickCount();
+	lv_init();
+	lv_port_disp_init();
+	while(1)
+	{
+		lv_tick_inc(1);
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+	}
 
 
 }

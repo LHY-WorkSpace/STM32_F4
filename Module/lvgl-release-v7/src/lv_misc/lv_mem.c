@@ -509,7 +509,7 @@ void * _lv_mem_buf_get(uint32_t size)
             void * buf = lv_mem_realloc(LV_GC_ROOT(_lv_mem_buf[i]).p, size);
             if(buf == NULL) {
                 LV_DEBUG_ASSERT(false, "Out of memory, can't allocate a new buffer (increase your LV_MEM_SIZE/heap size)", 0x00);
-                return NULL;
+                //return NULL;
             }
             LV_GC_ROOT(_lv_mem_buf[i]).used = 1;
             LV_GC_ROOT(_lv_mem_buf[i]).size = size;
@@ -519,7 +519,7 @@ void * _lv_mem_buf_get(uint32_t size)
     }
 
     LV_DEBUG_ASSERT(false, "No free buffer. Increase LV_MEM_BUF_MAX_NUM.", 0x00);
-    return NULL;
+//    return NULL;
 }
 
 /**

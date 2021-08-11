@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#include "../lvgl.h"
+#include "lvgl.h"
 #include "../lv_misc/lv_fs.h"
 #include "lv_font_loader.h"
 
