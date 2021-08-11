@@ -1477,21 +1477,6 @@
           <GroupName>LVGL</GroupName>
           <Files>
             <File>
-              <FileName>lv_port_disp_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_disp_template.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_port_fs_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_fs_template.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_port_indev_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_indev_template.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\lvgl-release-v7\lv_conf.h</FilePath>
@@ -2317,14 +2302,14 @@
               <FilePath>..\Module\lvgl-release-v7\src\lv_widgets\lv_label.c</FilePath>
             </File>
             <File>
-              <FileName>lv_label.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Module\lvgl-release-v7\src\lv_widgets\lv_label.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\lvgl-release-v7\src\lv_widgets\lv_led.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_label.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-release-v7\src\lv_widgets\lv_label.h</FilePath>
             </File>
             <File>
               <FileName>lv_led.h</FileName>
@@ -2515,6 +2500,36 @@
               <FileName>lv_conf_kconfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\lvgl-release-v7\src\lv_conf_kconfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_fs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_fs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_indev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_indev.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_indev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-release-v7\examples\porting\lv_port_indev.h</FilePath>
             </File>
           </Files>
         </Group>
