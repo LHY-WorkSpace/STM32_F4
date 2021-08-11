@@ -96,6 +96,7 @@ void USART_Task_3_()
 	while(1)
 	{
 		lv_tick_inc(10);
+		lv_task_handler();
 		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
