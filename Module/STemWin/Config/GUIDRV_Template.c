@@ -51,12 +51,13 @@ Purpose     : Template driver, could be used as starting point for new
   *
   ******************************************************************************
   */
-
+#include "IncludeFile.h"
 #include <stddef.h>
 
 #include "LCD_Private.h"
 #include "GUI_Private.h"
 #include "LCD_ConfDefaults.h"
+
 
 /*********************************************************************
 *
@@ -156,7 +157,14 @@ static void _SetPixelIndex(GUI_DEVICE * pDevice, int x, int y, int PixelIndex) {
     {
       //
       // Write into hardware ... Adapt to your system
-      //
+      if(PixelIndex)
+      {
+        OLED_Draw_Point(x,y,1);
+      }
+      else
+      {
+        OLED_Draw_Point(x,y,0);
+      }
       // TBD by customer...
       //
     }
@@ -193,12 +201,10 @@ static unsigned int _GetPixelIndex(GUI_DEVICE * pDevice, int x, int y) {
     GUI_USE_PARA(x);
     GUI_USE_PARA(y);
     {
-      //
-      // Write into hardware ... Adapt to your system
-      //
-      // TBD by customer...
-      //
-      PixelIndex = 0;
+
+      PixelIndex = (u32)OLED_Get_Point(x,y);
+      //PixelIndex= 0;
+
     }
     #if (LCD_MIRROR_X == 0) && (LCD_MIRROR_Y == 0) && (LCD_SWAP_XY == 0)
       #undef xPhys

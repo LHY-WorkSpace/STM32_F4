@@ -1,5 +1,5 @@
 #include "IncludeFile.h"
-
+#include "GUI.h"
 
 
 typedef struct 
@@ -259,6 +259,7 @@ void Task_Init()
 int  main()
 {
 
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC,ENABLE);//使能CRC时钟，否则STemWin不能使用 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
@@ -274,24 +275,17 @@ int  main()
 	//TaskTimer_Init();
 	// lv_init();
 	// lv_port_disp_init();
+    GUI_Init();
+    
+    // GUI_SetColor(GUI_RED);
+    // GUI_SetBkColor(GUI_BLUE);
+    GUI_SetFont(&GUI_Font8_ASCII);
+    GUI_Clear();
+    GUI_DispStringAt("Hello World",10,10); 
 
-
-
-	u8 P=0;
-	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
-	Delay_Init();
-	File_FATFSInit();
- 	//LCD_Init();           //初始化LCD FSMC接口
-	led_init();
-	lv_init();
-	lv_port_disp_init();
-	File_MountDisk("1:");
-	File_OpenDir("1:/SD");
-	//USB_Task();
-
-	// Queue_Handle = xQueueCreate(5,1024);
-	Task_Init();
-	vTaskStartScheduler();
+	// // Queue_Handle = xQueueCreate(5,1024);
+	// Task_Init();
+	// vTaskStartScheduler();
 	SystemDown();
 
 

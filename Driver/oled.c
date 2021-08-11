@@ -531,7 +531,24 @@ void OLED_Draw_Point(u8 x,u8 y,u8 t)
 }
 
 
+u8 OLED_Get_Point(u8 x,u8 y)
+{
 
+	u8 pos,bx,temp=0;
+    
+	pos=y/8; 
+	bx=y%8;     
+	temp=1<<bx;
+
+	temp &= OLED_GRAM[pos][x];
+
+	if(temp)
+		return 1;
+	else 
+		return 0;     
+
+
+}
 
 
 void OLED_ClearScreen(u8 Data)
