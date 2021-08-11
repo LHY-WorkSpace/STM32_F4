@@ -9,6 +9,7 @@
 /*********************
  *      INCLUDES
  *********************/
+#include "IncludeFile.h"
 #include "lv_port_disp.h"
 
 /*********************
@@ -101,8 +102,8 @@ void lv_port_disp_init(void)
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = 480;
-    disp_drv.ver_res = 320;
+    disp_drv.hor_res = LV_HOR_RES_MAX;
+    disp_drv.ver_res = LV_VER_RES_MAX;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = disp_flush;
@@ -132,6 +133,9 @@ void lv_port_disp_init(void)
 static void disp_init(void)
 {
     /*You code here*/
+    OLED_Init();
+    //lcd_init();
+
 }
 
 /* Flush the content of the internal buffer the specific area on the display
@@ -147,6 +151,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         for(x = area->x1; x <= area->x2; x++) {
             /* Put a pixel to the display. For example: */
             /* put_px(x, y, *color_p)*/
+            OLED_Draw_Point(x,y,*color_p);
             color_p++;
         }
     }

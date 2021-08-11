@@ -1,6 +1,5 @@
 #include "IncludeFile.h"
-#include "lcd.h"
-#include "lvgl.h"
+
 
 
 typedef struct 
@@ -93,11 +92,10 @@ void USART_Task_3_()
 
 	TickType_t Time;
 	Time=xTaskGetTickCount();
-	lv_init();
-	lv_port_disp_init();
+
 	while(1)
 	{
-		lv_tick_inc(1);
+		lv_tick_inc(10);
 		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
@@ -289,9 +287,10 @@ int  main()
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);//设置系统中断优先级分组2
 	Delay_Init();
 	File_FATFSInit();
- 	LCD_Init();           //初始化LCD FSMC接口
+ 	//LCD_Init();           //初始化LCD FSMC接口
 	led_init();
-	POINT_COLOR=RED;      //画笔颜色：红色
+	lv_init();
+	lv_port_disp_init();
 	File_MountDisk("1:");
 	File_OpenDir("1:/SD");
 	//USB_Task();
