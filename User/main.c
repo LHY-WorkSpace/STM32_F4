@@ -1,5 +1,5 @@
 #include "IncludeFile.h"
-#include "GUI.h"
+
 
 
 typedef struct 
@@ -37,7 +37,6 @@ void OLED_Task(void)
 		i++;
 		OLED_UpdateGRAM();
 		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
-		//taskEXIT_CRITICAL();
 
 	}
 }
@@ -76,8 +75,34 @@ void USART_Task_2_()
 
 }
 
+static void btn_event_cb(lv_obj_t * btn, lv_event_t event)
+{
+    if(event == LV_EVENT_CLICKED) {
+        static uint8_t cnt = 0;
+        cnt++;
+
+        /*Get the first child of the button which is the label and change its text*/
+        lv_obj_t * label = lv_obj_get_child(btn, NULL);
+        lv_label_set_text_fmt(label, "Button: %d", cnt);
+    }
+}
+
+void lvgl_first_demo_start(void)
+{
+    lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
+    lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
+    lv_obj_set_size(btn, 10, 10);                          /*Set its size*/
+    lv_obj_set_event_cb(btn, btn_event_cb);                 /*Assign a callback to the button*/
+
+    lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
+    lv_label_set_text(label, "Button");                     /*Set the labels text*/
 
 
+	lv_obj_t * label1 = lv_label_create(lv_scr_act(), NULL);
+	lv_label_set_text(label1, "Hello world!"); 
+	lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
+	lv_obj_align(btn, label1, LV_ALIGN_OUT_TOP_MID, 0, -10);
+}
 
 void USART_Task_3_()
 {
@@ -240,9 +265,9 @@ void Task_Init()
 {
 	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
 	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
-	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
+	 xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
 	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
@@ -273,19 +298,24 @@ int  main()
 	//File_FATFSInit();
 	//USB_Task();
 	//TaskTimer_Init();
-	// lv_init();
-	// lv_port_disp_init();
-    GUI_Init();
-    
-    // GUI_SetColor(GUI_RED);
-    // GUI_SetBkColor(GUI_BLUE);
-    GUI_SetFont(&GUI_Font8_ASCII);
-    GUI_Clear();
-    GUI_DispStringAt("Hello World",10,10); 
+	lv_init();
+	lv_port_disp_init();
+	lvgl_first_demo_start();
+	//lv_port_indev_init();
 
-	// // Queue_Handle = xQueueCreate(5,1024);
+
+	// Queue_Handle = xQueueCreate(5,1024);
 	// Task_Init();
 	// vTaskStartScheduler();
+
+	while(1)
+	{
+		lv_tick_inc(10);
+		lv_task_handler();
+	}
+
+
+
 	SystemDown();
 
 

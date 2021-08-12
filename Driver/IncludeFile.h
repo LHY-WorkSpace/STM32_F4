@@ -50,7 +50,7 @@
 #include "inv_mpu_dmp_motion_driver.h"
 #include "diskio.h"	
 #include "ff.h"	
-#include "GUI.H"
+//#include "GUI.H"
 #include "TEST.h"
 #include "FileOperate.h"
 #include "usbd_core.h"
