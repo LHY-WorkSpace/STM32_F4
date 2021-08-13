@@ -35,7 +35,7 @@ static void gpu_fill(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coord_t
 /**********************
  *  STATIC VARIABLES
  **********************/
-
+static uint8_t lcd_fb[LV_HOR_RES_MAX * LV_VER_RES_MAX / 8] = {0xAA, 0xAA};
 /**********************
  *      MACROS
  **********************/
@@ -144,35 +144,36 @@ static void disp_init(void)
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
+    u16 i;
+    int16_t x, y;
 
-
-
-    if(x2 < 0) return;
-    if(y2 < 0) return;
-    if(x1 > ST7565_HOR_RES - 1) return;
-    if(y1 > ST7565_VER_RES - 1) return;
+    if(area->x2 < 0) return;
+    if(area->y2 < 0) return;
+    if(area->x1 > LV_HOR_RES_MAX - 1) return;
+    if(area->y1 > LV_VER_RES_MAX - 1) return;
 
     /*Truncate the area to the screen*/
-    int32_t area->x1 = x1 < 0 ? 0 : x1;
-    int32_t area->y1 = y1 < 0 ? 0 : y1;
-    int32_t area->x2 = x2 > LV_HOR_RES_MAX - 1 ? LV_HOR_RES_MAX - 1 : x2;
-    int32_t area->y2 = y2 > LV_VER_RES_MAX - 1 ? LV_VER_RES_MAX - 1 : y2;
-    u16 i;
-    int32_t x, y;
-
+   int16_t x1 = area->x1  < 0 ? 0 : area->x1;
+   int16_t y1 = area->y1 < 0 ? 0 : area->y1;
+   int16_t x2 =area->x2 > LV_HOR_RES_MAX - 1 ? LV_HOR_RES_MAX - 1 : area->x2;
+   int16_t y2 = area->y2 > LV_VER_RES_MAX - 1 ? LV_VER_RES_MAX - 1 : area->y2;
     /*Set the first row in */
 
     /*Refresh frame buffer*/
-    for(y = area->y1; y <= area->y2; y++) {
-        for(x = area->x1; x <= area->x2; x++) {
-            if(lv_color_to1(*color_p) != 0) {
+    for(y = y1; y <= y2; y++) 
+    {
+        for(x =x1; x <= x2; x++)
+        {
+            if(lv_color_to1(*color_p) != 0) 
+            {
                 lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] &= ~(1 << (7 - (y % 8)));
-            } else {
+            } 
+            else 
+            {
                 lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] |= (1 << (7 - (y % 8)));
             }
             color_p ++;
         }
-
         color_p += x2 - area->x2; /*Next row*/
     }
 
@@ -183,7 +184,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
 	delay_us(2);  
-	for(i=0;i<1024;i++)
+	for(i=0;i<(LV_HOR_RES_MAX * LV_VER_RES_MAX / 8);i++)
 	{
 			OLED_SendData(lcd_fb[i]);
 	}
