@@ -145,16 +145,60 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 {
     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
 
-    int32_t x;
-    int32_t y;
+
+
+    if(x2 < 0) return;
+    if(y2 < 0) return;
+    if(x1 > ST7565_HOR_RES - 1) return;
+    if(y1 > ST7565_VER_RES - 1) return;
+
+    /*Truncate the area to the screen*/
+    int32_t area->x1 = x1 < 0 ? 0 : x1;
+    int32_t area->y1 = y1 < 0 ? 0 : y1;
+    int32_t area->x2 = x2 > LV_HOR_RES_MAX - 1 ? LV_HOR_RES_MAX - 1 : x2;
+    int32_t area->y2 = y2 > LV_VER_RES_MAX - 1 ? LV_VER_RES_MAX - 1 : y2;
+    u16 i;
+    int32_t x, y;
+
+    /*Set the first row in */
+
+    /*Refresh frame buffer*/
     for(y = area->y1; y <= area->y2; y++) {
         for(x = area->x1; x <= area->x2; x++) {
-            /* Put a pixel to the display. For example: */
-            /* put_px(x, y, *color_p)*/
-            OLED_Draw_Point(x,y,*((u8*)color_p));
-            color_p++;
+            if(lv_color_to1(*color_p) != 0) {
+                lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] &= ~(1 << (7 - (y % 8)));
+            } else {
+                lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] |= (1 << (7 - (y % 8)));
+            }
+            color_p ++;
         }
+
+        color_p += x2 - area->x2; /*Next row*/
     }
+
+	OLED_SetMode(0x22);	            
+	OLED_SetMode(0x00);	          	
+	OLED_SetMode(0x07);           
+	OLED_SetMode(0x21);           
+	OLED_SetMode(0x00);	        
+	OLED_SetMode(0x7f);
+	delay_us(2);  
+	for(i=0;i<1024;i++)
+	{
+			OLED_SendData(lcd_fb[i]);
+	}
+
+
+    // int32_t x;
+    // int32_t y;
+    // for(y = area->y1; y <= area->y2; y++) {
+    //     for(x = area->x1; x <= area->x2; x++) {
+    //         /* Put a pixel to the display. For example: */
+    //         /* put_px(x, y, *color_p)*/
+    //         OLED_Draw_Point(x,y,*((u8*)color_p));
+    //         color_p++;
+    //     }
+    // }
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/

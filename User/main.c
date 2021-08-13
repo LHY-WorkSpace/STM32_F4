@@ -273,15 +273,17 @@ int  main()
 	//File_FATFSInit();
 	//USB_Task();
 	//TaskTimer_Init();
-	// lv_init();
-	// lv_port_disp_init();
-    GUI_Init();
+	lv_init();
+	lv_port_disp_init();
+
+
+    // GUI_Init();
     
-    // GUI_SetColor(GUI_RED);
-    // GUI_SetBkColor(GUI_BLUE);
-    GUI_SetFont(&GUI_Font8_ASCII);
-    GUI_Clear();
-    GUI_DispStringAt("Hello World",10,10); 
+    // // GUI_SetColor(GUI_RED);
+    // // GUI_SetBkColor(GUI_BLUE);
+    // GUI_SetFont(&GUI_Font8_ASCII);
+    // GUI_Clear();
+    // GUI_DispStringAt("Hello World",10,10); 
 
 	// // Queue_Handle = xQueueCreate(5,1024);
 	// Task_Init();

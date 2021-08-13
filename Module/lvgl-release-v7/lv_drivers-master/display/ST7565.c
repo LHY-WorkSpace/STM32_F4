@@ -7,7 +7,7 @@
  *      INCLUDES
  *********************/
 #include "ST7565.h"
-#if USE_ST7565
+#if 1
 
 #include <stdbool.h>
 #include <stddef.h>
