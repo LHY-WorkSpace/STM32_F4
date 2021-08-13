@@ -1,5 +1,5 @@
 #include "IncludeFile.h"
-
+//#include "GUI.h"
 
 
 typedef struct 
@@ -300,11 +300,17 @@ int  main()
 	//TaskTimer_Init();
 	lv_init();
 	lv_port_disp_init();
-	lvgl_first_demo_start();
-	//lv_port_indev_init();
 
 
-	// Queue_Handle = xQueueCreate(5,1024);
+    // GUI_Init();
+    
+    // // GUI_SetColor(GUI_RED);
+    // // GUI_SetBkColor(GUI_BLUE);
+    // GUI_SetFont(&GUI_Font8_ASCII);
+    // GUI_Clear();
+    // GUI_DispStringAt("Hello World",10,10); 
+
+	// // Queue_Handle = xQueueCreate(5,1024);
 	// Task_Init();
 	// vTaskStartScheduler();
 
