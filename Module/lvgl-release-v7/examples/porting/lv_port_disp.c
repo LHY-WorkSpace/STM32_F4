@@ -143,63 +143,64 @@ static void disp_init(void)
  * 'lv_disp_flush_ready()' has to be called when finished. */
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
-    /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
-    u16 i;
-    int16_t x, y;
+//     /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
+//     u16 i;
+//     int16_t x, y;
 
-    if(area->x2 < 0) return;
-    if(area->y2 < 0) return;
-    if(area->x1 > LV_HOR_RES_MAX - 1) return;
-    if(area->y1 > LV_VER_RES_MAX - 1) return;
+//     if(area->x2 < 0) return;
+//     if(area->y2 < 0) return;
+//     if(area->x1 > LV_HOR_RES_MAX - 1) return;
+//     if(area->y1 > LV_VER_RES_MAX - 1) return;
 
-    /*Truncate the area to the screen*/
-   int16_t x1 = area->x1  < 0 ? 0 : area->x1;
-   int16_t y1 = area->y1 < 0 ? 0 : area->y1;
-   int16_t x2 =area->x2 > LV_HOR_RES_MAX - 1 ? LV_HOR_RES_MAX - 1 : area->x2;
-   int16_t y2 = area->y2 > LV_VER_RES_MAX - 1 ? LV_VER_RES_MAX - 1 : area->y2;
-    /*Set the first row in */
+//     /*Truncate the area to the screen*/
+//    int16_t x1 = area->x1  < 0 ? 0 : area->x1;
+//    int16_t y1 = area->y1 < 0 ? 0 : area->y1;
+//    int16_t x2 =area->x2 > LV_HOR_RES_MAX - 1 ? LV_HOR_RES_MAX - 1 : area->x2;
+//    int16_t y2 = area->y2 > LV_VER_RES_MAX - 1 ? LV_VER_RES_MAX - 1 : area->y2;
+//     /*Set the first row in */
 
-    /*Refresh frame buffer*/
-    for(y = y1; y <= y2; y++) 
-    {
-        for(x =x1; x <= x2; x++)
-        {
-            if(lv_color_to1(*color_p) != 0) 
-            {
-                lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] &= ~(1 << (7 - (y % 8)));
-            } 
-            else 
-            {
-                lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] |= (1 << (7 - (y % 8)));
-            }
-            color_p ++;
+//     /*Refresh frame buffer*/
+//     for(y = y1; y <= y2; y++) 
+//     {
+//         for(x =x1; x <= x2; x++)
+//         {
+//             if(lv_color_to1(*color_p) != 0) 
+//             {
+//                 lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] &= ~(1 << (7 - (y % 8)));
+//             } 
+//             else 
+//             {
+//                 lcd_fb[x + (y / 8)*LV_HOR_RES_MAX] |= (1 << (7 - (y % 8)));
+//             }
+//             color_p ++;
+//         }
+//         color_p += x2 - area->x2; /*Next row*/
+//     }
+
+// 	OLED_SetMode(0x22);	            
+// 	OLED_SetMode(0x00);	          	
+// 	OLED_SetMode(0x07);           
+// 	OLED_SetMode(0x21);           
+// 	OLED_SetMode(0x00);	        
+// 	OLED_SetMode(0x7f);
+// 	delay_us(10);  
+// 	for(i=0;i<(LV_HOR_RES_MAX * LV_VER_RES_MAX / 8);i++)
+// 	{
+// 			OLED_SendData(lcd_fb[i]);
+// 	}
+
+
+    int32_t x;
+    int32_t y;
+    for(y = area->y1; y <= area->y2; y++) {
+        for(x = area->x1; x <= area->x2; x++) {
+            /* Put a pixel to the display. For example: */
+            /* put_px(x, y, *color_p)*/
+            OLED_Draw_Point(x,y,*((u8*)color_p));
+            color_p++;
         }
-        color_p += x2 - area->x2; /*Next row*/
     }
-
-	OLED_SetMode(0x22);	            
-	OLED_SetMode(0x00);	          	
-	OLED_SetMode(0x07);           
-	OLED_SetMode(0x21);           
-	OLED_SetMode(0x00);	        
-	OLED_SetMode(0x7f);
-	delay_us(2);  
-	for(i=0;i<(LV_HOR_RES_MAX * LV_VER_RES_MAX / 8);i++)
-	{
-			OLED_SendData(lcd_fb[i]);
-	}
-
-
-    // int32_t x;
-    // int32_t y;
-    // for(y = area->y1; y <= area->y2; y++) {
-    //     for(x = area->x1; x <= area->x2; x++) {
-    //         /* Put a pixel to the display. For example: */
-    //         /* put_px(x, y, *color_p)*/
-    //         OLED_Draw_Point(x,y,*((u8*)color_p));
-    //         color_p++;
-    //     }
-    // }
+    OLED_UpdateGRAM();
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/

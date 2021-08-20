@@ -32,8 +32,8 @@ void OLED_Task(void)
 		// 	i++;
 		// }
 		// taskENTER_CRITICAL();
-		//OLED_ShowNumber(0,2,i,8);
-		OLED_Draw_FullCircle(63,32,i/100);
+		OLED_ShowNumber(0,2,i,8);
+		// OLED_Draw_FullCircle(63,32,i/100);
 		i++;
 		OLED_UpdateGRAM();
 		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
@@ -89,19 +89,50 @@ static void btn_event_cb(lv_obj_t * btn, lv_event_t event)
 
 void lvgl_first_demo_start(void)
 {
-    lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
-    lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
-    lv_obj_set_size(btn, 10, 10);                          /*Set its size*/
-    lv_obj_set_event_cb(btn, btn_event_cb);                 /*Assign a callback to the button*/
+    // lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
+    // lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
+    // lv_obj_set_size(btn, 10, 10);                          /*Set its size*/
+    // lv_obj_set_event_cb(btn, btn_event_cb);                 /*Assign a callback to the button*/
 
-    lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
-    lv_label_set_text(label, "Button");                     /*Set the labels text*/
+    // lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
+    // lv_label_set_text(label, "Button");                     /*Set the labels text*/
 
 
-	lv_obj_t * label1 = lv_label_create(lv_scr_act(), NULL);
-	lv_label_set_text(label1, "Hello world!"); 
-	lv_obj_align(label1, NULL, LV_ALIGN_CENTER, 0, 0);
-	lv_obj_align(btn, label1, LV_ALIGN_OUT_TOP_MID, 0, -10);
+	// lv_obj_t * label1 = lv_label_create(lv_scr_act(), NULL);
+	// lv_label_set_text(label1, "Hello world!"); 
+	// lv_obj_align(label1, NULL, LV_ALIGN_IN_TOP_LEFT, 2, 0);
+	// lv_obj_align(btn, label1, LV_ALIGN_IN_TOP_LEFT, 0, 10);
+
+
+
+	lv_obj_t * bar1 = lv_bar_create(lv_scr_act(), NULL);
+	lv_obj_set_size(bar1, 10, 10);
+	lv_obj_align(bar1, NULL, LV_ALIGN_CENTER, 0, 0);
+	lv_bar_set_anim_time(bar1, 10);
+	lv_bar_set_value(bar1, 50, LV_ANIM_ON);
+
+
+
+//  static lv_point_t line_points[] = { {5, 5}, {70, 70}, {120, 10}, {180, 60}, {240, 10} };
+//  /*Create new style (thick dark blue)*/
+//  static lv_style_t style_line;
+//  lv_style_copy(&style_line, &lv_style_plain);
+//  style_line.line.color = LV_COLOR_MAKE(0x00, 0x3b, 0x75);
+//  style_line.line.width = 3;
+//  style_line.line.rounded = 1;
+
+
+
+//  /*Copy the previous line and apply the new style*/
+//  lv_obj_t * line1;
+//  line1 = lv_line_create(lv_scr_act(), NULL);
+//  lv_line_set_points(line1, line_points, 5);     /*Set the points*/
+//  lv_line_set_style(line1, LV_LINE_STYLE_MAIN, &style_line);
+//  lv_obj_align(line1, NULL, LV_ALIGN_CENTER, 0, 0);
+
+
+
+
 }
 
 void USART_Task_3_()
@@ -265,17 +296,14 @@ void Task_Init()
 {
 	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
 	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
-	 xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
 	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
-
-
-
 
 
 
@@ -298,9 +326,9 @@ int  main()
 	//File_FATFSInit();
 	//USB_Task();
 	//TaskTimer_Init();
-	lv_init();
-	lv_port_disp_init();
-
+	// lv_init();
+	// lv_port_disp_init();
+	// lvgl_first_demo_start();
 
     // GUI_Init();
     
@@ -311,13 +339,14 @@ int  main()
     // GUI_DispStringAt("Hello World",10,10); 
 
 	// // Queue_Handle = xQueueCreate(5,1024);
-	// Task_Init();
-	// vTaskStartScheduler();
+	Task_Init();
+	vTaskStartScheduler();
 
 	while(1)
 	{
-		lv_tick_inc(10);
-		lv_task_handler();
+		// lv_tick_inc(50);
+		// lv_task_handler();
+		// delay_ms(50);
 	}
 
 
@@ -351,6 +380,7 @@ void Function_list()
 
 	https://blog.csdn.net/qq_40318498/article/details/97111069?utm_term=tft%E6%98%BE%E7%A4%BA%E9%97%AA%E7%83%81&utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-5-97111069&spm=3001.4430
 	https://mp.weixin.qq.com/s/JME3VArPETgPjD0n_cHKNQ
+	https://www.waveshare.net/study/article-969-1.html
 }
 */
 
