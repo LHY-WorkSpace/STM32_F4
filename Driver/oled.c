@@ -204,10 +204,10 @@ void OLED_Init(void)
     OLED_SetMode(0xDB);
     OLED_SetMode(0x30);
     OLED_SetMode(0xA4);       //0xA4-正常      0xA5-全亮
-    OLED_SetMode(0xA7);       //0xA6-正常      0xA7-反相
+    OLED_SetMode(0xA6);       //0xA6-正常      0xA7-反相
 	OLED_SetMode(0x20);       /*设置显示模式                 参考：  https://blog.csdn.net/gengyuchao/article/details/86608037             */
 	OLED_SetMode(0x00);	      /*[页地址----10b    水平模式---00b     垂直模式---01b        */	
-	OLED_SetMode(0xc8);	     //0xc8---正常      0xc0------垂直反转  
+	OLED_SetMode(0xc0);	     //0xc8---正常      0xc0------垂直反转  
 	OLED_SetMode(0xa1);				
 	OLED_SetMode(0x23);
 	OLED_SetMode(0x00);        //[5:4]--00禁用闪烁或淡出       10使能消退      11使能闪烁                 [3:0]-----0000(8帧)  0001(16帧)     0010(16帧)。。。。1111(128帧)

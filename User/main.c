@@ -58,18 +58,17 @@ void USART_Task_1_()
 
 }
 
-void USART_Task_2_()
+void LCD_Task()
 {
+	TickType_t Time;
 
+	Time=xTaskGetTickCount();
 	while(1)
 	{
-		QueueBuff[1].Dev_ID=2;
-		memset(QueueBuff[1].Dev_Data,0x22,sizeof(QueueBuff[1].Dev_Data));
-		xQueueSendToBack(Queue_Handle,&QueueBuff[1],0);
 		taskENTER_CRITICAL();
-		printf("Task_2 \r\n");
+		LCD_ShowPicture();
 		taskEXIT_CRITICAL();
-		taskYIELD();
+		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
 	}
 
 
@@ -207,7 +206,7 @@ void Queue_Task()
 			Frames++;
 			OLED_UpdateGRAM();
 		}
-		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
 	}
 
 
@@ -251,13 +250,13 @@ void SDCard_Task()
 	File_OpenDir("1:/SD");
 	while(1)
 	{	
-		File_ReadData("1:/SD/Data.bin",buff,sizeof(buff),i);
+		File_ReadData("1:/SD/Data_BadApple.bin",buff,sizeof(buff),i);
 		OLED_Data2GRAM(buff,sizeof(buff));
-		//OLED_ShowNumber(0,0,Frames,5);
+		OLED_ShowNumber(0,0,Frames,5);
 		i+=sizeof(buff);
 		Frames++;
 		OLED_UpdateGRAM();
-		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,38/portTICK_PERIOD_MS);
 	}
 
 //	File_CloseDir();
@@ -295,12 +294,12 @@ void Clock_Task()
 void Task_Init()
 {
 	// xTaskCreate( (TaskFunction_t)USART_Task_1_,"USART",100,NULL,10,&Task_1_Handle);
-	// xTaskCreate( (TaskFunction_t)USART_Task_2_,"USART",100,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)LCD_Task,"USART",10240,NULL,12,NULL);
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
-	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -318,12 +317,13 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
-	// File_MountDisk("1:");
-	// File_OpenDir("1:/SD");
-	// LCD_Init();           //初始化LCD FSMC接口
+	File_FATFSInit();
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD");
+	LCD_Init();           //初始化LCD FSMC接口
 	//RTC_ConfigInit();
 	//MPU6050_Init();
-	//File_FATFSInit();
+
 	//USB_Task();
 	//TaskTimer_Init();
 	// lv_init();
@@ -337,10 +337,11 @@ int  main()
     // GUI_SetFont(&GUI_Font8_ASCII);
     // GUI_Clear();
     // GUI_DispStringAt("Hello World",10,10); 
-
+	LCD_ShowPicture();
 	// // Queue_Handle = xQueueCreate(5,1024);
 	Task_Init();
 	vTaskStartScheduler();
+
 
 	while(1)
 	{

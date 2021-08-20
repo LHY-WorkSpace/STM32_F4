@@ -111,7 +111,7 @@ void SD_Test()
 	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",10,0);
 	File_WriteData("1:/SD/Data.c",(u8*)"add Test",9,10);
 	File_ReadData("1:/SD/Data.c",Data,10,10);
-	File_CloseDir();
+	//File_CloseDir();
 
 }
 

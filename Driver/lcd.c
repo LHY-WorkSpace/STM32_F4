@@ -310,12 +310,12 @@ void LCD_Init(void)
 	RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC,ENABLE);//使能FSMC时钟  
 	
  
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;//PB15 推挽输出,控制背光
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;//PB15 推挽输出,控制背光
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;//普通输出模式
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;//推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;//100MHz
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;//上拉
-	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化 //PB15 推挽输出,控制背光
+	GPIO_Init(GPIOE, &GPIO_InitStructure);//初始化 //PB15 推挽输出,控制背光
 
 	GPIO_InitStructure.GPIO_Pin = (3<<0)|(3<<4)|(7<<8)|(3<<14);//PD0,1,4,5,8,9,10,14,15 AF OUT
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;//复用输出
@@ -522,7 +522,7 @@ void LCD_Init(void)
 	LCD_WR_REG(0x29); //display on	
  
 	LCD_Display_Dir(0);		//默认为竖屏
-	GPIO_SetBits(GPIOB,GPIO_Pin_15);			//点亮背光
+	LCD_BACK_LIGHT_ON;	
 	LCD_Clear(WHITE);
 }  
 //清屏函数
@@ -545,7 +545,7 @@ void LCD_ShowPicture()
     
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
-	u32 P=0;
+	u32 P=0,totalpoint;
 	//totalpoint*=lcddev.height; 			//得到总点数
 	 LCD_SetCursor(0x00,0x0000);	//设置光标位置 
 	// LCD_Set_Window(0,0,240,320);
@@ -553,9 +553,9 @@ void LCD_ShowPicture()
 
 ////////////////////////////////////////////////////////////
 
-	// totalpoint=File_GetFileSize("1:/SD/Data.bin");
+	// totalpoint=File_GetFileSize("1:/SD/Data_1.bin");
 
-	// File_ReadData("1:/SD/Data.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
+	// File_ReadData("1:/SD/Data_1.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
 
 ////////////////////////////////////////////////////////////
 
@@ -570,6 +570,7 @@ void LCD_ShowPicture()
 		}
 
 		delay_ms(500);
+
 		P=0;
 		for(y=0;y<320;y++)
 		{
@@ -596,6 +597,8 @@ void LCD_ShowPicture()
 				LCD_Fast_DrawPoint(x,y,DataTemp.Data_16[x]);
 			}
 		}
+
+
 //////////////////////////////////////////////////////////////////
 
 } 
