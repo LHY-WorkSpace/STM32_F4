@@ -853,9 +853,70 @@ void OLED_ShowNumber(u8 x,u8 y,u16 Num,u8 Bit)
 	OLED_ShowStrings(x,y,ShiftTemp,Bit);
 }
 
+//更新8bit的列数据
+//High:字高(BIT)
+void UpdateOneColumn(u8 x,u8 y,u8 High,u8 *p)
+{
+	u8 y_Buff = y;
+	u8 i,j;
+	u8 Data = 0;
+
+	for(i=0;i<High/8;i++)
+	{
+		Data = *(p+i);
+		for(j=0;j<8;j++)
+		{
+			if(Data&0x80)
+			{
+				OLED_Draw_Point(x,y_Buff,1);
+			}
+			else
+			{
+				OLED_Draw_Point(x,y_Buff,0);
+			}
+			Data <<= 1;
+			y_Buff++;
+
+		}
+	}
+}
 
 
 
+
+
+void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
+{
+
+	u8 x_Buff=x;
+	u8 i=0;
+	u8 *Data=p;
+	u16 cnt=0,offset = 0;
+
+	for(cnt=0,i=x_Buff;i<128;i++)
+	{
+		UpdateOneColumn(i,y,High,Data + cnt);
+		cnt+=size/8;
+	}
+	OLED_UpdateGRAM();
+
+	x_Buff--;
+
+	if(x_Buff <= 0)
+	{
+		x_Buff = 0;
+		Data += High/8;
+	}
+
+	offset++;
+	
+	if(offset >= num*High+128)
+	{
+		offset = 0;
+		Data=p;
+		x_Buff = x;
+	}
+}
 
 
 
