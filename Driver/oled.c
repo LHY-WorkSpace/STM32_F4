@@ -894,12 +894,14 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 	if(x_Buff <= 0)
 	{
 		x_Buff = 0;
-		Data ++;
+		//Data ++;
+		cnt++;
 	}
 
 	offset++;
 	
-	if(offset >= num*High+128)
+	//if(offset >= num*High+128)
+	if(offset >= num*8+128)
 	{
 		offset = 0;
 		Data=p;
