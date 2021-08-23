@@ -881,12 +881,11 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 	for(cnt=0,i=x_Buff;i<128;i++)
 	{
 		UpdateOneColumn(i,y,High,(u8)(Data-'!'), cnt++);
-		
+
 		if( cnt % 8 )
 		{
 			Data++;
 		}
-
 	}
 	OLED_UpdateGRAM();
 
@@ -895,7 +894,7 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 	if(x_Buff <= 0)
 	{
 		x_Buff = 0;
-		Data += High/8;
+		Data ++;
 	}
 
 	offset++;
