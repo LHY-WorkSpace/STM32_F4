@@ -853,31 +853,16 @@ void OLED_ShowNumber(u8 x,u8 y,u16 Num,u8 Bit)
 	OLED_ShowStrings(x,y,ShiftTemp,Bit);
 }
 
-//更新8bit的列数据
+//更新某一字符的某一列的数据
 //High:字高(BIT)
-void UpdateOneColumn(u8 x,u8 y,u8 High,u8 *p)
+//p:字符在字模数组中的位置，offset 字符内列数据偏移
+void UpdateOneColumn(u8 x,u8 y,u8 High,u8 p,u8 offset)
 {
-	u8 y_Buff = y;
-	u8 i,j;
-	u8 Data = 0;
+	u8 i;
 
 	for(i=0;i<High/8;i++)
 	{
-		Data = *(p+i);
-		for(j=0;j<8;j++)
-		{
-			if(Data&0x80)
-			{
-				OLED_Draw_Point(x,y_Buff,1);
-			}
-			else
-			{
-				OLED_Draw_Point(x,y_Buff,0);
-			}
-			Data <<= 1;
-			y_Buff++;
-
-		}
+		OLED_GRAM[y++][x] = CharModel[p][offset+8];
 	}
 }
 
@@ -895,8 +880,13 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 
 	for(cnt=0,i=x_Buff;i<128;i++)
 	{
-		UpdateOneColumn(i,y,High,Data + cnt);
-		cnt+=size/8;
+		UpdateOneColumn(i,y,High,(u8)(Data-'!'), cnt++);
+		
+		if( cnt % 8 )
+		{
+			Data++;
+		}
+
 	}
 	OLED_UpdateGRAM();
 
