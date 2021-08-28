@@ -310,17 +310,17 @@ void Task_Init()
 
 int  main()
 {
-
+	u8 i=0;
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC,ENABLE);//使能CRC时钟，否则STemWin不能使用 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
-	File_FATFSInit();
-	File_MountDisk("1:");
-	File_OpenDir("1:/SD");
-	LCD_Init();           //初始化LCD FSMC接口
+	// File_FATFSInit();
+	// File_MountDisk("1:");
+	// File_OpenDir("1:/SD");
+	// LCD_Init();           //初始化LCD FSMC接口
 	//RTC_ConfigInit();
 	//MPU6050_Init();
 
@@ -337,27 +337,23 @@ int  main()
     // GUI_SetFont(&GUI_Font8_ASCII);
     // GUI_Clear();
     // GUI_DispStringAt("Hello World",10,10); 
-	LCD_ShowPicture();
+	//LCD_ShowPicture();
+	 OLED_MoveDisplay(127,0,16,5,"12345");
 	// // Queue_Handle = xQueueCreate(5,1024);
-	Task_Init();
-	vTaskStartScheduler();
+	// Task_Init();
+	// vTaskStartScheduler();
+// 	OLED_ShowNumber(20,2,5,2);
 
-
-	while(1)
-	{
-		// lv_tick_inc(50);
-		// lv_task_handler();
-		// delay_ms(50);
-	}
-
+	// while (1)
+	// {
+	// 	UpdateOneColumn(50+i,0,16,(u8)('5'-'!'),i);
+	// 	OLED_UpdateGRAM();
+	// 	i++;
+	// 	delay_ms(500);
+	// }
 
 
 	SystemDown();
-
-
-
-	//LCD_ShowPicture();
-	//LCD_Clear(RED);
 }	
 	
 /*

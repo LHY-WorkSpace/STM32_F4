@@ -862,7 +862,8 @@ void UpdateOneColumn(u8 x,u8 y,u8 High,u8 p,u8 offset)
 
 	for(i=0;i<High/8;i++)
 	{
-		OLED_GRAM[y++][x] = CharModel[p][offset+8];
+		OLED_GRAM[7-i-y*2][x]  = CharModel[p][offset];        
+		offset+=8;
 	}
 }
 
@@ -878,35 +879,43 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 	u8 *Data=p;
 	u16 cnt=0,offset = 0;
 
-	for(cnt=0,i=x_Buff;i<128;i++)
+	while(1)
 	{
-		UpdateOneColumn(i,y,High,(u8)(Data-'!'), cnt++);
-
-		if( cnt % 8 )
+		for(cnt=0,i=x_Buff;i<128;i++)
 		{
-			Data++;
+			UpdateOneColumn(i,y,High,(u8)(Data-'!'), cnt++);
+
+			if( cnt % 8 )
+			{
+				Data++;
+			}
+
+			OLED_UpdateGRAM();
+			delay_ms(500);
+		}
+
+
+
+		x_Buff--;
+
+		if(x_Buff <= 0)
+		{
+			x_Buff = 0;
+			//Data ++;
+			cnt++;
+		}
+
+		offset++;
+		
+		//if(offset >= num*High+128)
+		if(offset >= num*8+128)
+		{
+			offset = 0;
+			Data=p;
+			x_Buff = x;
 		}
 	}
-	OLED_UpdateGRAM();
 
-	x_Buff--;
-
-	if(x_Buff <= 0)
-	{
-		x_Buff = 0;
-		//Data ++;
-		cnt++;
-	}
-
-	offset++;
-	
-	//if(offset >= num*High+128)
-	if(offset >= num*8+128)
-	{
-		offset = 0;
-		Data=p;
-		x_Buff = x;
-	}
 }
 
 
