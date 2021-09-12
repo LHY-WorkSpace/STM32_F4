@@ -74,20 +74,20 @@ void LCD_Task()
 
 }
 
-static void btn_event_cb(lv_obj_t * btn, lv_event_t event)
-{
-    if(event == LV_EVENT_CLICKED) {
-        static uint8_t cnt = 0;
-        cnt++;
+//static void btn_event_cb(lv_obj_t * btn, lv_event_t event)
+//{
+//    if(event == LV_EVENT_CLICKED) {
+//        static uint8_t cnt = 0;
+//        cnt++;
 
-        /*Get the first child of the button which is the label and change its text*/
-        lv_obj_t * label = lv_obj_get_child(btn, NULL);
-        lv_label_set_text_fmt(label, "Button: %d", cnt);
-    }
-}
+//        /*Get the first child of the button which is the label and change its text*/
+//        lv_obj_t * label = lv_obj_get_child(btn, NULL);
+//        lv_label_set_text_fmt(label, "Button: %d", cnt);
+//    }
+//}
 
-void lvgl_first_demo_start(void)
-{
+// void lvgl_first_demo_start(void)
+// {
     // lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
     // lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
     // lv_obj_set_size(btn, 10, 10);                          /*Set its size*/
@@ -104,11 +104,11 @@ void lvgl_first_demo_start(void)
 
 
 
-	lv_obj_t * bar1 = lv_bar_create(lv_scr_act(), NULL);
-	lv_obj_set_size(bar1, 10, 10);
-	lv_obj_align(bar1, NULL, LV_ALIGN_CENTER, 0, 0);
-	lv_bar_set_anim_time(bar1, 10);
-	lv_bar_set_value(bar1, 50, LV_ANIM_ON);
+	// lv_obj_t * bar1 = lv_bar_create(lv_scr_act(), NULL);
+	// lv_obj_set_size(bar1, 10, 10);
+	// lv_obj_align(bar1, NULL, LV_ALIGN_CENTER, 0, 0);
+	// lv_bar_set_anim_time(bar1, 10);
+	// lv_bar_set_value(bar1, 50, LV_ANIM_ON);
 
 
 
@@ -132,23 +132,21 @@ void lvgl_first_demo_start(void)
 
 
 
-}
+// }
 
-void USART_Task_3_()
-{
+// void USART_Task_3_()
+// {
 
-	TickType_t Time;
-	Time=xTaskGetTickCount();
+// 	TickType_t Time;
+// 	Time=xTaskGetTickCount();
 
-	while(1)
-	{
-		lv_tick_inc(10);
-		lv_task_handler();
-		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
-	}
-
-
-}
+// 	while(1)
+// 	{
+// 		lv_tick_inc(10);
+// 		lv_task_handler();
+// 		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+// 	}
+// }
 
 void USART_Task_4_()
 {
@@ -317,6 +315,7 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
+	LCD_Init();
 	// File_FATFSInit();
 	// File_MountDisk("1:");
 	// File_OpenDir("1:/SD");
@@ -338,11 +337,11 @@ int  main()
     // GUI_Clear();
     // GUI_DispStringAt("Hello World",10,10); 
 	//LCD_ShowPicture();
-	 OLED_MoveDisplay(127,0,16,5,"12345");
-	// // Queue_Handle = xQueueCreate(5,1024);
+	// OLED_MoveDisplay(127,0,16,5,"12345");
+	// Queue_Handle = xQueueCreate(5,1024);
 	// Task_Init();
 	// vTaskStartScheduler();
-// 	OLED_ShowNumber(20,2,5,2);
+	// 	OLED_ShowNumber(20,2,5,2);
 
 	// while (1)
 	// {
@@ -375,9 +374,18 @@ void Function_list()
 		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);周期执行
 		vTaskDelay(100);非周期执行，延时可能被打断而导致边长
 
+
+	调试相关:
+		vTaskList();//用于获取各个任务信息
+
+
+
+
+
 	https://blog.csdn.net/qq_40318498/article/details/97111069?utm_term=tft%E6%98%BE%E7%A4%BA%E9%97%AA%E7%83%81&utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-5-97111069&spm=3001.4430
 	https://mp.weixin.qq.com/s/JME3VArPETgPjD0n_cHKNQ
 	https://www.waveshare.net/study/article-969-1.html
+
 }
 */
 

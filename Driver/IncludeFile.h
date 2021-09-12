@@ -37,7 +37,7 @@
 #include "ds18b20.h"
 #include "oled.h"
 //#include "ESP8266.h"
-#include "lcd1602.h"
+// #include "lcd1602.h"
 #include "HC_SR04.h"
 #include "PID.h"
 
