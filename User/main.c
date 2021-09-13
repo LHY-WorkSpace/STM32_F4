@@ -1,5 +1,4 @@
 #include "IncludeFile.h"
-//#include "GUI.h"
 
 
 typedef struct 
@@ -257,7 +256,6 @@ void SDCard_Task()
 		vTaskDelayUntil(&Time,38/portTICK_PERIOD_MS);
 	}
 
-//	File_CloseDir();
 }
 
 

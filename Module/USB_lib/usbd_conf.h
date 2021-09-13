@@ -48,8 +48,8 @@
 #define MSC_MAX_PACKET                64
 #endif
 
-
-#define MSC_MEDIA_PACKET             4096
+//越大传输越快
+#define MSC_MEDIA_PACKET             8*1024
 
 /**
   * @}

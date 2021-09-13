@@ -152,12 +152,7 @@ void USBD_Init(USB_OTG_CORE_HANDLE *pdev,
   USB_OTG_BSP_EnableInterrupt(pdev);
 }
 
-/**
-* @brief  USBD_DeInit 
-*         Re-Initialize the device library
-* @param  pdev: device instance
-* @retval status: status
-*/
+
 USBD_Status USBD_DeInit(USB_OTG_CORE_HANDLE *pdev)
 {
   /* Software Init */

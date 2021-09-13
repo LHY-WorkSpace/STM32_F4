@@ -270,18 +270,7 @@ uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev)
     if (gintr_status.b.incomplisoout)
     {
       retval |= DCD_IsoOUTIncomplete_ISR(pdev);
-    }    
-#ifdef VBUS_SENSING_ENABLED
-    if (gintr_status.b.sessreqintr)
-    {
-      retval |= DCD_SessionRequest_ISR(pdev);
-    }
-
-    if (gintr_status.b.otgintr)
-    {
-      retval |= DCD_OTG_ISR(pdev);
-    }   
-#endif    
+    }      
   }
   return retval;
 }

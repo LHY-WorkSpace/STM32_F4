@@ -99,10 +99,6 @@ __IO uint32_t count = 0;
 
 int8_t STORAGE_Init(uint8_t lun)
 {
-  // if (SD_Init() != 0)
-  // {
-  //   return (-1);
-  // }
 
   return (0);
 
@@ -119,11 +115,6 @@ int8_t STORAGE_GetCapacity(uint8_t lun, uint32_t * block_num,uint32_t * block_si
 {
 
   SD_GetCardInfo(&SDCardInfo);
-
-  // if (SD_GetState() != 0)
-  // {
-  //   return (-1);
-  // }
 
   *block_size = 512;
   *block_num = SDCardInfo.CardCapacity / 512;
@@ -144,15 +135,10 @@ int8_t STORAGE_IsReady(uint8_t lun)
 
   if (last_status < 0)
   {
-    //SD_Init();
     last_status = 0;
   }
 
-  // if (SD_GetState() != 0)
-  // {
-  //   last_status = -1;
-  //   return (-1);
-  // }
+
   return (0);
 }
 

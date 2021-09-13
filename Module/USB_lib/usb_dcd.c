@@ -124,15 +124,7 @@ void DCD_Init(USB_OTG_CORE_HANDLE *pdev ,
   
   USB_OTG_DisableGlobalInt(pdev);
 
-#if defined (STM32F446xx) || defined (STM32F469_479xx)
-  
-  /* Force Device Mode*/
-  USB_OTG_SetCurrentMode(pdev, DEVICE_MODE);
-  
-  /*Init the Core (common init.) */
-  USB_OTG_CoreInit(pdev);
 
-#else
   
     /*Init the Core (common init.) */
   USB_OTG_CoreInit(pdev);
@@ -140,7 +132,6 @@ void DCD_Init(USB_OTG_CORE_HANDLE *pdev ,
   /* Force Device Mode*/
   USB_OTG_SetCurrentMode(pdev, DEVICE_MODE);
 
-#endif
   
   /* Init Device */
   USB_OTG_CoreInitDev(pdev);
