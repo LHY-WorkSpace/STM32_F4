@@ -9,7 +9,9 @@
 /*********************
  *      INCLUDES
  *********************/
+#include "IncludeFile.h"
 #include "lv_port_disp.h"
+
 
 /*********************
  *      DEFINES
@@ -22,7 +24,7 @@
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static void disp_init(void);
+
 
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p);
 #if LV_USE_GPU
@@ -128,11 +130,7 @@ void lv_port_disp_init(void)
  *   STATIC FUNCTIONS
  **********************/
 
-/* Initialize your display and the required peripherals. */
-static void disp_init(void)
-{
-    /*You code here*/
-}
+
 
 /* Flush the content of the internal buffer the specific area on the display
  * You can use DMA or any hardware acceleration to do this operation in the background but
@@ -143,13 +141,17 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
     int32_t x;
     int32_t y;
+    LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
+    //LCD_Set_Window(area->x1,area->y1,(area->x2-area->x1),(area->y2-area->y1));
+    LCD_WriteToRAM();
     for(y = area->y1; y <= area->y2; y++) 
     {
         for(x = area->x1; x <= area->x2; x++)
         {
             /* Put a pixel to the display. For example: */
             /* put_px(x, y, *color_p)*/
-            LCD_Fast_DrawPoint(x,y,*color_p);
+            LCD_WriteData(*((u16*)color_p));
+           //LCD_DrawPoint(x,y,*((u16*)color_p));
             color_p++;
         }
     }

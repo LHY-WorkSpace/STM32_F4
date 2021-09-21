@@ -1,5 +1,5 @@
 #include "IncludeFile.h"
-#include "lcd.h"
+
 #include "font.h" 
 
 
@@ -7,7 +7,7 @@
 //    https://www.cnblogs.com/tansuoxinweilai/p/11405029.html
 
 //LCD的画笔颜色和背景色	   
-u16 POINT_COLOR=0x0000;	//画笔颜色
+u16 POINT_COLOR=RED;	//画笔颜色
 u16 BACK_COLOR=0xFFFF;  //背景色 
   
 //管理LCD重要参数
@@ -20,6 +20,7 @@ LCD_State_t LCD_State = { .Row_AddrMode = Up_Down,
 						  .RGB_BGR_Mode = RGB,
 						  .Hor_ScanMode = Left_Right,
 						  .Pixel_Bit = 16,
+						  .ID = 0Xffff,
 						};
 //写指令函数
 //regval:指令值
@@ -52,7 +53,7 @@ u16 LCD_ReadData(void)
 //带参数写指令
 //LCD_Cmd:指令地址
 //LCD_CmdValue:要写入的数据
-void LCD_WriteCmdPara(u16 LCD_Cmd,u16 LCD_CmdValue)
+void LCD_WriteCmdPara(vu16 LCD_Cmd,vu16 LCD_CmdValue)
 {	
 	LCD->LCD_REG = LCD_Cmd;		//写入要写的指令序号	 
 	LCD->LCD_RAM = LCD_CmdValue;//写入数据	    		 
@@ -65,7 +66,7 @@ void LCD_WriteCmdPara(u16 LCD_Cmd,u16 LCD_CmdValue)
 u16 LCD_ReadID(u16 LCD_Cmd)
 {										   
 	LCD_WriteCMD(LCD_Cmd);		//写入要读的指令序号
-	// delay_us(5);		  
+	delay_us(5);		  
 	return LCD_ReadData();		//返回读到的值
 } 
 
@@ -85,14 +86,6 @@ void LCD_WriteToRAM(void)
 {
  	LCD->LCD_REG=LCD_Dev.UpToGRAM;	  
 }	
-
-
-//LCD写GRAM
-//RGB_Code:颜色值
-void LCD_WriteRAM(u16 RGB_Code)
-{							    
-	LCD->LCD_RAM = RGB_Code;//写十六位GRAM
-}
 
 
 //LCD开启显示
@@ -269,7 +262,7 @@ void LCD_GetID()
 
 
 //查询显示模式(只支持部分参数，需要查询其他参数时再另外添加)
-void LCD_GetState()
+void LCD_GetState(LCD_State_t *LCD_State)
 {
 	u16 DataTemp[2];
 	LCD_WriteCMD(LCD_RDDST);
@@ -278,52 +271,106 @@ void LCD_GetState()
 	DataTemp[1] = LCD_ReadData();
 	if( DataTemp[0] & 0x02) 
 	{
-		LCD_State.Hor_ScanMode = Right_Left;
-	}
-	if( DataTemp[0] & 0x04)
-	{
-		LCD_State.RGB_BGR_Mode = BGR;
-	}
-	if( DataTemp[0] & 0x08)
-	{
-		LCD_State.Ver_ScanMode = Down_Up;
-	}
-	if( DataTemp[0] & 0x10)
-	{
-		LCD_State.RowCol_Exchenge = 1;
-	}
-	if( DataTemp[0] & 0x20)
-	{
-		LCD_State.Col_AddrMode = Right_Left;
-	}
-	if( DataTemp[0] & 0x40)
-	{
-		LCD_State.Row_AddrMode = Down_Up;
-	}
-	if( DataTemp[1] & 0x50)
-	{
-		LCD_State.Pixel_Bit = 16;
+		LCD_State->Hor_ScanMode = Right_Left;
 	}
 	else
 	{
-		LCD_State.Pixel_Bit = 18;
+		LCD_State->Hor_ScanMode = Left_Right;
 	}
+
+	if( DataTemp[0] & 0x04)
+	{
+		LCD_State->RGB_BGR_Mode = BGR;
+	}
+	else
+	{
+		LCD_State->RGB_BGR_Mode = RGB;
+	}
+	if( DataTemp[0] & 0x08)
+	{
+		LCD_State->Ver_ScanMode = Down_Up;
+	}
+	else
+	{
+		LCD_State->Ver_ScanMode = Up_Down;
+	}
+
+	if( DataTemp[0] & 0x10)
+	{
+		LCD_State->RowCol_Exchenge = 1;
+	}
+	else
+	{
+		LCD_State->RowCol_Exchenge = 0;
+	}
+	if( DataTemp[0] & 0x20)
+	{
+		LCD_State->Col_AddrMode = Right_Left;
+	}
+	else
+	{
+		LCD_State->Col_AddrMode = Left_Right;
+	}
+
+	if( DataTemp[0] & 0x40)
+	{
+		LCD_State->Row_AddrMode = Down_Up;
+	}
+	else
+	{
+		LCD_State->Row_AddrMode = Up_Down;
+	}
+
+	if( DataTemp[1] & 0x50)
+	{
+		LCD_State->Pixel_Bit = 16;
+	}
+	else
+	{
+		LCD_State->Pixel_Bit = 18;
+	}
+	LCD_State->ID = LCD_Dev.ID; 
 }
 
 
 
-//设置光标位置
+//设置光标起始位置
 //Xpos:横坐标
 //Ypos:纵坐标
-void LCD_SetXY(u16 Xpos, u16 Ypos)
+void LCD_SetXY_Start(u16 Xpos, u16 Ypos)
 { 	    
 	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
 	LCD_WriteData(Xpos>>8);
-	LCD_WriteData(Xpos&0XFF); 			 
+	LCD_WriteData(Xpos&0XFF); 
 	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
 	LCD_WriteData(Ypos>>8);
-	LCD_WriteData(Ypos&0XFF); 		
+	LCD_WriteData(Ypos&0XFF); 
+		
 } 
+
+
+//设置光标移动范围
+//  x_S  x起始
+//  y_S  x结束
+//  x_E  y起始
+//  y_E  y结束
+
+void LCD_SetXY_Area(u16 x_S, u16 y_S,u16 x_E,u16 y_E)
+{ 	    
+	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
+	LCD_WriteData(x_S>>8);
+	LCD_WriteData(x_S&0XFF); 
+	LCD_WriteData(x_E>>8);
+	LCD_WriteData(x_E&0XFF);			 
+	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
+	LCD_WriteData(y_S>>8);
+	LCD_WriteData(y_S&0XFF); 
+	LCD_WriteData(y_E>>8);
+	LCD_WriteData(y_E&0XFF);  			
+} 
+
+
+
 
 
 //读取个某点的颜色值	 
@@ -352,7 +399,7 @@ u16 LCD_ReadPoint(u16 x,u16 y)
 		}
 	}
 
-	LCD_SetXY(x,y);	    
+	LCD_SetXY_Start(x,y);	    
 	LCD_WriteCMD(LCD_RAMRD);	//读GRAM
  	LCD_ReadData();	
 
@@ -505,7 +552,8 @@ void LCD_Display_Dir(u8 Dir)
 		LCD_Dev.Height=LCD_HIGH;
 		LCD_Dev.UpToGRAM=LCD_GRAM;
 		LCD_Dev.Set_X_CMD=LCD_COLUMN_ADDR;
-		LCD_Dev.Set_Y_CMD=LCD_PAGE_ADDR;  	 
+		LCD_Dev.Set_Y_CMD=LCD_PAGE_ADDR;  
+		LCD_WriteData_Dir(L2R_U2D);	//默认填充方向	 
 	}
 	else 				//横屏
 	{	  				
@@ -515,10 +563,11 @@ void LCD_Display_Dir(u8 Dir)
 		LCD_Dev.UpToGRAM=LCD_GRAM;
 		LCD_Dev.Set_X_CMD=LCD_COLUMN_ADDR;
 		LCD_Dev.Set_Y_CMD=LCD_PAGE_ADDR;  	 
-
+		LCD_WriteData_Dir(U2D_R2L);	//默认填充方向
 	} 
-	LCD_WriteData_Dir(DFT_SCAN_DIR);	//默认填充方向
+	
 }
+
 
 
 
@@ -586,7 +635,7 @@ void LCD_Init(void)
 	LCD_IO_Init();
 
 	LCD_Reset();
-	LCD_Delay(10);//NOP
+	LCD_Delay(100);//NOP
 	//读设备ID	
 	LCD_GetID();   			   
 
@@ -701,13 +750,24 @@ void LCD_Init(void)
 	LCD_WriteData(0x00);
 	LCD_WriteData(0xef);	 
 
-	// LCD_WriteCMD(LCD_SLEEP_OUT); //退出睡眠
-	delay_ms(5);
+	LCD_WriteCMD(LCD_SLEEP_OUT); //退出睡眠
+	delay_ms(120);
 	LCD_WriteCMD(LCD_DISPLAY_ON); //开显示
  
-	LCD_Display_Dir(Vertical);		//默认为竖屏
-	LCD_BACK_LIGHT_ON;	
+	LCD_Display_Dir(Vertical);		//默认为竖屏	
 	LCD_Clear(WHITE);
+	LCD_GetState(&LCD_State);
+	LCD_BACK_LIGHT_ON;
+	if(LCD_State.ID == 0x9341)
+	{
+		OLED_ShowStrings(0,0,"ID 0x9341",9);
+	}
+	else
+	{
+		OLED_ShowStrings(0,0,"unkonw ID",9);
+	}
+	
+	OLED_UpdateGRAM();
 }  
 
 
@@ -719,7 +779,7 @@ void LCD_Clear(u16 color)
 	u32 index=0;      
 	u32 totalpoint=LCD_Dev.Width;
 	totalpoint*=LCD_Dev.Height; 			//得到总点数
-	LCD_SetXY(0x0000,0x0000);		//设置光标位置 
+	LCD_SetXY_Start(0x00,0x00);		//设置光标位置 
 	LCD_WriteToRAM();     		//开始写入GRAM	 	  
 	for(index=0;index<totalpoint;index++)
 	{
@@ -735,9 +795,9 @@ void LCD_ShowPicture()
     
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
-	u32 P=0,totalpoint;
+	u32 P=0;
 	//totalpoint*=LCD_Dev.Height; 			//得到总点数
-	 LCD_SetXY(0x00,0x0000);	//设置光标位置 
+	 LCD_SetXY_Start(0x00,0x0000);	//设置光标位置 
 	// LCD_Set_Window(0,0,240,320);
 	 LCD_WriteToRAM();     		//开始写入GRAM
 
@@ -775,7 +835,7 @@ void LCD_ShowPicture()
 		delay_ms(500);
 
 		LCD_Display_Dir(Horizontal);
-		LCD_SetXY(0x00,0x0000);	//设置光标位置 
+		LCD_SetXY_Start(0x00,0x0000);	//设置光标位置 
 		LCD_WriteToRAM();     		//开始写入GRAM
 		P=0;
 		for(y=0;y<240;y++)
@@ -807,9 +867,10 @@ void LCD_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
 	xlen=ex-sx+1;	 
 	for(i=sy;i<=ey;i++)
 	{
-		LCD_SetXY(sx,i);      				//设置光标位置 
+		LCD_SetXY_Start(sx,i);      				//设置光标位置 
 		LCD_WriteToRAM();     			//开始写入GRAM	  
-		for(j=0;j<xlen;j++)LCD->LCD_RAM=color;	//显示颜色 	    
+		for(j=0;j<xlen;j++)
+			LCD->LCD_RAM=color;	//显示颜色 	    
 	} 
 }  
 
@@ -828,7 +889,7 @@ void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 	Height=ey-sy+1;			//高度
  	for(i=0;i<Height;i++)
 	{
- 		LCD_SetXY(sx,sy+i);   	//设置光标位置 
+ 		LCD_SetXY_Start(sx,sy+i);   	//设置光标位置 
 		LCD_WriteToRAM();     //开始写入GRAM
 		for(j=0;j<Width;j++)LCD->LCD_RAM=color[i*Width+j];//写入数据 
 	}		  
@@ -1024,8 +1085,10 @@ void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode)
 		{
 			if(temp==0)
 			{
-				if(mode&0X80)LCD_ShowChar(x+(size/2)*t,y,'0',size,mode&0X01);  
-				else LCD_ShowChar(x+(size/2)*t,y,' ',size,mode&0X01);  
+				if(mode&0X80)
+					LCD_ShowChar(x+(size/2)*t,y,'0',size,mode&0X01);  
+				else 
+					LCD_ShowChar(x+(size/2)*t,y,' ',size,mode&0X01);  
  				continue;
 			}else enshow=1; 
 		 	 

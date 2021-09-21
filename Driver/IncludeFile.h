@@ -39,6 +39,8 @@
 //#include "ESP8266.h"
 // #include "lcd1602.h"
 #include "HC_SR04.h"
+#include "XPT2046.h"
+#include "lcd.h"
 #include "PID.h"
 
 
@@ -60,6 +62,7 @@
 #include "usbd_desc.h"
 #include "lcd.h"
 #include "lvgl.h"
+
 
 
 

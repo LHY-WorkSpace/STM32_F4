@@ -71,19 +71,19 @@ void SDIO_Test()
 {
 	u16 k;
 
-	Programe_Start();
+	Programe_StartRun();
 	SD_ShowInfomation();
-	Programe_End_Us();
+	Programe_End_Us(0);
 
 	memset(A,0x5A,sizeof(A));
 
-	Programe_Start();
+	Programe_StartRun();
 	SD_WriteMultiBlocks(A,1024, 512,sizeof(A)/512); 
-	Programe_End_Us();	
+	Programe_End_Us(0);	
 	
-	Programe_Start();
+	Programe_StartRun();
 	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
-	Programe_End_Us();	
+	Programe_End_Us(0);	
 
 	for(k=0;k<sizeof(B);k++)
 	printf("Data %d : %x \r\n",k,B[k]);
@@ -92,9 +92,9 @@ void SDIO_Test()
 
 void RTC_Test()
 {
-		Programe_Start();
+		Programe_StartRun();
 		RTC_Get_Time(&STM32_Time);
-		Programe_End_Us();
+		Programe_End_Us(0);
 		printf("Y:%d M:%d D:%d W:%d H:%d M:%d S:%d\r\n",STM32_Time.year,STM32_Time.month,STM32_Time.date,STM32_Time.week,STM32_Time.hour,STM32_Time.minute,STM32_Time.second);
 
 }

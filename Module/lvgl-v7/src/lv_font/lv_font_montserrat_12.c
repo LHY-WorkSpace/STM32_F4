@@ -10,7 +10,7 @@
 #define LV_FONT_MONTSERRAT_12 1
 #endif
 
-#if LV_FONT_MONTSERRAT_12
+#if 1
 
 /*-----------------
  *    BITMAPS

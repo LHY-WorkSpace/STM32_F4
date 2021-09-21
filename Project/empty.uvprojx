@@ -10,13 +10,14 @@
       <TargetName>Empty_Project</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F407VETx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.15.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32F4xx_DFP.2.13.0</PackID>
+          <PackURL>http://www.keil.com/pack</PackURL>
           <Cpu>IRAM(0x20000000,0x20000) IRAM2(0x10000000,0x10000) IROM(0x08000000,0x80000) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -125,47 +126,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>11</TargetSelection>
-          <SimDlls>
-            <CpuDll></CpuDll>
-            <CpuDllArguments></CpuDllArguments>
-            <PeripheralDll></PeripheralDll>
-            <PeripheralDllArguments></PeripheralDllArguments>
-            <InitializationFile></InitializationFile>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll></CpuDll>
-            <CpuDllArguments></CpuDllArguments>
-            <PeripheralDll></PeripheralDll>
-            <PeripheralDllArguments></PeripheralDllArguments>
-            <InitializationFile></InitializationFile>
-            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -224,6 +184,8 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -364,16 +326,20 @@
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,ARM_MATH_CM4, __FPU_PRESENT, __FPU_USED, __CC_ARM,USE_EMBEDDED_PHY,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal</IncludePath>
+              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal;..\Module\lvgl-v7\src\lv_widgets;..\Module\lvgl-v7\examples\Mark;..\Module\lvgl-v7\examples\Mark\assets;..\Module\lvgl-v7\lv_demos-7.11.0;..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -386,6 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1657,106 +1624,6 @@
               <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_16.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_montserrat_18.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_18.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_20.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_22.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_22.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_24.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_24.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_26.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_26.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_28.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_28.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_28_compressed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_28_compressed.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_30.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_30.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_32.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_34.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_34.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_36.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_36.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_38.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_38.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_40.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_40.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_42.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_42.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_44.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_44.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_46.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_46.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_48.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_montserrat_48.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_simsun_16_cjk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_simsun_16_cjk.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_unscii_8.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_unscii_16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\lvgl-v7\src\lv_font\lv_font_unscii_16.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_gpu_nxp_pxp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\lvgl-v7\src\lv_gpu\lv_gpu_nxp_pxp.c</FilePath>
@@ -2061,10 +1928,155 @@
               <FileType>1</FileType>
               <FilePath>..\Module\lvgl-v7\src\lv_widgets\lv_win.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_port_disp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_disp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_disp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_fs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_fs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_fs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_fs.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_indev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_indev.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_port_indev.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\examples\porting\lv_port_indev.h</FilePath>
+            </File>
+            <File>
+              <FileName>img_cogwheel_alpha16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_cogwheel_alpha16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_cogwheel_argb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_cogwheel_argb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_cogwheel_chroma_keyed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_cogwheel_chroma_keyed.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_cogwheel_indexed16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_cogwheel_indexed16.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_cogwheel_rgb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_cogwheel_rgb.c</FilePath>
+            </File>
+            <File>
+              <FileName>img_hand.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\img_hand.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_12_compr_az.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\lv_font_montserrat_12_compr_az.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_16_compr_az.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\lv_font_montserrat_16_compr_az.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_montserrat_28_compr_az.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\assets\lv_font_montserrat_28_compr_az.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_benchmark.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_demo_benchmark\lv_demo_benchmark.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\lv_ex_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_examples.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\lv_examples.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_widgets.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_widgets.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_demo_widgets\lv_demo_widgets.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_img_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_img\lv_ex_img_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_img_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_img\lv_ex_img_2.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_img_3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_img\lv_ex_img_3.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_demo_stress.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_demo_stress\lv_demo_stress.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_keyboard_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_keyboard\lv_ex_keyboard_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ex_cpicker_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_cpicker\lv_ex_cpicker_1.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>empty</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

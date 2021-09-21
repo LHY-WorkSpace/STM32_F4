@@ -140,81 +140,81 @@ void EXTI2_IRQHandler(void)                   //²Ëµ¥±êºÅ
 			EXTI_ClearFlag(EXTI_Line2);
 }
                                                      
-void EXTI3_IRQHandler(void)
-{  
+// void EXTI3_IRQHandler(void)
+// {  
 		
 
-   	if(EXTI_GetFlagStatus(EXTI_Line3)==SET)
-	{		
-      LED1_ON;
-			switch (Menu_Num)
-				{
+//    	if(EXTI_GetFlagStatus(EXTI_Line3)==SET)
+// 	{		
+//       LED1_ON;
+// 			switch (Menu_Num)
+// 				{
 
-								case 1:
-								{
+// 								case 1:
+// 								{
 							
-			       Temperature_HIGH--;
-									if(Temperature_HIGH==0)
-								Temperature_HIGH=99;
+// 			       Temperature_HIGH--;
+// 									if(Temperature_HIGH==0)
+// 								Temperature_HIGH=99;
 								
-								break;
-								}
+// 								break;
+// 								}
 									
-								case 2:
-								{
+// 								case 2:
+// 								{
 								
 								
-             Temperature_LOW--;
-								if(Temperature_LOW==0)
-								Temperature_LOW=99;
+//              Temperature_LOW--;
+// 								if(Temperature_LOW==0)
+// 								Temperature_LOW=99;
 								
 								
-								break;
-								}
+// 								break;
+// 								}
 
-								case 3:
-								{
+// 								case 3:
+// 								{
 								
-              Humidity_HIGH--;
-								if(Humidity_HIGH==0)
-								Humidity_HIGH=99;
+//               Humidity_HIGH--;
+// 								if(Humidity_HIGH==0)
+// 								Humidity_HIGH=99;
 
 								
-								break;
-								}
+// 								break;
+// 								}
 								
-								case 4:
-								{
+// 								case 4:
+// 								{
 								
-						 Humidity_LOW--;		
-								if(Humidity_LOW==0)
-								Humidity_LOW=99;
+// 						 Humidity_LOW--;		
+// 								if(Humidity_LOW==0)
+// 								Humidity_LOW=99;
 								
-								break;
-								}
-								case 5:
-								{
+// 								break;
+// 								}
+// 								case 5:
+// 								{
 								
-						    Set_Time--;		
-								if(Set_Time==0)
-								Set_Time=30;
+// 						    Set_Time--;		
+// 								if(Set_Time==0)
+// 								Set_Time=30;
 								
-								break;
-								}
+// 								break;
+// 								}
 		
 				
 				
 				
 				
-			}
+// 			}
 	     
 
 	
 
 
-}
-		EXTI_ClearFlag(EXTI_Line3);	
-}
+// }
+// 		EXTI_ClearFlag(EXTI_Line3);	
+// }
 
 //-----------------------------------------------------------------------------------------------------------------//
 

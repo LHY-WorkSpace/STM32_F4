@@ -16,7 +16,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 
 /*********************
  *      DEFINES
@@ -29,7 +29,7 @@ extern "C" {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-
+void lv_port_disp_init(void);
 /**********************
  *      MACROS
  **********************/

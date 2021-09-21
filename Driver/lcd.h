@@ -1,5 +1,6 @@
 #ifndef __LCD_H
-#define __LCD_H		
+#define __LCD_H	
+#include "IncludeFile.h"
 #include "stdlib.h" 
 
 
@@ -14,6 +15,7 @@ PA7--MOSI
 
 PE3--Touch_IT
 PE4--SD_CS
+PXX -- RST (低复位，正常高)
 
 PE5--BL
 PD 0--D2
@@ -119,6 +121,7 @@ typedef struct
 	LCD_RGBMode_n 		RGB_BGR_Mode;			//RGB BGR 模式
 	LCD_LeftRightMode_n Hor_ScanMode;			//水平扫描模式
 	u8 					Pixel_Bit;				//每像素位数
+	u16 				ID;
 }LCD_State_t;
 
 
@@ -278,14 +281,12 @@ typedef struct
 
 
 
-
+void LCD_IO_Init(void);
 void LCD_Init(void);													   	//初始化
 void LCD_DisplayOn(void);													//开显示
 void LCD_DisplayOff(void);													//关显示
-void LCD_Clear(u16 Color);	 												//清屏
-void LCD_SetCursor(u16 Xpos, u16 Ypos);										//设置光标
-void LCD_DrawPoint(u16 x,u16 y,u16 color);											//画点
-void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color);								//快速画点
+void LCD_Clear(u16 Color);	 												//清屏									//设置光标
+void LCD_DrawPoint(u16 x,u16 y,u16 color);									//画点
 u16  LCD_ReadPoint(u16 x,u16 y); 											//读点 
 void LCD_Draw_Circle(u16 x0,u16 y0,u8 r,u16 color);				 			//画圆
 void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2,u16 color);							//画线
@@ -299,17 +300,30 @@ void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p);		//显示一个
 void LCD_VerScroll(u16 XStart,u16 Xend,u16 High);
 
 
+
+void LCD_Reset(void);
+void LCD_GetID(void);
 void LCD_ShowPicture(void);
+void LCD_GetState(LCD_State_t *LCD_State);
+void LCD_SetXY(u16 Xpos, u16 Ypos);
+void LCD_SetXY_Area(u16 x_S, u16 y_S,u16 x_E,u16 y_E);
+void LCD_WriteData_Dir(u8 Dir);
+void LCD_Display_Dir(u8 Dir);
+void LCD_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height);
 
 
-void LCD_WriteReg(u16 LCD_Reg, u16 LCD_RegValue);
-u16 LCD_ReadReg(u16 LCD_Reg);
+
+void LCD_WriteCMD(vu16 regval);
+void LCD_WriteData(vu16 data);
+u16 LCD_ReadData(void);
+void LCD_WriteCmdPara(vu16 LCD_Cmd,vu16 LCD_CmdValue);
+u16 LCD_ReadID(u16 LCD_Cmd);
 void LCD_WriteToRAM(void);
-void LCD_WriteRAM(u16 RGB_Code);
-void LCD_SSD_BackLightSet(u8 pwm);							//SSD1963 背光控制
-void LCD_Scan_Dir(u8 dir);									//设置屏扫描方向
-void LCD_Display_Dir(u8 dir);								//设置屏幕显示方向
-void LCD_Set_Window(u16 sx,u16 sy,u16 width,u16 height);	//设置窗口					   						   																			 
+u16 LCD_BGR2RGB(u16 c);
+void LCD_Delay(u8 i);
+void LCD_Set_BackLight(u8 pwm);
+
+
 //LCD分辨率设置
 #define SSD_HOR_RESOLUTION		800		//LCD水平分辨率
 #define SSD_VER_RESOLUTION		480		//LCD垂直分辨率

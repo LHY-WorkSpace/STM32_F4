@@ -45,15 +45,15 @@ extern "C" {
 #  define XPT2046_VER_RES     320
 
 //可能是XY最大和最小的AD值
-#  define XPT2046_X_MIN       200
-#  define XPT2046_Y_MIN       200
-#  define XPT2046_X_MAX       3200
-#  define XPT2046_Y_MAX       3200
+#  define XPT2046_X_MIN       210
+#  define XPT2046_Y_MIN       170
+#  define XPT2046_X_MAX       3900
+#  define XPT2046_Y_MAX       3800
 
-#  define XPT2046_AVG         4
+#  define XPT2046_AVG         5
 #  define XPT2046_X_INV       0
 #  define XPT2046_Y_INV       0
-#  define XPT2046_XY_SWAP     0
+#  define XPT2046_XY_SWAP     1
 
 /**********************
  *      TYPEDEFS
@@ -62,8 +62,8 @@ extern "C" {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-void xpt2046_init(void);
-u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+void XPT2046_Init(void);
+u8 XPT2046_Read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 void xpt2046_corr(int16_t * x, int16_t * y);
 void xpt2046_avg(int16_t * x, int16_t * y);
 /**********************

@@ -73,65 +73,7 @@ void LCD_Task()
 
 }
 
-//static void btn_event_cb(lv_obj_t * btn, lv_event_t event)
-//{
-//    if(event == LV_EVENT_CLICKED) {
-//        static uint8_t cnt = 0;
-//        cnt++;
 
-//        /*Get the first child of the button which is the label and change its text*/
-//        lv_obj_t * label = lv_obj_get_child(btn, NULL);
-//        lv_label_set_text_fmt(label, "Button: %d", cnt);
-//    }
-//}
-
-// void lvgl_first_demo_start(void)
-// {
-    // lv_obj_t * btn = lv_btn_create(lv_scr_act(), NULL);     /*Add a button the current screen*/
-    // lv_obj_set_pos(btn, 10, 10);                            /*Set its position*/
-    // lv_obj_set_size(btn, 10, 10);                          /*Set its size*/
-    // lv_obj_set_event_cb(btn, btn_event_cb);                 /*Assign a callback to the button*/
-
-    // lv_obj_t * label = lv_label_create(btn, NULL);          /*Add a label to the button*/
-    // lv_label_set_text(label, "Button");                     /*Set the labels text*/
-
-
-	// lv_obj_t * label1 = lv_label_create(lv_scr_act(), NULL);
-	// lv_label_set_text(label1, "Hello world!"); 
-	// lv_obj_align(label1, NULL, LV_ALIGN_IN_TOP_LEFT, 2, 0);
-	// lv_obj_align(btn, label1, LV_ALIGN_IN_TOP_LEFT, 0, 10);
-
-
-
-	// lv_obj_t * bar1 = lv_bar_create(lv_scr_act(), NULL);
-	// lv_obj_set_size(bar1, 10, 10);
-	// lv_obj_align(bar1, NULL, LV_ALIGN_CENTER, 0, 0);
-	// lv_bar_set_anim_time(bar1, 10);
-	// lv_bar_set_value(bar1, 50, LV_ANIM_ON);
-
-
-
-//  static lv_point_t line_points[] = { {5, 5}, {70, 70}, {120, 10}, {180, 60}, {240, 10} };
-//  /*Create new style (thick dark blue)*/
-//  static lv_style_t style_line;
-//  lv_style_copy(&style_line, &lv_style_plain);
-//  style_line.line.color = LV_COLOR_MAKE(0x00, 0x3b, 0x75);
-//  style_line.line.width = 3;
-//  style_line.line.rounded = 1;
-
-
-
-//  /*Copy the previous line and apply the new style*/
-//  lv_obj_t * line1;
-//  line1 = lv_line_create(lv_scr_act(), NULL);
-//  lv_line_set_points(line1, line_points, 5);     /*Set the points*/
-//  lv_line_set_style(line1, LV_LINE_STYLE_MAIN, &style_line);
-//  lv_obj_align(line1, NULL, LV_ALIGN_CENTER, 0, 0);
-
-
-
-
-// }
 
 // void USART_Task_3_()
 // {
@@ -300,20 +242,20 @@ void Task_Init()
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
 
-
-
-
-
 int  main()
 {
-	u8 i=0;
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_CRC,ENABLE);//使能CRC时钟，否则STemWin不能使用 
+	u16 i=0;
+	u16 x=500,y=0,clr=0;
+	lv_indev_drv_t indev_drv;
+	lv_indev_data_t  data;
+
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
 	LCD_Init();
+	
 	// File_FATFSInit();
 	// File_MountDisk("1:");
 	// File_OpenDir("1:/SD");
@@ -323,32 +265,37 @@ int  main()
 
 	//USB_Task();
 	//TaskTimer_Init();
-	// lv_init();
-	// lv_port_disp_init();
-	// lvgl_first_demo_start();
 
-    // GUI_Init();
-    
-    // // GUI_SetColor(GUI_RED);
-    // // GUI_SetBkColor(GUI_BLUE);
-    // GUI_SetFont(&GUI_Font8_ASCII);
-    // GUI_Clear();
-    // GUI_DispStringAt("Hello World",10,10); 
-	//LCD_ShowPicture();
-	// OLED_MoveDisplay(127,0,16,5,"12345");
-	// Queue_Handle = xQueueCreate(5,1024);
-	// Task_Init();
-	// vTaskStartScheduler();
-	// 	OLED_ShowNumber(20,2,5,2);
+	lv_init();
+	lv_port_disp_init();
+	lv_port_indev_init();
 
-	// while (1)
-	// {
-	// 	UpdateOneColumn(50+i,0,16,(u8)('5'-'!'),i);
-	// 	OLED_UpdateGRAM();
-	// 	i++;
-	// 	delay_ms(500);
-	// }
+	//lv_ex_img_1();
+	//lv_ex_img_2();
+	//lv_ex_keyboard_1();
+	lv_demo_widgets();
+	//lv_demo_stress();
+	//lv_demo_benchmark();
+	// lv_ex_cpicker_1();
+	OLED_ClearScreen(0);
+	while (1)
+	{
 
+		XPT2046_Read(&indev_drv,&data);
+		OLED_UpdateGRAM();
+		LCD_DrawPoint(data.point.x,data.point.y,0X00);
+		// LCD_SetXY_Area(0,0,100,100);
+		// LCD_WriteToRAM();
+		// for(i=0;i<10000;i++)
+		// {
+		// 	LCD_WriteData(clr);
+		// }
+		// clr++;
+		
+		lv_task_handler();
+		lv_tick_inc(5);
+
+	}
 
 	SystemDown();
 }	
@@ -386,6 +333,8 @@ void Function_list()
 
 }
 */
+
+
 
 
 

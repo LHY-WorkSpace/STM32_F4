@@ -53,13 +53,13 @@ void SystemDown()
 	while(1)
 	{		
 		LED1_ON;
-		delay_ms(100);
+		delay_ms(250);
 		LED1_OFF;
-		delay_ms(100);
+		delay_ms(250);
 		LED1_ON;
-		delay_ms(100);
+		delay_ms(250);
 		LED1_OFF;
-		delay_ms(100);
+		delay_ms(250);
 
 	}
 }

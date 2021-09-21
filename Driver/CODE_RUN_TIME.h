@@ -6,11 +6,11 @@
 
 
 
-void Programe_Start(void);
-void  Programe_End_Us(void);
-void  Programe_End_Ms(void);
-void Show_RunTime(void);
-void Programe_Start(void);
+void Programe_RunInit(void);
+void Programe_StartRun(void);
+u16  Programe_End_Us(u8 Dev);
+u16  Programe_End_Ms(u8 Dev);
+
 
 
 #endif

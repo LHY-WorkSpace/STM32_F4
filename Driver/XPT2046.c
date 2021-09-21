@@ -6,8 +6,8 @@
 /*********************
  *      INCLUDES
  *********************/
+#include "IncludeFile.h"
 
-#include "XPT2046.h"
 
 
 #include <stddef.h>
@@ -34,7 +34,7 @@
 int16_t avg_buf_x[XPT2046_AVG];
 int16_t avg_buf_y[XPT2046_AVG];
 uint8_t avg_last;
-
+u8 irq = LV_DRV_INDEV_IRQ_READ;
 /**********************
  *      MACROS
  **********************/
@@ -46,13 +46,22 @@ uint8_t avg_last;
 /**
  * Initialize the XPT2046
  */
-void xpt2046_init(void)
+void XPT2046_Init(void)
 {
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1,ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
-	
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_EXTIT,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG,ENABLE);
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE,ENABLE);
+
+
+
+    NVIC_InitTypeDef NVIC_InitStructure;
 	GPIO_InitTypeDef GPIO_InitTypeDefinsture;
 	SPI_InitTypeDef SPI_InitTypeDefinsture;
+	GPIO_InitTypeDef GPIOE_Initstruc;
+  	EXTI_InitTypeDef EXTI_Initstruct1;
 
 	
 	GPIO_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_5|GPIO_Pin_7|GPIO_Pin_6;                 // PA5---SCLK       PA7-----SDA
@@ -89,6 +98,15 @@ void xpt2046_init(void)
 	SPI_Init(SPI1,&SPI_InitTypeDefinsture);
     SPI_I2S_ClearFlag(SPI1,SPI_I2S_FLAG_RXNE|SPI_I2S_FLAG_TXE);
 	SPI_Cmd(SPI1,ENABLE);
+
+	GPIOE_Initstruc.GPIO_Pin=GPIO_Pin_3;
+	GPIOE_Initstruc.GPIO_Mode=GPIO_Mode_IN;
+	GPIOE_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;
+	GPIOE_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
+	GPIO_Init(GPIOE,&GPIOE_Initstruc);
+
+
+
 }
 
 u8 XPT2046_SendData(u8 Tdata)
@@ -108,7 +126,7 @@ u8 XPT2046_SendData(u8 Tdata)
 
 void XPT2046_CS(u8 State)
 {
-    if (!State )
+    if ( State )
     {
         XPT2046_SPI_SEL;
 
@@ -125,7 +143,7 @@ void XPT2046_CS(u8 State)
  * @param data store the read data here
  * @return false: because no ore data to be read
  */
-u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
+u8 XPT2046_Read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     static int16_t last_x = 0;
     static int16_t last_y = 0;
@@ -134,17 +152,18 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     int16_t x = 0;
     int16_t y = 0;
 
-    uint8_t irq = LV_DRV_INDEV_IRQ_READ;
-
-    if(irq == 0) {
+    if( GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3) == 0) 
+    {
         LV_DRV_INDEV_SPI_CS(0);
 
         LV_DRV_INDEV_SPI_XCHG_BYTE(CMD_X_READ);         /*Start x read*/
 
         buf = LV_DRV_INDEV_SPI_XCHG_BYTE(0);           /*Read x MSB*/
         x = buf << 8;
-        buf = LV_DRV_INDEV_SPI_XCHG_BYTE(CMD_Y_READ);  /*Until x LSB converted y command can be sent*/
+         buf = LV_DRV_INDEV_SPI_XCHG_BYTE(0);           /*Read x MSB*/
         x += buf;
+			
+        LV_DRV_INDEV_SPI_XCHG_BYTE(CMD_Y_READ);  /*Until x LSB converted y command can be sent*/
 
         buf =  LV_DRV_INDEV_SPI_XCHG_BYTE(0);   /*Read y MSB*/
         y = buf << 8;
@@ -155,6 +174,17 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
         /*Normalize Data*/
         x = x >> 3;
         y = y >> 3;
+
+        if( x > 4000 )
+        {
+            x=0;
+        }
+
+        if( y > 4000 )
+        {
+            y=0;
+        }
+
         xpt2046_corr(&x, &y);
         xpt2046_avg(&x, &y);
 
@@ -163,7 +193,10 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 		data->state = LV_INDEV_STATE_PR;
 
         LV_DRV_INDEV_SPI_CS(1);
-    } else {
+
+    } 
+    else 
+    {
         x = last_x;
         y = last_y;
         avg_last = 0;
@@ -172,6 +205,13 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 
     data->point.x = x;
     data->point.y = y;
+
+
+    OLED_ShowStrings(0,2,"X:",2);
+    OLED_ShowStrings(0,3,"Y:",2);   
+    OLED_ShowNumber(16,2,x,4);
+    OLED_ShowNumber(16,3,y,4);
+	OLED_UpdateGRAM();
 
     return false;
 }
@@ -225,7 +265,8 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     /*Shift out the oldest data*/
     uint8_t i;
-    for(i = XPT2046_AVG - 1; i > 0 ; i--) {
+    for(i = XPT2046_AVG - 1; i > 0 ; i--)
+     {
         avg_buf_x[i] = avg_buf_x[i - 1];
         avg_buf_y[i] = avg_buf_y[i - 1];
     }
@@ -233,12 +274,14 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     /*Insert the new point*/
     avg_buf_x[0] = *x;
     avg_buf_y[0] = *y;
-    if(avg_last < XPT2046_AVG) avg_last++;
+    if(avg_last < XPT2046_AVG) 
+        avg_last++;
 
     /*Sum the x and y coordinates*/
     int32_t x_sum = 0;
     int32_t y_sum = 0;
-    for(i = 0; i < avg_last ; i++) {
+    for(i = 0; i < avg_last ; i++) 
+    {
         x_sum += avg_buf_x[i];
         y_sum += avg_buf_y[i];
     }
@@ -247,5 +290,4 @@ u8 xpt2046_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     (*x) = (int32_t)x_sum / avg_last;
     (*y) = (int32_t)y_sum / avg_last;
 }
-
 

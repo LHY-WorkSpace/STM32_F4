@@ -62,7 +62,7 @@ ARM Macro Assembler    Page 1
    38 00000000         ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
    39 00000000         ; </h>
    40 00000000         
-   41 00000000 00005000 
+   41 00000000 0000C800 
 
 
 
@@ -70,24 +70,24 @@ ARM Macro Assembler    Page 2
 
 
                        Stack_Size
-                               EQU              0x00005000  ;20K
+                               EQU              0x0000c800  ;50K
    42 00000000         
    43 00000000                 AREA             STACK, NOINIT, READWRITE, ALIGN
 =3
    44 00000000         Stack_Mem
                                SPACE            Stack_Size
-   45 00005000         __initial_sp
-   46 00005000         
-   47 00005000         
-   48 00005000         ; <h> Heap Configuration
-   49 00005000         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
-   50 00005000         ; </h>
-   51 00005000         
-   52 00005000 00005000 
+   45 0000C800         __initial_sp
+   46 0000C800         
+   47 0000C800         
+   48 0000C800         ; <h> Heap Configuration
+   49 0000C800         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+   50 0000C800         ; </h>
+   51 0000C800         
+   52 0000C800 00005000 
                        Heap_Size
-                               EQU              0x00005000  ;20K
-   53 00005000         
-   54 00005000                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
+                               EQU              0x00005000  ;10K
+   53 0000C800         
+   54 0000C800                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    55 00000000         __heap_base
    56 00000000         Heap_Mem
@@ -855,13 +855,12 @@ ARM Macro Assembler    Page 14
   432 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\objects\startup_stm32f40_41xxx.d -o.\objects\startup_stm32f40
-_41xxx.o -IE:\ÎÄµµ\×ÊÁÏ\123\STM32_F4\Project\RTE -ID:\SoftWare\MDK\ARM\PACK\Kei
-l\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include -ID:\SoftWare\
-MDK\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VE
-RSION SETA 517" --predefine="STM32F407xx SETA 1" --list=.\listings\startup_stm3
-2f40_41xxx.lst ..\CMSIS\startup_stm32f40_41xxx.s
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
+interwork --depend=.\objects\startup_stm32f40_41xxx.d -o.\objects\startup_stm32
+f40_41xxx.o -I"D:\MDK 5\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32
+F4xx\Include" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SE
+TA 534" --predefine="STM32F407xx SETA 1" --list=.\listings\startup_stm32f40_41x
+xx.lst ..\CMSIS\startup_stm32f40_41xxx.s
 
 
 
@@ -884,7 +883,7 @@ Symbol: Stack_Mem
    Uses
       None
 Comment: Stack_Mem unused
-__initial_sp 00005000
+__initial_sp 0000C800
 
 Symbol: __initial_sp
    Definitions
@@ -1915,7 +1914,7 @@ Symbol: Heap_Size
    Uses
       At line 56 in file ..\CMSIS\startup_stm32f40_41xxx.s
 Comment: Heap_Size used once
-Stack_Size 00005000
+Stack_Size 0000C800
 
 Symbol: Stack_Size
    Definitions

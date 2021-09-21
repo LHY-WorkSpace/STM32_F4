@@ -3,7 +3,7 @@
 u16 Run_Time; 
 
 
-void Programe_Start(void)
+void Programe_RunInit(void)
 {
 	
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStruct;
@@ -24,13 +24,11 @@ void Programe_Start(void)
 	//TIM_ClearFlag(TIM6,TIM_IT_Update);
 	TIM_ARRPreloadConfig(TIM6,ENABLE);
 	TIM6->CNT = 0;
-
 	TIM_Cmd(TIM6,DISABLE);
 	
-
 }
 
-void Programe_Start1()
+void Programe_StartRun()
 {
 	TIM_Cmd(TIM6,DISABLE);
 	TIM6->CNT = 0;
@@ -43,22 +41,36 @@ void Programe_Start1()
 
 
 
-void  Programe_End_Us()
+u16  Programe_End_Us(u8 Dev)
 {
+	if( Dev  == 1)
+	{
+		printf("Time:%d us\r\n",TIM_GetCounter(TIM6));
+	}
+	else if(Dev  == 2)
+	{	OLED_ShowStrings(0,0,"Time-us ",8);
+		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6),6);
+		OLED_UpdateGRAM();
+	}
 
-	printf("Time:%d us\r\n",TIM_GetCounter(TIM6));
+	return TIM_GetCounter(TIM6);
+
 }
 
-void  Programe_End_Ms()
+u16  Programe_End_Ms(u8 Dev)
 {
-	printf("Time:%d us\r\n",TIM_GetCounter(TIM6)/1000);
+	
+	if( Dev  == 1)
+	{
+		printf("Time:%d us\r\n",TIM_GetCounter(TIM6)/1000);
+	}
+	else if(Dev  == 2)
+	{	OLED_ShowStrings(0,0,"Time-ms ",8);
+		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6)/1000,6);
+		OLED_UpdateGRAM();
+	}
 
-}
-
-
-void Show_RunTime()
-{
-	printf("Run Time: %d ms",Run_Time);
+	return TIM_GetCounter(TIM6)/1000;
 }
 
 
@@ -75,6 +87,7 @@ void TIM6_DAC_IRQHandler()
 	TIM_ClearFlag(TIM6,TIM_IT_Update);
 
 }
+
 
 
 

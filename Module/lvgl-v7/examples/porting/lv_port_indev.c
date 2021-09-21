@@ -9,6 +9,7 @@
 /*********************
  *      INCLUDES
  *********************/
+#include "IncludeFile.h"
 #include "lv_port_indev.h"
 
 /*********************
@@ -23,40 +24,40 @@
  *  STATIC PROTOTYPES
  **********************/
 
-static void touchpad_init(void);
-static bool touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
-static bool touchpad_is_pressed(void);
-static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y);
+ void touchpad_init(void);
+ u8 touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+ bool touchpad_is_pressed(void);
+ void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y);
 
-static void mouse_init(void);
-static bool mouse_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
-static bool mouse_is_pressed(void);
-static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y);
+// static void mouse_init(void);
+// static bool mouse_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+// static bool mouse_is_pressed(void);
+// static void mouse_get_xy(lv_coord_t * x, lv_coord_t * y);
 
-static void keypad_init(void);
-static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
-static uint32_t keypad_get_key(void);
+// static void keypad_init(void);
+// static bool keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+// static uint32_t keypad_get_key(void);
 
-static void encoder_init(void);
-static bool encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
-static void encoder_handler(void);
+// static void encoder_init(void);
+// static bool encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+// static void encoder_handler(void);
 
-static void button_init(void);
-static bool button_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
-static int8_t button_get_pressed_id(void);
-static bool button_is_pressed(uint8_t id);
+// static void button_init(void);
+// static bool button_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
+// static int8_t button_get_pressed_id(void);
+// static bool button_is_pressed(uint8_t id);
 
 /**********************
  *  STATIC VARIABLES
  **********************/
 lv_indev_t * indev_touchpad;
-lv_indev_t * indev_mouse;
-lv_indev_t * indev_keypad;
-lv_indev_t * indev_encoder;
-lv_indev_t * indev_button;
+//lv_indev_t * indev_mouse;
+//lv_indev_t * indev_keypad;
+//lv_indev_t * indev_encoder;
+//lv_indev_t * indev_button;
 
-static int32_t encoder_diff;
-static lv_indev_state_t encoder_state;
+//static int32_t encoder_diff;
+//static lv_indev_state_t encoder_state;
 
 /**********************
  *      MACROS
@@ -185,19 +186,19 @@ void lv_port_indev_init(void)
  * -----------------*/
 
 /*Initialize your touchpad*/
-static void touchpad_init(void)
+ void touchpad_init(void)
 {
-    xpt2046_init();
+    XPT2046_Init();
 }
 
 /* Will be called by the library to read the touchpad */
-static bool touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
+ u8 touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
-    return xpt2046_read(indev_drv,data);
+    return XPT2046_Read(indev_drv,data);
 }
 
 /*Return true is the touchpad is pressed*/
-static bool touchpad_is_pressed(void)
+ bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
 
@@ -205,13 +206,12 @@ static bool touchpad_is_pressed(void)
 }
 
 /*Get the x and y coordinates if the touchpad is pressed*/
-static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
+ void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {
     /*Your code comes here*/
 
     xpt2046_corr(x,y);
-    // (*x) = 0;
-    // (*y) = 0;
+
 }
 
 // /*------------------

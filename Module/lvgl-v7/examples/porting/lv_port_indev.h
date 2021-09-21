@@ -18,7 +18,7 @@ extern "C" {
  *      INCLUDES
  *********************/
 #include "XPT2046.h"
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 
 /*********************
  *      DEFINES
@@ -31,7 +31,7 @@ extern "C" {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-
+void lv_port_indev_init(void);
 /**********************
  *      MACROS
  **********************/
