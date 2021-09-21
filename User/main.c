@@ -64,10 +64,10 @@ void LCD_Task()
 	Time=xTaskGetTickCount();
 	while(1)
 	{
-		taskENTER_CRITICAL();
+		// taskENTER_CRITICAL();
 		LCD_ShowPicture();
-		taskEXIT_CRITICAL();
-		vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
+		// taskEXIT_CRITICAL();
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
 	}
 
 
@@ -225,7 +225,23 @@ void Clock_Task()
 	}
 }
 
+void LVGL_Task()
+{
 
+	TickType_t Time;
+	Time=xTaskGetTickCount();
+
+	while (1)
+	{
+		taskENTER_CRITICAL();
+		lv_task_handler();
+		lv_tick_inc(10);
+		taskEXIT_CRITICAL();
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+	}
+
+
+}
 
 
 
@@ -236,8 +252,10 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,11,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,13,NULL);
+	xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",2000,NULL,12,NULL);
+
+	// xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -255,10 +273,11 @@ int  main()
 	led_init();
 	OLED_Init();
 	LCD_Init();
-	
-	// File_FATFSInit();
-	// File_MountDisk("1:");
-	// File_OpenDir("1:/SD");
+	XPT2046_Init();
+	File_FATFSInit();
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD");
+
 	// LCD_Init();           //初始化LCD FSMC接口
 	//RTC_ConfigInit();
 	//MPU6050_Init();
@@ -270,36 +289,37 @@ int  main()
 	lv_port_disp_init();
 	lv_port_indev_init();
 
-	//lv_ex_img_1();
+	// lv_ex_img_1();
 	//lv_ex_img_2();
 	//lv_ex_keyboard_1();
-	lv_demo_widgets();
+	//lv_demo_widgets();
 	//lv_demo_stress();
-	//lv_demo_benchmark();
+	lv_demo_benchmark();
 	// lv_ex_cpicker_1();
-	OLED_ClearScreen(0);
-	while (1)
-	{
+	// LCD_ShowPicture();
+	Task_Init();
 
-		XPT2046_Read(&indev_drv,&data);
-		OLED_UpdateGRAM();
-		LCD_DrawPoint(data.point.x,data.point.y,0X00);
-		// LCD_SetXY_Area(0,0,100,100);
-		// LCD_WriteToRAM();
-		// for(i=0;i<10000;i++)
-		// {
-		// 	LCD_WriteData(clr);
-		// }
-		// clr++;
-		
-		lv_task_handler();
-		lv_tick_inc(5);
+	vTaskStartScheduler();
 
-	}
+
+
+	// OLED_ClearScreen(0);
+	// while (1)
+	// {
+
+	// 	XPT2046_Read(&indev_drv,&data);
+	// 	OLED_UpdateGRAM();
+	// 	// LCD_DrawPoint(data.point.x,data.point.y,0X00);
+	// }
 
 	SystemDown();
 }	
 	
+
+
+
+
+
 /*
 void Function_list()
 {

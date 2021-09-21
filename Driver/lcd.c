@@ -796,9 +796,9 @@ void LCD_ShowPicture()
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
 	u32 P=0;
-	//totalpoint*=LCD_Dev.Height; 			//得到总点数
-	 LCD_SetXY_Start(0x00,0x0000);	//设置光标位置 
-	// LCD_Set_Window(0,0,240,320);
+	//u32 totalpoint=LCD_Dev.Height*LCD_Dev.Width; 			//得到总点数
+	 LCD_Display_Dir(Vertical);
+	 LCD_SetXY_Area(0,0,239,319);	//设置光标位置 
 	 LCD_WriteToRAM();     		//开始写入GRAM
 
 ////////////////////////////////////////////////////////////
@@ -815,11 +815,11 @@ void LCD_ShowPicture()
 			P+=480;		
 			for(x=0;x<240;x++)
 			{
-				LCD_DrawPoint(x,y,DataTemp.Data_16[x]);
+				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
 
-		delay_ms(500);
+		delay_ms(100);
 
 		P=0;
 		for(y=0;y<320;y++)
@@ -828,14 +828,14 @@ void LCD_ShowPicture()
 			P+=480;		
 			for(x=0;x<240;x++)
 			{
-				LCD_DrawPoint(x,y,DataTemp.Data_16[x]);
+				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
 
-		delay_ms(500);
+		delay_ms(100);
 
 		LCD_Display_Dir(Horizontal);
-		LCD_SetXY_Start(0x00,0x0000);	//设置光标位置 
+	 	LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
 		LCD_WriteToRAM();     		//开始写入GRAM
 		P=0;
 		for(y=0;y<240;y++)
@@ -844,10 +844,10 @@ void LCD_ShowPicture()
 			P+=640;		
 			for(x=0;x<320;x++)
 			{
-				LCD_DrawPoint(x,y,DataTemp.Data_16[x]);
+				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
-
+		delay_ms(100);
 
 //////////////////////////////////////////////////////////////////
 
