@@ -234,10 +234,8 @@ void LVGL_Task()
 
 	while (1)
 	{
-		taskENTER_CRITICAL();
 		lv_task_handler();
-		lv_tick_inc(10);
-		taskEXIT_CRITICAL();
+		lv_tick_inc(5);
 		if(State == 0)
 		{
 			OLED_ShowStrings(0,1,"Run ",4);   
@@ -248,8 +246,8 @@ void LVGL_Task()
 			OLED_ShowStrings(0,1,"Stop",4);   
 			State=0;
 		}
-
-		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+		OLED_UpdateGRAM();
+		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
 	}
 
 
@@ -264,7 +262,7 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",20,NULL,13,NULL);
+	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,13,NULL);
 	xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
 
 	// xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
@@ -286,11 +284,11 @@ int  main()
 	OLED_Init();
 	LCD_Init();
 	XPT2046_Init();
-	File_FATFSInit();
-	File_MountDisk("1:");
-	File_OpenDir("1:/SD");
+	// File_FATFSInit();
+	// File_MountDisk("1:");
+	// File_OpenDir("1:/SD");
 
-	// LCD_Init();           //初始化LCD FSMC接口
+
 	//RTC_ConfigInit();
 	//MPU6050_Init();
 
@@ -303,11 +301,11 @@ int  main()
 
 	// lv_ex_img_1();
 	//lv_ex_img_2();
-	lv_ex_keyboard_1();
+	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
 	//lv_demo_stress();
-	//lv_demo_benchmark();
-	// lv_ex_cpicker_1();
+	lv_demo_benchmark();
+	 //lv_ex_cpicker_1();
 	// LCD_ShowPicture();
 	Task_Init();
 
@@ -315,12 +313,13 @@ int  main()
 
 
 
-	// OLED_ClearScreen(0);
 	// while (1)
 	// {
 
 	// 	XPT2046_Read(&indev_drv,&data);
 	// 	OLED_UpdateGRAM();
+	// 	lv_task_handler();
+	// 	lv_tick_inc(10);
 	// 	// LCD_DrawPoint(data.point.x,data.point.y,0X00);
 	// }
 
