@@ -24,7 +24,7 @@ https://blog.csdn.net/yyyyyyyyyysz/article/details/96774504
 
 
 
-
+RTOS中如果使用delay_xs(),会导致其他任务忽快忽慢，因为在等待delay的过程中，其他任务
 
 
 

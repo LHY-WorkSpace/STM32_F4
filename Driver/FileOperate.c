@@ -3,9 +3,7 @@
 
 
 static FATFS fs;
-static FIL fils;
-static DIR dp;		
-// static FILINFO fno;
+
 
 
 
@@ -18,58 +16,136 @@ static DIR dp;
 u8 File_FATFSInit()
 {
     
-		GPIO_InitTypeDef GPIOA_Initstruc;
-        	
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
+    GPIO_InitTypeDef GPIOA_Initstruc;
+    DIR dp;
 
-		GPIOA_Initstruc.GPIO_Pin=GPIO_Pin_8;
-		GPIOA_Initstruc.GPIO_Mode=GPIO_Mode_IN;
-		GPIOA_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
-		GPIOA_Initstruc.GPIO_OType=GPIO_OType_PP; 
-	  	GPIOA_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;           
-		GPIO_Init(GPIOA,&GPIOA_Initstruc);
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
 
-    return disk_initialize(DEV_SD);
+    GPIOA_Initstruc.GPIO_Pin=GPIO_Pin_8;
+    GPIOA_Initstruc.GPIO_Mode=GPIO_Mode_IN;
+    GPIOA_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
+    GPIOA_Initstruc.GPIO_OType=GPIO_OType_PP; 
+    GPIOA_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;           
+    GPIO_Init(GPIOA,&GPIOA_Initstruc);
+
+
+    disk_initialize(DEV_SD);
+
+	File_MountDisk("1:");
+	File_OpenDir("1:/SD",&dp);
+
+    return 0;
 }
 
 //挂载设备：   "1:"
 u8 File_MountDisk(const char* Path)
 {
-	return f_mount(&fs,Path,1);
+	 
+    u8 Sta;
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    Sta = f_mount(&fs,Path,1);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+    return Sta;
 }
 
 //卸载设备
 u8 File_UmountDiak(const char* Path)
 {
-    return f_mount(0,Path,0);
+
+    u8 Sta;
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    Sta = f_mount(0,Path,0);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+    return Sta;
+
 }
 
 //创建文件系统
 u8 File_CreateFAT()
 {
     u8 work[512];
-    return f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
+    u8 Sta;
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    Sta = f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+    return Sta;
+
 }
 
 
 
 //Directory Operate 文件夹操作
 //打开文件夹
-u8 File_OpenDir(const char* Path)
+u8 File_OpenDir(const char* Path,DIR *dp)
 {
-    return f_opendir(&dp,Path);
+    u8 Sta;
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    Sta = f_opendir(dp,Path);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+
+    return Sta;
 }
 
 //关闭文件夹
-void File_CloseDir()
+void File_CloseDir(FIL *fils)
 {
-    f_close(&fils);
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    f_close(fils);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+
 }
 
 //创建文件夹
 u8 File_Mkdir(const char * Path)
 {
-    return f_mkdir(Path);
+ u8 Sta;
+ #if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    Sta = f_mkdir(Path);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
+
+    return Sta;
 }
 
 
@@ -87,62 +163,91 @@ return 0;
 
 //File Operate   文件操作
 //创建新文件,如果已存在，则删除重新创建
-u8 File_CreateNewFile(const char* Path)
+u8 File_CreateNewFile(const char* Path,FIL *fils)
 {
     u8 sta;
 
-    sta = f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
+#if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    sta = f_open(fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
 
     if( sta == FR_EXIST)
     {
         sta = f_unlink(Path);
-        sta = f_open(&fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
+        sta = f_open(fils,Path,FA_CREATE_ALWAYS|FA_WRITE|FA_CREATE_NEW);
     }
-    f_close(&fils);	
+    f_close(fils);	
+
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
     return sta;
 }
 
 
 //读取数据
-u8 File_ReadData(const char* Path,u8* Data,u32 Length,u32 Offset)
+u8 File_ReadData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
 {
     u8 sta;
     u32 DataPointer;
 
-    sta=f_open(&fils,Path,FA_READ|FA_OPEN_EXISTING);
+#if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+
+    sta=f_open(fils,Path,FA_READ|FA_OPEN_EXISTING);
 
     if( Offset != 0)
     {
-        f_lseek(&fils,Offset);
+        f_lseek(fils,Offset);
     }
 
     if( sta == FR_OK)
     {
-        sta=f_read(&fils,Data,Length,&DataPointer);
+        sta=f_read(fils,Data,Length,&DataPointer);
     }
-    f_close(&fils);
+    f_close(fils);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
      return sta;
 }
 
 
 //写入数据
-u8 File_WriteData(const char* Path,u8* Data,u32 Length,u32 Offset)
+u8 File_WriteData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
 {
     u8 sta;
     u32 DataPointer;
 
-    sta=f_open(&fils,Path,FA_WRITE|FA_OPEN_EXISTING);
+#if USE_RTOS
+    taskENTER_CRITICAL();
+#endif 
+
+    sta=f_open(fils,Path,FA_WRITE|FA_OPEN_EXISTING);
      
     if( Offset != 0)
     {
-        f_lseek(&fils,Offset);
+        f_lseek(fils,Offset);
     }
 
     if( sta == FR_OK)
     {
-        sta =f_write(&fils,Data,Length,&DataPointer);
+        sta =f_write(fils,Data,Length,&DataPointer);
     }
-    f_close(&fils);
+    f_close(fils);
+
+#if USE_RTOS
+    taskEXIT_CRITICAL();
+#endif 
+
     return sta;
 
 }

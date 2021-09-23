@@ -23,17 +23,17 @@ u8 File_CreateFAT(void);
 
 
 //Directory Operate 文件夹操作
-u8 File_OpenDir(const char* Path);
-void File_CloseDir(void);
+u8 File_OpenDir(const char* Path,DIR *dp);
+void File_CloseDir(FIL *fils);
 u8 File_ScanIndex(const char* Path,u8* Num ,FileName NameList);
 u8 File_Mkdir(const char * Path);
 
 
 
 //File Operate   文件操作
-u8 File_CreateNewFile(const char* Path);
-u8 File_ReadData(const char* Path,u8* Data,u32 Length,u32 Offset);
-u8 File_WriteData(const char* Path,u8* Data,u32 Length,u32 Offset);
+u8 File_CreateNewFile(const char* Path,FIL *fils);
+u8 File_ReadData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset);
+u8 File_WriteData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset);
 u32 File_GetFileSize(const char* Path);
 void File_GetFileNameList(void);
 u8 File_Rename(const char* path_old, const char* path_new);

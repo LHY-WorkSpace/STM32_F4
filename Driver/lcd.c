@@ -1,5 +1,4 @@
 #include "IncludeFile.h"
-
 #include "font.h" 
 
 
@@ -800,7 +799,7 @@ void LCD_ShowPicture()
 	 LCD_Display_Dir(Vertical);
 	 LCD_SetXY_Area(0,0,239,319);	//设置光标位置 
 	 LCD_WriteToRAM();     		//开始写入GRAM
-
+	FIL fils;
 ////////////////////////////////////////////////////////////
 
 	// totalpoint=File_GetFileSize("1:/SD/Data_1.bin");
@@ -809,30 +808,30 @@ void LCD_ShowPicture()
 
 ////////////////////////////////////////////////////////////
 
-		for(y=0;y<320;y++)
+		for(y=0;y<64;y++)
 		{
-			File_ReadData("1:/SD/Data_1.bin",DataTemp.Data_8,480,P);
-			P+=480;		
-			for(x=0;x<240;x++)
+			File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,2400,P);
+			P+=2400;		
+			for(x=0;x<1200;x++)
 			{
 				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
 
-		delay_ms(100);
+		//delay_ms(100);
 
 		P=0;
-		for(y=0;y<320;y++)
+		for(y=0;y<64;y++)
 		{
-			File_ReadData("1:/SD/Data_2.bin",DataTemp.Data_8,480,P);
-			P+=480;		
-			for(x=0;x<240;x++)
+			File_ReadData(&fils,"1:/SD/Data_2.bin",DataTemp.Data_8,2400,P);
+			P+=2400;		
+			for(x=0;x<1200;x++)
 			{
 				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
 
-		delay_ms(100);
+		//delay_ms(100);
 
 		LCD_Display_Dir(Horizontal);
 	 	LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
@@ -840,14 +839,14 @@ void LCD_ShowPicture()
 		P=0;
 		for(y=0;y<240;y++)
 		{
-			File_ReadData("1:/SD/Data_3.bin",DataTemp.Data_8,640,P);
+			File_ReadData(&fils,"1:/SD/Data_3.bin",DataTemp.Data_8,640,P);
 			P+=640;		
 			for(x=0;x<320;x++)
 			{
 				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
-		delay_ms(100);
+		//delay_ms(100);
 
 //////////////////////////////////////////////////////////////////
 

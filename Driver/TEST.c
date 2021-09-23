@@ -102,15 +102,16 @@ void RTC_Test()
 void SD_Test()
 {
 	u8 Data[20];
-
+	FIL fils;
+	DIR dp;
 	File_FATFSInit();
 	File_MountDisk("1:");
 	File_Mkdir("1:/SD");
-	File_OpenDir("1:/SD");
-	File_CreateNewFile("1:/SD/Data.c");
-	File_WriteData("1:/SD/Data.c",(u8*)"Working!!",10,0);
-	File_WriteData("1:/SD/Data.c",(u8*)"add Test",9,10);
-	File_ReadData("1:/SD/Data.c",Data,10,10);
+	File_OpenDir("1:/SD",&dp);
+	File_CreateNewFile("1:/SD/Data.c",&fils);
+	File_WriteData(&fils,"1:/SD/Data.c",(u8*)"Working!!",10,0);
+	File_WriteData(&fils,"1:/SD/Data.c",(u8*)"add Test",9,10);
+	File_ReadData(&fils,"1:/SD/Data.c",Data,10,10);
 	//File_CloseDir();
 
 }

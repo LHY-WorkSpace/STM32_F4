@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,ARM_MATH_CM4, __FPU_PRESENT, __FPU_USED, __CC_ARM,USE_EMBEDDED_PHY,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal;..\Module\lvgl-v7\src\lv_widgets;..\Module\lvgl-v7\examples\Mark;..\Module\lvgl-v7\examples\Mark\assets;..\Module\lvgl-v7\lv_demos-7.11.0;..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets</IncludePath>
+              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal;..\Module\lvgl-v7\src\lv_widgets;..\Module\lvgl-v7\examples\Mark;..\Module\lvgl-v7\examples\Mark\assets;..\Module\lvgl-v7\lv_demos-7.11.0;..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets;..\Module\lvgl-v7\src\lv_core;..\Module\lvgl-v7\examples\porting</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2057,6 +2057,11 @@
               <FileName>lv_ex_cpicker_1.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets\lv_ex_cpicker\lv_ex_cpicker_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>LVGL_Init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\lvgl-v7\LVGL_Init.c</FilePath>
             </File>
           </Files>
         </Group>

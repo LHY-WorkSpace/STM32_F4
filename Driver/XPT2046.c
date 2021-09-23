@@ -207,11 +207,11 @@ u8 XPT2046_Read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     data->point.y = y;
 
 
-    OLED_ShowStrings(0,2,"X:",2);
-    OLED_ShowStrings(0,3,"Y:",2);   
-    OLED_ShowNumber(16,2,x,4);
-    OLED_ShowNumber(16,3,y,4);
-	OLED_UpdateGRAM();
+    // OLED_ShowStrings(0,2,"X:",2);
+    // OLED_ShowStrings(0,3,"Y:",2);   
+    // OLED_ShowNumber(16,2,x,4);
+    // OLED_ShowNumber(16,3,y,4);
+	// OLED_UpdateGRAM();
 
     return false;
 }

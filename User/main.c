@@ -64,10 +64,10 @@ void LCD_Task()
 	Time=xTaskGetTickCount();
 	while(1)
 	{
-		// taskENTER_CRITICAL();
+		//taskENTER_CRITICAL();
 		LCD_ShowPicture();
-		// taskEXIT_CRITICAL();
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		//taskEXIT_CRITICAL();
+		vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
 	}
 
 
@@ -182,20 +182,20 @@ void SDCard_Task()
 	u32 i=0;
 	u16 Frames=0;
 	TickType_t Time;
+	FIL fils;
 	Time = xTaskGetTickCount();
 
-	File_FATFSInit();
-	File_MountDisk("1:");
-	File_OpenDir("1:/SD");
 	while(1)
 	{	
-		File_ReadData("1:/SD/Data_BadApple.bin",buff,sizeof(buff),i);
+
+
+		File_ReadData(&fils,"1:/SD/Data_BadApple.bin",buff,sizeof(buff),i);
 		OLED_Data2GRAM(buff,sizeof(buff));
 		OLED_ShowNumber(0,0,Frames,5);
 		i+=sizeof(buff);
 		Frames++;
 		OLED_UpdateGRAM();
-		vTaskDelayUntil(&Time,38/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
 }
@@ -263,9 +263,9 @@ void Task_Init()
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,13,NULL);
-	xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
-
-	// xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",4096,NULL,10,NULL);
+	//xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
+	xTaskCreate( (TaskFunction_t)LCD_Task,"LVGL",3000,NULL,11,NULL);
+	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",1500,NULL,12,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -277,16 +277,15 @@ int  main()
 	lv_indev_drv_t indev_drv;
 	lv_indev_data_t  data;
 
+
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
 	LCD_Init();
-	XPT2046_Init();
-	// File_FATFSInit();
-	// File_MountDisk("1:");
-	// File_OpenDir("1:/SD");
+	File_FATFSInit();
+	//LVGL_Init();
 
 
 	//RTC_ConfigInit();
@@ -295,16 +294,16 @@ int  main()
 	//USB_Task();
 	//TaskTimer_Init();
 
-	lv_init();
-	lv_port_disp_init();
-	lv_port_indev_init();
+	// lv_init();
+	// lv_port_disp_init();
+	// lv_port_indev_init();
 
 	// lv_ex_img_1();
 	//lv_ex_img_2();
 	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
 	//lv_demo_stress();
-	lv_demo_benchmark();
+	// lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
 	// LCD_ShowPicture();
 	Task_Init();
@@ -316,7 +315,7 @@ int  main()
 	// while (1)
 	// {
 
-	// 	XPT2046_Read(&indev_drv,&data);
+		//XPT2046_Read(&indev_drv,&data);
 	// 	OLED_UpdateGRAM();
 	// 	lv_task_handler();
 	// 	lv_tick_inc(10);

@@ -43,8 +43,8 @@ PD 7--LCD_CS
 
 typedef union
 {
-	u8 Data_8[640];
-	u16 Data_16[320];
+	u8 Data_8[2400];   //  5ÐÐ
+	u16 Data_16[1200]; 
 }Data_Buff;
 
 
