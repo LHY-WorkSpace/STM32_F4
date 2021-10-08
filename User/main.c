@@ -11,7 +11,7 @@ QueueBuff_t QueueBuff[5];
 TaskHandle_t  Task_1_Handle;
 QueueHandle_t Queue_Handle;
 
-
+extern u8 USART1_Buffer[1024];
 
 void OLED_Task(void)
 {
@@ -280,11 +280,14 @@ int  main()
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
+	//MPU6050_Init();
 	OLED_Init();
+	// XPT2046_Init();
 	LCD_Init();
-	File_FATFSInit();
+	// File_FATFSInit();
 	//LVGL_Init();
 
 
@@ -305,22 +308,26 @@ int  main()
 	//lv_demo_stress();
 	// lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
-	// LCD_ShowPicture();
-	Task_Init();
-
-	vTaskStartScheduler();
 
 
+	// Task_Init();
 
-	// while (1)
-	// {
+	// vTaskStartScheduler();
 
-		//XPT2046_Read(&indev_drv,&data);
-	// 	OLED_UpdateGRAM();
-	// 	lv_task_handler();
-	// 	lv_tick_inc(10);
-	// 	// LCD_DrawPoint(data.point.x,data.point.y,0X00);
-	// }
+
+	printf("%s","AT+RST\r\n");
+	while (1)
+	{
+		LCD_ShowString(0,0,240,320,12,USART1_Buffer);
+		// OLED_ShowStrings(0,0,USART1_Buffer,64);
+		// OLED_ShowNumber(16,2,data.point.x,4);
+		// OLED_ShowNumber(16,3,data.point.y,4);
+		// OLED_UpdateGRAM();
+
+		// lv_task_handler();
+		// lv_tick_inc(10);
+		// LCD_DrawPoint(data.point.x,data.point.y,0X00);
+	}
 
 	SystemDown();
 }	

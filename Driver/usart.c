@@ -132,8 +132,8 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART_Init(USART2,&USART2_Initstruc);
 	
 	NVIC_Initstr.NVIC_IRQChannel=USART2_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=1;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=6;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
@@ -192,8 +192,18 @@ void USART1_IRQHandler()
 
 void USART2_IRQHandler()
 {
+	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
+	{
+		USART1_Buffer[RX_Point] = USART_ReceiveData(USART2);
+		RX_Point++;	
+		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
+	}
 
-	USART_ClearITPendingBit(USART2,USART_IT_RXNE|USART_IT_TC);
+	if(USART_GetITStatus(USART2,USART_IT_TC)!=RESET)
+	{
+		USART_ClearITPendingBit(USART2,USART_IT_TC);
+	}
+
 }
 
 

@@ -1110,11 +1110,18 @@ void LCD_ShowString(u16 x,u16 y,u16 Width,u16 Height,u8 size,u8 *p)
 	u8 x0=x;
 	Width+=x;
 	Height+=y;
-    while((*p<='~')&&(*p>=' '))//判断是不是非法字符!
+    while(1)//判断是不是非法字符!
     {       
         if(x>=Width){x=x0;y+=size;}
         if(y>=Height)break;//退出
-        LCD_ShowChar(x,y,*p,size,1);
+		if((*p<='~')&&(*p>=' '))
+		{
+			LCD_ShowChar(x,y,*p,size,1);
+		}
+		else
+		{
+			LCD_ShowChar(x,y,' ',size,1);
+		}
         x+=size/2;
         p++;
     }  

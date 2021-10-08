@@ -21,8 +21,21 @@ void USB_Task()
 void MPU6050_Test()
 {
 	float pitch,yaw,roll; 
+	// char PData[6];
+	// char YData[6];
+	// char RData[6];
 	MPU6050_Get_DMP_Data(&pitch,&yaw,&roll);
 	printf("P:%f Y:%f R:%f\r\n",pitch,yaw,roll);
+	// sprintf(PData,"%3.2f",pitch);
+	// sprintf(YData,"%3.2f",yaw);
+	// sprintf(RData,"%3.2f",roll);
+
+	// OLED_ShowStrings(50,0,PData,6);
+	// OLED_ShowStrings(50,1,YData,6); 
+	// OLED_ShowStrings(50,2,RData,6);
+	// OLED_UpdateGRAM();
+
+
 }
 	
 

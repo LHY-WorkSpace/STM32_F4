@@ -173,7 +173,23 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename></Filename>
           <ExecCommand></ExecCommand>
-          <Expression></Expression>
+          <Expression>0x0800774C</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>1121</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134224558</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Driver\lcd.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../Driver/lcd.c\1121</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -306,6 +322,11 @@
           <count>25</count>
           <WinNumber>1</WinNumber>
           <ItemText>LCD_Dev</ItemText>
+        </Ww>
+        <Ww>
+          <count>26</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>USART1_Buffer</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>

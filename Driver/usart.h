@@ -19,7 +19,7 @@
 
 
 #define USART1_MODE_A
-#define USART2_MODE_A   
+#define USART2_MODE_B   
 
 
 
