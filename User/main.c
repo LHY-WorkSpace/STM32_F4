@@ -36,7 +36,6 @@ void OLED_Task(void)
 		i++;
 		OLED_UpdateGRAM();
 		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
-
 	}
 }
 
@@ -110,26 +109,11 @@ void USART_Task_4_()
 
 }
 
-void USART_Task_5_()
-{
-	TickType_t Time;
 
-	Time=xTaskGetTickCount();
-	while(1)
-	{
-		// taskENTER_CRITICAL();
-		// printf("Task_5 \r\n");
-		// taskEXIT_CRITICAL();
-		OLED_ClearScreen(0X00);
-		vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
-	}
-
-
-}
 
 void Queue_Task()
 {
-// QueueBuff_t QueueTemp;
+
 	u8 buff[1024];
 	u16 Frames=0;
 	TickType_t Time;
@@ -152,13 +136,29 @@ void Queue_Task()
 
 	
 }
-   
+
+
+void USART_Task_5()
+{
+	TickType_t Time;
+	static u16 Test_Val =0;
+	Time=xTaskGetTickCount();
+	while(1)
+	{
+		OLED_ShowNumber(0,0,Test_Val,5);
+		OLED_UpdateGRAM();
+		vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
+	}
+
+
+}
+
 
 
 void LED_Task(void)
 {
 	TickType_t Time;
-
+	static u16 Test_Val=0;
 	Time=xTaskGetTickCount();
 	while(1)
 	{	
@@ -170,6 +170,8 @@ void LED_Task(void)
 		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
 		LED1_OFF;
 		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
+		Test_Val++;
+		OLED_ShowNumber(0,3,Test_Val,5);
 	}
 }
 
@@ -234,20 +236,22 @@ void LVGL_Task()
 
 	while (1)
 	{
+		taskENTER_CRITICAL();;
 		lv_task_handler();
-		lv_tick_inc(5);
-		if(State == 0)
-		{
-			OLED_ShowStrings(0,1,"Run ",4);   
-			State=1;
-		}
-		else
-		{
-			OLED_ShowStrings(0,1,"Stop",4);   
-			State=0;
-		}
-		OLED_UpdateGRAM();
-		vTaskDelayUntil(&Time,5/portTICK_PERIOD_MS);
+		lv_tick_inc(10);
+		taskEXIT_CRITICAL();
+		// if(State == 0)
+		// {
+		// 	OLED_ShowStrings(0,1,"Run ",4);   
+		// 	State=1;
+		// }
+		// else
+		// {
+		// 	OLED_ShowStrings(0,1,"Stop",4);   
+		// 	State=0;
+		// }
+		// OLED_UpdateGRAM();
+		vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
 	}
 
 
@@ -263,9 +267,10 @@ void Task_Init()
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
 	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,13,NULL);
-	//xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
-	xTaskCreate( (TaskFunction_t)LCD_Task,"LVGL",3000,NULL,11,NULL);
-	xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",1500,NULL,12,NULL);
+	xTaskCreate( (TaskFunction_t)USART_Task_5,"LED",100,NULL,13,NULL);
+	// xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
+	// xTaskCreate( (TaskFunction_t)LCD_Task,"LVGL",3000,NULL,11,NULL);
+	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",1500,NULL,12,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
 }
@@ -280,13 +285,13 @@ int  main()
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
-	USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	//USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	//MPU6050_Init();
 	OLED_Init();
 	// XPT2046_Init();
-	LCD_Init();
+	// LCD_Init();
+	
 	// File_FATFSInit();
 	//LVGL_Init();
 
@@ -306,19 +311,23 @@ int  main()
 	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
 	//lv_demo_stress();
-	// lv_demo_benchmark();
+	//lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
 
 
-	// Task_Init();
+	Task_Init();
 
-	// vTaskStartScheduler();
+	vTaskStartScheduler();
 
 
-	printf("%s","AT+RST\r\n");
+	//printf("%s","AT+RST\r\n");
 	while (1)
-	{
-		LCD_ShowString(0,0,240,320,12,USART1_Buffer);
+	{ 
+		//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
+		lv_task_handler();
+		lv_tick_inc(5);
+		delay_ms(5);
+		
 		// OLED_ShowStrings(0,0,USART1_Buffer,64);
 		// OLED_ShowNumber(16,2,data.point.x,4);
 		// OLED_ShowNumber(16,3,data.point.y,4);
@@ -330,6 +339,7 @@ int  main()
 	}
 
 	SystemDown();
+
 }	
 	
 

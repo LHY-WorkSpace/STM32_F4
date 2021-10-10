@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${default}",
+                "${workspaceFolder}/Driver",
+                "${workspaceFolder}/FreeRTOS/include",
+                "${workspaceFolder}/FreeRTOS/portable",
+                "${workspaceFolder}/CMSIS",
+                "${workspaceFolder}/User",
+                "${workspaceFolder}/Module/SD",
+                "${workspaceFolder}/FreeRTOS/portable",
+                "${workspaceFolder}/Module/lvgl-v7"
+
+                // "${workspaceFolder}/FreeRTOS/include",
+                // "${workspaceFolder}/FreeRTOS/include",
+                // "${workspaceFolder}/FreeRTOS/include",
+                // "${workspaceFolder}/FreeRTOS/include",
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
