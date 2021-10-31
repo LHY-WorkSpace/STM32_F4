@@ -28,10 +28,10 @@
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_H
 
-#ifndef INC_FREERTOS_H
-	#error "include FreeRTOS.h" must appear in source files before "include semphr.h"
-#endif
-
+// #ifndef INC_FREERTOS_H
+// 	#error "include FreeRTOS.h" must appear in source files before "include semphr.h"
+// #endif
+#include "FreeRTOS.h"
 #include "queue.h"
 
 typedef QueueHandle_t SemaphoreHandle_t;
@@ -140,20 +140,24 @@ typedef QueueHandle_t SemaphoreHandle_t;
  *
  * Example usage:
  <pre>
- SemaphoreHandle_t xSemaphore = NULL;
+*/
 
- void vATask( void * pvParameters )
- {
-    // Semaphore cannot be used before a call to xSemaphoreCreateBinary().
-    // This is a macro so pass the variable in directly.
-    xSemaphore = xSemaphoreCreateBinary();
+//  SemaphoreHandle_t xSemaphore = NULL;
 
-    if( xSemaphore != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-    }
- }
+//  void vATask( void * pvParameters )
+//  {
+//     // Semaphore cannot be used before a call to xSemaphoreCreateBinary().
+//     // This is a macro so pass the variable in directly.
+//     xSemaphore = xSemaphoreCreateBinary();
+
+//     if( xSemaphore != NULL )
+//     {
+//         // The semaphore was created successfully.
+//         // The semaphore can now be used.
+//     }
+//  }
+
+/*
  </pre>
  * \defgroup xSemaphoreCreateBinary xSemaphoreCreateBinary
  * \ingroup Semaphores

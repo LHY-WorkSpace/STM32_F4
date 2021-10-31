@@ -48,6 +48,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "semphr.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "diskio.h"	
@@ -63,6 +64,10 @@
 #include "lcd.h"
 #include "lvgl.h"
 #include "LVGL_Init.h"
+
+
+
+
 
 #endif
 

@@ -786,6 +786,7 @@ void OLED_ShowChar(u8 x,u8 y,u8* Data)
  y:0-3 (每个字符高度16像素，最多4行字符)
 Length：字符串长度
 当显示长度超过一行(最多16个)时，自动换行
+单屏最多64个(8*16尺寸的字符)
 */
 void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 {	
@@ -793,7 +794,7 @@ void OLED_ShowStrings(u8 x,u8 y,char* Data,u8 Length)
 	u8 i=0;
 
 	if( Length > 64 || Length == 0 )
-	 	return;   			 //单屏最多64个(8*16尺寸的字符)
+	 	return;   			
 
 	while( i < Length )
 	{

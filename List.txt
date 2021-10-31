@@ -29,10 +29,16 @@ RTOS中如果使用delay_xs(),会导致其他任务忽快忽慢，因为在等待delay的过程中，其他任
 
 
 
+vTaskSuspendAll(); //挂起任务调度器
+之间不能有FreeRTOS函数！！！！
+xTaskResumeAll();//恢复任务调度器
 
 
 
-
+临界区访问函数只会屏蔽和开启受FreeRTOS管理的中断，
+对于高于【configMAX_SYSCALL_INTERRUPT_PRIORITY】中断函数内不能包含FreeRTOS函数
+taskENTER_CRITICAL();进入临界区
+taskEXIT_CRITICAL();退出临界区
 
 
 

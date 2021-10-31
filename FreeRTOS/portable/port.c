@@ -237,9 +237,9 @@ __asm void vPortSVCHandler( void )
 	PRESERVE8
 
 	/* Get the location of the current TCB. */
-	ldr	r3, =pxCurrentTCB
-	ldr r1, [r3]
-	ldr r0, [r1]
+	ldr	r3, =pxCurrentTCB	//取 pxCurrentTCB 的地址
+	ldr r1, [r3]			//取 pxCurrentTCB 的内容到R1( 即 R1 = pxTopOfStack )  pxTopOfStack为一个指针变量！！！！
+	ldr r0, [r1]			//取 pxTopOfStack 指向的内容，即 R0 = 栈地址
 	/* Pop the core registers. */
 	ldmia r0!, {r4-r11, r14}
 	msr psp, r0
@@ -255,9 +255,9 @@ __asm void prvStartFirstTask( void )
 	PRESERVE8
 
 	/* Use the NVIC offset register to locate the stack. */
-	ldr r0, =0xE000ED08
-	ldr r0, [r0]
-	ldr r0, [r0]
+	ldr r0, =0xE000ED08		//加载 VTOR寄存器的地址到R0
+	ldr r0, [r0]			//取VTOR寄存器的内容,即中断向量表的偏移地址
+	ldr r0, [r0]			//取偏移地址的第一个数据(即MSP)到 R0
 	/* Set the msp back to the start of the stack. */
 	msr msp, r0
 	/* Clear the bit that indicates the FPU is in use in case the FPU was used
@@ -265,14 +265,14 @@ __asm void prvStartFirstTask( void )
 	unnecessary leaving of space in the SVC stack for lazy saving of FPU
 	registers. */
 	mov r0, #0
-	msr control, r0
+	msr control, r0		// control寄存器只能在特权模式下由 MSR 访问
 	/* Globally enable interrupts. */
-	cpsie i
-	cpsie f
-	dsb
-	isb
+	cpsie i			//开全局中断
+	cpsie f			//开异常中断
+	dsb				//数据同步隔离
+	isb				//指令同步隔离
 	/* Call SVC to start the first task. */
-	svc 0
+	svc 0			//调用SVC中断
 	nop
 	nop
 }

@@ -49,6 +49,7 @@ void USART_Task_1_()
 		xQueueSendToBack(Queue_Handle,&QueueBuff[0],0);
 		taskENTER_CRITICAL();
 		printf("Task_1 \r\n");
+		taskYIELD();
 		taskEXIT_CRITICAL();
 		taskYIELD();
 	}
@@ -257,6 +258,43 @@ void LVGL_Task()
 
 }
 
+void Send_1()
+{
+	u8 AAA=1;
+	while (1)
+	{
+		printf("Send_1\r\n");
+		xQueueSendToBack(Queue_Handle,&AAA,0);
+		taskYIELD();
+	}
+}
+
+void Send_2()
+{
+	u8 AAA=2;
+	while (1)
+	{
+		printf("Send_2\r\n");
+		xQueueSendToBack(Queue_Handle,&AAA,0);
+		taskYIELD();
+	}
+}
+void Get_1()
+{
+	u8 AAA=0;
+	BaseType_t states;
+	u8 asd=0;
+	while (1)
+	{
+		printf("！！！！  %d  ！！！\r\n",uxQueueMessagesWaiting(Queue_Handle));
+		states = xQueueReceive(Queue_Handle,&AAA,200);
+		printf("*******  %d  ******\r\n",uxQueueMessagesWaiting(Queue_Handle));
+		if( states == pdPASS)
+		{
+			printf("#%d \r\n",AAA);
+		}
+	}
+}
 
 
 void Task_Init()
@@ -266,14 +304,82 @@ void Task_Init()
 	// xTaskCreate( (TaskFunction_t)USART_Task_3_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)USART_Task_4_,"USART",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)OLED_Task,"USART",100,NULL,10,NULL);
-	xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,13,NULL);
-	xTaskCreate( (TaskFunction_t)USART_Task_5,"LED",100,NULL,13,NULL);
+	// xTaskCreate( (TaskFunction_t)LED_Task,"LED",100,NULL,13,NULL);
+	// xTaskCreate( (TaskFunction_t)USART_Task_5,"LED",100,NULL,13,NULL);
 	// xTaskCreate( (TaskFunction_t)LVGL_Task,"LVGL",1000,NULL,12,NULL);
 	// xTaskCreate( (TaskFunction_t)LCD_Task,"LVGL",3000,NULL,11,NULL);
 	//xTaskCreate( (TaskFunction_t)SDCard_Task,"Queue",1500,NULL,12,NULL);
 	//xTaskCreate( (TaskFunction_t)Clock_Task,"Clock",100,NULL,10,NULL);
 	//xTaskCreate( (TaskFunction_t)Queue_Task,"USART",2048,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)Get_1,"LED",100,NULL,14,NULL);
+	xTaskCreate( (TaskFunction_t)Send_1,"LED",100,NULL,13,NULL);
+	xTaskCreate( (TaskFunction_t)Send_2,"LED",100,NULL,13,NULL);
+
+
 }
+
+
+
+
+
+SemaphoreHandle_t xSemaphore;
+
+void vATask( void * pvParameters )
+{
+    /* Attempt to create a semaphore. */
+    xSemaphore = xSemaphoreCreateBinary();
+
+    if( xSemaphore == NULL )
+    {
+        /* There was insufficient FreeRTOS heap available for the semaphore to
+        be created successfully. */
+    }
+    else
+    {
+        /* The semaphore can now be used. Its handle is stored in the
+        xSemahore variable.  Calling xSemaphoreTake() on the semaphore here
+        will fail until the semaphore has first been given. */
+    }
+
+
+
+
+	//获取信号量，如果无效，则阻塞Times时长来等待信号量有效
+	if( xSemaphoreTake( xSemaphore, ( TickType_t ) Times ) )
+	{
+		//获取信号量成功！！
+	}
+
+void __interrupt __far vExampleInterruptHandler( void ) 
+{ 
+	static portBASE_TYPE xHigherPriorityTaskWoken; 
+	xHigherPriorityTaskWoken = pdFALSE; //初始状态设置为FALSE
+	
+	// xHigherPriorityTaskWoken 用于指示【被中断的函数】 和 【被信号量阻塞的任务】的优先级比较结果
+	// 当【被信号量解除阻塞的任务优先级】 高于 【被中断的函数】 的任务时， xHigherPriorityTaskWoken 会被设置为TURE
+	xSemaphoreGiveFromISR( xBinarySemaphore, &xHigherPriorityTaskWoken ); 
+
+	if( xHigherPriorityTaskWoken == pdTRUE ) 
+	{ 
+		/* 给出信号量以使得等待此信号量的任务解除阻塞。如果解出阻塞的任务的优先级高于当前任务的优先
+		级 – 强制进行一次任务切换，以确保中断直接返回到解出阻塞的任务(优选级更高)。
+		*/ 
+		vTaskSwitchContext(); 
+	} 
+} 
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 int  main()
 {
@@ -289,6 +395,7 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
+	Queue_Handle = xQueueCreate(5,1);
 	// XPT2046_Init();
 	// LCD_Init();
 	
@@ -314,13 +421,10 @@ int  main()
 	//lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
 
-
 	Task_Init();
 
 	vTaskStartScheduler();
 
-
-	//printf("%s","AT+RST\r\n");
 	while (1)
 	{ 
 		//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
@@ -328,7 +432,7 @@ int  main()
 		lv_tick_inc(5);
 		delay_ms(5);
 		
-		// OLED_ShowStrings(0,0,USART1_Buffer,64);
+		OLED_ShowStrings(0,0,USART1_Buffer,64);
 		// OLED_ShowNumber(16,2,data.point.x,4);
 		// OLED_ShowNumber(16,3,data.point.y,4);
 		// OLED_UpdateGRAM();
@@ -341,7 +445,6 @@ int  main()
 	SystemDown();
 
 }	
-	
 
 
 
@@ -372,6 +475,21 @@ void Function_list()
 
 
 
+只会关闭上下文的切换，不关闭中断
+临界区执行时间太长时建议使用此操作，而不是使用临界区开关中断的方式
+vTaskSuspendAll(); //挂起任务调度器
+之间不能有FreeRTOS函数！！！！
+xTaskResumeAll();//恢复任务调度器
+
+
+
+临界区访问函数只会屏蔽和开启受FreeRTOS管理的中断，
+对于高于【configMAX_SYSCALL_INTERRUPT_PRIORITY】中断函数内不能包含FreeRTOS函数
+taskENTER_CRITICAL();进入临界区
+taskEXIT_CRITICAL();退出临界区
+
+
+
 
 
 	https://blog.csdn.net/qq_40318498/article/details/97111069?utm_term=tft%E6%98%BE%E7%A4%BA%E9%97%AA%E7%83%81&utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-5-97111069&spm=3001.4430
@@ -380,12 +498,6 @@ void Function_list()
 
 }
 */
-
-
-
-
-
-
 
 
 

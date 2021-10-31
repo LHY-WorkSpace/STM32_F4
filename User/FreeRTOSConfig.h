@@ -51,10 +51,10 @@
 #define configUSE_IDLE_HOOK								0
 #define configUSE_TICK_HOOK								0
 #define configCPU_CLOCK_HZ								( SystemCoreClock )
-#define configTICK_RATE_HZ								( ( TickType_t ) 1000 )
+#define configTICK_RATE_HZ								( ( TickType_t ) 100 )
 #define configMAX_PRIORITIES							( 15 )
 #define configMINIMAL_STACK_SIZE						( ( unsigned short ) 150 )
-#define configTOTAL_HEAP_SIZE							( ( size_t ) ( 30 * 1024 ) )
+#define configTOTAL_HEAP_SIZE							( ( size_t ) ( 30 * 1024 ) )  // 30k的堆大小，由FreeRTOS管理
 #define configMAX_TASK_NAME_LEN							( 20 )
 #define configUSE_TRACE_FACILITY						1
 #define configUSE_16_BIT_TICKS							0
@@ -82,11 +82,11 @@
 to exclude the API function. */
 #define INCLUDE_vTaskPrioritySet		   1
 #define INCLUDE_uxTaskPriorityGet		   1
-#define INCLUDE_vTaskDelete				     1
-#define INCLUDE_vTaskCleanUpResources	 1
-#define INCLUDE_vTaskSuspend			     1
+#define INCLUDE_vTaskDelete				   1
+#define INCLUDE_vTaskCleanUpResources	   1
+#define INCLUDE_vTaskSuspend			   1
 #define INCLUDE_vTaskDelayUntil			   1
-#define INCLUDE_vTaskDelay				     1
+#define INCLUDE_vTaskDelay				   1
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
