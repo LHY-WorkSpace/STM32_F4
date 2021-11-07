@@ -49,7 +49,7 @@ __initial_sp
 ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Heap_Size       EQU     0x00005000       ;10K
+Heap_Size       EQU     0x00000200       ;512字节，使用malloc时才会编译进去 不使用不会被使用
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base

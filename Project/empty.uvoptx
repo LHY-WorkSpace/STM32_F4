@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=1152,218,1602,775,0)(1007=1172,464,1359,739,0)(1008=852,352,1228,588,0)(1009=501,271,759,859,0)(1012=950,363,1427,678,0)</Name>
+          <Name>(1010=702,188,1152,745,0)(1007=1172,464,1359,739,0)(1008=852,352,1228,588,0)(1009=501,271,759,859,0)(1012=950,363,1427,678,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -178,18 +178,34 @@
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>1121</LineNumber>
+          <LineNumber>258</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134224558</Address>
+          <Address>134218176</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\FreeRTOS\portable\port.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../FreeRTOS/portable/port.c\258</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>1121</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>..\Driver\lcd.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../Driver/lcd.c\1121</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

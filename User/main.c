@@ -344,29 +344,29 @@ void vATask( void * pvParameters )
 
 
 
-	//获取信号量，如果无效，则阻塞Times时长来等待信号量有效
-	if( xSemaphoreTake( xSemaphore, ( TickType_t ) Times ) )
-	{
-		//获取信号量成功！！
-	}
+//	//获取信号量，如果无效，则阻塞Times时长来等待信号量有效
+//	if( xSemaphoreTake( xSemaphore, ( TickType_t ) Times ) )
+//	{
+//		//获取信号量成功！！
+//	}
 
-void __interrupt __far vExampleInterruptHandler( void ) 
-{ 
-	static portBASE_TYPE xHigherPriorityTaskWoken; 
-	xHigherPriorityTaskWoken = pdFALSE; //初始状态设置为FALSE
-	
-	// xHigherPriorityTaskWoken 用于指示【被中断的函数】 和 【被信号量阻塞的任务】的优先级比较结果
-	// 当【被信号量解除阻塞的任务优先级】 高于 【被中断的函数】 的任务时， xHigherPriorityTaskWoken 会被设置为TURE
-	xSemaphoreGiveFromISR( xBinarySemaphore, &xHigherPriorityTaskWoken ); 
+//void __interrupt __far vExampleInterruptHandler( void ) 
+//{ 
+//	static portBASE_TYPE xHigherPriorityTaskWoken; 
+//	xHigherPriorityTaskWoken = pdFALSE; //初始状态设置为FALSE
+//	
+//	// xHigherPriorityTaskWoken 用于指示【被中断的函数】 和 【被信号量阻塞的任务】的优先级比较结果
+//	// 当【被信号量解除阻塞的任务优先级】 高于 【被中断的函数】 的任务时， xHigherPriorityTaskWoken 会被设置为TURE
+//	xSemaphoreGiveFromISR( xBinarySemaphore, &xHigherPriorityTaskWoken ); 
 
-	if( xHigherPriorityTaskWoken == pdTRUE ) 
-	{ 
-		/* 给出信号量以使得等待此信号量的任务解除阻塞。如果解出阻塞的任务的优先级高于当前任务的优先
-		级 – 强制进行一次任务切换，以确保中断直接返回到解出阻塞的任务(优选级更高)。
-		*/ 
-		vTaskSwitchContext(); 
-	} 
-} 
+//	if( xHigherPriorityTaskWoken == pdTRUE ) 
+//	{ 
+//		/* 给出信号量以使得等待此信号量的任务解除阻塞。如果解出阻塞的任务的优先级高于当前任务的优先
+//		级 – 强制进行一次任务切换，以确保中断直接返回到解出阻塞的任务(优选级更高)。
+//		*/ 
+//		vTaskSwitchContext(); 
+//	} 
+//} 
 
 
 }
