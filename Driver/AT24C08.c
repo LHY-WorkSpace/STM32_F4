@@ -60,6 +60,56 @@ void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 
 }
 
+
+
+
+void AT24C08Read_NBytes(u16 addr,u16 length,u8 *data)
+{
+	u16 PageAddr,offset;
+	B16_B08 MemAddr;	//绝对地址
+
+	// offset = addr%AT24C08_PAGE_SIZE;
+	// PageAddr =addr/AT24C08_PAGE_SIZE;
+	// MemAddr.B16 = PageAddr<<4 | offset;
+
+	MemAddr.B16=addr;
+
+	Start_IIC();
+	IIC_SenddByte(AT24C08_ADDRESS);
+    IIC_Wait_Ack_OK();
+	IIC_SenddByte(MemAddr.B08[1]);
+    IIC_Wait_Ack_OK();
+	IIC_SenddByte(MemAddr.B08[0]);
+	IIC_Wait_Ack_OK();
+
+	Start_IIC();
+	IIC_SenddByte(AT24C08_ADDRESS|0X01);//读取操作
+    IIC_Wait_Ack_OK();
+
+	for(i=0;i<length;i++)
+	{
+		data[i]=IIC_GetByte();
+		if(IIC_Wait_Ack_OK()==1)
+		{
+			Stop_IIC();
+			return 1;
+		}
+		i++;
+	}
+	Stop_IIC();
+}
+
+
+void AT24C08Write_NBytes(u16 dev_addr,u16 length,u8 *data)
+{
+	
+	
+}
+
+
+
+
+
 /*
 	u8 i=0;
 	Start_IIC();

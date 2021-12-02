@@ -9,8 +9,8 @@
 #include "arm_math.h"
 #include "math.h"
 #include "stdio.h"
+#include "DataType.h"
 #include "SystemState.h"
-
 
 //Ð¾Æ¬Çý¶¯²ã
 #include "Timer.h"
@@ -70,6 +70,14 @@
 
 
 #endif
+
+
+
+
+
+
+
+
 
 
 
