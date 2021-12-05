@@ -14,13 +14,15 @@ void IIC_Init()
 	GPIO_InitTypeDef GPIO_Initstructure;
 	RCC_AHB1PeriphClockCmd(PORT_AHB,ENABLE);
 	
+	IIC_SCL_HIGH;
+	IIC_SDA_HIGH;//先写入值，防止初始化时电平拉低
+
 	GPIO_Initstructure.GPIO_Pin=IIC_SCL|IIC_SDA;	
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_OUT;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
 	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;                
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
-	
+
 }
 
 
@@ -31,7 +33,6 @@ static void Pin_in2out(void)
 	GPIO_Initstructure.GPIO_Pin=IIC_SDA;	
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_OUT;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
 	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;                
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
 
@@ -45,7 +46,6 @@ static void Pin_out2in(void)
 	GPIO_Initstructure.GPIO_Pin=IIC_SDA;	
 	GPIO_Initstructure.GPIO_Mode=GPIO_Mode_IN;          
 	GPIO_Initstructure.GPIO_Speed=GPIO_Speed_50MHz;
-	GPIO_Initstructure.GPIO_PuPd=GPIO_PuPd_UP;	
 	GPIO_Initstructure.GPIO_OType=GPIO_OType_PP;              
 	GPIO_Init(PORT_GROUP,&GPIO_Initstructure);
 
@@ -54,33 +54,25 @@ static void Pin_out2in(void)
 
 void Start_IIC(void)
 {
-		Pin_in2out();
-		IIC_SDA_HIGH;
-		IIC_SCL_HIGH;
-	 	delay_us(1);
-		IIC_SDA_LOW;
-	 	delay_us(1);
-	  	IIC_SCL_LOW;
-		delay_us(1);
-
+	Pin_in2out();
+	IIC_SDA_HIGH;
+	delay_us(2);
+	IIC_SCL_HIGH;
+	delay_us(2);
+	IIC_SDA_LOW;
+	delay_us(2);
+	IIC_SCL_LOW;
+	delay_us(2);
 }
 
 
 void Stop_IIC(void)
 {
-
 	Pin_in2out();
-	IIC_SCL_LOW;
-	delay_us(1);
-	IIC_SDA_LOW;
-	delay_us(1);
 	IIC_SCL_HIGH;
-	delay_us(1);
+	delay_us(2);
 	IIC_SDA_HIGH;
-	delay_us(1);
-	
-
-
+	delay_us(2);
 }
 
 
@@ -89,59 +81,52 @@ void Stop_IIC(void)
 
 void IIC_Send_Ack(void)
 {
-	
-	IIC_SCL_LOW;
-	Pin_in2out();
-	delay_us(1);	
+	Pin_in2out();	
 	IIC_SDA_LOW;
-	delay_us(1);
+	delay_us(2);
 	IIC_SCL_HIGH;
-	delay_us(1);
+	delay_us(4);
 	IIC_SCL_LOW;
-	delay_us(1);
+	delay_us(2);
+	IIC_SDA_HIGH;
+	delay_us(2);
 }
 
 
 
 void IIC_Send_NAck(void)
 {
-
-	IIC_SCL_LOW;
 	Pin_in2out();
-	delay_us(1);
 	IIC_SDA_HIGH;
-	delay_us(1);
+	delay_us(2);
 	IIC_SCL_HIGH;
-	delay_us(1);
+	delay_us(2);
 	IIC_SCL_LOW;
-	delay_us(1);
-
+	delay_us(2);
+	IIC_SDA_LOW;
+	delay_us(2);
 }
 
 
 u8 IIC_Wait_Ack_OK(void)
 {
 	u8 i=0;
-	Pin_out2in();	
-	IIC_SDA_HIGH;  
-	delay_us(2);
+	Pin_out2in();	  
 	IIC_SCL_HIGH; 
-	delay_us(2);
-                                       
-		while(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)
-		{
-				i++;
-				if(i>250)
-				{
-					Stop_IIC();
-					return 1;
-				}
-				delay_us(2);	
-		}
-				
-	 IIC_SCL_LOW;	
-	 delay_us(2);	
-
+	delay_us(2);                              
+	while(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)
+	{
+			i++;
+			if(i>250)
+			{
+				Stop_IIC();
+				return 1;
+			}
+			delay_us(2);	
+	}
+	delay_us(2);			
+	IIC_SCL_LOW;	
+	delay_us(2);	
 	return 0;
 }
 
@@ -150,12 +135,11 @@ void IIC_SenddByte(u8 data)
 
 	u8 i=0;
 	Pin_in2out();
-	IIC_SCL_LOW;	                      //拉低SCL
 
 	for(i=0;i<8;i++)
 	{
 		IIC_SCL_LOW;
-		delay_us(2);
+		delay_us(3);
 		if(data&0x80)	
 		{
 			IIC_SDA_HIGH;
@@ -167,10 +151,10 @@ void IIC_SenddByte(u8 data)
 		data<<=1;
 		delay_us(2);
 		IIC_SCL_HIGH;
-		//delay_us(2);
+		delay_us(5);
 	}
-    IIC_SCL_LOW;                     
-    delay_us(2);
+    IIC_SCL_LOW;
+	delay_us(2);                   
 
 }
 
@@ -182,14 +166,14 @@ u8 IIC_GetByte(void)
 
 	Pin_out2in();	
 	IIC_SDA_HIGH;
-	delay_us(2);
+	delay_us(5);
 	for(i=0;i<8;i++)
 	{		
 			data<<=1;
 			IIC_SCL_LOW;
-			delay_us(2); 		
+			delay_us(5); 		
 			IIC_SCL_HIGH;	
-			delay_us(2);
+			delay_us(5);
 			if(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)	
 			{
       			data|=0x01;
@@ -197,7 +181,7 @@ u8 IIC_GetByte(void)
 
 	}
  	IIC_SCL_LOW;	
-	delay_us(2);
+	delay_us(3);
 
   return data;
 }

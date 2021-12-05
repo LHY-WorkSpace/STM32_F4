@@ -40,14 +40,14 @@ void AT24C08Write_Byte(u8 dev_addr,u8 Data_addr,u8 data)
 }
 
 
-void AT24C08Read_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
-{
-	u16 i;
-	for(i=0;i<length;i++)
-	{
-		data[i]=AT24C08Read_Byte(dev_addr,Data_addr+i);
-	}
-}
+// void AT24C08Read_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
+// {
+// 	u16 i;
+// 	for(i=0;i<length;i++)
+// 	{
+// 		data[i]=AT24C08Read_Byte(dev_addr,Data_addr+i);
+// 	}
+// }
 
 
 void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
@@ -63,14 +63,10 @@ void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 
 
 
-void AT24C08Read_NBytes(u16 addr,u16 length,u8 *data)
+u8 AT24C08Read_NBytes(u16 addr,u16 length,u8 *data)
 {
-	u16 PageAddr,offset;
+	u16 PageAddr,offset,i;
 	B16_B08 MemAddr;	//绝对地址
-
-	// offset = addr%AT24C08_PAGE_SIZE;
-	// PageAddr =addr/AT24C08_PAGE_SIZE;
-	// MemAddr.B16 = PageAddr<<4 | offset;
 
 	MemAddr.B16=addr;
 
@@ -89,22 +85,25 @@ void AT24C08Read_NBytes(u16 addr,u16 length,u8 *data)
 	for(i=0;i<length;i++)
 	{
 		data[i]=IIC_GetByte();
-		if(IIC_Wait_Ack_OK()==1)
+		if( i == length-1)
 		{
-			Stop_IIC();
-			return 1;
+			IIC_Send_NAck();//最后一个字节发送N_ACK
 		}
-		i++;
+		else
+		{
+			IIC_Send_Ack();
+		}
+		
 	}
 	Stop_IIC();
 }
 
 
-void AT24C08Write_NBytes(u16 dev_addr,u16 length,u8 *data)
-{
-	
-	
-}
+//void AT24C08Write_NBytes(u16 dev_addr,u16 length,u8 *data)
+//{
+//	
+//	
+//}
 
 
 

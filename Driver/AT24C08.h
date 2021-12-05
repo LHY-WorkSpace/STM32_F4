@@ -13,9 +13,9 @@
 void AT24C08_init(void);
 u8 AT24C08Read_Byte(u8 dev_addr,u8 Data_addr);
 void AT24C08Write_Byte(u8 dev_addr,u8 Data_addr,u8 data);
-void AT24C08Read_NBytes(u8 dev_addr,u8 addr,u16 length,u8 *data);
+// void AT24C08Read_NBytes(u8 dev_addr,u8 addr,u16 length,u8 *data);
 void AT24C08Write_NBytes(u8 dev_addr,u8 addr,u16 length,u8 *data);
-
+u8 AT24C08Read_NBytes(u16 addr,u16 length,u8 *data);
 
 #endif
 

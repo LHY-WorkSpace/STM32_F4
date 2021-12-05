@@ -387,6 +387,7 @@ int  main()
 	u16 x=500,y=0,clr=0;
 	lv_indev_drv_t indev_drv;
 	lv_indev_data_t  data;
+	u8 Data[1024];
 
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
@@ -395,7 +396,8 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
-	Queue_Handle = xQueueCreate(5,1);
+	IIC_Init();
+	//Queue_Handle = xQueueCreate(5,1);
 	// XPT2046_Init();
 	// LCD_Init();
 	
@@ -420,6 +422,10 @@ int  main()
 	//lv_demo_stress();
 	//lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
+
+	AT24C08Read_NBytes(0,1024,Data);
+
+
 
 	Task_Init();
 

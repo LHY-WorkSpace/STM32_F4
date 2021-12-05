@@ -41,7 +41,7 @@ void Delay_Init()
 	TIM_TimeBaseInitStr.TIM_Period=10000;                    //未开启预装载，此值无用，只是写入一个值而已
 	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
-    TIM_ARRPreloadConfig(TIM9,DISABLE);
+    TIM_ARRPreloadConfig(TIM10,DISABLE);
     TIM_Cmd(TIM10,ENABLE);
    
 }
@@ -51,7 +51,6 @@ void Delay_Init()
 //最大65535us=65.535ms
 void delay_us(u16 nus)
 {
-
     TIM10->CNT = 0;
     TIM_Cmd(TIM10,ENABLE);
     while (TIM10->CNT < nus);
