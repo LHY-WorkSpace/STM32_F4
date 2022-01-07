@@ -69,13 +69,15 @@ void Start_IIC(void)
 void Stop_IIC(void)
 {
 	Pin_in2out();
+	IIC_SCL_LOW;
+	delay_us(2);
+	IIC_SDA_LOW;
+	delay_us(2);
 	IIC_SCL_HIGH;
 	delay_us(2);
 	IIC_SDA_HIGH;
 	delay_us(2);
 }
-
-
 
 
 
@@ -100,7 +102,7 @@ void IIC_Send_NAck(void)
 	IIC_SDA_HIGH;
 	delay_us(2);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	delay_us(5);
 	IIC_SCL_LOW;
 	delay_us(2);
 	IIC_SDA_LOW;
@@ -127,7 +129,7 @@ u8 IIC_Wait_Ack_OK(void)
 	delay_us(2);			
 	IIC_SCL_LOW;	
 	delay_us(2);	
-	return 0;
+	return TRUE;
 }
 
 void IIC_SenddByte(u8 data)

@@ -1,5 +1,11 @@
 #include"IncludeFile.h"
 
+
+
+
+
+
+
 void AT24C08_init(void)
 {
 	IIC_Init();
@@ -48,15 +54,95 @@ void AT24C08Write_Byte(u8 dev_addr,u8 Data_addr,u8 data)
 // 		data[i]=AT24C08Read_Byte(dev_addr,Data_addr+i);
 // 	}
 // }
+	
 
-
-void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
+u8  AT24C08Write_NBytes(u16 addr,u16 length,u8 *data)
 {
-	u16 i;
-	for(i=0;i<length;i++)
+	u8 i,k;
+	u8 Pages;
+	u16 PageNum,WR_Len=,Offset;
+	B16_B08 MemAddr;	//绝对地址
+
+	if( addr >= AT24C08_PAGE_SIZE*AT24C08_PAGES)
 	{
-		AT24C08Write_Byte(dev_addr,Data_addr+i,data[i]);
+		return 0XFF;
 	}
+	MemAddr.B16 = addr;
+
+	PageNum = addr/AT24C08_PAGE_SIZE;			//得到页编号
+	Offset = addr - PageNum*AT24C08_PAGE_SIZE;	//计算页内偏移
+	WR_Len = AT24C08_PAGE_SIZE - Offset;		//计算一页内从偏移位置要写入的字节数
+
+
+	if( length/AT24C08_PAGE_SIZE == 0)
+	{
+		Pages = 1;
+	}
+	else
+	{
+		if( length%AT24C08_PAGE_SIZE == 0)
+		{
+			
+		}
+		else
+		{
+			
+		}
+	}
+
+
+
+
+	if(length > AT24C08_PAGE_SIZE)
+	{
+		
+		PageSize = AT24C08_PAGE_SIZE;
+
+		if( length%AT24C08_PAGE_SIZE != 0)
+		{
+			Pages += 1;
+		}
+	}
+	else
+	{
+		Pages = 1;
+		PageSize = length;
+	}
+
+
+	for(i=0;i<Pages;i++)
+	{
+
+		Start_IIC();
+		IIC_SenddByte(AT24C08_ADDRESS | MemAddr.B08[1] <<1);
+		IIC_Wait_Ack_OK();
+		IIC_SenddByte(MemAddr.B08[0]);
+		IIC_Wait_Ack_OK();
+
+		for(k=0;k<WR_Len;k++)
+		{
+			IIC_SenddByte(data[len]);
+			if(IIC_Wait_Ack_OK() == FALSE)
+			{
+				return FALSE;
+			}
+			len++;
+		}
+		Stop_IIC();
+		delay_ms(2);//等待写入完成
+
+		MemAddr.B16 += AT24C08_PAGE_SIZE;
+
+		if( i != Pages-1)//判断是否到最后一页
+		{
+			PageSize = AT24C08_PAGE_SIZE;		  //不是则继续按页写
+		}
+		else
+		{
+			PageSize = length/AT24C08_PAGE_SIZE;  //是则写入不足一页的数据
+		}
+	}
+	return TRUE;
 
 }
 
@@ -65,21 +151,24 @@ void AT24C08Write_NBytes(u8 dev_addr,u8 Data_addr,u16 length,u8 *data)
 
 u8 AT24C08Read_NBytes(u16 addr,u16 length,u8 *data)
 {
-	u16 PageAddr,offset,i;
+	u16 PageNum,offset,i;
 	B16_B08 MemAddr;	//绝对地址
+
+	if( addr >= AT24C08_PAGE_SIZE*AT24C08_PAGES)
+	{
+		return 0XFF;
+	}
 
 	MemAddr.B16=addr;
 
 	Start_IIC();
-	IIC_SenddByte(AT24C08_ADDRESS);
-    IIC_Wait_Ack_OK();
-	IIC_SenddByte(MemAddr.B08[1]);
+	IIC_SenddByte(AT24C08_ADDRESS |MemAddr.B08[1]<<1);
     IIC_Wait_Ack_OK();
 	IIC_SenddByte(MemAddr.B08[0]);
 	IIC_Wait_Ack_OK();
 
 	Start_IIC();
-	IIC_SenddByte(AT24C08_ADDRESS|0X01);//读取操作
+	IIC_SenddByte(AT24C08_ADDRESS|0X01|MemAddr.B08[1]<<1);//读取操作
     IIC_Wait_Ack_OK();
 
 	for(i=0;i<length;i++)

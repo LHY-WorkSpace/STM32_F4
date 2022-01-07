@@ -397,14 +397,20 @@ int  main()
 	led_init();
 	OLED_Init();
 	IIC_Init();
-	//Queue_Handle = xQueueCreate(5,1);
+	Queue_Handle = xQueueCreate(5,1);
+
+
+
+	EEPROM_ADDR(EEPROM_MAP,EEPROM_Data.LCD_Data[0]);
+
+
+
+
 	// XPT2046_Init();
 	// LCD_Init();
 	
 	// File_FATFSInit();
 	//LVGL_Init();
-
-
 	//RTC_ConfigInit();
 	//MPU6050_Init();
 
@@ -423,6 +429,12 @@ int  main()
 	//lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
 
+
+	memset(Data,0,sizeof(Data));
+	AT24C08Write_NBytes(10,10,Data);
+
+	delay_ms(10);
+	memset(Data,0,sizeof(Data));
 	AT24C08Read_NBytes(0,1024,Data);
 
 
