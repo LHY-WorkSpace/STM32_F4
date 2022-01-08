@@ -430,23 +430,6 @@ int  main()
 	 //lv_ex_cpicker_1();
 
 
-	memset(Data,0x55,sizeof(Data));
-	AT24C08WriteData(10,10,Data);
-
-	delay_ms(10);
-	memset(Data,0,sizeof(Data));
-	AT24C08ReadData(0,1024,Data);
-
-
-	for ( i = 0; i < 1024; i++)
-	{
-		printf(" %d  %x \r\n",i,Data[i]);
-	}
-	
-
-
-
-
 	// Task_Init();
 
 	// vTaskStartScheduler();

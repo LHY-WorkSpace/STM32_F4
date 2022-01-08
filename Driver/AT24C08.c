@@ -7,7 +7,7 @@ void AT24C08_init(void)
 
 u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 {
-	u8 k;
+	u8 k,i;
 	u16 PageNum,WR_Len,Offset,LenCount;
 	B16_B08 MemAddr;	//绝对地址
 
@@ -46,8 +46,12 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 			LenCount++;
 		}
 		Stop_IIC();
-		delay_ms(2);//等待写入完成
-
+		//此处必须延时，等待页写入完成，手册最大5ms
+		for ( i = 0; i < 5; i++)
+		{
+			IIC_Delay(2500);
+		}
+		
 		MemAddr.B16 += WR_Len;
 
 		if( (length - LenCount) >= AT24C08_PAGE_SIZE)
