@@ -51,18 +51,39 @@ static void Pin_out2in(void)
 
 }
 
+#if (DELAY_TYPE == TIMER) 
+void IIC_Delay(u16 nus)
+{
+	delay_us(nus);
+}
+
+#else
+void IIC_Delay(u16 nus)
+{
+	u16 i,k;
+
+	for(k=0; k<nus; k++)
+	{
+		for(i=0; i<100; i++)
+		{
+			__NOP();
+		}
+	}
+}
+#endif
+
 
 void Start_IIC(void)
 {
 	Pin_in2out();
 	IIC_SDA_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SDA_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SCL_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 }
 
 
@@ -70,13 +91,13 @@ void Stop_IIC(void)
 {
 	Pin_in2out();
 	IIC_SCL_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SDA_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SCL_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SDA_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 }
 
 
@@ -85,13 +106,13 @@ void IIC_Send_Ack(void)
 {
 	Pin_in2out();	
 	IIC_SDA_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SCL_HIGH;
-	delay_us(4);
+	IIC_Delay(4);
 	IIC_SCL_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SDA_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 }
 
 
@@ -100,13 +121,13 @@ void IIC_Send_NAck(void)
 {
 	Pin_in2out();
 	IIC_SDA_HIGH;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SCL_HIGH;
-	delay_us(5);
+	IIC_Delay(5);
 	IIC_SCL_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 	IIC_SDA_LOW;
-	delay_us(2);
+	IIC_Delay(2);
 }
 
 
@@ -115,7 +136,7 @@ u8 IIC_Wait_Ack_OK(void)
 	u8 i=0;
 	Pin_out2in();	  
 	IIC_SCL_HIGH; 
-	delay_us(2);                              
+	IIC_Delay(2);                              
 	while(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)
 	{
 			i++;
@@ -124,11 +145,11 @@ u8 IIC_Wait_Ack_OK(void)
 				Stop_IIC();
 				return 1;
 			}
-			delay_us(2);	
+			IIC_Delay(2);	
 	}
-	delay_us(2);			
+	IIC_Delay(2);			
 	IIC_SCL_LOW;	
-	delay_us(2);	
+	IIC_Delay(2);	
 	return TRUE;
 }
 
@@ -141,7 +162,7 @@ void IIC_SenddByte(u8 data)
 	for(i=0;i<8;i++)
 	{
 		IIC_SCL_LOW;
-		delay_us(3);
+		IIC_Delay(3);
 		if(data&0x80)	
 		{
 			IIC_SDA_HIGH;
@@ -151,12 +172,12 @@ void IIC_SenddByte(u8 data)
 			IIC_SDA_LOW;
 		}
 		data<<=1;
-		delay_us(2);
+		IIC_Delay(2);
 		IIC_SCL_HIGH;
-		delay_us(5);
+		IIC_Delay(5);
 	}
     IIC_SCL_LOW;
-	delay_us(2);                   
+	IIC_Delay(2);                   
 
 }
 
@@ -168,14 +189,14 @@ u8 IIC_GetByte(void)
 
 	Pin_out2in();	
 	IIC_SDA_HIGH;
-	delay_us(5);
+	IIC_Delay(5);
 	for(i=0;i<8;i++)
 	{		
 			data<<=1;
 			IIC_SCL_LOW;
-			delay_us(5); 		
+			IIC_Delay(5); 		
 			IIC_SCL_HIGH;	
-			delay_us(5);
+			IIC_Delay(5);
 			if(GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)==1)	
 			{
       			data|=0x01;
@@ -183,7 +204,7 @@ u8 IIC_GetByte(void)
 
 	}
  	IIC_SCL_LOW;	
-	delay_us(3);
+	IIC_Delay(3);
 
   return data;
 }

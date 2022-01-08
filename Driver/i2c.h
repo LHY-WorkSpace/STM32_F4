@@ -11,11 +11,16 @@
 #define IIC_SCL_HIGH  		 	GPIO_SetBits(PORT_GROUP,IIC_SCL)
 #define IIC_SDA_LOW  			GPIO_ResetBits(PORT_GROUP,IIC_SDA)
 #define IIC_SDA_HIGH 			GPIO_SetBits(PORT_GROUP,IIC_SDA)
+#define CPU_NOP                 0x11
+#define TIMER                   0x22
 
 
+//IIC延时类型：定时器/CPU_NOP
+#define DELAY_TYPE    CPU_NOP
 
-void Pin_out2in(void);
-void Pin_in2out(void);
+
+static void Pin_out2in(void);
+static void Pin_in2out(void);
 
 
 void Stop_IIC(void);
@@ -28,13 +33,6 @@ u8 IIC_Wait_Ack_OK(void);
 void IIC_Init(void);
 void IIC_SenddByte(u8 data);
 u8 IIC_GetByte(void);
-
-
-// void IIC_Write_Byte(u8 Dev_addr,u8 Data_addr,u8 data);
-// u8 IIC_Read_Byte(u8 Dev_addr,u8 Data_addr);
-// void IIC_Write_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
-// void IIC_Read_NBytes(u8 Dev_addr,u8 Data_addr,u8 length,u8 *data);
-
 
 
 #endif

@@ -45,33 +45,33 @@ void AT24C08_Test()
 	u16 k;
 
 	// memset(A,0X12,256);
-	// AT24C08Write_NBytes(AT24C08_BLOCK1,0,256,A);
+	// AT24C08WriteData(AT24C08_BLOCK1,0,256,A);
 	// memset(A,0X34,256);
-	// AT24C08Write_NBytes(AT24C08_BLOCK2,0,256,A);
+	// AT24C08WriteData(AT24C08_BLOCK2,0,256,A);
 	// memset(A,0X56,256);
-	// AT24C08Write_NBytes(AT24C08_BLOCK3,0,256,A);
+	// AT24C08WriteData(AT24C08_BLOCK3,0,256,A);
 	// memset(A,0X78,256);
-	// AT24C08Write_NBytes(AT24C08_BLOCK4,0,256,A);
+	// AT24C08WriteData(AT24C08_BLOCK4,0,256,A);
 
- 	// AT24C08Read_NBytes(AT24C08_BLOCK1,0,256,B);
+ 	// AT24C08ReadData(AT24C08_BLOCK1,0,256,B);
 	// for(k=0;k<256;k++)
 	// {
  	// printf("%d EE1:%x \r\n",k,B[k]);	
 	// }
 
- 	// AT24C08Read_NBytes(AT24C08_BLOCK2,0,256,B);
+ 	// AT24C08ReadData(AT24C08_BLOCK2,0,256,B);
 	// for(k=0;k<256;k++)
 	// {
  	// printf("%d EE2:%x \r\n",k,B[k]);	
 	// }
 
-	// AT24C08Read_NBytes(AT24C08_BLOCK3,0,256,B);
+	// AT24C08ReadData(AT24C08_BLOCK3,0,256,B);
 	// for(k=0;k<256;k++)
 	// {
  	// printf("%d EE3:%x \r\n",k,B[k]);	
 	// }
 
-	// AT24C08Read_NBytes(AT24C08_BLOCK4,0,256,B);
+	// AT24C08ReadData(AT24C08_BLOCK4,0,256,B);
 	// for(k=0;k<256;k++)
 	// {
  	// printf("%d EE4:%x \r\n",k,B[k]);	

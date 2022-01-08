@@ -401,8 +401,8 @@ int  main()
 
 
 
-	EEPROM_ADDR(EEPROM_MAP,EEPROM_Data.LCD_Data[0]);
-
+	EEPROM_ADDR(EEPROM_Data.LCD_Data[0]);
+	EEPROM_ADDR(EEPROM_MEM[10]);
 
 
 
@@ -431,11 +431,11 @@ int  main()
 
 
 	memset(Data,0,sizeof(Data));
-	AT24C08Write_NBytes(10,10,Data);
+	AT24C08WriteData(10,10,Data);
 
 	delay_ms(10);
 	memset(Data,0,sizeof(Data));
-	AT24C08Read_NBytes(0,1024,Data);
+	AT24C08ReadData(0,1024,Data);
 
 
 
