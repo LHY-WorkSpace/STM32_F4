@@ -26,7 +26,8 @@
 #include "DMA.h"  
 #include "pwm.h"
 #include "RNG.h"
-
+#include "lcd.h"
+#include "XPT2046.h"
 
 
 
@@ -39,16 +40,28 @@
 //#include "ESP8266.h"
 // #include "lcd1602.h"
 #include "HC_SR04.h"
-#include "XPT2046.h"
 #include "lcd.h"
 #include "PID.h"
 
+// TRUE     使用
+// FALSE    不使用
+/**************************** RTOS ***************************************/
+#define USE_RTOS    FALSE
+
+/**************************** u8g2 ***************************************/
+#define USE_U8G2    TRUE
+
+/**************************** LVGL ***************************************/
+#define USE_LVGL    FALSE
 
 //应用层
+#if (USE_RTOS == TRUE)
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
+#endif
+
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
 #include "diskio.h"	
@@ -56,16 +69,23 @@
 //#include "GUI.H"
 #include "TEST.h"
 #include "FileOperate.h"
+
 #include "usbd_core.h"
 #include "usb_bsp.h"
 #include "usbd_usr.h"
 #include "usbd_msc_core.h"
 #include "usbd_desc.h"
-#include "lcd.h"
+
+
+#if (USE_LVGL == TRUE)
 #include "lvgl.h"
 #include "LVGL_Init.h"
+#endif
 
-
+#if (USE_U8G2 == TRUE)
+#include "../Module/u8g2_src/u8x8.h"
+#include "../Module/u8g2_src/u8g2.h"
+#endif
 
 
 
@@ -83,8 +103,6 @@
 
 
 
-/**************************** RTOS ***************************************/
-#define USE_RTOS    1
 
 
 

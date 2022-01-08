@@ -4,7 +4,7 @@
 
 u8 USART1_Buffer[1024];
 u16 RX_Point,TX_Point;
-extern QueueHandle_t Queue_Handle;
+// extern QueueHandle_t Queue_Handle;
 
 /*
 	USART1_MODE_A : PA9-TX1 
@@ -169,7 +169,7 @@ void USART1_IRQHandler()
 		RX_Point++;	
 		if(RX_Point == 1024)
 		{
-			xQueueSendFromISR(Queue_Handle,USART1_Buffer,NULL);
+			// xQueueSendFromISR(Queue_Handle,USART1_Buffer,NULL);
 			RX_Point = 0;
 		}
 //		RX_Point=RX_Point%DATA_BUFFER; //×Ô¶¯×ªÈ¦

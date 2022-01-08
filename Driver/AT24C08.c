@@ -73,7 +73,7 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 
 u8 AT24C08ReadData(u16 addr,u16 length,u8 *data)
 {
-	u16 PageNum,offset,i;
+	u16 i;
 	B16_B08 MemAddr;	//¾ø¶ÔµØÖ·
 
 	if( addr >= AT24C08_PAGE_SIZE*AT24C08_PAGES)
@@ -104,9 +104,9 @@ u8 AT24C08ReadData(u16 addr,u16 length,u8 *data)
 		{
 			IIC_Send_Ack();
 		}
-		
 	}
 	Stop_IIC();
+	return TRUE;
 }
 
 

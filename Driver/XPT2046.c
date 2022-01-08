@@ -57,11 +57,9 @@ void XPT2046_Init(void)
 
 
 
-    NVIC_InitTypeDef NVIC_InitStructure;
 	GPIO_InitTypeDef GPIO_InitTypeDefinsture;
 	SPI_InitTypeDef SPI_InitTypeDefinsture;
 	GPIO_InitTypeDef GPIOE_Initstruc;
-  	EXTI_InitTypeDef EXTI_Initstruct1;
 
 	
 	GPIO_InitTypeDefinsture.GPIO_Pin=GPIO_Pin_5|GPIO_Pin_7|GPIO_Pin_6;                 // PA5---SCLK       PA7-----SDA

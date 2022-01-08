@@ -37,7 +37,7 @@
   
 */
 
-
+#include "IncludeFile.h"
 #include "u8x8.h"
 
 
@@ -162,5 +162,65 @@ void u8x8_ClearLine(u8x8_t *u8x8, uint8_t line)
     tile.tile_ptr = (uint8_t *)buf;		/* tile_ptr should be const, but isn't */
     u8x8->display_cb(u8x8, U8X8_MSG_DISPLAY_DRAW_TILE, u8x8->display_info->tile_width, (void *)&tile);
   }  
+}
+
+
+
+uint8_t u8x8_byte_4wire_hw_spi(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int,
+    void *arg_ptr)
+{
+    uint8_t *data = NULL;
+  switch (msg)
+  {
+  case U8X8_MSG_BYTE_SEND:
+        data = (uint8_t*)arg_ptr;
+        do
+        {
+            while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            
+            SPI_I2S_SendData(SPI2,*(data++));			
+            SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+            arg_int--;
+        }while(arg_int > 0);
+    break;
+  case U8X8_MSG_BYTE_INIT:
+    break;
+  case U8X8_MSG_BYTE_SET_DC:
+        if (arg_int == 1)
+        {
+            OLED_DATA;         
+        }
+        else if (arg_int == 0)
+        {
+            OLED_ORDER;
+        }
+    break;
+  case U8X8_MSG_BYTE_START_TRANSFER:
+    break;
+  case U8X8_MSG_BYTE_END_TRANSFER:
+    break;
+  default:
+    return 0;
+  }
+  return 1;
+}
+
+uint8_t u8x8_stm32_gpio_and_delay(U8X8_UNUSED u8x8_t *u8x8,
+    U8X8_UNUSED uint8_t msg, U8X8_UNUSED uint8_t arg_int,
+    U8X8_UNUSED void *arg_ptr)
+{
+  switch (msg)
+  {
+    case U8X8_MSG_GPIO_AND_DELAY_INIT:
+        // OLED_Init();
+        delay_ms(1);
+      break;
+    case U8X8_MSG_DELAY_MILLI:
+        delay_ms(arg_int);
+      break;
+      default:
+        break;
+
+  }
+  return 1;
 }
 

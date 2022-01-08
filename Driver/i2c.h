@@ -28,7 +28,7 @@ void Start_IIC(void);
 void IIC_Send_NAck(void);
 void IIC_Send_Ack(void);
 u8 IIC_Wait_Ack_OK(void);
-
+void IIC_Delay(u16 nus);
 
 void IIC_Init(void);
 void IIC_SenddByte(u8 data);

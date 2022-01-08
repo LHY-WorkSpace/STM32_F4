@@ -42,13 +42,13 @@ u8 File_MountDisk(const char* Path)
 {
 	 
     u8 Sta;
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     Sta = f_mount(&fs,Path,1);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -60,13 +60,13 @@ u8 File_UmountDiak(const char* Path)
 {
 
     u8 Sta;
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     Sta = f_mount(0,Path,0);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -79,13 +79,13 @@ u8 File_CreateFAT()
 {
     u8 work[512];
     u8 Sta;
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     Sta = f_mkfs("1",FM_FAT|FM_SFD,512,work,sizeof(work));
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -100,13 +100,13 @@ u8 File_CreateFAT()
 u8 File_OpenDir(const char* Path,DIR *dp)
 {
     u8 Sta;
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     Sta = f_opendir(dp,Path);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -117,13 +117,13 @@ u8 File_OpenDir(const char* Path,DIR *dp)
 //¹Ø±ÕÎÄ¼þ¼Ð
 void File_CloseDir(FIL *fils)
 {
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     f_close(fils);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -134,13 +134,13 @@ void File_CloseDir(FIL *fils)
 u8 File_Mkdir(const char * Path)
 {
  u8 Sta;
- #if USE_RTOS
+ #if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
     Sta = f_mkdir(Path);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -167,7 +167,7 @@ u8 File_CreateNewFile(const char* Path,FIL *fils)
 {
     u8 sta;
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
@@ -181,7 +181,7 @@ u8 File_CreateNewFile(const char* Path,FIL *fils)
     f_close(fils);	
 
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -195,7 +195,7 @@ u8 File_ReadData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
     u8 sta;
     u32 DataPointer;
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
@@ -213,7 +213,7 @@ u8 File_ReadData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
     }
     f_close(fils);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
@@ -227,7 +227,7 @@ u8 File_WriteData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
     u8 sta;
     u32 DataPointer;
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskENTER_CRITICAL();
 #endif 
 
@@ -244,7 +244,7 @@ u8 File_WriteData(FIL *fils,const char* Path,u8* Data,u32 Length,u32 Offset)
     }
     f_close(fils);
 
-#if USE_RTOS
+#if ( USE_RTOS == TRUE )
     taskEXIT_CRITICAL();
 #endif 
 
