@@ -397,12 +397,12 @@ int  main()
 	led_init();
 	OLED_Init();
 	IIC_Init();
-	Queue_Handle = xQueueCreate(5,1);
+	// Queue_Handle = xQueueCreate(5,1);
 
 
 
-	EEPROM_ADDR(EEPROM_Data.LCD_Data[0]);
-	EEPROM_ADDR(EEPROM_MEM[10]);
+	// EEPROM_ADDR(EEPROM_Data.LCD_Data[0]);
+	// EEPROM_ADDR(EEPROM_MEM[10]);
 
 
 
@@ -430,7 +430,7 @@ int  main()
 	 //lv_ex_cpicker_1();
 
 
-	memset(Data,0,sizeof(Data));
+	memset(Data,0x55,sizeof(Data));
 	AT24C08WriteData(10,10,Data);
 
 	delay_ms(10);
@@ -438,27 +438,35 @@ int  main()
 	AT24C08ReadData(0,1024,Data);
 
 
-
-	Task_Init();
-
-	vTaskStartScheduler();
-
-	while (1)
-	{ 
-		//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
-		lv_task_handler();
-		lv_tick_inc(5);
-		delay_ms(5);
-		
-		OLED_ShowStrings(0,0,USART1_Buffer,64);
-		// OLED_ShowNumber(16,2,data.point.x,4);
-		// OLED_ShowNumber(16,3,data.point.y,4);
-		// OLED_UpdateGRAM();
-
-		// lv_task_handler();
-		// lv_tick_inc(10);
-		// LCD_DrawPoint(data.point.x,data.point.y,0X00);
+	for ( i = 0; i < 1024; i++)
+	{
+		printf(" %d  %x \r\n",i,Data[i]);
 	}
+	
+
+
+
+
+	// Task_Init();
+
+	// vTaskStartScheduler();
+
+	// while (1)
+	// { 
+	// 	//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
+	// 	lv_task_handler();
+	// 	lv_tick_inc(5);
+	// 	delay_ms(5);
+		
+	// 	OLED_ShowStrings(0,0,USART1_Buffer,64);
+	// 	// OLED_ShowNumber(16,2,data.point.x,4);
+	// 	// OLED_ShowNumber(16,3,data.point.y,4);
+	// 	// OLED_UpdateGRAM();
+
+	// 	// lv_task_handler();
+	// 	// lv_tick_inc(10);
+	// 	// LCD_DrawPoint(data.point.x,data.point.y,0X00);
+	// }
 
 	SystemDown();
 

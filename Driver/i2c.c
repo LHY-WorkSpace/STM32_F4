@@ -58,13 +58,14 @@ void IIC_Delay(u16 nus)
 }
 
 #else
+// 168Mhz = 238KHZ
 void IIC_Delay(u16 nus)
 {
 	u16 i,k;
 
 	for(k=0; k<nus; k++)
 	{
-		for(i=0; i<100; i++)
+		for(i=0; i<10; i++)
 		{
 			__NOP();
 		}
