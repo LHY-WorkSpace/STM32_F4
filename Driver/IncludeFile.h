@@ -2,7 +2,7 @@
 #define  _INCLUDE_FILE_H_
 
 //标准文件
-#include "stm32f4xx.h"
+#include "../User/stm32f4xx.h"
 #include "string.h"
 #include "stdint.h"
 #include "stdlib.h"
@@ -46,7 +46,7 @@
 // TRUE     使用
 // FALSE    不使用
 /**************************** RTOS ***************************************/
-#define USE_RTOS    FALSE
+#define USE_RTOS    TRUE
 
 /**************************** u8g2 ***************************************/
 #define USE_U8G2    TRUE
@@ -56,25 +56,29 @@
 
 //应用层
 #if (USE_RTOS == TRUE)
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
+#include "../FreeRTOS/include/FreeRTOS.h"
+#include "../include/task.h"
+#include "../FreeRTOS/include/queue.h"
+#include "../FreeRTOS/include/semphr.h"
 #endif
 
-#include "inv_mpu.h"
-#include "inv_mpu_dmp_motion_driver.h"
-#include "diskio.h"	
-#include "ff.h"	
+#include "../MPU6050DMP/inv_mpu.h"
+#include "../MPU6050DMP/inv_mpu_dmp_motion_driver.h"
+
+
+#include "../SD/diskio.h"	
+#include "../SD/ff.h"	
 //#include "GUI.H"
 #include "TEST.h"
 #include "FileOperate.h"
 
-#include "usbd_core.h"
-#include "usb_bsp.h"
-#include "usbd_usr.h"
-#include "usbd_msc_core.h"
-#include "usbd_desc.h"
+
+
+#include "../USB_lib/usbd_core.h"
+#include "../USB_lib/usb_bsp.h"
+#include "../USB_lib/usbd_usr.h"
+#include "../USB_lib/usbd_msc_core.h"
+#include "../USB_lib/usbd_desc.h"
 
 
 #if (USE_LVGL == TRUE)
@@ -85,6 +89,7 @@
 #if (USE_U8G2 == TRUE)
 #include "../Module/u8g2_src/u8x8.h"
 #include "../Module/u8g2_src/u8g2.h"
+#include "../Module/u8g2_src/u8g2_UserGUI.h"
 #endif
 
 

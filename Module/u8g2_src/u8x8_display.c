@@ -235,6 +235,9 @@ uint8_t u8x8_byte_4wire_hw_spi(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int,
     break;
   case U8X8_MSG_BYTE_END_TRANSFER:
     break;
+  case U8X8_MSG_DISPLAY_SET_CONTRAST:
+    OLED_SetContrast(arg_int);
+    break;
   default:
     return 0;
   }

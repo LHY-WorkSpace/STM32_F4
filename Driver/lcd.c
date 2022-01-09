@@ -757,16 +757,6 @@ void LCD_Init(void)
 	LCD_Clear(WHITE);
 	LCD_GetState(&LCD_State);
 	LCD_BACK_LIGHT_ON;
-	if(LCD_State.ID == 0x9341)
-	{
-		OLED_ShowStrings(0,0,"ID 0x9341",9);
-	}
-	else
-	{
-		OLED_ShowStrings(0,0,"unkonw ID",9);
-	}
-	
-	OLED_UpdateGRAM();
 }  
 
 

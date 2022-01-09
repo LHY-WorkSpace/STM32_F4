@@ -4,8 +4,9 @@
 //  PB13-------SCLK          PB15------SDA
 //  PB12-------D/C           PB14------RST 
 
-u8 OLED_GRAM[8][128];
+#if (USE_U8G2 == FALSE)
 
+u8 OLED_GRAM[8][128];
 
 /*
 阴码 列行 顺向 8*16
@@ -122,7 +123,7 @@ u8 CharModel[][16]=
 	{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},/*"空格*/
 	{0xFF,0x80,0x9F,0x9F,0x9F,0x9F,0x80,0xFF,0xFF,0x01,0xF1,0xF1,0xF1,0xF1,0x01,0xFF},/*"未知字符*/
 };
-
+#endif
 
 
 	
@@ -259,7 +260,6 @@ void OLED_TurnON()
 */
 void OLED_TurnOFF()
 {
-
 	OLED_SetMode(0x8D);     //设置电荷泵
 	OLED_SetMode(0x10);      //0x14-----开启     0x10----关闭
 	OLED_SetMode(0xAE);
@@ -363,7 +363,34 @@ void OLED_SetTwinkMode(u8 Mode,u8 Speed)
 
 }
 
+void OLED_ClearScreen(u8 Data)
+{
+	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
+	OLED_UpdateGRAM();
+}
 
+
+void OLED_UpdateGRAM()
+{
+	u8 i,j;
+	OLED_SetMode(0x22);	            
+	OLED_SetMode(0x00);	          	
+	OLED_SetMode(0x07);           
+	OLED_SetMode(0x21);           
+	OLED_SetMode(0x00);	        
+	OLED_SetMode(0x7f);
+	delay_us(2);  
+	for(i=0;i<8;i++)
+	{
+		for(j=0;j<128;j++)
+		{
+			OLED_SendData(OLED_GRAM[i][j]);
+		}
+	}
+}
+
+
+#if (USE_U8G2 == FALSE)
 
 void windows_open(u32 speed)
 {
@@ -393,124 +420,6 @@ u8 i;
 		
 		}
 }
-
-
-
-
-
-
-
-
-void power_on_check_display(void)
-{
-windows_open(10);                                //进度条速度
-delay_ms(500);
-
-OLED_ClearScreen(0x00);
-
-OLED_SetScanFre(15,6);		
-delay_ms(500);
-
-////display_position(40,0,5);
-////display_str_and_speed("CHECK",play_speed);
-//delay_ms(200);
-	
-
-
-//从此处开始添加开机检查项目
-	
-////display_position(0,2,6);
-////display_str_and_speed("18B20:",play_speed);
-//delay_ms(500);	
-////display_position(87,2,5);
-//ds18B20_init(1);	                             //18B20
-//delay_ms(500);
-
-
-
-////display_position(0,4,4);
-////display_str_and_speed("RTC:",play_speed);
-//delay_ms(500);
-////display_position(87,4,5);
-//RTC_configinit();
-//delay_ms(500);
-//	
-//	
-
-////display_position(1,7,6);
-////display_str_and_speed("POWER:",play_speed);
-//delay_ms(500);
-////display_position(87,7,2);
-////display_str_and_speed("OK",play_speed);
-//delay_ms(500);
-
-//OLED_ClearScreen();	
-
-////display_position(0,2,6);
-////display_str_and_speed("VOICE:",play_speed);
-//delay_ms(500);
-////display_position(86,2,2);
-////display_str_and_speed("OK",play_speed);
-//delay_ms(500);
-
-
-
-
-
-////display_position(0,4,5);
-////display_str_and_speed("WIFI:",play_speed);
-//delay_ms(500);
-////display_position(87,4,2);
-////display_str_and_speed("OK",play_speed);
-//delay_ms(500);
-
-
-
-////display_position(1,6,7);
-////display_str_and_speed("SENSOR:",play_speed);
-//delay_ms(500);
-////display_position(87,6,2);
-
-////display_str_and_speed("OK",play_speed);
-//delay_ms(500);
-
-//OLED_ClearScreen();
-
-////display_position(1,8,4);
-////display_str_and_speed("LED:",play_speed);
-//delay_ms(500);
-////display_position(87,8,5);
-////display_str_and_speed("READY",play_speed);
-
-////delay_ms(500);
-
-
-// OLED_ClearScreen();	
-
-
-
-//<-------此处检查完毕
-
-//display_position(1,4,13);
-//display_str_and_speed("ENTER SYSTEM:",play_speed);
-delay_ms(500);
-delay_ms(500);
-//display_position(105,4,2);
-//display_str_and_speed("..",100);
-delay_ms(500);
-OLED_SetScanFre(15,0);		                 
-//OLED_ClearScreen();	
-
-}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -551,59 +460,6 @@ u8 OLED_Get_Point(u8 x,u8 y)
 }
 
 
-void OLED_ClearScreen(u8 Data)
-{
-	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
-	OLED_UpdateGRAM();
-}
-
-// void OLED_UpdateGRAM()
-// {
-// 	u8 i,j;
-// OLED_SetMode(0x20); 
-// OLED_SetMode(0x02);	 
-// 	for(i=0;i<8;i++)
-// 	{
-// 		OLED_SetMode(0xb0+i);	            
-// 		OLED_SetMode(0x00);	          	
-// 		OLED_SetMode(0x10); 
-// 		delay_us(5);
-// 		for(j=0;j<128;j++)
-// 		{
-// 			OLED_SendData(OLED_GRAM[i][j]);
-// 		}
-// 	}
-// }
-
-
-
-void OLED_UpdateGRAM()
-{
-	u8 i,j;
-	// OLED_SetMode(0x20); 
-	// OLED_SetMode(0x00); 
-	OLED_SetMode(0x22);	            
-	OLED_SetMode(0x00);	          	
-	OLED_SetMode(0x07);           
-	OLED_SetMode(0x21);           
-	OLED_SetMode(0x00);	        
-	OLED_SetMode(0x7f);
-	delay_us(2);  
-	for(i=0;i<8;i++)
-	{
-		for(j=0;j<128;j++)
-		{
-			OLED_SendData(OLED_GRAM[i][j]);
-		}
-	}
-}
-
-
-
-
-
-
-
 void OLED_Data2GRAM(u8 *Data,u16 length)
 {
 	u8 i,j;
@@ -623,9 +479,6 @@ void OLED_Data2GRAM(u8 *Data,u16 length)
 	}
 
 }
-
-
-
 
 void OLED_Draw_Line(unsigned int x1, unsigned int y1, unsigned int x2,unsigned int y2)
 {
@@ -919,182 +772,6 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 
 }
 
+#endif
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// /*          8*8                        */
-// u8 num0[]={0X00,0X00,0X7F,0X41,0X41,0X41,0X7F,0X00};
-// u8 num1[]={0X00,0X00,0X42,0X42,0X7F,0X40,0X00,0X00};
-// u8 num2[]={0X00,0X00,0X7B,0X49,0X49,0X49,0X4F,0X00};
-// u8 num3[]={0X00,0X00,0X63,0X49,0X49,0X49,0X7F,0X00};
-// u8 num4[]={0X00,0X00,0X0F,0X08,0X7E,0X08,0X08,0X00};
-// u8 num5[]={0X00,0X00,0X4F,0X49,0X49,0X49,0X79,0X00};
-// u8 num6[]={0X00,0X00,0X7F,0X49,0X49,0X49,0X79,0X00};
-// u8 num7[]={0X00,0X00,0X01,0X01,0X7D,0X03,0X01,0X00};
-// u8 num8[]={0X00,0X00,0X7F,0X49,0X49,0X49,0X7F,0X00};
-// u8 num9[]={0x00,0x00,0x00,0x10,0x10,0x18,0x28,0x28,0x24,0x3C,0x44,0x42,0x42,0xE7,0x00,0x00};
-// u8 charA[8]={0X00,0X00,0X7C,0X12,0X11,0X12,0X7C,0X00};
-// u8 charB[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X36,0X00};
-// u8 charC[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X22,0X00};
-// u8 charD[8]={0X00,0X00,0X7F,0X41,0X41,0X41,0X22,0X1C};
-// u8 charE[8]={0X00,0X00,0X7F,0X49,0X49,0X49,0X49,0X00};
-// u8 charF[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X01,0X00};
-// u8 charG[8]={0X00,0X00,0X3E,0X41,0X59,0X49,0X32,0X00};
-// u8 charH[8]={0X00,0X00,0X7F,0X08,0X08,0X08,0X7F,0X00};
-// u8 charI[8]={0X00,0X00,0X41,0X41,0X7F,0X41,0X41,0X00};
-// u8 charJ[8]={0X00,0X00,0X31,0X41,0X21,0X1F,0X01,0X00};
-// u8 charK[8]={0X00,0X00,0X7F,0X08,0X14,0X22,0X41,0X00};
-// u8 charL[8]={0X00,0X00,0X7F,0X40,0X40,0X40,0X40,0X00};
-// u8 charM[8]={0X00,0X7F,0X02,0X04,0X04,0X02,0X7F,0X00};
-// u8 charN[8]={0X00,0X7F,0X02,0X04,0X08,0X10,0X7F,0X00};
-// u8 charO[8]={0X00,0X00,0X3E,0X41,0X41,0X41,0X3E,0X00};
-// u8 charP[8]={0X00,0X00,0X7F,0X09,0X09,0X09,0X06,0X00};
-// u8 charQ[8]={0X00,0X3E,0X41,0X41,0X51,0X3E,0X40,0X00};
-// u8 charR[8]={0X00,0X7F,0X09,0X19,0X29,0X46,0X00,0X00};
-// u8 charS[8]={0X00,0X4E,0X49,0X49,0X49,0X39,0X00,0X00};
-// u8 charT[8]={0X00,0X00,0X01,0X01,0X7F,0X01,0X01,0X00};
-// u8 charU[8]={0X00,0X00,0X3F,0X40,0X40,0X40,0X3F,0X00};
-// u8 charV[8]={0X00,0X00,0X1F,0X20,0X40,0X20,0X1F,0X00};
-// u8 charW[8]={0X00,0X3F,0X40,0X20,0X20,0X40,0X3F,0X00};
-// u8 charX[8]={0X00,0X42,0X24,0X18,0X18,0X24,0X42,0X00};
-// u8 charY[8]={0X00,0X01,0X02,0X04,0X78,0X04,0X02,0X01};	
-// u8 charZ[8]={0X00,0X00,0X61,0X51,0X49,0X45,0X43,0X00};																					
-// u8 charcolom[8]={0X00,0X00,0X00,0X66,0X66,0X00,0X00,0X00};    //冒号
-// u8 char_tempure[8]={0X03,0X03,0X1C,0X62,0X81,0X81,0X42,0X44};
-// u8 point[8]={0X00,0X00,0X00,0X60,0X60,0X00,0X00,0X00};	
-
-// //	
-// u8 windows[]=
-// {0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,0X80,0X80,0X80,0X80,0X80,
-// 0X80,0X80,0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0XE0,0XF0,0XF8,0XFC,0XFE,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,
-// 0XFF,0XFF,0XFF,0XFF,0XFE,0XFC,0XF8,0XF0,0XE0,0XC0,0X00,0X80,0X80,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,0X80,0XC0,0XE0,0XF0,0XF8,0XFC,0X00,
-// 0X02,0X02,0X7E,0X02,0X02,0X00,0X00,0X7E,0X04,0X08,0X04,0X7E,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X7F,0X7F,0XBF,0X9F,0XDF,0XEF,0XE7,0XF7,0XFB,0XF7,0XF7,0XF7,
-// 0XF7,0XEF,0XDF,0X9F,0XBF,0X7F,0X7F,0XFF,0XFF,0XFF,0X00,0XFF,0XFF,0XFF,0XFF,0XFE,
-// 0XFE,0XFE,0XFE,0XFE,0XFE,0XFE,0XFE,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X7F,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X7F,0X3F,0X3F,0X3F,0X3F,0X3F,
-// 0X3F,0X3F,0X3F,0X3F,0X7F,0XFF,0XFF,0XFE,0XFE,0XFC,0X00,0XFD,0XFB,0XF7,0XFF,0XEF,
-// 0XEF,0XEF,0XEF,0XEF,0XEF,0XEF,0XF7,0XF7,0XF7,0XF3,0XFB,0XFD,0XFD,0XFE,0XFE,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X1F,0X0F,0X07,0X03,0X01,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X01,0X03,0X07,0X07,0X08,0X1F,0X1F,0X3F,0X3F,0X7F,
-// 0X7F,0X7F,0X7F,0X7F,0X7F,0X7F,0X7F,0X3F,0X3F,0X1F,0X4F,0X0F,0X07,0X03,0X01,0X00,
-// 0X00,0X00,0X40,0X00,0X00,0XE0,0X20,0X20,0X20,0X20,0X20,0X20,0X20,0XC0,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XFF,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,0X00,0X00,0X00,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0XFF,0X00,0X00,0X00,0X00,0XD8,0XD8,0X00,0X00,0X00,0XC0,
-// 0X20,0X10,0X10,0X10,0X10,0X10,0X10,0X20,0XC0,0X00,0X80,0X40,0X20,0X20,0X20,0X20,
-// 0X20,0X20,0X20,0XFE,0X00,0XE0,0X10,0X10,0X10,0X10,0X10,0X10,0X10,0XE0,0X00,0XF0,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF0,0X00,0XE0,0X10,0X10,0X10,0X10,
-// 0X10,0X10,0X20,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X01,0X04,0X10,0X40,0X10,
-// 0X04,0X01,0X00,0X00,0X00,0XFF,0X08,0X08,0X08,0X08,0X08,0X08,0X08,0X07,0X00,0X00,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-// 0X02,0X04,0X08,0X10,0X20,0X20,0X10,0X08,0X02,0X01,0X00,0X01,0X02,0X08,0X10,0X20,
-// 0X20,0X10,0X08,0X04,0X02,0X00,0X00,0X00,0X00,0X00,0X7F,0X7F,0X00,0X00,0X00,0X7F,
-// 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X7F,0X00,0X1F,0X20,0X40,0X40,0X40,0X40,
-// 0X40,0X40,0X40,0X3F,0X00,0X3F,0X40,0X40,0X40,0X40,0X40,0X40,0X40,0X3F,0X00,0X0F,
-// 0X10,0X20,0X10,0X08,0X0C,0X08,0X10,0X20,0X10,0X0F,0X00,0X21,0X42,0X42,0X42,0X42,
-// 0X42,0X42,0X3C,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X10,0X04,0X01,0X00,0X01,
-// 0X04,0X10,0X00,0X00,0X00,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00
-// };

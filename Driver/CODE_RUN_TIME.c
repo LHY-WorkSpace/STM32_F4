@@ -48,9 +48,10 @@ u16  Programe_End_Us(u8 Dev)
 		printf("Time:%d us\r\n",TIM_GetCounter(TIM6));
 	}
 	else if(Dev  == 2)
-	{	OLED_ShowStrings(0,0,"Time-us ",8);
-		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6),6);
-		OLED_UpdateGRAM();
+	{	
+//		OLED_ShowStrings(0,0,"Time-us ",8);
+//		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6),6);
+//		OLED_UpdateGRAM();
 	}
 
 	return TIM_GetCounter(TIM6);
@@ -65,9 +66,10 @@ u16  Programe_End_Ms(u8 Dev)
 		printf("Time:%d us\r\n",TIM_GetCounter(TIM6)/1000);
 	}
 	else if(Dev  == 2)
-	{	OLED_ShowStrings(0,0,"Time-ms ",8);
-		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6)/1000,6);
-		OLED_UpdateGRAM();
+	{	
+//		OLED_ShowStrings(0,0,"Time-ms ",8);
+//		OLED_ShowNumber(70,0,TIM_GetCounter(TIM6)/1000,6);
+//		OLED_UpdateGRAM();
 	}
 
 	return TIM_GetCounter(TIM6)/1000;
