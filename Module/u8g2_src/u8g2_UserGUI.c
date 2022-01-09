@@ -3,7 +3,7 @@
 
 static u8g2_t u8g2;
 
-
+static TaskHandle_t u8g2_iconTask_h;
 
 
 
@@ -23,7 +23,31 @@ void u8g2_Init()
 	u8g2_SetPowerSave(&u8g2, 0);
 }
 
+void Battery_icon()
+{
 
+
+
+
+
+
+}
+
+
+
+
+
+void u8g2_TaskCreate()
+{
+
+    xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,7,&u8g2_iconTask_h);
+
+
+
+
+
+    vTaskDelete(NULL);
+}
 
 
 
@@ -31,12 +55,13 @@ void u8g2_Init()
 void u8g2_Task()
 {
 	TickType_t Time;		
-	Time=xTaskGetTickCount();
 
+    u8g2_TaskCreate();
+
+
+	Time=xTaskGetTickCount();
     while (1)
     {
-
-
 
 
        vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
