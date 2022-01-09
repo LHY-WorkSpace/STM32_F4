@@ -8,27 +8,61 @@ static u8g2_t u8g2; //首先定义u8g2的对象
 
 void draw(u8g2_t *u8g2)
 {
-    u8g2_SetFontMode(u8g2, 1);  // Transparent
-    u8g2_SetFontDirection(u8g2, 0);
-    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
-    u8g2_DrawStr(u8g2, 0, 20, "U");
+	static u8 k=0,i=0;
+    // u8g2_SetFontMode(u8g2, 1);  // Transparent
+    // u8g2_SetFontDirection(u8g2, 0);
+    // u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    // u8g2_DrawStr(u8g2, 0, 20, "U");
     
-    u8g2_SetFontDirection(u8g2, 1);
-    u8g2_SetFont(u8g2, u8g2_font_inb30_mn);
-    u8g2_DrawStr(u8g2, 21,8,"8");
+    // u8g2_SetFontDirection(u8g2, 1);
+    // u8g2_SetFont(u8g2, u8g2_font_inb30_mn);
+    // u8g2_DrawStr(u8g2, 21,8,"8");
         
-    u8g2_SetFontDirection(u8g2, 0);
-    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
-    u8g2_DrawStr(u8g2, 51,30,"g");
-    u8g2_DrawStr(u8g2, 67,30,"\xb2");
+    // u8g2_SetFontDirection(u8g2, 0);
+    // u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    // u8g2_DrawStr(u8g2, 51,30,"g");
+    // u8g2_DrawStr(u8g2, 67,30,"\xb2");
     
-    u8g2_DrawHLine(u8g2, 2, 35, 47);
-    u8g2_DrawHLine(u8g2, 3, 36, 47);
-    u8g2_DrawVLine(u8g2, 45, 32, 12);
-    u8g2_DrawVLine(u8g2, 46, 33, 12);
+    // u8g2_DrawHLine(u8g2, 2, 35, 47);
+    // u8g2_DrawHLine(u8g2, 3, 36, 47);
+    // u8g2_DrawVLine(u8g2, 45, 32, 12);
+    // u8g2_DrawVLine(u8g2, 46, 33, 12);
   
-    u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
-    u8g2_DrawStr(u8g2, 1,54,"github.com/olikraus/u8g2");
+    // u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
+    // u8g2_DrawStr(u8g2, 1,54,"github.com/olikraus/u8g2");
+
+
+	//u8g2_SetupBitmap();
+	u8g2_SetFontDirection(u8g2, 0);
+	u8g2_SetFont(u8g2, u8g2_font_open_iconic_www_2x_t);
+	u8g2_DrawGlyph(u8g2,16*i,16,0x40+i);
+	u8g2_SetFont(u8g2, u8g2_font_open_iconic_embedded_2x_t);
+	u8g2_DrawGlyph(u8g2,16*i,32,0x40+i);
+	u8g2_SetFont(u8g2, u8g2_font_streamline_all_t);
+	u8g2_DrawGlyph(u8g2,21*i,52,0x220+i);
+
+
+
+
+	u8g2_SetFont(u8g2, u8g2_font_battery19_tn);
+	u8g2_SetFontDirection(u8g2, 1);
+	u8g2_DrawGlyph(u8g2,19,52,0x30+k);
+	k++;
+	i++;
+	if(k==7)
+		k=0;
+	if(i==6)
+	{
+		u8g2_FirstPage(u8g2);	
+		i=0;
+	}
+		
+	
+	
+	// u8g2_SetBitmapMode(u8g2,1);
+	// u8g2_DrawXBM(u8g2,0,0,8,8,&u8g2_font_open_iconic_www_1x_t[0]);
+
+
 }
 
 
@@ -51,28 +85,18 @@ int  main()
 	u8g2_SetPowerSave(&u8g2, 0);
 
 
-    u8g2_FirstPage(&u8g2);
+
+
+
+  while (1)
+  {
+    
     do
     {
     	draw(&u8g2);
     } while (u8g2_NextPage(&u8g2));
-	for (u8 i = 0; i < 12; i++)
-	{
-		delay_ms(200);
-	}
-
-	u8g2_ClearBuffer(&u8g2);
-	u8g2_NextPage(&u8g2);
-
-//   while (1)
-//   {
-//     u8g2_FirstPage(&u8g2);
-//     do
-//     {
-//     	draw(&u8g2);
-//     } while (u8g2_NextPage(&u8g2));
-// 	// delay_ms(10);
-//   }
+	delay_ms(500);
+  }
 
 //   while (1)
 //   {

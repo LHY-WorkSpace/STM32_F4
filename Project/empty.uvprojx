@@ -1638,6 +1638,11 @@
               <FileType>1</FileType>
               <FilePath>..\Module\u8g2_src\u8x8_u16toa.c</FilePath>
             </File>
+            <File>
+              <FileName>u8g2_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\u8g2_src\u8g2_button.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
