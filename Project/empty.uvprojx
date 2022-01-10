@@ -1643,6 +1643,16 @@
               <FileType>1</FileType>
               <FilePath>..\Module\u8g2_src\u8g2_button.c</FilePath>
             </File>
+            <File>
+              <FileName>u8g2_UserGUI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\u8g2_src\u8g2_UserGUI.c</FilePath>
+            </File>
+            <File>
+              <FileName>u8g2_UserGUI.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Module\u8g2_src\u8g2_UserGUI.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

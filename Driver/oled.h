@@ -5,9 +5,9 @@
 
 	
 #define  OLED_RST_OFF   GPIO_SetBits(GPIOB,GPIO_Pin_14)	              //复位关
-#define  OLED_RST_ON    GPIO_ResetBits(GPIOB,GPIO_Pin_14)	            //复位开
-#define  OLED_DATA      GPIO_SetBits(GPIOB,GPIO_Pin_12)	            //数据
-#define  OLED_ORDER     GPIO_ResetBits(GPIOB,GPIO_Pin_12)	           //命令
+#define  OLED_RST_ON    GPIO_ResetBits(GPIOB,GPIO_Pin_14)	          //复位开
+#define  OLED_DATA      GPIO_SetBits(GPIOB,GPIO_Pin_12)	              //数据
+#define  OLED_ORDER     GPIO_ResetBits(GPIOB,GPIO_Pin_12)	          //命令
 
 
 

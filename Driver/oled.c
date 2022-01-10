@@ -216,8 +216,27 @@ void OLED_Init(void)
 	OLED_SetMode(0x14);      //0x14-----¿ªÆô     0x10----¹Ø±Õ
 	OLED_SetMode(0xAf);
 
-	OLED_ClearScreen(0x00);	
 
+
+#if (USE_U8G2 == FALSE)
+	OLED_ClearScreen(0x00);	
+#else
+	u8 i,j;
+	OLED_SetMode(0x22);	            
+	OLED_SetMode(0x00);	          	
+	OLED_SetMode(0x07);           
+	OLED_SetMode(0x21);           
+	OLED_SetMode(0x00);	        
+	OLED_SetMode(0x7f);
+	delay_us(2);  
+	for(i=0;i<8;i++)
+	{
+		for(j=0;j<128;j++)
+		{
+			OLED_SendData(0);
+		}
+	}
+#endif
 
 }
 
@@ -363,12 +382,16 @@ void OLED_SetTwinkMode(u8 Mode,u8 Speed)
 
 }
 
+
+
+
+#if (USE_U8G2 == FALSE)
+
 void OLED_ClearScreen(u8 Data)
 {
 	memset(OLED_GRAM,Data,sizeof(OLED_GRAM));
 	OLED_UpdateGRAM();
 }
-
 
 void OLED_UpdateGRAM()
 {
@@ -388,9 +411,6 @@ void OLED_UpdateGRAM()
 		}
 	}
 }
-
-
-#if (USE_U8G2 == FALSE)
 
 void windows_open(u32 speed)
 {

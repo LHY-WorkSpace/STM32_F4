@@ -8,28 +8,28 @@
 
 void draw(u8g2_t *u8g2)
 {
-	static u8 k=0,i=0;
-    // u8g2_SetFontMode(u8g2, 1);  // Transparent
-    // u8g2_SetFontDirection(u8g2, 0);
-    // u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
-    // u8g2_DrawStr(u8g2, 0, 20, "U");
+	static u8 i=0;
+    u8g2_SetFontMode(u8g2, 1);  // Transparent
+    u8g2_SetFontDirection(u8g2, 0);
+    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    u8g2_DrawStr(u8g2, 0, 20, "U");
     
-    // u8g2_SetFontDirection(u8g2, 1);
-    // u8g2_SetFont(u8g2, u8g2_font_inb30_mn);
-    // u8g2_DrawStr(u8g2, 21,8,"8");
+    u8g2_SetFontDirection(u8g2, 1);
+    u8g2_SetFont(u8g2, u8g2_font_inb30_mn);
+    u8g2_DrawStr(u8g2, 21,8,"8");
         
-    // u8g2_SetFontDirection(u8g2, 0);
-    // u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
-    // u8g2_DrawStr(u8g2, 51,30,"g");
-    // u8g2_DrawStr(u8g2, 67,30,"\xb2");
+    u8g2_SetFontDirection(u8g2, 0);
+    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    u8g2_DrawStr(u8g2, 51,30,"g");
+    u8g2_DrawStr(u8g2, 67,30,"\xb2");
     
-    // u8g2_DrawHLine(u8g2, 2, 35, 47);
-    // u8g2_DrawHLine(u8g2, 3, 36, 47);
-    // u8g2_DrawVLine(u8g2, 45, 32, 12);
-    // u8g2_DrawVLine(u8g2, 46, 33, 12);
+    u8g2_DrawHLine(u8g2, 2, 35, 47);
+    u8g2_DrawHLine(u8g2, 3, 36, 47);
+    u8g2_DrawVLine(u8g2, 45, 32, 12);
+    u8g2_DrawVLine(u8g2, 46, 33, 12);
   
-    // u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
-    // u8g2_DrawStr(u8g2, 1,54,"github.com/olikraus/u8g2");
+    u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
+    u8g2_DrawStr(u8g2, 1,54,"github.com/olikraus/u8g2");
 
 
 	//u8g2_SetupBitmap();
@@ -44,20 +44,14 @@ void draw(u8g2_t *u8g2)
 
 
 
-	u8g2_SetFont(u8g2, u8g2_font_battery19_tn);
-	u8g2_SetFontDirection(u8g2, 1);
-	u8g2_DrawGlyph(u8g2,19,52,0x30+k);
-	k++;
+
 	i++;
-	if(k==7)
-		k=0;
 	if(i==6)
 	{
 		u8g2_FirstPage(u8g2);	
 		i=0;
 	}
 	
-		
 	
 	
 	// u8g2_SetBitmapMode(u8g2,1);
@@ -67,8 +61,14 @@ void draw(u8g2_t *u8g2)
 }
 
 
+void CreateAllTask()
+{
 
-static u8 P=0;
+	u8g2_TaskCreate();
+
+	vTaskDelete(NULL);
+}
+
 
 int  main()
 {
@@ -78,37 +78,24 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	OLED_Init();
+	u8g2_Init();
 
-
-
-
-
-
-
-
-
-  while (1)
-  {
-    
-    do
-    {
-    	draw(&u8g2);
-    } while (u8g2_NextPage(&u8g2));
-	delay_ms(10);
-	//u8g2_SetContrast(&u8g2,P);
-	P++;
-  }
+	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
+	vTaskStartScheduler();
+	
 
 //   while (1)
 //   {
-//     u8g2_FirstPage(&u8g2);
+    
 //     do
 //     {
-//       u8g2_SetFont(&u8g2, u8g2_font_ncenB14_tr);
-//       u8g2_DrawStr(&u8g2, 0, 15, "Hello World!");
-//       u8g2_DrawCircle(&u8g2, 64, 40, 10, U8G2_DRAW_ALL);
+//     	draw(&u8g2);
 //     } while (u8g2_NextPage(&u8g2));
+// 	delay_ms(10);
+// 	//u8g2_SetContrast(&u8g2,P);
+// 	P++;
 //   }
+
 
 
 

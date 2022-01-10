@@ -251,12 +251,23 @@ uint8_t u8x8_stm32_gpio_and_delay(U8X8_UNUSED u8x8_t *u8x8,
   switch (msg)
   {
     case U8X8_MSG_GPIO_AND_DELAY_INIT:
-        // OLED_Init();
         delay_ms(1);
       break;
     case U8X8_MSG_DELAY_MILLI:
         delay_ms(arg_int);
       break;
+    case U8X8_MSG_GPIO_RESET:
+        if (arg_int == 1)
+        {
+            OLED_RST_OFF;         
+        }
+        else if (arg_int == 0)
+        {
+            OLED_RST_ON;
+        }
+      break;
+
+
       default:
         break;
 
