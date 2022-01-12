@@ -2,7 +2,7 @@
 
 
 
-
+u8g2_t u8g2;
 
 
 
@@ -32,30 +32,26 @@ void draw(u8g2_t *u8g2)
     u8g2_DrawStr(u8g2, 1,54,"github.com/olikraus/u8g2");
 
 
-	//u8g2_SetupBitmap();
-	u8g2_SetFontDirection(u8g2, 0);
-	u8g2_SetFont(u8g2, u8g2_font_open_iconic_www_2x_t);
-	u8g2_DrawGlyph(u8g2,16*i,16,0x40+i);
-	u8g2_SetFont(u8g2, u8g2_font_open_iconic_embedded_2x_t);
-	u8g2_DrawGlyph(u8g2,16*i,32,0x40+i);
-	u8g2_SetFont(u8g2, u8g2_font_streamline_all_t);
-	u8g2_DrawGlyph(u8g2,21*i,52,0x220+i);
+	// //u8g2_SetupBitmap();
+	// u8g2_SetFontDirection(u8g2, 0);
+	// u8g2_SetFont(u8g2, u8g2_font_open_iconic_www_2x_t);
+	// u8g2_DrawGlyph(u8g2,16*i,16,0x40+i);
+	// u8g2_SetFont(u8g2, u8g2_font_open_iconic_embedded_2x_t);
+	// u8g2_DrawGlyph(u8g2,16*i,32,0x40+i);
+	// u8g2_SetFont(u8g2, u8g2_font_streamline_all_t);
+	// u8g2_DrawGlyph(u8g2,21*i,52,0x220+i);
 
 
 
 
 
-	i++;
-	if(i==6)
-	{
-		u8g2_FirstPage(u8g2);	
-		i=0;
-	}
+	// i++;
+	// if(i==6)
+	// {
+	// 	u8g2_FirstPage(u8g2);	
+	// 	i=0;
+	// }
 	
-	
-	
-	// u8g2_SetBitmapMode(u8g2,1);
-	// u8g2_DrawXBM(u8g2,0,0,8,8,&u8g2_font_open_iconic_www_1x_t[0]);
 
 
 }
@@ -69,6 +65,7 @@ void CreateAllTask()
 	vTaskDelete(NULL);
 }
 
+u8 x=0,y=0,i=0;
 
 int  main()
 {
@@ -79,6 +76,12 @@ int  main()
 	led_init();
 	OLED_Init();
 	u8g2_Init();
+
+
+
+
+
+
 
 	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
 	vTaskStartScheduler();
