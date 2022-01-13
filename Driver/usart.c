@@ -4,7 +4,14 @@
 
 u8 USART1_Buffer[1024];
 u16 RX_Point,TX_Point;
-// extern QueueHandle_t Queue_Handle;
+
+typedef struct 
+{
+	u8 Dev_ID;
+	u8 Dev_Data;
+}QueueBuff_t;
+extern QueueHandle_t Queue_Handle;
+// QueueBuff_t Diaplay_Data[10];
 
 /*
 	USART1_MODE_A : PA9-TX1 
@@ -166,13 +173,14 @@ void USART1_IRQHandler()
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
 	{
 		USART1_Buffer[RX_Point] = USART_ReceiveData(USART1);
+		
+		// if(RX_Point == 1024)
+		// {
+			xQueueSendFromISR(Queue_Handle,&USART1_Buffer[RX_Point],NULL);
+		// 	RX_Point = 0;
+		// }
 		RX_Point++;	
-		if(RX_Point == 1024)
-		{
-			// xQueueSendFromISR(Queue_Handle,USART1_Buffer,NULL);
-			RX_Point = 0;
-		}
-//		RX_Point=RX_Point%DATA_BUFFER; //自动转圈
+		RX_Point=RX_Point%1024; //自动转圈
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 	}
 

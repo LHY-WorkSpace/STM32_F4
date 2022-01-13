@@ -3,9 +3,20 @@
 
 static u8g2_t u8g2;
 
-static TaskHandle_t u8g2_iconTask_h;
+static TaskHandle_t u8g2_Battery_T;
+static TaskHandle_t u8g2_Dir_T;
+static TaskHandle_t u8g2_Safe_T;
+static TaskHandle_t LED_T;
 
 u8 flag=0;
+
+
+
+
+QueueHandle_t Queue_Handle;
+
+
+
 
 
 
@@ -18,6 +29,51 @@ void u8g2_Init()
 
 }
 
+void draw(u8g2_t *u8g2)
+{
+	static u8 i=0;
+    u8g2_SetFontMode(u8g2, 1);  // Transparent
+    u8g2_SetFontDirection(u8g2, 0);
+    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    u8g2_DrawStr(u8g2, 0, 20, "U");
+    
+    u8g2_SetFontDirection(u8g2, 1);
+    u8g2_SetFont(u8g2, u8g2_font_inb30_mn);
+    u8g2_DrawStr(u8g2, 21,8,"8");
+        
+    u8g2_SetFontDirection(u8g2, 0);
+    u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
+    u8g2_DrawStr(u8g2, 51,30,"g");
+    u8g2_DrawStr(u8g2, 67,30,"\xb2");
+    
+    u8g2_DrawHLine(u8g2, 2, 35, 47);
+    u8g2_DrawHLine(u8g2, 3, 36, 47);
+    u8g2_DrawVLine(u8g2, 45, 32, 12);
+    u8g2_DrawVLine(u8g2, 46, 33, 12);
+  
+    u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
+    u8g2_DrawStr(u8g2, 1,54,"Design By LHY");
+	
+}
+void Start_Page()
+{
+    u8 i=0;
+	u8g2_FirstPage(&u8g2);
+    do
+    {
+    	draw(&u8g2);
+    } while (u8g2_NextPage(&u8g2));
+    for ( i = 0; i < 20; i++)
+    {
+        delay_ms(100);
+    }
+    u8g2_ClearBuffer(&u8g2);
+    
+}
+
+
+
+
 void Battery_icon()
 {
     u8 k=0;
@@ -26,6 +82,8 @@ void Battery_icon()
     while (1)
     {
         taskENTER_CRITICAL();
+        u8g2_SetFontMode(&u8g2,0);
+        u8g2_SetDrawColor(&u8g2,1);
         do
         {	
             u8g2_SetFont(&u8g2, u8g2_font_battery19_tn);
@@ -75,6 +133,8 @@ void Dir_icon()
     while (1)
     {
         taskENTER_CRITICAL();
+        u8g2_SetFontMode(&u8g2,0);
+        u8g2_SetDrawColor(&u8g2,1);
         do
         {	
             u8g2_SetFont(&u8g2, u8g2_font_unifont_t_78_79);
@@ -86,6 +146,7 @@ void Dir_icon()
                 k=0;
             }
         } while (u8g2_NextPage(&u8g2));
+        u8g2_SetFontDirection(&u8g2, 0);
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
@@ -175,8 +236,6 @@ void Round_Task()
         u8g2_SetFontMode(&u8g2,1);
         do
         {	
-
-
             switch (i)
             {
                 case 0:
@@ -194,11 +253,6 @@ void Round_Task()
                 default:
                     break;
             }
-
-            // u8g2_SetDrawColor(&u8g2,0);
-            // u8g2_DrawBox(&u8g2,20,22,22,22);
-
-
             u8g2_SetDrawColor(&u8g2,1);
             u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
             u8g2_SetFontDirection(&u8g2, i);
@@ -225,9 +279,7 @@ void Clear_Task()
 
     while (1)
     {
-        //u8g2_FirstPage(&u8g2);
         u8g2_SendBuffer(&u8g2);
-        // u8g2_ClearBuffer(&u8g2);
     }
     vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
 }
@@ -288,7 +340,80 @@ void Teat_Task()
 
     }
     
+}
 
+
+
+
+void Switch_Task()
+{
+    u8 Data=0;
+    u8 ID,Num;
+    s8 Char[3];
+
+    while (1)
+    {
+        if( xQueueReceive(Queue_Handle,&Data,1) == pdPASS )
+        {
+            ID = Data>>4;
+            Num = Data&0x0F;
+            switch (ID)
+            {
+            case 1:
+               if ( Num == 0)
+                {
+                    vTaskSuspend(LED_T);
+                }
+                else
+                {
+                    vTaskResume(LED_T);
+                }
+                break;
+             case 2:
+               if ( Num == 0)
+                {
+                    vTaskSuspend(u8g2_Safe_T);
+                }
+                else
+                {
+                    vTaskResume(u8g2_Safe_T);
+                }
+                break;
+            case 3:
+               if ( Num == 0)
+                {
+                    vTaskSuspend(u8g2_Dir_T);
+                }
+                else
+                {
+                    vTaskResume(u8g2_Dir_T);
+                }
+                break;
+            case 4:
+               if ( Num == 0)
+                {
+                    vTaskSuspend(u8g2_Battery_T);
+                }
+                else
+                {
+                    vTaskResume(u8g2_Battery_T);
+                }
+                break;          
+            default:
+                break;
+            }
+        sprintf(Char,"%x",Data);
+        do
+        {
+            u8g2_SetFontMode(&u8g2,0);
+            u8g2_SetDrawColor(&u8g2,1);
+            u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
+            u8g2_DrawStr(&u8g2, 1,54,Char);
+        } while (u8g2_NextPage(&u8g2));
+
+        }
+        taskYIELD();
+    }
 
 }
 
@@ -297,14 +422,22 @@ void Teat_Task()
 
 
 
-
-
 void u8g2_TaskCreate()
 {
-    // xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,10,&u8g2_iconTask_h);
-    xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,10,            NULL);
-    xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10,            NULL);
-    // xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10,            NULL);
+
+    Queue_Handle = xQueueCreate(10,sizeof(u8));
+
+    if( Queue_Handle == NULL)
+    {
+        vTaskDelete(NULL);
+    }
+
+    xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,10,&u8g2_Battery_T);
+    xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,10,&LED_T);
+    xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
+    xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
+    xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
+
     // xTaskCreate( (TaskFunction_t)Streamline_icon,    "IconTask",200,NULL,10,            NULL);
     // xTaskCreate( (TaskFunction_t)Shift_icon,    "IconTask",200,NULL,10,            NULL);
   // xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
