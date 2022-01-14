@@ -51,7 +51,7 @@ void draw(u8g2_t *u8g2)
     u8g2_DrawVLine(u8g2, 45, 32, 12);
     u8g2_DrawVLine(u8g2, 46, 33, 12);
   
-    u8g2_SetFont(u8g2, u8g2_font_5x7_tr);
+    u8g2_SetFont(u8g2, u8g2_font_6x10_tr);
     u8g2_DrawStr(u8g2, 1,54,"Design By LHY");
 	
 }

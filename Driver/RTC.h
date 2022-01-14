@@ -1,8 +1,7 @@
 #ifndef RTC_H
 #define RTC_H
 
-
-typedef struct 
+typedef struct
 {
     u8 year;
     u8 month;
@@ -12,42 +11,11 @@ typedef struct
     u8 minute;
     u8 second;
 
-}STM32_Time_t;
-
-
-
-
+} RTC_Time_t;
 
 void RTC_ConfigInit(void);
-void RTC_Set_Date(u8 year,u8 month,u8 date,u8 week);
-void RTC_Set_Time(u8 hour,u8 minute,u8 second);
-void RTC_Get_Time(STM32_Time_t* STM32_Time);
-
-
-
-
+void RTC_Set_Date(RTC_Time_t Time);
+void RTC_Set_Time(RTC_Time_t Time);
+void RTC_Get_Time(RTC_Time_t *Time);
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

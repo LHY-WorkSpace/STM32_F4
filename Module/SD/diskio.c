@@ -196,7 +196,7 @@ DRESULT disk_ioctl (
 
 		return res;
 
-	case DEV_SD :
+	case  :
 			switch ( cmd )
 			{			//fatfs????cmd??
 				case GET_SECTOR_COUNT:	//sector count, ??sect_cnt
@@ -211,12 +211,10 @@ DRESULT disk_ioctl (
 				case CTRL_SYNC:			//???????FatFs?????????????
 					return RES_OK;
 			}
-		default:
-			printf( "No device %d.\n", pdrv );
-			break;
 
 	case DEV_USB :
-
+	default:
+			break;
 		// Process of the command the USB drive
 
 		return res;

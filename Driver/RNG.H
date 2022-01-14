@@ -3,9 +3,8 @@
 
 
 void RNG_Init(void);
-u32 RHG_GetRadomData(void);
-
-
+void RNG_Close(void);
+u8 RHG_GetRadomData(u32 *Radom);
 
 #endif
 
