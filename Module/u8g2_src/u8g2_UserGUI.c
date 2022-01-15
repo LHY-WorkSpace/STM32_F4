@@ -11,15 +11,6 @@ static TaskHandle_t LED_T;
 u8 flag=0;
 
 
-
-
-QueueHandle_t Queue_Handle;
-
-
-
-
-
-
 void u8g2_Init()
 {
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
@@ -31,7 +22,6 @@ void u8g2_Init()
 
 void draw(u8g2_t *u8g2)
 {
-	static u8 i=0;
     u8g2_SetFontMode(u8g2, 1);  // Transparent
     u8g2_SetFontDirection(u8g2, 0);
     u8g2_SetFont(u8g2, u8g2_font_inb24_mf);
@@ -104,7 +94,6 @@ void Battery_icon()
 
 void Safe_icon()
 {
-    u8 k=0;
     TickType_t Time;	
     Time=xTaskGetTickCount();
     while (1)
@@ -120,6 +109,10 @@ void Safe_icon()
             u8g2_SetFontDirection(&u8g2, 0);
             u8g2_DrawGlyph(&u8g2,16,16,0x26C9);
         } while (u8g2_NextPage(&u8g2));
+        if(flag==1)
+            flag=0;
+        else
+            flag=1;
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
     }
@@ -155,7 +148,7 @@ void Dir_icon()
 
 void Streamline_icon()
 {
-    u8 k=0,p=0;
+    u8 k=0;
     TickType_t Time;	
     Time=xTaskGetTickCount();
     while (1)
@@ -179,7 +172,7 @@ void Streamline_icon()
 
 void Shift_icon()
 {
-    u8 k=127,p=0;
+    u8 k=127;
     TickType_t Time;	
     Time=xTaskGetTickCount();
     while (1)
@@ -280,8 +273,9 @@ void Clear_Task()
     while (1)
     {
         u8g2_SendBuffer(&u8g2);
+				vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
-    vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+    
 }
 
 
@@ -299,11 +293,6 @@ void LED_Task(void)
 		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
 		LED1_OFF;
 		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
-        if(flag==1)
-        flag=0;
-        else
-        flag=1;
-
 	}
 }
 
@@ -353,7 +342,7 @@ void Switch_Task()
 
     while (1)
     {
-        if( xQueueReceive(Queue_Handle,&Data,1) == pdPASS )
+        if( xQueueReceive(USART1_TaskHandle,&Data,1) == pdPASS )
         {
             ID = Data>>4;
             Num = Data&0x0F;
@@ -425,9 +414,9 @@ void Switch_Task()
 void u8g2_TaskCreate()
 {
 
-    Queue_Handle = xQueueCreate(10,sizeof(u8));
+    USART1_TaskHandle = xQueueCreate(10,sizeof(u8));
 
-    if( Queue_Handle == NULL)
+    if( USART1_TaskHandle == NULL)
     {
         vTaskDelete(NULL);
     }

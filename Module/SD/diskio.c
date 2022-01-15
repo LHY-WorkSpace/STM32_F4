@@ -196,7 +196,7 @@ DRESULT disk_ioctl (
 
 		return res;
 
-	case  :
+	case DEV_SD :
 			switch ( cmd )
 			{			//fatfs????cmd??
 				case GET_SECTOR_COUNT:	//sector count, ??sect_cnt

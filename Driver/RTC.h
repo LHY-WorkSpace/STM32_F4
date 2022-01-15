@@ -17,5 +17,5 @@ void RTC_ConfigInit(void);
 void RTC_Set_Date(RTC_Time_t Time);
 void RTC_Set_Time(RTC_Time_t Time);
 void RTC_Get_Time(RTC_Time_t *Time);
-
+void RTC_Get_Date(RTC_Time_t* Date);
 #endif

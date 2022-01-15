@@ -2,7 +2,7 @@
 
 const u8 STM32_RTCDefault[] = {21, 11, 11, 5, 15, 20, 55};
 
-// RTC_Time_t STM32_Time;
+RTC_Time_t STM32_Time;
 
 void RTC_ConfigInit()
 {
@@ -36,8 +36,8 @@ void RTC_ConfigInit()
 		RTC_InitStructure.RTC_SynchPrediv = 0xFF;			  // RTC同步分频系数(0~7FFF)
 		RTC_InitStructure.RTC_HourFormat = RTC_HourFormat_24; // RTC设置为,24小时格式
 		RTC_Init(&RTC_InitStructure);
-		RTC_Set_Time(STM32_RTCDefault[4], STM32_RTCDefault[5], STM32_RTCDefault[6]);					  //设置时间
-		RTC_Set_Date(STM32_RTCDefault[0], STM32_RTCDefault[1], STM32_RTCDefault[2], STM32_RTCDefault[3]); //设置日期
+		RTC_Set_Time(STM32_Time); //设置时间
+		RTC_Set_Date(STM32_Time); //设置日期
 		RTC_WriteBackupRegister(RTC_BKP_DR0, 0x5A5A);
 	}
 }
@@ -83,17 +83,17 @@ void RTC_Get_Time(RTC_Time_t *Time)
 	Time->week = RTC_DateTypeDefinit.RTC_WeekDay;
 }
 
-// void RTC_Get_Date(RTC_Time_t* STM32_Time)
-// {
-// 	RTC_DateTypeDef RTC_DateTypeDefinit;
+void RTC_Get_Date(RTC_Time_t* Date)
+{
+	RTC_DateTypeDef RTC_DateTypeDefinit;
 
-// 	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
+	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
 
-// 	STM32_Time->year=RTC_DateTypeDefinit.RTC_Year;
-// 	STM32_Time->month=RTC_DateTypeDefinit.RTC_Month;
-// 	STM32_Time->date=RTC_DateTypeDefinit.RTC_Date;
-// 	STM32_Time->week=RTC_DateTypeDefinit.RTC_WeekDay;
-// }
+	Date->year=RTC_DateTypeDefinit.RTC_Year;
+	Date->month=RTC_DateTypeDefinit.RTC_Month;
+	Date->date=RTC_DateTypeDefinit.RTC_Date;
+	Date->week=RTC_DateTypeDefinit.RTC_WeekDay;
+}
 /*
 void RTC_Set_Alarm(u8* Data,u8 length)
 {

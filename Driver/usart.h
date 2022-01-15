@@ -1,5 +1,5 @@
-#ifndef     __USART_H__
-#define     __USART_H__
+#ifndef USART_H
+#define USART_H
 
 
 
@@ -26,10 +26,12 @@
 #define BUFFER_SIZE      (1024)
 
 
-// typedef struct 
-// {
-//     /* data */
-// };
+typedef struct 
+{
+    u16 RX_Count;
+    u16 TX_Count;
+    u8 Data[BUFFER_SIZE];  
+}USART_Data_t;
 
 
 
