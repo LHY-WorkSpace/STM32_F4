@@ -28,12 +28,12 @@ int  main()
 	led_init();
 	OLED_Init();
 	u8g2_Init();
+	// Start_Page();
 
-	Start_Page();
+	SendDataFF();
 
-
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
-	vTaskStartScheduler();
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
+	// vTaskStartScheduler();
 	
 	SystemDown();
 

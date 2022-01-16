@@ -50,6 +50,7 @@ void System_ResetState(u8 Device,u8 State)
 
 void SystemDown()
 {
+	u8 i=0;
 	while(1)
 	{		
 		LED1_ON;
@@ -57,9 +58,22 @@ void SystemDown()
 		LED1_OFF;
 		delay_ms(250);
 		LED1_ON;
+
 		delay_ms(250);
 		LED1_OFF;
 		delay_ms(250);
+		if(i==0)
+		{
+			SendDataFF();
+			i=1;
+		}
+		else
+		{
+			CloseSend();
+			i=0;
+		}
+		
+		
 
 	}
 }

@@ -1268,6 +1268,11 @@
               <FileType>5</FileType>
               <FilePath>..\FreeRTOS\include\FreeRTOSConfig.h</FilePath>
             </File>
+            <File>
+              <FileName>FreeROS_Communication.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\FreeRTOS\FreeROS_Communication.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

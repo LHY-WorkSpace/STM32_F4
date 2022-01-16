@@ -23,14 +23,14 @@
 
 
 
-#define BUFFER_SIZE      (1024)
-
+#define BUFFER_SIZE      (500)
 
 typedef struct 
 {
     u16 RX_Count;
     u16 TX_Count;
-    u8 Data[BUFFER_SIZE];  
+    u8 RX_Data[BUFFER_SIZE]; 
+    u8 TX_Data[BUFFER_SIZE];  
 }USART_Data_t;
 
 

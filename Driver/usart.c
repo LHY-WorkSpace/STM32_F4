@@ -7,6 +7,12 @@ USART_Data_t USART2_Buffer;
 
 
 
+//使用中断方式发送数据时，应先将数据发送到寄存器中，然后再开启中断，发送完毕后应在中断函数里关闭发送中断！！！！！！！
+// sendBuffer(Data);
+// USART_IT(enbale);
+
+
+
 /*
 	USART1_MODE_A : PA9-TX1 
 	         		PA10-RX1
@@ -71,7 +77,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART1,USART_IT_TC,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -166,18 +172,37 @@ void USART1_IRQHandler()
 {
 	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
 	{
-		USART1_Buffer.Data[USART1_Buffer.RX_Count] = USART_ReceiveData(USART1);
-		xQueueSendFromISR(USART1_TaskHandle,&USART1_Buffer.Data[USART1_Buffer.RX_Count],NULL);
+		USART1_Buffer.RX_Data[USART1_Buffer.RX_Count] = USART_ReceiveData(USART1);
+		xQueueSendFromISR(USART1_TaskHandle,&USART1_Buffer.RX_Data[USART1_Buffer.RX_Count],NULL);
 		USART1_Buffer.RX_Count++;
 		USART1_Buffer.RX_Count=USART1_Buffer.RX_Count%BUFFER_SIZE; //自动转圈
+		USART1_Buffer.TX_Count = 0;
 		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
 	}
 
 	if(USART_GetITStatus(USART1,USART_IT_TC)!=RESET)
 	{
+		USART_SendData(USART1,USART1_Buffer.RX_Data[USART1_Buffer.TX_Count]);
+		USART1_Buffer.TX_Count++;
+		USART1_Buffer.TX_Count = USART1_Buffer.TX_Count%BUFFER_SIZE; //自动转圈
 		USART_ClearITPendingBit(USART1,USART_IT_TC);
 	}
 
+}
+
+void SendDataFF()
+{
+	memset(USART1_Buffer.TX_Data,0xFF,sizeof(USART1_Buffer.TX_Data));
+	USART1_Buffer.TX_Count =0 ;
+	USART_SendData(USART1,USART1_Buffer.RX_Data[USART1_Buffer.TX_Count]);
+	USART_ITConfig(USART1,USART_IT_TC,ENABLE);
+
+}
+
+void CloseSend()
+{
+	USART_ITConfig(USART1,USART_IT_TC,DISABLE);
+	USART_ClearITPendingBit(USART1,USART_IT_TC);
 }
 
 
@@ -187,15 +212,18 @@ void USART2_IRQHandler()
 {
 	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
 	{
-		USART2_Buffer.Data[USART2_Buffer.RX_Count] = USART_ReceiveData(USART2);
-		xQueueSendFromISR(USART1_TaskHandle,&USART2_Buffer.Data[USART2_Buffer.RX_Count],NULL);
+		USART2_Buffer.RX_Data[USART2_Buffer.RX_Count] = USART_ReceiveData(USART2);
+		// xQueueSendFromISR(USART1_TaskHandle,&USART2_Buffer.RX_Data[USART2_Buffer.RX_Count],NULL);
 		USART2_Buffer.RX_Count++;
-		USART2_Buffer.RX_Count=USART2_Buffer.RX_Count%BUFFER_SIZE; //自动转圈
+		USART2_Buffer.RX_Count = USART2_Buffer.RX_Count%BUFFER_SIZE; //自动转圈
 		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
 	}
 
 	if(USART_GetITStatus(USART2,USART_IT_TC)!=RESET)
 	{
+		USART_SendData(USART2,USART2_Buffer.RX_Data[USART2_Buffer.TX_Count]);
+		USART2_Buffer.TX_Count++;
+		USART2_Buffer.TX_Count = USART2_Buffer.TX_Count%BUFFER_SIZE; //自动转圈
 		USART_ClearITPendingBit(USART2,USART_IT_TC);
 	}
 

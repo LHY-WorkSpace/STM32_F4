@@ -2,27 +2,7 @@
 
 
 
-#define IP_START  	       "@!"
-#define IP_END     	       "!@"
-#define PASSWORD_START     "#!"
-#define PASSWORD_END       "!#"
-
-
-const char* IP_begin=IP_START;
-const char* IP_end=IP_END;
-const char* password_begin=PASSWORD_START;
-const char* password_end=PASSWORD_END;
-
-
-char *user_message="\
-Input WIFI name and password\n\
-such as :@!xxxx!@|#!yyyy!#\n\
-xxxx:name\n\
-yyyy:password";
-
-
-
-//设置本地WIFI///
+//设置AP模式时的参数///
 char CMD_RST[]="AT+RST\r\n";
 char CMD_CWMODE[]="AT+CWMODE=3\r\n";
 char CMD_CWSAP[]="AT+CWSAP=\"DEVICE1\",\"123456789\",6,3\r\n";
@@ -30,10 +10,16 @@ char CMD_CIFSR[]="AT+CIFSR\r\n";
 char CMD_CIPMUX[]="AT+CIPMUX=1\r\n";
 char CMD_CIPSERVER[]="AT+CIPSERVER=1,8080\r\n";
 char CMD_CIPSEND[]="AT+CIPSEND=0,79\r\n";
-
 char Wifi_Name[]="WIFI:DEVICE1";
 char Wifi_Password[]="KEY:123456789";
 char Port[]="PORT:8080";
+
+//设置STA模式时的参数///
+
+
+
+
+
 char Local_IP[12];
 char Net_Name[15];
 char Net_Password[10];

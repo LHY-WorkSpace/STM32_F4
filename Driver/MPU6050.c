@@ -192,19 +192,6 @@ static void run_self_test()
 
 }
 
-void MPU6050_Init(void)
-{
-	IIC_Init();
-	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
-	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
-	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
-	MPU6050_Write_Data(MPU6050_GYR_CONFIG_REG,MPU6050_FS_SEL);
-	MPU6050_Write_Data(MPU6050_ACC_CONFIG_REG,MPU6050_AFS_SEL);
-	MPU6050_Write_Data(MPU6050_FIFO_ENABLE_REG,MPU6050_TEMP_FIFO_ENABLE|MPU6050_GYRFIFO_ENABLE|MPU6050_ACCFIFO_ENABLE);
-	MPU6050_DMP_Init();
-	
-}
-
 u8 MPU6050_DMP_Init(void)
 {  
 	
@@ -237,6 +224,21 @@ u8 MPU6050_DMP_Init(void)
 }
 
 
+void MPU6050_Init(void)
+{
+	IIC_Init();
+	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
+	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
+	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
+	MPU6050_Write_Data(MPU6050_GYR_CONFIG_REG,MPU6050_FS_SEL);
+	MPU6050_Write_Data(MPU6050_ACC_CONFIG_REG,MPU6050_AFS_SEL);
+	MPU6050_Write_Data(MPU6050_FIFO_ENABLE_REG,MPU6050_TEMP_FIFO_ENABLE|MPU6050_GYRFIFO_ENABLE|MPU6050_ACCFIFO_ENABLE);
+	MPU6050_DMP_Init();
+	
+}
+
+
+
 double MPU6050_Tempure(void)
 {
 	short int temp;
@@ -246,6 +248,8 @@ double MPU6050_Tempure(void)
   return reval;
 
 }
+
+
 
 
 /*读取数据到 pitch,yaw,roll  */
@@ -258,7 +262,7 @@ u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 	unsigned char more;
 	float q0=1.0f,q1=0.0f,q2=0.0f,q3=0.0f;
 
-	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<30)
+	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<50)
 	{
 		i++;
 		delay_us(2);
@@ -281,75 +285,121 @@ u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 }
 
 
-
-void usart1_niming_report(u8 fun,u8 *data,u8 len)
+void MPU6050_Task()
 {
-	u8 send_buf[32];
-	u8 i;
-	if(len>28)return;	//最多28字节数据 
-	send_buf[len+3]=0;	//校验数置零
-	send_buf[0]=0X88;	//帧头
-	send_buf[1]=fun;	//功能字
-	send_buf[2]=len;	//数据长度
-	for(i=0;i<len;i++)send_buf[3+i]=data[i];			//复制数据
-	for(i=0;i<len+3;i++)send_buf[len+3]+=send_buf[i];	//计算校验和	
-	for(i=0;i<len+4;i++)usart1_send_char(send_buf[i]);    //发送数据到串口1
+
+
+
+
+
 	
-	 
 }
 
-//匿名上位机//
-void mpu6050_SendTo_APP(short pitch,short yaw,short roll)
-{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void usart1_niming_report(u8 fun,u8 *data,u8 len)
+// {
+// 	u8 send_buf[32];
+// 	u8 i;
+// 	if(len>28)return;	//最多28字节数据 
+// 	send_buf[len+3]=0;	//校验数置零
+// 	send_buf[0]=0X88;	//帧头
+// 	send_buf[1]=fun;	//功能字
+// 	send_buf[2]=len;	//数据长度
+// 	for(i=0;i<len;i++)send_buf[3+i]=data[i];			//复制数据
+// 	for(i=0;i<len+3;i++)send_buf[len+3]+=send_buf[i];	//计算校验和	
+// 	for(i=0;i<len+4;i++)usart1_send_char(send_buf[i]);    //发送数据到串口1
 	
-	MPU6050_Get_DMP_Data((float*)&pitch,(float*)&yaw,(float*)&roll);
-	u8 tbuf[28]; 
-	u8 i;
-	for(i=0;i<28;i++)tbuf[i]=0;//清0
+	 
+// }
+
+// //匿名上位机//
+// void mpu6050_SendTo_APP(short pitch,short yaw,short roll)
+// {
+	
+// 	MPU6050_Get_DMP_Data((float*)&pitch,(float*)&yaw,(float*)&roll);
+// 	u8 tbuf[28]; 
+// 	u8 i;
+// 	for(i=0;i<28;i++)tbuf[i]=0;//清0
 	
 	
 	
-	//显示曲线
-//	tbuf[0]=(roll>>8)&0XFF;
-//	tbuf[1]=roll&0XFF;
-//	tbuf[2]=(pitch>>8)&0XFF;
-//	tbuf[3]=pitch&0XFF;
-//	tbuf[4]=(yaw>>8)&0XFF;
-//	tbuf[5]=yaw&0XFF;
-//	usart1_niming_report(0XA1,tbuf,10);//飞控显示帧,0XAF	
+// 	//显示曲线
+// //	tbuf[0]=(roll>>8)&0XFF;
+// //	tbuf[1]=roll&0XFF;
+// //	tbuf[2]=(pitch>>8)&0XFF;
+// //	tbuf[3]=pitch&0XFF;
+// //	tbuf[4]=(yaw>>8)&0XFF;
+// //	tbuf[5]=yaw&0XFF;
+// //	usart1_niming_report(0XA1,tbuf,10);//飞控显示帧,0XAF	
 	
 
 	
-	//显示姿态
+// 	//显示姿态
 	
-//	tbuf[3]=ACC_X_L;
-//	tbuf[4]=ACC_X_H;
-//	tbuf[5]=ACC_Y_L;
-//	tbuf[6]=ACC_Y_H;
-//	tbuf[7]=ACC_Z_L;
-//	tbuf[8]=ACC_Z_H;
-//	
+// //	tbuf[3]=ACC_X_L;
+// //	tbuf[4]=ACC_X_H;
+// //	tbuf[5]=ACC_Y_L;
+// //	tbuf[6]=ACC_Y_H;
+// //	tbuf[7]=ACC_Z_L;
+// //	tbuf[8]=ACC_Z_H;
+// //	
 	
 	
-	tbuf[18]=(roll>>8)&0XFF;
-	tbuf[19]=roll&0XFF;
-	tbuf[20]=(pitch>>8)&0XFF;
-	tbuf[21]=pitch&0XFF;
-	tbuf[22]=(yaw>>8)&0XFF;
-	tbuf[23]=yaw&0XFF;
-	usart1_niming_report(0XAf,tbuf,28);//飞控显示帧,0XAF		
+// 	tbuf[18]=(roll>>8)&0XFF;
+// 	tbuf[19]=roll&0XFF;
+// 	tbuf[20]=(pitch>>8)&0XFF;
+// 	tbuf[21]=pitch&0XFF;
+// 	tbuf[22]=(yaw>>8)&0XFF;
+// 	tbuf[23]=yaw&0XFF;
+// 	usart1_niming_report(0XAf,tbuf,28);//飞控显示帧,0XAF		
 	
 
 
-} 
+// } 
 
-void usart1_send_char(u8 c)
-{
+// void usart1_send_char(u8 c)
+// {
 
-	while(USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET);
-   USART_SendData(USART1,c);   
+// 	while(USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET);
+//    USART_SendData(USART1,c);   
 
-} 
+// } 
 
 
 

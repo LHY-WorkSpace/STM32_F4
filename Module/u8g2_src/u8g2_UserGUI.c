@@ -219,14 +219,13 @@ void Moon_Task()
 void Round_Task()
 {
     TickType_t Time;
-    u8 i=0;	
-    u8 x0=21,y0=21;
+    u8 i=3;	
+    u8 x0=60,y0=50;
     u8 x,y;
     Time=xTaskGetTickCount();
     while (1)
     {
         taskENTER_CRITICAL();
-        u8g2_SetFontMode(&u8g2,1);
         do
         {	
             switch (i)
@@ -246,19 +245,20 @@ void Round_Task()
                 default:
                     break;
             }
+            u8g2_SetFontMode(&u8g2,0);
             u8g2_SetDrawColor(&u8g2,1);
             u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
             u8g2_SetFontDirection(&u8g2, i);
             u8g2_DrawGlyph(&u8g2,x,y,0x36);
-            i++;
-            if(i >=4)
+            if(i ==0)
             {
-                i=0;
+                i=4;
             }
+            i--;
         } while (u8g2_NextPage(&u8g2));
 
         taskEXIT_CRITICAL();
-        vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
+        vTaskDelayUntil(&Time,200/portTICK_PERIOD_MS);
     }
 }
 
@@ -422,14 +422,14 @@ void u8g2_TaskCreate()
     }
 
     xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,10,&u8g2_Battery_T);
-    xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,10,&LED_T);
+    xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,8,&LED_T);
     xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
     xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
     xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
 
     // xTaskCreate( (TaskFunction_t)Streamline_icon,    "IconTask",200,NULL,10,            NULL);
     // xTaskCreate( (TaskFunction_t)Shift_icon,    "IconTask",200,NULL,10,            NULL);
-  // xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
+  xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
     // xTaskCreate( (TaskFunction_t)Moon_Task,    "IconTask",200,NULL,10,            NULL);
 
    //xTaskCreate( (TaskFunction_t)Teat_Task,    "IconTask",200,NULL,10,            NULL);
@@ -437,25 +437,6 @@ void u8g2_TaskCreate()
 }
 
 
-
-
-void u8g2_Task()
-{
-	TickType_t Time;		
-
-    u8g2_TaskCreate();
-
-
-	Time=xTaskGetTickCount();
-    while (1)
-    {
-
-
-       vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
-    }
-
-    vTaskDelete(NULL);
-}
 
 
 
