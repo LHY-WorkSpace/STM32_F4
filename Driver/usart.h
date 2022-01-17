@@ -57,14 +57,17 @@ typedef struct
 
 typedef union
 {
-    USART_Data[BUFFER_SIZE];
+    u8 USART_Data[BUFFER_SIZE];
     FrameData_t  FrameData; 
 }USART_FrameData_u;
 
+extern USART_Data_t USART1_Buffer;
+extern USART_Data_t USART2_Buffer;
 
 void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);   
 void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
-
+void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data);
+u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length);
 int fputc(int ch, FILE* stream);
 #endif
 

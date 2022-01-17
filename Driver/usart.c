@@ -77,7 +77,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_TC,ENABLE);
+	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -181,21 +181,21 @@ void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 {
 	if(USART_GetITStatus(USARTx,USART_IT_RXNE)!=RESET)
 	{
-		USART_Data.RX_Data[USART_Data.RX_Pointer] = USART_ReceiveData(USARTx);
-		USART_Data.RX_Pointer++;
+		USART_Data->RX_Data[USART_Data->RX_Pointer] = USART_ReceiveData(USARTx);
+		USART_Data->RX_Pointer++;
 		
 		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 	}
 
 	if(USART_GetITStatus(USARTx,USART_IT_TC)!=RESET)
 	{
-		USART_SendData(USARTx,USART_Data.TX_Data[USART_Data.TX_Pointer]);
-		USART_Data.TX_Pointer++; 
-
-		if(USART_Data.TX_WriteLength <= USART_Data.TX_Pointer)
+		USART_Data->TX_Pointer++; 
+		USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
+		
+		if(USART_Data->TX_WriteLength <= USART_Data->TX_Pointer)
 		{
 			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
-			USART_Data.TX_Pointer =0;	//发送完毕置为空闲
+			USART_Data->TX_Pointer =0;	//发送完毕置为空闲
 		}
 		USART_ClearITPendingBit(USARTx,USART_IT_TC);
 	}
@@ -213,15 +213,15 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 
 		return FALSE;
 	}
 
-	if( USART_Data.TX_Pointer != 0)//正在发送数据
+	if( USART_Data->TX_Pointer != 0)//正在发送数据
 	{
 		return BUSY;
 	}
 
-	memset(USART_Data.TX_Data,Data,Length);
-	USART_Data.TX_Pointer = 0;
-	USART_Data.TX_WriteLength = Length;
-	USART_SendData(USARTx,USART_Data.TX_Data[USART_Data.TX_Pointer]);
+	memcpy(USART_Data->TX_Data,Data,Length);
+	USART_Data->TX_Pointer = 0;
+	USART_Data->TX_WriteLength = Length;
+	USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
 	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
 	return TRUE;
 }
@@ -234,15 +234,14 @@ u8 USART_ReceiceData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16
 		return FALSE;
 	}
 
-	if( USART_Data.RX_Pointer != 0)//正在接收数据
+	if( USART_Data->RX_Pointer != 0)//正在接收数据
 	{
 		return BUSY;
 	}
 
 
 
-
-
+	return TRUE;
 
 
 

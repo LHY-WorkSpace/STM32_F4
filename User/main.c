@@ -19,6 +19,7 @@ void CreateAllTask()
 
 u8 x=0,y=0,i=0;
 
+
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
@@ -29,8 +30,6 @@ int  main()
 	OLED_Init();
 	u8g2_Init();
 	// Start_Page();
-
-	SendDataFF();
 
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
 	// vTaskStartScheduler();

@@ -50,7 +50,7 @@ void System_ResetState(u8 Device,u8 State)
 
 void SystemDown()
 {
-	u8 i=0;
+	char Data[] ="STM32-USART-Test!!!\r\n";
 	while(1)
 	{		
 		LED1_ON;
@@ -62,19 +62,7 @@ void SystemDown()
 		delay_ms(250);
 		LED1_OFF;
 		delay_ms(250);
-		if(i==0)
-		{
-			SendDataFF();
-			i=1;
-		}
-		else
-		{
-			CloseSend();
-			i=0;
-		}
-		
-		
-
+		USART_ITSendData(USART1,&USART1_Buffer,(u8 *)Data,sizeof(Data));
 	}
 }
 

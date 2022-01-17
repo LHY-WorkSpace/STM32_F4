@@ -338,7 +338,7 @@ void Switch_Task()
 {
     u8 Data=0;
     u8 ID,Num;
-    s8 Char[3];
+    char Char[3];
 
     while (1)
     {

@@ -126,12 +126,12 @@ void Get_Temperature(u8 *Temperature)
 	
 	__disable_irq();
 	
-	if(DS18B20_Init(0)==0)
+	if(DS18B20_Init()==0)
 	{
 		DS18B20_Write_Byte(0xcc);
 		DS18B20_Write_Byte(0x44);
 
-		DS18B20_Init(0);
+		DS18B20_Init();
 
 		DS18B20_Write_Byte(0xcc);
 		DS18B20_Write_Byte(0xbe);
