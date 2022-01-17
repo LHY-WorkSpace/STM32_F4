@@ -4,6 +4,11 @@
 
 #define  TRUE     0
 #define  FALSE    1
+#define  BUSY    2
+#define  ILDE    3
+
+
+
 
 #define  HIGH   1
 #define  LOW    0

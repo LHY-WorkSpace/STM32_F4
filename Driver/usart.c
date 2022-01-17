@@ -167,67 +167,92 @@ int fputc(int ch, FILE* stream)
 }
 
 
-
 void USART1_IRQHandler()
 {
-	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
-	{
-		USART1_Buffer.RX_Data[USART1_Buffer.RX_Count] = USART_ReceiveData(USART1);
-		xQueueSendFromISR(USART1_TaskHandle,&USART1_Buffer.RX_Data[USART1_Buffer.RX_Count],NULL);
-		USART1_Buffer.RX_Count++;
-		USART1_Buffer.RX_Count=USART1_Buffer.RX_Count%BUFFER_SIZE; //自动转圈
-		USART1_Buffer.TX_Count = 0;
-		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-	}
-
-	if(USART_GetITStatus(USART1,USART_IT_TC)!=RESET)
-	{
-		USART_SendData(USART1,USART1_Buffer.RX_Data[USART1_Buffer.TX_Count]);
-		USART1_Buffer.TX_Count++;
-		USART1_Buffer.TX_Count = USART1_Buffer.TX_Count%BUFFER_SIZE; //自动转圈
-		USART_ClearITPendingBit(USART1,USART_IT_TC);
-	}
-
+	USARTx_ITHandle(USART1,&USART1_Buffer);
 }
-
-void SendDataFF()
-{
-	memset(USART1_Buffer.TX_Data,0xFF,sizeof(USART1_Buffer.TX_Data));
-	USART1_Buffer.TX_Count =0 ;
-	USART_SendData(USART1,USART1_Buffer.RX_Data[USART1_Buffer.TX_Count]);
-	USART_ITConfig(USART1,USART_IT_TC,ENABLE);
-
-}
-
-void CloseSend()
-{
-	USART_ITConfig(USART1,USART_IT_TC,DISABLE);
-	USART_ClearITPendingBit(USART1,USART_IT_TC);
-}
-
-
-
 
 void USART2_IRQHandler()
 {
-	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
+	USARTx_ITHandle(USART2,&USART2_Buffer);	
+}
+
+void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
+{
+	if(USART_GetITStatus(USARTx,USART_IT_RXNE)!=RESET)
 	{
-		USART2_Buffer.RX_Data[USART2_Buffer.RX_Count] = USART_ReceiveData(USART2);
-		// xQueueSendFromISR(USART1_TaskHandle,&USART2_Buffer.RX_Data[USART2_Buffer.RX_Count],NULL);
-		USART2_Buffer.RX_Count++;
-		USART2_Buffer.RX_Count = USART2_Buffer.RX_Count%BUFFER_SIZE; //自动转圈
-		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
+		USART_Data.RX_Data[USART_Data.RX_Pointer] = USART_ReceiveData(USARTx);
+		USART_Data.RX_Pointer++;
+		
+		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 	}
 
-	if(USART_GetITStatus(USART2,USART_IT_TC)!=RESET)
+	if(USART_GetITStatus(USARTx,USART_IT_TC)!=RESET)
 	{
-		USART_SendData(USART2,USART2_Buffer.RX_Data[USART2_Buffer.TX_Count]);
-		USART2_Buffer.TX_Count++;
-		USART2_Buffer.TX_Count = USART2_Buffer.TX_Count%BUFFER_SIZE; //自动转圈
-		USART_ClearITPendingBit(USART2,USART_IT_TC);
+		USART_SendData(USARTx,USART_Data.TX_Data[USART_Data.TX_Pointer]);
+		USART_Data.TX_Pointer++; 
+
+		if(USART_Data.TX_WriteLength <= USART_Data.TX_Pointer)
+		{
+			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
+			USART_Data.TX_Pointer =0;	//发送完毕置为空闲
+		}
+		USART_ClearITPendingBit(USARTx,USART_IT_TC);
 	}
+}
+
+
+// USART_TypeDef* USARTx
+// USART_Data_t *USART_Data 
+// u8 *Data
+// u16  Length
+u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
+{
+	if(Length > BUFFER_SIZE)
+	{
+		return FALSE;
+	}
+
+	if( USART_Data.TX_Pointer != 0)//正在发送数据
+	{
+		return BUSY;
+	}
+
+	memset(USART_Data.TX_Data,Data,Length);
+	USART_Data.TX_Pointer = 0;
+	USART_Data.TX_WriteLength = Length;
+	USART_SendData(USARTx,USART_Data.TX_Data[USART_Data.TX_Pointer]);
+	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
+	return TRUE;
+}
+
+
+u8 USART_ReceiceData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
+{
+	if(Length > BUFFER_SIZE)
+	{
+		return FALSE;
+	}
+
+	if( USART_Data.RX_Pointer != 0)//正在接收数据
+	{
+		return BUSY;
+	}
+
+
+
+
+
+
+
 
 }
+
+
+
+
+
+
 
 
 
