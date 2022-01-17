@@ -2,12 +2,13 @@
 #define   DS18B20_H
 
 
+#define  DS18B20_HIGH   GPIO_SetBits(GPIOB,GPIO_Pin_8)
+#define  DS18B20_LOW    GPIO_ResetBits(GPIOB,GPIO_Pin_8)
+#define  IO_STATE       GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_8)
 
-int ds18B20_init(char CMD);
-int ds18b20_read_byte(void);
-void ds18b20_write_byte(u32 data);
-void tempure_value_OLEDdisplay(char x,char y);
-void Get_Temperature(u8 *Temp);
+void DS18B20_Write_Byte(u8 Data);
+u8 DS18B20_Read_Byte(void);
+u8 DS18B20_Init(void);
 
 
 #endif
