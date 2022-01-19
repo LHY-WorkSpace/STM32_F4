@@ -62,7 +62,7 @@ void SystemDown()
 		delay_ms(250);
 		LED1_OFF;
 		delay_ms(250);
-		USART_ITSendData(USART1,&USART1_Buffer,(u8 *)Data,sizeof(Data));
+		//USART_ITSendData(USART1,&USART1_Buffer,(u8 *)Data,sizeof(Data));
 	}
 }
 

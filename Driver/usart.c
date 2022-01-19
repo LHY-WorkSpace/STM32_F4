@@ -169,39 +169,61 @@ int fputc(int ch, FILE* stream)
 
 void USART1_IRQHandler()
 {
-	USARTx_ITHandle(USART1,&USART1_Buffer);
+	u8 Data;
+	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
+	{
+		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+		Data = USART_ReceiveData(USART1);
+		// while ((USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET));
+		USART_SendData(USART2, Data);	
+		// USART_ClearFlag(USART2,USART_FLAG_TC);
+	}
+
+
+
+
+	// USARTx_ITHandle(USART1,&USART1_Buffer);
 }
 
 void USART2_IRQHandler()
 {
-	USARTx_ITHandle(USART2,&USART2_Buffer);	
+	u8 Data;
+	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
+	{
+		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
+		Data = USART_ReceiveData(USART2);
+		// while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
+		USART_SendData(USART1, Data);	
+		// USART_ClearFlag(USART1,USART_FLAG_TC);
+
+	}
+
+	// USARTx_ITHandle(USART2,&USART2_Buffer);	
 }
 
 void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 {
 	if(USART_GetITStatus(USARTx,USART_IT_RXNE)!=RESET)
 	{
+		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 		USART_Data->RX_Data[USART_Data->RX_Pointer] = USART_ReceiveData(USARTx);
 		USART_Data->RX_Pointer++;
-		
-		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 	}
 
 	if(USART_GetITStatus(USARTx,USART_IT_TC)!=RESET)
 	{
-		USART_Data->TX_Pointer++; 
+		USART_ClearITPendingBit(USARTx,USART_IT_TC);
 		USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
-		
+		USART_Data->TX_Pointer++; 
 		if(USART_Data->TX_WriteLength <= USART_Data->TX_Pointer)
 		{
 			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
 			USART_Data->TX_Pointer =0;	//发送完毕置为空闲
 		}
-		USART_ClearITPendingBit(USARTx,USART_IT_TC);
 	}
 }
 
-
+//中断方式
 // USART_TypeDef* USARTx
 // USART_Data_t *USART_Data 
 // u8 *Data
@@ -221,8 +243,24 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 
 	memcpy(USART_Data->TX_Data,Data,Length);
 	USART_Data->TX_Pointer = 0;
 	USART_Data->TX_WriteLength = Length;
-	USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
 	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
+	return TRUE;
+}
+
+//非中断方式
+// USART_TypeDef* USARTx
+// USART_Data_t *USART_Data 
+// u8 *Data
+// u16  Length
+u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
+{
+	u16 i;
+	for ( i = 0; i < Length; i++)
+	{
+		while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
+		USART_SendData(USARTx, *(Data+i));	
+		USART_ClearFlag(USARTx,USART_FLAG_TC);
+	}
 	return TRUE;
 }
 
@@ -246,11 +284,6 @@ u8 USART_ReceiceData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16
 
 
 }
-
-
-
-
-
 
 
 

@@ -162,25 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>197</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134224106</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Driver\usart.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\1\../Driver/usart.c\197</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>226</LineNumber>
+          <LineNumber>183</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223824</Address>
+          <Address>134224020</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -189,7 +173,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Driver\usart.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../Driver/usart.c\226</Expression>
+          <Expression>\\1\../Driver/usart.c\183</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
