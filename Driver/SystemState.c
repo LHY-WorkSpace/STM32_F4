@@ -66,6 +66,16 @@ void SystemDown()
 	}
 }
 
+void SW_Reset()
+{
+	__set_FAULTMASK(1);
+	NVIC_SystemReset();
+}
+
+
+
+
+
 
 
 

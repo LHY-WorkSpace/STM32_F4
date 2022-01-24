@@ -178,10 +178,6 @@ void USART1_IRQHandler()
 		USART_SendData(USART2, Data);	
 		// USART_ClearFlag(USART2,USART_FLAG_TC);
 	}
-
-
-
-
 	// USARTx_ITHandle(USART1,&USART1_Buffer);
 }
 
@@ -197,7 +193,6 @@ void USART2_IRQHandler()
 		// USART_ClearFlag(USART1,USART_FLAG_TC);
 
 	}
-
 	// USARTx_ITHandle(USART2,&USART2_Buffer);	
 }
 
@@ -257,9 +252,9 @@ u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data
 	u16 i;
 	for ( i = 0; i < Length; i++)
 	{
-		while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
-		USART_SendData(USARTx, *(Data+i));	
 		USART_ClearFlag(USARTx,USART_FLAG_TC);
+		USART_SendData(USARTx, *(Data+i));
+		while ((USART_GetFlagStatus(USARTx,USART_FLAG_TC)==RESET));
 	}
 	return TRUE;
 }

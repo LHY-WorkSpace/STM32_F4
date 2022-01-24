@@ -110,9 +110,10 @@ void XPT2046_Init(void)
 u8 XPT2046_SendData(u8 Tdata)
 {
     u8 Temp=0;
-	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);            
-	SPI_I2S_SendData(SPI1,Tdata);			
 	SPI_I2S_ClearFlag(SPI1,SPI_I2S_FLAG_TXE);	
+	SPI_I2S_SendData(SPI1,Tdata);	
+	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET);            
+
 
 	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET);            
 	Temp = SPI_I2S_ReceiveData(SPI1);			

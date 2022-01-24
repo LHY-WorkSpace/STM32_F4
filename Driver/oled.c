@@ -244,21 +244,18 @@ void OLED_Init(void)
 
 void OLED_SendData(u8 Tdata)
 {
-	OLED_DATA;
-	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            
-	SPI_I2S_SendData(SPI2,Tdata);			
-	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-
-
+	OLED_DATA;	
+	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);
+	SPI_I2S_SendData(SPI2,Tdata);		
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);      
 }
 
 void OLED_SetMode(u8 Tdata)
 {
 	OLED_ORDER;	
+	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
+	SPI_I2S_SendData(SPI2,Tdata);	
 	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);           
-	SPI_I2S_SendData(SPI2,Tdata);			
-    SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-
 }
 
 /*

@@ -124,5 +124,5 @@ u8   System_GetState(u8 Device,u8 State);
 void System_SetState(u8 Device,u8 State);
 void System_ResetState(u8 Device,u8 State);
 void SystemDown(void);
-
+void SW_Reset(void);
 #endif
