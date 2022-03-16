@@ -34,7 +34,7 @@ extern u8 Data_OK;
 		1024 Byte per time 
 
 */
-void DMA1_ConfigInit()
+void DMA1_ConfigInit(u8 Dir,u8 *Mem_Addr,u8 *Peri_Addr,)
 {
 	
 	NVIC_InitTypeDef  NVIC_Initstr;
@@ -42,13 +42,9 @@ void DMA1_ConfigInit()
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1,ENABLE);
 	
-	SPI_I2S_DMACmd(SPI2,SPI_I2S_DMAReq_Tx,ENABLE);
-	
-
-	
-	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)OLED;	
+	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)Mem_Addr;	
 	   
-	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI2->DR);
+	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)Peri_Addr);
 	
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
 	
@@ -56,7 +52,7 @@ void DMA1_ConfigInit()
 	
 	DMA_InitConfig.DMA_BufferSize=DMA_TIMES;//单次传输的大小
 	
-  DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; 
+  	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; 
 	
 	DMA_InitConfig.DMA_Channel=DMA_Channel_0; 
 	
@@ -94,10 +90,6 @@ void DMA2_ConfigInit()
 {
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
-	
-	//USART_DMACmd(USART1,USART_DMAReq_Rx,ENABLE);
-	SDIO_DMACmd(ENABLE);
-
 
   	DMA_InitTypeDef DMA_InitConfig;
 	
@@ -113,7 +105,7 @@ void DMA2_ConfigInit()
 	
 	DMA_InitConfig.DMA_BufferSize=DMA_TIMES;//单次传输的大小
 	
-  DMA_InitConfig.DMA_DIR=DMA_PeripheralDataSize_Word; //先试试从内存到外设  
+	DMA_InitConfig.DMA_DIR=DMA_PeripheralDataSize_Word; //先试试从内存到外设  
 	
 	DMA_InitConfig.DMA_Channel=DMA_Channel_4; 
 	
@@ -202,4 +194,13 @@ void DMA2_Stream6_IRQHandler()
 
 
 }
+
+
+
+void DMA_Start(u8 Mode)
+{
+
+}
+
+
 
