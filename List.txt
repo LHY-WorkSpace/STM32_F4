@@ -9,6 +9,18 @@
 
 
 
+2022.3.25
+  1.完善和优化SD卡代码
+  2.完善和优化USB代码
+  3.完善和优化FSMC和LCD代码
+  4.LVGL和U8G2使用
+
+
+
+
+
+
+
 407VET FSMC TFT	LCD移植部分
 https://blog.csdn.net/yyyyyyyyyysz/article/details/96774504
 
