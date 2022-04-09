@@ -1,6 +1,8 @@
 #include "IncludeFile.h"
 
 
+PID_t pid;
+
 void PID_init()
 {
 	pid.SetSpeed = 0.0;

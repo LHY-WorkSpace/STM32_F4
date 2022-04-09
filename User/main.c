@@ -8,7 +8,6 @@ u8g2_t u8g2;
 
 
 
-
 void CreateAllTask()
 {
 
@@ -24,13 +23,13 @@ int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
-	USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	OLED_Init();
-	u8g2_Init();
+	// OLED_Init();
+	// u8g2_Init();
 	// Start_Page();
-
+	USB_Task();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
 	// vTaskStartScheduler();
 	

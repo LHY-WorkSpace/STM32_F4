@@ -104,7 +104,7 @@ u8 FALSH_GetSumData(u32 StartAddr,u32 EndAddr,u32 *Data)
 	
 	while ( StartAddr != EndAddr )
 	{
-		Temp += *StartAddr;
+		Temp += *((u32 *)StartAddr);
 		StartAddr += 4;
 	}
 }
