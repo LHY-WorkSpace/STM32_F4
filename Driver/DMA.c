@@ -34,47 +34,48 @@ extern u8 Data_OK;
 		1024 Byte per time 
 
 */
-void DMA1_ConfigInit(u8 Dir,u8 *Mem_Addr,u8 *Peri_Addr,)
-{
-	
-	NVIC_InitTypeDef  NVIC_Initstr;
-	DMA_InitTypeDef DMA_InitConfig;
-	
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1,ENABLE);
-	
-	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)Mem_Addr;	
-	   
-	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)Peri_Addr);
-	
-	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
-	
-	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
-	
-	DMA_InitConfig.DMA_BufferSize=DMA_TIMES;//单次传输的大小
-	
-  	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; 
-	
-	DMA_InitConfig.DMA_Channel=DMA_Channel_0; 
-	
-	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Disable;
-	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_Full;
-	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
-	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
-	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
-	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
-	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
-	DMA_InitConfig.DMA_Priority=DMA_Priority_Medium;
-	DMA_Init(DMA1_Stream4,&DMA_InitConfig);
-	DMA_ITConfig(DMA1_Stream4,DMA_IT_TC,ENABLE);
-	
-	
-	NVIC_Initstr.NVIC_IRQChannel=DMA1_Stream4_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
-	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_Init(&NVIC_Initstr);
 
-}
+// void DMA1_ConfigInit(u8 Dir,u8 *Mem_Addr,u8 Peri_Addr,)
+// {
+	
+// 	NVIC_InitTypeDef  NVIC_Initstr;
+// 	DMA_InitTypeDef DMA_InitConfig;
+	
+// 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1,ENABLE);
+	
+// 	DMA_InitConfig.DMA_Memory0BaseAddr=(u32)Mem_Addr;	
+	   
+// 	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)Peri_Addr);
+	
+// 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
+	
+// 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
+	
+// 	DMA_InitConfig.DMA_BufferSize=DMA_TIMES;//单次传输的大小
+	
+//   	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; 
+	
+// 	DMA_InitConfig.DMA_Channel=DMA_Channel_0; 
+	
+// 	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Disable;
+// 	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_Full;
+// 	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
+// 	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
+// 	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
+// 	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
+// 	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
+// 	DMA_InitConfig.DMA_Priority=DMA_Priority_Medium;
+// 	DMA_Init(DMA1_Stream4,&DMA_InitConfig);
+// 	DMA_ITConfig(DMA1_Stream4,DMA_IT_TC,ENABLE);
+	
+	
+// 	NVIC_Initstr.NVIC_IRQChannel=DMA1_Stream4_IRQn;
+// 	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
+// 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+// 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
+// 	NVIC_Init(&NVIC_Initstr);
+
+// }
 
 
 

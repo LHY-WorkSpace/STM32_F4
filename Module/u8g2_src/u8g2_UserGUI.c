@@ -1,7 +1,7 @@
 #include "IncludeFile.h"
 
 
-static u8g2_t u8g2;
+static u8g2_t u8g2_Data;
 
 static TaskHandle_t u8g2_Battery_T;
 static TaskHandle_t u8g2_Dir_T;
@@ -9,14 +9,68 @@ static TaskHandle_t u8g2_Safe_T;
 static TaskHandle_t LED_T;
 
 u8 flag=0;
+static unsigned char FreeRTOS_Logo[] =
+{
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
+0X00,0X00,0XFF,0XFF,0XFF,0X05,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
+0X00,0XC0,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X1F,0X00,0X00,0X00,0X00,
+0X00,0X20,0X00,0X00,0X00,0X80,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X01,
+0X00,0X10,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XE0,0XFF,0XFF,0XFF,0X07,
+0X00,0X18,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X18,
+0X00,0X18,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X38,
+0X00,0X0C,0XC0,0X9F,0XFF,0X07,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X38,
+0X00,0X0C,0XE0,0X8D,0XFF,0X3F,0XF8,0XFF,0X1F,0XC0,0X1F,0X00,0X00,0X00,0X00,0X38,
+0X00,0X0C,0XB0,0XCD,0XFF,0X7F,0XF8,0XFF,0X1F,0XF8,0XFF,0X01,0XC0,0XFF,0X01,0X78,
+0X00,0X06,0XB0,0XCF,0XFF,0XFF,0XFC,0XFF,0X1F,0XFE,0XFF,0X07,0XF8,0XFF,0X07,0X78,
+0X00,0X06,0XF0,0XE7,0X0F,0XFF,0XF8,0XFF,0X0F,0XFF,0XFF,0X0F,0XFC,0XFF,0X07,0X78,
+0X00,0X06,0XE0,0XE3,0X07,0X7E,0X00,0X3F,0X80,0XFF,0XF8,0X0F,0XFE,0XFF,0X03,0X38,
+0X00,0X03,0X00,0XE0,0X07,0X7E,0X80,0X3F,0XC0,0X3F,0XE0,0X1F,0XFF,0X81,0X03,0X38,
+0X00,0X03,0X70,0XF0,0X07,0X3F,0X80,0X3F,0XE0,0X1F,0XC0,0X1F,0XFF,0X00,0X00,0X38,
+0X80,0X01,0X7C,0XF3,0XFF,0X1F,0X80,0X1F,0XE0,0X0F,0XC0,0X1F,0XFF,0X00,0X00,0X38,
+0X80,0X01,0X2E,0XF3,0XFF,0X0F,0X80,0X1F,0XF0,0X07,0XC0,0X1F,0XFF,0X03,0X00,0X38,
+0X80,0X01,0XB6,0XF9,0XFF,0X07,0XC0,0X1F,0XF0,0X07,0XC0,0X1F,0XFF,0X1F,0X00,0X38,
+0XC0,0X00,0XFE,0XF9,0XFF,0X07,0XC0,0X1F,0XF0,0X07,0XC0,0X1F,0XFE,0XFF,0X00,0X3C,
+0XC0,0X00,0XFE,0XF8,0XF1,0X07,0XC0,0X0F,0XF0,0X07,0XC0,0X1F,0XFC,0XFF,0X01,0X3C,
+0XE0,0X00,0X3D,0XFC,0XE1,0X07,0XE0,0X0F,0XF0,0X07,0XE0,0X1F,0XF0,0XFF,0X03,0X3C,
+0X60,0X00,0X03,0XFC,0XE0,0X0F,0XE0,0X0F,0XF0,0X07,0XE0,0X1F,0X00,0XFF,0X07,0X3C,
+0X60,0X00,0X03,0XFC,0XE0,0X0F,0XE0,0X0F,0XF0,0X07,0XF0,0X0F,0X00,0XFC,0X07,0X3C,
+0X70,0X80,0X7F,0XFE,0XE0,0X0F,0XE0,0X07,0XF0,0X0F,0XF8,0X0F,0X00,0XF8,0X07,0X3C,
+0X30,0X80,0X7F,0X7E,0XE0,0X0F,0XF0,0X07,0XF0,0X1F,0XFE,0X87,0X00,0XF8,0X07,0X3C,
+0X30,0X18,0X3F,0X7E,0XE0,0X0F,0XF0,0X07,0XE0,0XFF,0XFF,0X83,0X07,0XFC,0X07,0X3C,
+0X18,0X1C,0X00,0X00,0XC0,0X0F,0XF0,0X07,0XC0,0XFF,0XFF,0X81,0XFF,0XFF,0X03,0X1C,
+0X18,0XCC,0X00,0X00,0X00,0X00,0XE0,0X03,0X80,0XFF,0X7F,0XC0,0XFF,0XFF,0X01,0X1C,
+0X1C,0XFC,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0XFC,0X1F,0XC0,0XFF,0XFF,0X00,0X1C,
+0X0C,0XFC,0X9F,0XFF,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XFF,0X3F,0X00,0X1E,
+0X0C,0XF8,0X9F,0XFF,0XFF,0XFF,0XFF,0X00,0X00,0X00,0X00,0X00,0X80,0X01,0X00,0X1E,
+0X0E,0X30,0X00,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X03,0X00,0X00,0X00,0X00,0X00,0X1E,
+0X06,0X00,0X00,0X00,0X00,0XFC,0XFF,0XFF,0XFF,0XFF,0XFF,0X03,0X00,0X00,0X00,0X1E,
+0X06,0X00,0X00,0X00,0X00,0X00,0X00,0XF8,0XFF,0XFF,0XFF,0XFF,0XFF,0X0F,0X00,0X1E,
+0X06,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF8,0XFF,0XFF,0XFF,0XFF,0X03,0X1E,
+0X06,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF8,0XFF,0XFF,0X03,0X1E,
+0XFE,0XFF,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XC0,0X03,0X1E,
+0XFC,0XFF,0XFF,0X3F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X1E,
+0XFC,0XFF,0XFF,0XFF,0XFF,0X3F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0E,
+0XE0,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X1F,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X0E,
+0X00,0X00,0XFE,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X0F,0X00,0X00,0X00,0X00,0X00,0X0E,
+0X00,0X00,0X00,0XC0,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X07,0X00,0X00,0X00,0X0F,
+0X00,0X00,0X00,0X00,0X00,0XF0,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X03,0X00,0X0F,
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF8,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0XFF,0X07,
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XFE,0XFF,0XFF,0XFF,0XFF,0XFF,0X03,
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,0XFF,0XFF,0XFF,0XFF,0X01,
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF0,0XFF,0XFF,0X00,
+0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
 
+};
 
 void u8g2_Init()
 {
-	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
-    u8g2_ClearDisplay(&u8g2);
-	u8g2_InitDisplay(&u8g2);
-	u8g2_SetPowerSave(&u8g2, 0);
+	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
+    u8g2_ClearDisplay(&u8g2_Data);
+	u8g2_InitDisplay(&u8g2_Data);
+	u8g2_SetPowerSave(&u8g2_Data, 0);
+
+
+
 
 }
 
@@ -42,22 +96,40 @@ void draw(u8g2_t *u8g2)
     u8g2_DrawVLine(u8g2, 46, 33, 12);
   
     u8g2_SetFont(u8g2, u8g2_font_6x10_tr);
-    u8g2_DrawStr(u8g2, 1,54,"Design By LHY");
-	
+    u8g2_DrawStr(u8g2, 1,54,"Design By LHY");	
 }
+
+
+
+void Display_FreeRTOS_Logo()
+{
+    u8 Buff[768];
+    u8 i;
+    memset(Buff,0,sizeof(Buff));
+    for ( i = 0; i < 6; i++)
+    {
+        AT24C08ReadData(128*i,128,Buff+128*i);
+        u8g2_DrawXBM(&u8g2_Data,0,8,128,48,Buff);
+        u8g2_SendBuffer(&u8g2_Data);
+        delay_ms(50);
+    }
+}
+
+
+
+
+
 void Start_Page()
 {
     u8 i=0;
-	u8g2_FirstPage(&u8g2);
-    do
-    {
-    	draw(&u8g2);
-    } while (u8g2_NextPage(&u8g2));
+    draw(&u8g2_Data);
+    u8g2_SendBuffer(&u8g2_Data);
+    AT24C08WriteData(0,768,FreeRTOS_Logo);
     for ( i = 0; i < 20; i++)
     {
         delay_ms(100);
     }
-    u8g2_ClearBuffer(&u8g2);
+    u8g2_ClearBuffer(&u8g2_Data);
     
 }
 
@@ -72,17 +144,16 @@ void Battery_icon()
     while (1)
     {
         taskENTER_CRITICAL();
-        u8g2_SetFontMode(&u8g2,0);
-        u8g2_SetDrawColor(&u8g2,1);
-        do
-        {	
-            u8g2_SetFont(&u8g2, u8g2_font_battery19_tn);
-            u8g2_SetFontDirection(&u8g2, 1);
-            u8g2_DrawGlyph(&u8g2,106,8,0x30+k);
+        u8g2_SetFontMode(&u8g2_Data,0);
+        u8g2_SetDrawColor(&u8g2_Data,1);
+
+            u8g2_SetFont(&u8g2_Data, u8g2_font_battery19_tn);
+            u8g2_SetFontDirection(&u8g2_Data, 1);
+            u8g2_DrawGlyph(&u8g2_Data,106,8,0x30+k);
             k++;
             if(k==7)
             k=0;
-        } while (u8g2_NextPage(&u8g2));
+       u8g2_SendBuffer(&u8g2_Data);
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
     }
@@ -99,16 +170,15 @@ void Safe_icon()
     while (1)
     {
          taskENTER_CRITICAL();
-         u8g2_SetFontMode(&u8g2,0);
-        do
-        {	if(flag==0)
-            u8g2_SetDrawColor(&u8g2,2);
+         u8g2_SetFontMode(&u8g2_Data,0);
+            if(flag==0)
+            u8g2_SetDrawColor(&u8g2_Data,2);
             else
-            u8g2_SetDrawColor(&u8g2,1);
-            u8g2_SetFont(&u8g2, u8g2_font_unifont_t_77);
-            u8g2_SetFontDirection(&u8g2, 0);
-            u8g2_DrawGlyph(&u8g2,16,16,0x26C9);
-        } while (u8g2_NextPage(&u8g2));
+            u8g2_SetDrawColor(&u8g2_Data,1);
+            u8g2_SetFont(&u8g2_Data, u8g2_font_unifont_t_77);
+            u8g2_SetFontDirection(&u8g2_Data, 0);
+            u8g2_DrawGlyph(&u8g2_Data,16,16,0x26C9);
+            u8g2_SendBuffer(&u8g2_Data);
         if(flag==1)
             flag=0;
         else
@@ -126,20 +196,19 @@ void Dir_icon()
     while (1)
     {
         taskENTER_CRITICAL();
-        u8g2_SetFontMode(&u8g2,0);
-        u8g2_SetDrawColor(&u8g2,1);
-        do
-        {	
-            u8g2_SetFont(&u8g2, u8g2_font_unifont_t_78_79);
-            u8g2_SetFontDirection(&u8g2, 1);
-            u8g2_DrawGlyph(&u8g2,0,0,0x27A2+k);
+        u8g2_SetFontMode(&u8g2_Data,0);
+        u8g2_SetDrawColor(&u8g2_Data,1);
+
+            u8g2_SetFont(&u8g2_Data, u8g2_font_unifont_t_78_79);
+            u8g2_SetFontDirection(&u8g2_Data, 1);
+            u8g2_DrawGlyph(&u8g2_Data,0,0,0x27A2+k);
             k++;
             if(k>=3)
             {
                 k=0;
             }
-        } while (u8g2_NextPage(&u8g2));
-        u8g2_SetFontDirection(&u8g2, 0);
+       u8g2_SendBuffer(&u8g2_Data);
+        u8g2_SetFontDirection(&u8g2_Data, 0);
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
@@ -154,17 +223,16 @@ void Streamline_icon()
     while (1)
     {
         taskENTER_CRITICAL();
-        do
-        {	
-            u8g2_SetFont(&u8g2, u8g2_font_streamline_all_t);
-            u8g2_SetFontDirection(&u8g2, 0);
-            u8g2_DrawGlyph(&u8g2,0,60,0x30+(k+1));
-            u8g2_DrawGlyph(&u8g2,22,60,0x30+(k+2));
-            u8g2_DrawGlyph(&u8g2,44,60,0x30+(k+3));
-            u8g2_DrawGlyph(&u8g2,66,60,0x30+(k+4));
-            u8g2_DrawGlyph(&u8g2,88,60,0x30+(k+5));
+
+            u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_all_t);
+            u8g2_SetFontDirection(&u8g2_Data, 0);
+            u8g2_DrawGlyph(&u8g2_Data,0,60,0x30+(k+1));
+            u8g2_DrawGlyph(&u8g2_Data,22,60,0x30+(k+2));
+            u8g2_DrawGlyph(&u8g2_Data,44,60,0x30+(k+3));
+            u8g2_DrawGlyph(&u8g2_Data,66,60,0x30+(k+4));
+            u8g2_DrawGlyph(&u8g2_Data,88,60,0x30+(k+5));
             k++;
-        } while (u8g2_NextPage(&u8g2));
+        u8g2_SendBuffer(&u8g2_Data);
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
@@ -178,15 +246,14 @@ void Shift_icon()
     while (1)
     {
         taskENTER_CRITICAL();
-        do
-        {	
-            u8g2_SetFont(&u8g2, u8g2_font_streamline_all_t);
-            u8g2_SetFontDirection(&u8g2, 0);
-            u8g2_DrawGlyph(&u8g2,k,40,0x29D);
+
+            u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_all_t);
+            u8g2_SetFontDirection(&u8g2_Data, 0);
+            u8g2_DrawGlyph(&u8g2_Data,50,40,0x29D);
             k--;
             if(k==0)
             k=127;
-        } while (u8g2_NextPage(&u8g2));
+        u8g2_SendBuffer(&u8g2_Data);
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,50/portTICK_PERIOD_MS);
     }
@@ -200,12 +267,10 @@ void Moon_Task()
     while (1)
     {
         taskENTER_CRITICAL();
-        do
-        {	
-            u8g2_SetFont(&u8g2, u8g2_font_unifont_t_weather);
-            u8g2_SetFontDirection(&u8g2, 0);
-            u8g2_DrawGlyph(&u8g2,32,16,0x22+i);
-        } while (u8g2_NextPage(&u8g2));
+        u8g2_SetFont(&u8g2_Data, u8g2_font_unifont_t_weather);
+        u8g2_SetFontDirection(&u8g2_Data, 0);
+        u8g2_DrawGlyph(&u8g2_Data,32,16,0x22+i);
+        u8g2_SendBuffer(&u8g2_Data);
         i++;
         if(i >=7)
         {
@@ -226,8 +291,6 @@ void Round_Task()
     while (1)
     {
         taskENTER_CRITICAL();
-        do
-        {	
             switch (i)
             {
                 case 0:
@@ -245,17 +308,17 @@ void Round_Task()
                 default:
                     break;
             }
-            u8g2_SetFontMode(&u8g2,0);
-            u8g2_SetDrawColor(&u8g2,1);
-            u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-            u8g2_SetFontDirection(&u8g2, i);
-            u8g2_DrawGlyph(&u8g2,x,y,0x36);
+            u8g2_SetFontMode(&u8g2_Data,0);
+            u8g2_SetDrawColor(&u8g2_Data,1);
+            u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+            u8g2_SetFontDirection(&u8g2_Data, i);
+            u8g2_DrawGlyph(&u8g2_Data,x,y,0x36);
             if(i ==0)
             {
                 i=4;
             }
             i--;
-        } while (u8g2_NextPage(&u8g2));
+        u8g2_SendBuffer(&u8g2_Data);
 
         taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,200/portTICK_PERIOD_MS);
@@ -272,7 +335,7 @@ void Clear_Task()
 
     while (1)
     {
-        u8g2_SendBuffer(&u8g2);
+        u8g2_SendBuffer(&u8g2_Data);
 				vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
     
@@ -304,27 +367,27 @@ void Teat_Task()
 	Time=xTaskGetTickCount();
     while (1)
     {
-        u8g2_SetFontMode(&u8g2,0);
-            u8g2_SetDrawColor(&u8g2,0);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,0,21,0x36);
-            u8g2_SetDrawColor(&u8g2,1);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,21,21,0x36);
-            u8g2_SetDrawColor(&u8g2,2);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,42,21,0x36);
-       u8g2_SetFontMode(&u8g2,1);
-            u8g2_SetDrawColor(&u8g2,0);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,0,45,0x36);
-            u8g2_SetDrawColor(&u8g2,1);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,21,45,0x36);
-            u8g2_SetDrawColor(&u8g2,2);
-                u8g2_SetFont(&u8g2, u8g2_font_streamline_interface_essential_action_t);
-                u8g2_DrawGlyph(&u8g2,42,45,0x36);              
-        u8g2_SendBuffer(&u8g2);
+        u8g2_SetFontMode(&u8g2_Data,0);
+            u8g2_SetDrawColor(&u8g2_Data,0);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,0,21,0x36);
+            u8g2_SetDrawColor(&u8g2_Data,1);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,21,21,0x36);
+            u8g2_SetDrawColor(&u8g2_Data,2);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,42,21,0x36);
+       u8g2_SetFontMode(&u8g2_Data,1);
+            u8g2_SetDrawColor(&u8g2_Data,0);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,0,45,0x36);
+            u8g2_SetDrawColor(&u8g2_Data,1);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,21,45,0x36);
+            u8g2_SetDrawColor(&u8g2_Data,2);
+                u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_interface_essential_action_t);
+                u8g2_DrawGlyph(&u8g2_Data,42,45,0x36);              
+        u8g2_SendBuffer(&u8g2_Data);
         vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
 
     }
@@ -391,14 +454,13 @@ void Switch_Task()
             default:
                 break;
             }
-        sprintf(Char,"%x",Data);
-        do
-        {
-            u8g2_SetFontMode(&u8g2,0);
-            u8g2_SetDrawColor(&u8g2,1);
-            u8g2_SetFont(&u8g2, u8g2_font_5x7_tr);
-            u8g2_DrawStr(&u8g2, 1,54,Char);
-        } while (u8g2_NextPage(&u8g2));
+            sprintf(Char,"%x",Data);
+
+            u8g2_SetFontMode(&u8g2_Data,0);
+            u8g2_SetDrawColor(&u8g2_Data,1);
+            u8g2_SetFont(&u8g2_Data, u8g2_font_5x7_tr);
+            u8g2_DrawStr(&u8g2_Data, 1,54,Char);
+        u8g2_SendBuffer(&u8g2_Data);
 
         }
         taskYIELD();
