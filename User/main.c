@@ -29,15 +29,18 @@ int  main()
 	AT24C08_init();
 	OLED_Init();
 	u8g2_Init();
+
+
+	OLED_SetScanFre(15,5);
 	Start_Page();
 	// USB_Task();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
 	// vTaskStartScheduler();
 	
 
-
-
+ OLED_SetScanFre(15,0);
 Display_FreeRTOS_Logo();
+Display_NIUNI();
 	SystemDown();
 
 }	

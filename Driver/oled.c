@@ -349,6 +349,22 @@ void OLED_SetScanFre(u8 fre,u8 div)    //闪烁设置fre[0-f]  div[0-f]
     OLED_SetMode(0x00|fre<<4|div);      //高四位(复位=8)-刷新频率   低四位(复位=1)---分频值
 }
 
+void OLED_SetChargePre(u8 Data)
+{
+    OLED_SetMode(0xD9);      //预充电周期设置
+    OLED_SetMode(Data);     //设置预充电周期
+}
+
+//		0x00
+//		0x10
+//		0x30
+void OLED_SetVcomLevel(u8 Data)
+{
+    OLED_SetMode(0xDB);      //
+    OLED_SetMode(Data);     //
+}
+
+
 
 /*
 设置屏幕对比度(亮度)
@@ -359,8 +375,6 @@ void OLED_SetContrast(u8 value)
     OLED_SetMode(0x81);           //对比度设置
     OLED_SetMode(value);     //设置对比度值
 }
-
-
 
 
 /*

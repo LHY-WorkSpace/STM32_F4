@@ -62,6 +62,26 @@ static unsigned char FreeRTOS_Logo[] =
 
 };
 
+static unsigned char NIUNI[] =
+{
+0x80,0x00,0x88,0x00,0x88,0x00,0x88,0x00,
+0xF8,0x1F,0x84,0x00,0x82,0x00,0x80,0x00,
+0x80,0x00,0xFF,0x7F,0x80,0x00,0x80,0x00,
+0x80,0x00,0x80,0x00,0x80,0x00,0x80,0x00,
+};/*"?",0*/
+
+static unsigned char BIII[] =
+{
+0x00,0x00,0xE4,0x3F,0x08,0x00,0xC8,0x1F,
+0x40,0x10,0xC0,0x1F,0x0F,0x00,0xE8,0x3F,
+0x28,0x22,0xE8,0x3F,0x28,0x22,0xE8,0x3F,
+0x28,0x20,0x14,0x00,0xE2,0x7F,0x00,0x00,
+};
+/*"?",1*/
+
+
+
+
 void u8g2_Init()
 {
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
@@ -111,12 +131,21 @@ void Display_FreeRTOS_Logo()
         AT24C08ReadData(128*i,128,Buff+128*i);
         u8g2_DrawXBM(&u8g2_Data,0,8,128,48,Buff);
         u8g2_SendBuffer(&u8g2_Data);
-        delay_ms(50);
+        delay_ms(10);
     }
 }
 
 
+void Display_NIUNI()
+{
+    u8g2_SetBitmapMode(&u8g2_Data,SET);//????
+    u8g2_DrawXBM(&u8g2_Data,0,8,16,16,NIUNI);
+    u8g2_SetBitmapMode(&u8g2_Data,RESET);//????
+    u8g2_DrawXBM(&u8g2_Data,20,20,16,16,BIII);
+    u8g2_SendBuffer(&u8g2_Data);
+    delay_ms(10);
 
+}
 
 
 void Start_Page()
@@ -125,7 +154,7 @@ void Start_Page()
     draw(&u8g2_Data);
     u8g2_SendBuffer(&u8g2_Data);
     AT24C08WriteData(0,768,FreeRTOS_Logo);
-    for ( i = 0; i < 20; i++)
+    for ( i = 0; i < 15; i++)
     {
         delay_ms(100);
     }
