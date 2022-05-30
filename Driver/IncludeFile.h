@@ -52,7 +52,7 @@
 #define USE_U8G2    TRUE
 
 /**************************** LVGL ***************************************/
-#define USE_LVGL    FALSE
+#define USE_LVGL    TRUE
 
 //”¶”√≤„
 #if (USE_RTOS == TRUE)

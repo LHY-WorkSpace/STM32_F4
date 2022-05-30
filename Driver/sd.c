@@ -336,12 +336,12 @@ SD_error SD_CARD_Init()
 			return SD_UNKNOWCARD;
 		}
 
-	//delay_ms(10);//上电延时
+	//Delay_ms(10);//上电延时
 	for(i=0;i<90;i++)
 	 {
 			CMD_Number_Argument_Responsetype(CMD0,0,N_RESPONSE);                     //CMD0        发送大于74个周期复位命令	
 	 }
-	delay_ms(10);//必须延时？？？待解决
+	Delay_ms(10);//必须延时？？？待解决
 	SD_GetVersion();
 
 	if(SD_information.SD_version==SD_V2)
@@ -485,7 +485,7 @@ SD_error SD_Write_Block(u32 *buffer,u32 Physical_Block_BaseAddr)
 	CMD_Number_Argument_Responsetype(CMD12,0,S_RESPONSE);  
 	error_type=CMD_ERROR();
 
-	delay_ms(3);
+	Delay_ms(3);
 
 
 
@@ -556,7 +556,7 @@ SD_error SD_Write_MultiBlocks(u32 *buffer,u32 Physical_Block_BaseAddr,u8 count)
 
 
 	// SD_PreEraseMultiBlocks(count);
-	// delay_ms(3);
+	// Delay_ms(3);
 
 	SDIO_Data_Set(BLOCK_SIZE*count,TO_SD_CARD);	                                               //设置SDIO要发送的数据长度，必须是512的倍数
 	

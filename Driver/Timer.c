@@ -58,7 +58,7 @@ void delay_us(u16 nus)
 
 }
 //×î´ó2^16ms
-void delay_ms(u16 nus)
+void Delay_ms(u16 nus)
 {
     u16 i; 
 

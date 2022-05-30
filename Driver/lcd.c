@@ -75,7 +75,7 @@ u16 LCD_ReadID(u16 LCD_Cmd)
 void LCD_Reset()
 {
 	LCD_WriteCMD(LCD_SWRESET);
-	delay_ms(7);
+	Delay_ms(7);
 }
 
 
@@ -750,7 +750,7 @@ void LCD_Init(void)
 	LCD_WriteData(0xef);	 
 
 	LCD_WriteCMD(LCD_SLEEP_OUT); //退出睡眠
-	delay_ms(120);
+	Delay_ms(120);
 	LCD_WriteCMD(LCD_DISPLAY_ON); //开显示
  
 	LCD_Display_Dir(Vertical);		//默认为竖屏	
@@ -808,7 +808,7 @@ void LCD_ShowPicture()
 			}
 		}
 
-		//delay_ms(100);
+		//Delay_ms(100);
 
 		P=0;
 		for(y=0;y<64;y++)
@@ -821,7 +821,7 @@ void LCD_ShowPicture()
 			}
 		}
 
-		//delay_ms(100);
+		//Delay_ms(100);
 
 		LCD_Display_Dir(Horizontal);
 	 	LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
@@ -836,7 +836,7 @@ void LCD_ShowPicture()
 				LCD_WriteData(DataTemp.Data_16[x]);
 			}
 		}
-		//delay_ms(100);
+		//Delay_ms(100);
 
 //////////////////////////////////////////////////////////////////
 

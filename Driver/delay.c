@@ -18,7 +18,7 @@
 
 
 
-// void delay_ms(u32 nms)        //最大798ms
+// void Delay_ms(u32 nms)        //最大798ms
 // {
 //  u32 temp;
 //  SysTick->LOAD = 21*1000*nms;

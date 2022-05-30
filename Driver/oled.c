@@ -434,7 +434,7 @@ u32 i;
 	for(i=0;i<128;i++)
 	{
 	OLED_SendData(0xff);
-	delay_ms(speed);        //进度条速度
+	Delay_ms(speed);        //进度条速度
 
 	}
 	OLED_ClearScreen(0x00);
@@ -638,14 +638,14 @@ void Boot_Animation(void)
 				y = 64-x;
 				OLED_Draw_Point(64-0.7*y,y,1);
 				OLED_Draw_Point(64+0.7*y,y,1);
-				delay_ms(20);
+				Delay_ms(20);
 			  	OLED_UpdateGRAM();
 		}
 		for(x = 30;x <= 94;x++)
 		{
 				OLED_Draw_Point(125-x,47,1);
 				OLED_Draw_Point(x,18,1);
-				delay_ms(20);
+				Delay_ms(20);
 				OLED_UpdateGRAM();
 		}
 		
@@ -776,7 +776,7 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 			}
 
 			OLED_UpdateGRAM();
-			delay_ms(500);
+			Delay_ms(500);
 		}
 
 

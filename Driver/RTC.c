@@ -23,7 +23,7 @@ void RTC_ConfigInit()
 			}
 			else
 			{
-				delay_ms(2);
+				Delay_ms(2);
 			}
 			retry--;
 		}

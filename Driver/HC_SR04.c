@@ -79,7 +79,7 @@ u16 Distance;
 // 	HCSR04_StartMeasure();
 // 	for(i=0;i<3;i++)
 // 	{
-// 		delay_ms(10);
+// 		Delay_ms(10);
 // 		if (System_GetState(Dev_HCSR04,F_HCSR04_DataReady) == SET )
 // 		{
 // 			*Data = Distance*0.17;	

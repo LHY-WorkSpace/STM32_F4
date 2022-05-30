@@ -59,26 +59,7 @@ static unsigned char FreeRTOS_Logo[] =
 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X80,0XFF,0XFF,0XFF,0XFF,0X01,
 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XF0,0XFF,0XFF,0X00,
 0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-
 };
-
-static unsigned char NIUNI[] =
-{
-0x80,0x00,0x88,0x00,0x88,0x00,0x88,0x00,
-0xF8,0x1F,0x84,0x00,0x82,0x00,0x80,0x00,
-0x80,0x00,0xFF,0x7F,0x80,0x00,0x80,0x00,
-0x80,0x00,0x80,0x00,0x80,0x00,0x80,0x00,
-};/*"?",0*/
-
-static unsigned char BIII[] =
-{
-0x00,0x00,0xE4,0x3F,0x08,0x00,0xC8,0x1F,
-0x40,0x10,0xC0,0x1F,0x0F,0x00,0xE8,0x3F,
-0x28,0x22,0xE8,0x3F,0x28,0x22,0xE8,0x3F,
-0x28,0x20,0x14,0x00,0xE2,0x7F,0x00,0x00,
-};
-/*"?",1*/
-
 
 
 
@@ -88,10 +69,6 @@ void u8g2_Init()
     u8g2_ClearDisplay(&u8g2_Data);
 	u8g2_InitDisplay(&u8g2_Data);
 	u8g2_SetPowerSave(&u8g2_Data, 0);
-
-
-
-
 }
 
 void draw(u8g2_t *u8g2)
@@ -114,52 +91,71 @@ void draw(u8g2_t *u8g2)
     u8g2_DrawHLine(u8g2, 3, 36, 47);
     u8g2_DrawVLine(u8g2, 45, 32, 12);
     u8g2_DrawVLine(u8g2, 46, 33, 12);
-  
+
     u8g2_SetFont(u8g2, u8g2_font_6x10_tr);
     u8g2_DrawStr(u8g2, 1,54,"Design By LHY");	
 }
+
+void ClearDisplay()
+{
+    u8g2_ClearBuffer(&u8g2_Data);
+}
+
 
 
 
 void Display_FreeRTOS_Logo()
 {
-    u8 Buff[768];
-    u8 i;
-    memset(Buff,0,sizeof(Buff));
-    for ( i = 0; i < 6; i++)
-    {
-        AT24C08ReadData(128*i,128,Buff+128*i);
-        u8g2_DrawXBM(&u8g2_Data,0,8,128,48,Buff);
-        u8g2_SendBuffer(&u8g2_Data);
-        delay_ms(10);
-    }
-}
-
-
-void Display_NIUNI()
-{
-    u8g2_SetBitmapMode(&u8g2_Data,SET);//????
-    u8g2_DrawXBM(&u8g2_Data,0,8,16,16,NIUNI);
-    u8g2_SetBitmapMode(&u8g2_Data,RESET);//????
-    u8g2_DrawXBM(&u8g2_Data,20,20,16,16,BIII);
+    u8g2_ClearBuffer(&u8g2_Data);
+    u8g2_DrawXBM(&u8g2_Data,0,8,128,48,FreeRTOS_Logo);
     u8g2_SendBuffer(&u8g2_Data);
-    delay_ms(10);
-
+    Delay_ms(500);
+    u8g2_ClearBuffer(&u8g2_Data);
 }
 
 
 void Start_Page()
 {
-    u8 i=0;
+
     draw(&u8g2_Data);
-    u8g2_SendBuffer(&u8g2_Data);
-    AT24C08WriteData(0,768,FreeRTOS_Logo);
-    for ( i = 0; i < 15; i++)
-    {
-        delay_ms(100);
-    }
+    u8g2_SendBuffer(&u8g2_Data); 
+    Delay_ms(500);  
+}
+
+void DispalyUTF_8Strings()
+{   
     u8g2_ClearBuffer(&u8g2_Data);
+    u8g2_SetFontMode(&u8g2_Data,0);
+    u8g2_SetFont(&u8g2_Data, u8g2_font_6x12_tr);
+    u8g2_DrawUTF8(&u8g2_Data,10,10,"STM32 U8g2");
+
+    u8g2_DrawButtonUTF8(&u8g2_Data,40,40,U8G2_BTN_HCENTER|U8G2_BTN_BW1|U8G2_BTN_SHADOW1,0,1,1,"OK");
+    u8g2_SendBuffer(&u8g2_Data); 
+     u8g2_ClearBuffer(&u8g2_Data);
+    Delay_ms(500);
+    u8g2_DrawButtonUTF8(&u8g2_Data,41,41,U8G2_BTN_HCENTER|U8G2_BTN_BW1,0,1,1,"FreeRTOS");
+    u8g2_SendBuffer(&u8g2_Data);   
+    Delay_ms(500);
+}
+
+void Mov(u16 x,u16 y)
+{
+    char Data[6];
+
+    // u8g2_ClearBuffer(&u8g2_Data);
+    // u8g2_DrawButtonUTF8(&u8g2_Data,40,40,U8G2_BTN_HCENTER|U8G2_BTN_BW1|U8G2_BTN_SHADOW1,0,1,1,"OK");
+    u8g2_ClearBuffer(&u8g2_Data);
+    memset(Data,0x00,sizeof(Data)-1);
     
+    sprintf(Data+1,"%d",x);
+    Data[0]='x';
+    u8g2_DrawUTF8(&u8g2_Data,x,y+8,Data);
+    sprintf(Data+1,"%d",y);
+    Data[0]='y';
+    u8g2_DrawUTF8(&u8g2_Data,x,y+16,Data);
+    u8g2_SendBuffer(&u8g2_Data); 
+
+
 }
 
 
@@ -365,7 +361,7 @@ void Clear_Task()
     while (1)
     {
         u8g2_SendBuffer(&u8g2_Data);
-				vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
     }
     
 }
@@ -505,22 +501,16 @@ void Switch_Task()
 void u8g2_TaskCreate()
 {
 
-    USART1_TaskHandle = xQueueCreate(10,sizeof(u8));
-
-    if( USART1_TaskHandle == NULL)
-    {
-        vTaskDelete(NULL);
-    }
 
     xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,10,&u8g2_Battery_T);
     xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,8,&LED_T);
-    xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
-    xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
-    xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
+    // xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
+    // xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
+    // xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
 
     // xTaskCreate( (TaskFunction_t)Streamline_icon,    "IconTask",200,NULL,10,            NULL);
     // xTaskCreate( (TaskFunction_t)Shift_icon,    "IconTask",200,NULL,10,            NULL);
-  xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
+//   xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
     // xTaskCreate( (TaskFunction_t)Moon_Task,    "IconTask",200,NULL,10,            NULL);
 
    //xTaskCreate( (TaskFunction_t)Teat_Task,    "IconTask",200,NULL,10,            NULL);
@@ -544,10 +534,10 @@ void u8g2_TaskCreate()
 
 
 
-// ÉÁË¸ÉèÖÃ
-//     u8g2_SetFontMode(&u8g2,x); x=1»ò0
-//     u8g2_SetDrawColor(&u8g2,2);ÆôÓÃÉÁË¸
-//      u8g2_SetDrawColor(&u8g2,1);¹Ø±ÕÉÁË¸
+// ?????¨¨??
+//     u8g2_SetFontMode(&u8g2,x); x=1?¨°0
+//     u8g2_SetDrawColor(&u8g2,2);????????
+//      u8g2_SetDrawColor(&u8g2,1);??¡À?????
 //     delay();
 
 

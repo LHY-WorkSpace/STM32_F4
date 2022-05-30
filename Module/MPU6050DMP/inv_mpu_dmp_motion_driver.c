@@ -29,7 +29,7 @@
  *      unsigned char length, unsigned char const *data)
  * i2c_read(unsigned char slave_addr, unsigned char reg_addr,
  *      unsigned char length, unsigned char *data)
- * delay_ms(unsigned long num_ms)
+ * Delay_ms(unsigned long num_ms)
  * get_ms(unsigned long *count)
  */
 #if defined MOTION_DRIVER_TARGET_MSP430

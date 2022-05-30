@@ -20,7 +20,7 @@ static struct hal_s hal = {0};
 
 u8 get_ms(unsigned long *count)
 {
-	delay_ms(5);
+	Delay_ms(5);
 	return 0;
 }
 

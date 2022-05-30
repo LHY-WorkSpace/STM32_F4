@@ -31,7 +31,7 @@ void led_init()
 //	RW_write;
 //	write_off;
 //	GPIO_Write(GPIOB,dat);
-//	delay_ms(2);
+//	Delay_ms(2);
 //	write_on;
 
 //}
@@ -42,7 +42,7 @@ void led_init()
 //	RW_write;
 //	write_off;
 //	GPIO_Write(GPIOB,ord);
-//	delay_ms(2);
+//	Delay_ms(2);
 //	write_on;
 
 //}

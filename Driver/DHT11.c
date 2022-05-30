@@ -54,7 +54,7 @@ u8 DHT11_Init(void)
 		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
 		DHT11_IO_OUT(DHT11_OUT_LOW);	            //拉低总线20ms，
-		delay_ms(20);
+		Delay_ms(20);
 		DHT11_IO_OUT(DHT11_OUT_HIGH);	            //拉高30us,用于主机转换IO
 		DHT11_IO_IN();                            //主机转换IO
 

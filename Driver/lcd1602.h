@@ -27,7 +27,7 @@ u8  table2[]="STM32";
 	{
 	lcd_write_data(table1[i]);
 	i++;
-	delay_ms(10);	
+	Delay_ms(10);	
 	}
 	
 	lcd_write_order(0xc0);
@@ -35,7 +35,7 @@ u8  table2[]="STM32";
 	{
 	lcd_write_data(table2[j]);
 	j++;
-	delay_ms(10);	
+	Delay_ms(10);	
 	}
 
 

@@ -54,9 +54,10 @@ void SystemDown()
 	while(1)
 	{		
 		LED1_ON;
-		delay_ms(500);
+		Delay_ms(500);
 		LED1_OFF;
-		delay_ms(500);
+		Delay_ms(500);
+		DispalyUTF_8Strings();
 		//USART_ITSendData(USART1,&USART1_Buffer,(u8 *)Data,sizeof(Data));
 	}
 }

@@ -6,17 +6,11 @@ u8g2_t u8g2;
 
 
 
-
-
-void CreateAllTask()
+void CreateAllTask(void *pv)
 {
-
 	u8g2_TaskCreate();
-
 	vTaskDelete(NULL);
 }
-
-u8 x=0,y=0,i=0;
 
 
 int  main()
@@ -26,23 +20,22 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	AT24C08_init();
+	// AT24C08_init();
+	// XPT2046_Init();
 	OLED_Init();
 	u8g2_Init();
-
-
-	OLED_SetScanFre(15,5);
 	Start_Page();
+	// Display_FreeRTOS_Logo();
 	// USB_Task();
-	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
-	// vTaskStartScheduler();
-	
-
- OLED_SetScanFre(15,0);
-Display_FreeRTOS_Logo();
-Display_NIUNI();
-	SystemDown();
-
+	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,(void *)memtest,10,NULL);
+	vTaskStartScheduler();
+	// while (1)
+	// {
+	// 	XPT2046_Read(&NoUse, &TouchData);
+	// 	Mov(TouchData.point.x,TouchData.point.y);
+	// 	Delay_ms(10);
+	// }
+	// SystemDown();
 }	
 
 

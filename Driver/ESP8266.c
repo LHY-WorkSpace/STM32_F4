@@ -45,14 +45,14 @@ void Set_Mode()
 	
 	
 	printf("%s",CMD_RST);
-	delay_ms(500);
+	Delay_ms(500);
 	printf("%s",CMD_CWMODE);
-	delay_ms(100);
+	Delay_ms(100);
 	printf("%s",CMD_CWSAP);
-	delay_ms(100);
+	Delay_ms(100);
 	printf("%s",CMD_CIFSR);
 	USED_FLAG=1;	                     //清除缓存，从头开始接收
-	delay_ms(100);
+	Delay_ms(100);
 	Get_IP(Wifi_Data,Local_IP);        //提取IP
 	display_position(0,0,12);
 	//display_str_and_speed(Wifi_Name,10);
@@ -65,9 +65,9 @@ void Set_Mode()
 	display_position(24,6,11);
 	//display_str_and_speed(Local_IP,10);
 	printf("%s",CMD_CIPMUX);
-	delay_ms(100);
+	Delay_ms(100);
 	printf("%s",CMD_CIPSERVER);
-	delay_ms(100);
+	Delay_ms(100);
 	USED_FLAG=1;
 	while(1)
 	{
@@ -85,7 +85,7 @@ void Set_Mode()
 	  USED_FLAG=1;
 		}
 		
-		delay_ms(100);
+		Delay_ms(100);
 //	  times++;
 //		if(times>250)
 //		{
@@ -101,9 +101,9 @@ void Set_Mode()
 		
 	}
 printf("%s",CMD_CIPSEND);
-delay_ms(100);
+Delay_ms(100);
 printf("%s",user_message);
-delay_ms(500);
+Delay_ms(500);
 memset(Wifi_Data,0,sizeof(Wifi_Data));	
 	while(1)
 	{
@@ -120,7 +120,7 @@ memset(Wifi_Data,0,sizeof(Wifi_Data));
 //		//display_str_and_speed(Net_Name,100);	
 //		display_position(0,3,3);	
 //		//display_str_and_speed(Net_Password,10);	
-//		delay_ms(500);
+//		Delay_ms(500);
 		USED_FLAG=1;			
     break;
 		}

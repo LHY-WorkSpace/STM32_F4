@@ -1,7 +1,7 @@
 #include "IncludeFile.h"
 
 
-__align(4) u8 A[1024],B[2048];   //对齐的部分不能在栈里！！！
+// __align(4) u8 A[1024],B[2048];   //对齐的部分不能在栈里！！！
 
 
 __ALIGN_BEGIN 
@@ -45,28 +45,29 @@ void AT24C08_Test()
 
 }	
 		
-void SDIO_Test()
-{
-	u16 k;
+//void SDIO_Test()
+//{
+//	u16 k;
 
-	Programe_StartRun();
-	SD_ShowInfomation();
-	Programe_End_Us(0);
+//	Programe_StartRun();
+//	SD_ShowInfomation();
+//	Programe_End_Us(0);
 
-	memset(A,0x5A,sizeof(A));
+//	memset(A,0x5A,sizeof(A));
 
-	Programe_StartRun();
-	SD_WriteMultiBlocks(A,1024, 512,sizeof(A)/512); 
-	Programe_End_Us(0);	
-	
-	Programe_StartRun();
-	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
-	Programe_End_Us(0);	
+//	Programe_StartRun();
 
-	for(k=0;k<sizeof(B);k++)
-	printf("Data %d : %x \r\n",k,B[k]);
+//	SD_WriteMultiBlocks(A,1024, 512,sizeof(A)/512); 
+//	Programe_End_Us(0);	
+//	
+//	Programe_StartRun();
+//	SD_ReadMultiBlocks(B,0, 512, sizeof(B)/512);
+//	Programe_End_Us(0);	
 
-}
+//	for(k=0;k<sizeof(B);k++)
+//	printf("Data %d : %x \r\n",k,B[k]);
+
+//}
 
 //void RTC_Test()
 //{
@@ -115,13 +116,13 @@ void Led_Test()
 	if(i)
 	{
 			LED1_OFF;
-			delay_ms(500);
+			Delay_ms(500);
 			printf("LED关\r\n");
 	}
 	else
 	{
 			LED1_ON;
-			delay_ms(500);
+			Delay_ms(500);
 			printf("LED开\r\n");
 	}
 
@@ -208,7 +209,7 @@ void Task_List()
 	// LCD_Init();
 	
 	// File_FATFSInit();
-	//LVGL_Init();
+	// LVGL_Init();
 	//RTC_ConfigInit();
 	//MPU6050_Init();
 
@@ -223,10 +224,11 @@ void Task_List()
 	//lv_ex_img_2();
 	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
-	//lv_demo_stress();
-	//lv_demo_benchmark();
+	// lv_demo_stress();
+	// lv_demo_benchmark();
 	 //lv_ex_cpicker_1();
-
+		// lv_task_handler();
+		// lv_tick_inc(10);
 	// Task_Init();
 
 	// vTaskStartScheduler();
@@ -236,7 +238,7 @@ void Task_List()
 	// 	//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
 	// 	lv_task_handler();
 	// 	lv_tick_inc(5);
-	// 	delay_ms(5);
+	// 	Delay_ms(5);
 		
 	// 	OLED_ShowStrings(0,0,USART1_Buffer,64);
 	// 	// OLED_ShowNumber(16,2,data.point.x,4);
