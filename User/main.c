@@ -1,7 +1,8 @@
 #include "IncludeFile.h"
 
 
-
+float DACC = 1.2;
+float ADCC;
 
 
 
@@ -13,6 +14,8 @@ void CreateAllTask(void *pv)
 }
 
 
+
+
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
@@ -20,6 +23,8 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
+	DAC_UserInit();
+	ADC_UserInit();
 	// AT24C08_init();
 	// XPT2046_Init();
 	// OLED_Init();
@@ -27,16 +32,30 @@ int  main()
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 	// USB_Task();
-	// {
+
+
+	while (1)
+	{
+
+
+
+		DAC_Out(DACC);
+		Delay_ms(50);
+		ADCC=BatteryGetVolate();
+		Delay_ms(50);
+	}
+
+
+
+
+
 	// 	XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
 	// 	Delay_ms(10);
-
-
 	//Test_UI();
-	Clock();
-	Delay_ms(10);
-	SystemDown();
+	// Clock();
+	// Delay_ms(10);
+	// SystemDown();
 }	
 
 
