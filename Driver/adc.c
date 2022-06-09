@@ -4,20 +4,15 @@
 
 
 
-
-
-void adc_init()
+void ADC_UserInit()
 {	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
-
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
 	
 	GPIO_InitTypeDef GPIO_Initstruc;
 	ADC_InitTypeDef   ADC_InitTypeDefstruct;
 	ADC_CommonInitTypeDef   ADC_CommonInitTypeDefstruct;
-	
 
-	
 	GPIO_Initstruc.GPIO_Pin=GPIO_Pin_5;
 	GPIO_Initstruc.GPIO_Mode=GPIO_Mode_AN; 
 	GPIO_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;
@@ -48,21 +43,32 @@ void adc_init()
 }
 
 
-
-float adc_val()        
+u16 ADC_GetVal()        
 {
-
-
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_5,1,ADC_SampleTime_480Cycles);
 	ADC_SoftwareStartConv(ADC1);	
 	while(!ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC));	
-	
 	return ADC_GetConversionValue(ADC1);
-
 }
 
 
-		
+float BatteryGetVolate()
+{  
+	float Temp;
+	Temp = ( VBAT * R0 )/ ( R0 + R1 );
+	return ( Temp * (float)ADC_GetVal() / 4096.0 );
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -2,8 +2,12 @@
 #define   DAC_H
 
 
-void dac_init(void);
-void dac_output_V(float vol);
+
+#define   VCC   (3.3f)
+
+
+void DAC_UserInit(void);
+void DAC_Out(float vol);
 
 
 #endif

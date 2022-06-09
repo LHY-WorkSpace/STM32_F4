@@ -2,7 +2,7 @@
 
 
 
-void dac_init()
+void DAC_UserInit()
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC,ENABLE);
@@ -26,20 +26,15 @@ void dac_init()
 	DAC_Init(DAC_Channel_1,&DAC_InitTypeDefstruct);
 
 	DAC_Cmd(DAC_Channel_1,ENABLE);
-
-
-
 }
 
-void dac_output_V(float  vol)
+
+
+void DAC_Out(float vol)
 {
-		float val;
-	//vol=vol/1000;
-		val=vol*4096/33/10;
-
-	DAC_SetChannel1Data(DAC_Align_12b_R,val);
-
-
+	u16 DAC_Val;
+	DAC_Val= (u16)(vol*4096.0/VCC);
+	DAC_SetChannel1Data(DAC_Align_12b_R,DAC_Val);
 }
 
 
