@@ -103,7 +103,7 @@ void MPU6050_Write_Data(u8 Reg,u8 data)
 	IIC_SenddByte(data);	
 	IIC_Wait_Ack_OK();
 	Stop_IIC();
-	delay_us(1); 
+	Delay_us(1); 
 }
 
 
@@ -127,7 +127,7 @@ u8 MPU6050_Write_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 		data++;
 	}
  	Stop_IIC();
-	delay_us(1);
+	Delay_us(1);
 	return 0;
 
 }
@@ -265,7 +265,7 @@ u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 	while(dmp_read_fifo(gyro, accel, quat, &sensor_timestamp, &sensors,&more)&&i<50)
 	{
 		i++;
-		delay_us(2);
+		Delay_us(2);
 	}
 
 	if(sensors&INV_WXYZ_QUAT)

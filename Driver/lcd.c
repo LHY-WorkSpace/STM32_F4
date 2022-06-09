@@ -65,7 +65,7 @@ void LCD_WriteCmdPara(vu16 LCD_Cmd,vu16 LCD_CmdValue)
 u16 LCD_ReadID(u16 LCD_Cmd)
 {										   
 	LCD_WriteCMD(LCD_Cmd);		//写入要读的指令序号
-	delay_us(5);		  
+	Delay_us(5);		  
 	return LCD_ReadData();		//返回读到的值
 } 
 

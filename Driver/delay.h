@@ -2,7 +2,7 @@
 #define   _DELAY_H_
 
 
-// void delay_us(u32 time_us);
+// void Delay_us(u32 time_us);
 // void Delay_ms(u32 time_ms);
 
 

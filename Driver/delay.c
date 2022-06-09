@@ -1,7 +1,7 @@
 #include "IncludeFile.h"
 
 
-// void delay_us(u32 nus)         //最大798915us
+// void Delay_us(u32 nus)         //最大798915us
 // {
 //  u32  temp;
 //  SysTick->LOAD = 21*nus;

@@ -21,7 +21,7 @@ u8 RHG_GetRadomData(u32 *Radom)
     u8 times;
 	while((RNG_GetFlagStatus(RNG_FLAG_DRDY)!=SET)&&(times<10))
     {
-        delay_us(2);
+        Delay_us(2);
         times++;
     }
     if(times==10)

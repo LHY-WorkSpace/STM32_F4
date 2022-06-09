@@ -61,13 +61,13 @@ u8 DHT11_Init(void)
     	while(DHT11_IO_STATE==HIGH&&j<230)
 		{
 			j++;
-			delay_us(2);
+			Delay_us(2);
 		}
 		if(DHT11_IO_STATE==LOW)                    //总线为低，应答成功
 			DHT11_ACK=1;
 		else
 			DHT11_ACK=0;
-			delay_us(170);                          //DHT拉高准备传输
+			Delay_us(170);                          //DHT拉高准备传输
 
 		return DHT11_ACK;
 
@@ -88,19 +88,19 @@ for(i=0;i<8;i++)
           while(DHT11_IO_STATE==LOW&&j<200)				//检测到高电平时	
 		{
 			j++;
-			delay_us(2);	
+			Delay_us(2);	
 		}				
-		delay_us(35);
+		Delay_us(35);
 		Byte_Data=Byte_Data<<1;
 		if(DHT11_IO_STATE==HIGH)
 		{
 			Byte_Data+=1;
-			delay_us(50);
+			Delay_us(50);
 		}
 		else
 		{
 			Byte_Data+=0;
-			delay_us(10);
+			Delay_us(10);
 
 		}
 	}

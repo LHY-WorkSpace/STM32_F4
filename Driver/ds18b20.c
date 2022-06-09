@@ -46,7 +46,7 @@ void DS18B20_Write_Byte(u8 data)
 	for(i=0;i<8;i++)
 	{
 		GPIO_Out(LOW); 
-		delay_us(15);		
+		Delay_us(15);		
 		if((0x01&data)==0)
 		{		
 			GPIO_Out(LOW); 
@@ -56,10 +56,10 @@ void DS18B20_Write_Byte(u8 data)
 			GPIO_Out(HIGH); 
 		}
 
-		delay_us(55);
+		Delay_us(55);
 		GPIO_Out(HIGH); 
 		data = data>>1;
-		delay_us(3);
+		Delay_us(3);
 	}
 }
 	
@@ -72,7 +72,7 @@ u8 DS18B20_Read_Byte()
 	for(i=0;i<8;i++)
 	{
 		GPIO_Out(LOW);
-		delay_us(8);
+		Delay_us(8);
 		GPIO_Out(HIGH);
 		GPIO_In();	
 
@@ -85,10 +85,10 @@ u8 DS18B20_Read_Byte()
 			temp=0x00;
 		}
 
-		delay_us(40);
+		Delay_us(40);
 		data=data|(temp>>(7-i));
 		GPIO_Out(HIGH);
-		delay_us(4);
+		Delay_us(4);
 	}
 	return data;
 }
@@ -99,20 +99,20 @@ u8 DS18B20_Init()
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
 	GPIO_Out(HIGH); 
-	delay_us(10);
+	Delay_us(10);
   	GPIO_Out(LOW);        //拉低总线		
-	delay_us(500);
+	Delay_us(500);
 	GPIO_Out(HIGH);      	//释放总线
 	GPIO_In();
-	delay_us(120);		//延时检测
+	Delay_us(120);		//延时检测
 	
 	if(IO_STATE==0)        //18b20应答检测
 	{	
-		State = HIGH;
+		State = TRUE;
 	}
 	else
 	{
-		State = LOW;
+		State = FALSE;
 	}
 	GPIO_Out(HIGH);
 	
@@ -126,7 +126,7 @@ void Get_Temperature(u8 *Temperature)
 	
 	__disable_irq();
 	
-	if(DS18B20_Init()==0)
+	if(DS18B20_Init()==TRUE)
 	{
 		DS18B20_Write_Byte(0xcc);
 		DS18B20_Write_Byte(0x44);

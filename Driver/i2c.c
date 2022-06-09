@@ -54,7 +54,7 @@ static void Pin_out2in(void)
 #if (DELAY_TYPE == TIMER) 
 void IIC_Delay(u16 nus)
 {
-	delay_us(nus);
+	Delay_us(nus);
 }
 
 #else

@@ -183,9 +183,9 @@ void OLED_Init(void)
 
 	OLED_SPI_Init();
 	OLED_RST_ON;
-	delay_us(5);	
+	Delay_us(5);	
 	OLED_RST_OFF;
-	delay_us(5);	
+	Delay_us(5);	
 
     OLED_SetMode(0xA8);
     OLED_SetMode(0x3F);
@@ -228,7 +228,7 @@ void OLED_Init(void)
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
-	delay_us(2);  
+	Delay_us(2);  
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)
@@ -413,7 +413,7 @@ void OLED_UpdateGRAM()
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
-	delay_us(2);  
+	Delay_us(2);  
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)

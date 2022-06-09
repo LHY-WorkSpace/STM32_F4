@@ -66,7 +66,7 @@ u16 Distance;
 // {
 	
 // 	TRIG_H;
-// 	delay_us(30);
+// 	Delay_us(30);
 // 	TRIG_L;
 // 	System_ResetState(Dev_HCSR04,F_HCSR04_DataReady);
 

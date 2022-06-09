@@ -49,7 +49,7 @@ void Delay_Init()
 
 
 //×î´ó65535us=65.535ms
-void delay_us(u16 nus)
+void Delay_us(u16 nus)
 {
     TIM10->CNT = 0;
     TIM_Cmd(TIM10,ENABLE);
