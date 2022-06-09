@@ -236,9 +236,9 @@ void Task_List()
 	// while (1)
 	// { 
 	// 	//LCD_ShowString(0,0,240,320,12,USART1_Buffer);
-	// 	lv_task_handler();
-	// 	lv_tick_inc(5);
-	// 	Delay_ms(5);
+		// lv_task_handler();
+		// lv_tick_inc(5);
+		// Delay_ms(5);
 		
 	// 	OLED_ShowStrings(0,0,USART1_Buffer,64);
 	// 	// OLED_ShowNumber(16,2,data.point.x,4);

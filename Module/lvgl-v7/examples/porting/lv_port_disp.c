@@ -148,10 +148,8 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
     {
         for(x = area->x1; x <= area->x2; x++)
         {
-            /* Put a pixel to the display. For example: */
-            /* put_px(x, y, *color_p)*/
             LCD_WriteData(*((u16*)color_p));
-           //LCD_DrawPoint(x,y,*((u16*)color_p));
+
             color_p++;
         }
     }

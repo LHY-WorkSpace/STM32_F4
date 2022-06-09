@@ -2,7 +2,7 @@
 
 
 
-u8g2_t u8g2;
+
 
 
 
@@ -27,14 +27,20 @@ int  main()
 	Start_Page();
 	// Display_FreeRTOS_Logo();
 	// USB_Task();
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,(void *)memtest,10,NULL);
-	vTaskStartScheduler();
-	// while (1)
-	// {
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,(void *)memtest,10,NULL);
+	// vTaskStartScheduler();
+	while (1)
+	{
 	// 	XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
 	// 	Delay_ms(10);
-	// }
+
+
+	//Test_UI();
+	Clock();
+	Delay_ms(10);
+
+	}
 	// SystemDown();
 }	
 
