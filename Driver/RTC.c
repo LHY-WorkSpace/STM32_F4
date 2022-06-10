@@ -83,17 +83,6 @@ void RTC_Get_Time(RTC_Time_t *Time)
 	Time->week = RTC_DateTypeDefinit.RTC_WeekDay;
 }
 
-void RTC_Get_Date(RTC_Time_t* Date)
-{
-	RTC_DateTypeDef RTC_DateTypeDefinit;
-
-	RTC_GetDate(RTC_Format_BIN,&RTC_DateTypeDefinit);
-
-	Date->year=RTC_DateTypeDefinit.RTC_Year;
-	Date->month=RTC_DateTypeDefinit.RTC_Month;
-	Date->date=RTC_DateTypeDefinit.RTC_Date;
-	Date->week=RTC_DateTypeDefinit.RTC_WeekDay;
-}
 /*
 void RTC_Set_Alarm(u8* Data,u8 length)
 {

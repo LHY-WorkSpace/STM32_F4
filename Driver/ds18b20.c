@@ -119,12 +119,13 @@ u8 DS18B20_Init()
 	return State;
 }
 
-void Get_Temperature(u8 *Temperature)
+float Get_Temperature()
 {
-	u8 LSB,MSB;
-	u32 wendu;
+	B16_B08 Data;
+	u16 Buff;
+	float TempVal = 0.0;
 	
-	__disable_irq();
+	CLOSE_ALL_IRQ;
 	
 	if(DS18B20_Init()==TRUE)
 	{
@@ -136,14 +137,22 @@ void Get_Temperature(u8 *Temperature)
 		DS18B20_Write_Byte(0xcc);
 		DS18B20_Write_Byte(0xbe);
 
-		LSB=DS18B20_Read_Byte();
-		MSB=DS18B20_Read_Byte();
-	
-	wendu=(LSB|((MSB&0x7)<<8))*625;
-	*Temperature=(u8)(wendu/10000);
-		
+		Data.B08[0]=DS18B20_Read_Byte();
+		Data.B08[1]=DS18B20_Read_Byte();
+
+		if( Data.B08[1] & 0xF8 )//¸ºÎÂ¶È
+		{
+			Buff = (~Data.B16) & 0x7FF
+		}
+		else
+		{
+			Buff = Data.B16 & 0x7FF;
+		}
+
+		TempVal = (float)Buff * DS18B20_RESOLUTION;
 	}
-	__enable_irq();
+	
+	OPEN_ALL_IRQ;
 
-
+	return TempVal;
 }

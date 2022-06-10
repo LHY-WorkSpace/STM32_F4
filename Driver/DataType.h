@@ -51,6 +51,11 @@ typedef union
 }B32_B16;
 
 
+#define  CLOSE_ALL_IRQ      do{  __disable_irq();  }while(0)    
+#define  OPEN_ALL_IRQ       do{  __enable_irq();  }while(0)    
+
+
+
 #endif
 
 
