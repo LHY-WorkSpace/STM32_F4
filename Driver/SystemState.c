@@ -50,14 +50,14 @@ void System_ResetState(u8 Device,u8 State)
 
 void SystemDown()
 {
-	char Data[] ="STM32-USART-Test!!!\r\n";
+	//char Data[] ="STM32-USART-Test!!!\r\n";
 	while(1)
 	{		
 		LED1_ON;
 		Delay_ms(500);
 		LED1_OFF;
 		Delay_ms(500);
-		DispalyUTF_8Strings();
+		//DispalyUTF_8Strings();
 		//USART_ITSendData(USART1,&USART1_Buffer,(u8 *)Data,sizeof(Data));
 	}
 }

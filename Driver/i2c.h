@@ -16,7 +16,7 @@
 
 
 //IIC延时类型：定时器/CPU_NOP
-#define DELAY_TYPE    CPU_NOP
+#define IIC_DELAY_TYPE    CPU_NOP
 
 
 static void Pin_out2in(void);

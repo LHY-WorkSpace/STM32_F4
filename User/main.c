@@ -5,17 +5,17 @@ float DACC = 1.2;
 float ADCC;
 
 
-
-
 void CreateAllTask(void *pv)
 {
 	u8g2_TaskCreate();
 	vTaskDelete(NULL);
 }
 
-
-
-
+DHT11_Data_t DHT11_Data;
+char T[6];
+char H[6];
+char tempchar[6];
+float temp;
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
@@ -23,26 +23,47 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	DAC_UserInit();
-	ADC_UserInit();
+	// DAC_UserInit();
+	// ADC_UserInit();
+	// DHT11_GPIO_Init();
+	DS18B20_GPIO_Init();
 	// AT24C08_init();
 	// XPT2046_Init();
-	// OLED_Init();
-	// u8g2_Init();
+	OLED_Init();
+	u8g2_Init();
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 	// USB_Task();
-
+	
 
 	while (1)
 	{
+		temp =	DS18B20_Get_Temperature();
+		DHT11_Read_Data(&DHT11_Data);
+		sprintf(T,"%2d",DHT11_Data.Tempure.B08[1]);
+		sprintf(&T[3],"%2d",DHT11_Data.Tempure.B08[0]);
+		sprintf(H,"%2d",DHT11_Data.Humidity.B08[1]);
+		sprintf(&H[3],"%2d",DHT11_Data.Humidity.B08[0]);
+		T[2] = '.';
+		H[2] = '.';
+
+		sprintf(tempchar,"%4.2f",temp);
+		ShowDS18B20TempData(tempchar);
+		ShowTempData(T);
+		ShowHumanityData(H);
+		// DAC_Out(DACC);
+		// Delay_ms(50);
+		// ADCC=BatteryGetVolate();
+		Delay_ms(500);
+		Delay_ms(500);
+		LED1_OFF;
+		DS18B20_GetID();
+		Delay_ms(500);
+		Delay_ms(500);
+		LED1_ON;
+		
 
 
-
-		DAC_Out(DACC);
-		Delay_ms(50);
-		ADCC=BatteryGetVolate();
-		Delay_ms(50);
 	}
 
 

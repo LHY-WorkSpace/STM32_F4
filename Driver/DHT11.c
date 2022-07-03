@@ -1,127 +1,127 @@
 #include "IncludeFile.h"
 
 
-#define  DHT11_OUT_HIGH   1
-#define  DHT11_OUT_LOW    0
+//PC8-----------DATA//
 
 
-#define DHT11_IO_STATE GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_4)
-
-
-//PB6-----------DATA//
-
-void DHT11_IO_IN(void)
+void DHT11_GPIO_Init()
 {
-
-
 	GPIO_InitTypeDef GPIOB_Initstruc;
-	
-	GPIOB_Initstruc.GPIO_Pin=GPIO_Pin_4;
-	GPIOB_Initstruc.GPIO_Mode=GPIO_Mode_IN;
-	GPIOB_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;         
-	GPIOB_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
-	
-	GPIO_Init(GPIOB,&GPIOB_Initstruc);
 
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
 
+	GPIOB_Initstruc.GPIO_Pin = GPIO_Pin_8;                       
+	GPIOB_Initstruc.GPIO_Mode = GPIO_Mode_OUT;
+	GPIOB_Initstruc.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIOB_Initstruc.GPIO_OType = GPIO_OType_OD;
+	GPIOB_Initstruc.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_Init(GPIOC,&GPIOB_Initstruc);
+	DHT11_HIGH;	  //初始化完毕后立即释放总线
 }
 
 
-void DHT11_IO_OUT(u8 DHT11_IO_CMD)
+static u8 DHT11_Init(void)
 {
+	u8 i=0;
 
+	DHT11_HIGH;
+	Delay_ms(5);
+	DHT11_LOW;	            //拉低总线20ms,发送开始信号
+	Delay_ms(20);
+	DHT11_HIGH;	            //拉高40us.等待应答
+	Delay_us(40);
 
-	GPIO_InitTypeDef GPIOB_Initstruc;
-	GPIOB_Initstruc.GPIO_Pin=GPIO_Pin_4;                       
-	GPIOB_Initstruc.GPIO_Mode=GPIO_Mode_OUT;
-	GPIOB_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;         
-	GPIOB_Initstruc.GPIO_PuPd=GPIO_PuPd_UP;
-	GPIO_Init(GPIOB,&GPIOB_Initstruc);
-	
-		if(DHT11_IO_CMD==1)
-			GPIO_SetBits(GPIOB,GPIO_Pin_4);
-		else
-			GPIO_ResetBits(GPIOB,GPIO_Pin_4); 
-
-
-}
-
-
-u8 DHT11_Init(void)
-{
-    u8 DHT11_ACK=0,j=0;
-	
-		RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
-
-		DHT11_IO_OUT(DHT11_OUT_LOW);	            //拉低总线20ms，
-		Delay_ms(20);
-		DHT11_IO_OUT(DHT11_OUT_HIGH);	            //拉高30us,用于主机转换IO
-		DHT11_IO_IN();                            //主机转换IO
-
-    	while(DHT11_IO_STATE==HIGH&&j<230)
-		{
-			j++;
-			Delay_us(2);
-		}
-		if(DHT11_IO_STATE==LOW)                    //总线为低，应答成功
-			DHT11_ACK=1;
-		else
-			DHT11_ACK=0;
-			Delay_us(170);                          //DHT拉高准备传输
-
-		return DHT11_ACK;
-
-}
-
-
-
-
-
-
-
-
-u8 DHT11_Read_Byte(void)
-{
-	u8 Byte_Data=0,i=0,j=0;;
-for(i=0;i<8;i++)
+	if(DHT11_IO_STATE == HIGH)
 	{
-          while(DHT11_IO_STATE==LOW&&j<200)				//检测到高电平时	
-		{
-			j++;
-			Delay_us(2);	
-		}				
-		Delay_us(35);
-		Byte_Data=Byte_Data<<1;
-		if(DHT11_IO_STATE==HIGH)
-		{
-			Byte_Data+=1;
-			Delay_us(50);
-		}
-		else
-		{
-			Byte_Data+=0;
-			Delay_us(10);
-
-		}
+		return FALSE;
+	}
+     
+	while( (DHT11_IO_STATE == LOW )&&( i < 50) )
+	{
+		i++;
+		Delay_us(2);
 	}
 
-return Byte_Data;
+	i=0;
 
+	while( (DHT11_IO_STATE == HIGH )&&( i < 50) )
+	{
+		i++;
+		Delay_us(2);
+	}
+
+	return TRUE;
 }
 
 
-void DHT11_Read_Data(u8 *temp,u8 *humi)//读取温湿度间隔必须大于1s
+static u8 DHT11_Read_Byte(void)
 {
-	
- __disable_irq();                   //关全局中断
-	DHT11_Init();
-	*humi=DHT11_Read_Byte();
-				DHT11_Read_Byte();
-	*temp=DHT11_Read_Byte();
-				DHT11_Read_Byte();
-				DHT11_Read_Byte();
-	__enable_irq();
-		  
+	u8 Byte_Data=0,i,k;
+	for(i=0;i<8;i++)
+	{
+		k=0;
+		while( (DHT11_IO_STATE == LOW )&&( k < 50) )
+		{
+			k++;
+			Delay_us(2);
+		}
+		Delay_us(30);
+
+		Byte_Data <<= 1;
+		if(DHT11_IO_STATE==HIGH)
+		{
+			Byte_Data |= 1;
+			k=0;
+			while( (DHT11_IO_STATE == HIGH )&&( k < 50) )
+			{
+				k++;
+				Delay_us(2);
+			}
+		}
+		else
+		{
+			Byte_Data |= 0;
+		}
+
+	}
+
+	return Byte_Data;
+}
+
+
+//读取温湿度间隔必须大于1s
+void DHT11_Read_Data(DHT11_Data_t *DHT11_Data)
+{
+	u8 CheckSum;
+
+	if ( DHT11_Init() == FALSE)
+	{
+		DHT11_Data->Tempure.B08[1] = 0;
+		DHT11_Data->Tempure.B08[0] = 0;
+		DHT11_Data->Humidity.B08[1] = 0;
+		DHT11_Data->Humidity.B08[0] = 0;	
+		return;
+	}
+
+	DHT11_Data->Humidity.B08[1] = DHT11_Read_Byte();
+	DHT11_Data->Humidity.B08[0] = DHT11_Read_Byte();
+	DHT11_Data->Tempure.B08[1] =  DHT11_Read_Byte();
+	DHT11_Data->Tempure.B08[0] =  DHT11_Read_Byte();
+	DHT11_Data->CheckSum =	DHT11_Read_Byte(); 
+
+	CheckSum =  DHT11_Data->Tempure.B08[0];
+	CheckSum += DHT11_Data->Tempure.B08[1];
+	CheckSum += DHT11_Data->Humidity.B08[0];
+	CheckSum += DHT11_Data->Humidity.B08[1];
+
+	if( CheckSum != DHT11_Data->CheckSum)
+	{
+		DHT11_Data->Tempure.B08[1] = 0;
+		DHT11_Data->Tempure.B08[0] = 0;
+		DHT11_Data->Humidity.B08[1] = 0;
+		DHT11_Data->Humidity.B08[0] = 0;	
+	}
+
 }
  
 

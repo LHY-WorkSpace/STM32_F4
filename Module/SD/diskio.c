@@ -217,7 +217,7 @@ DRESULT disk_ioctl (
 			break;
 		// Process of the command the USB drive
 
-		return res;
+	//	return res;
 	  }
 
 	return RES_PARERR;

@@ -55,7 +55,7 @@ u16 ADC_GetVal()
 float BatteryGetVolate()
 {  
 	float Temp;
-	Temp = ( VBAT * R0 )/ ( R0 + R1 );
+	Temp = ( VBAT_MAX * R0 )/ ( R0 + R1 );
 	return ( Temp * (float)ADC_GetVal() / 4096.0 );
 }
 

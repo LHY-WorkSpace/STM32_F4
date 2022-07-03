@@ -1,16 +1,25 @@
 #ifndef  DHT11_H
 #define  DHT11_H
+#include "DataType.h"
 
 
+#define  DHT11_HIGH         GPIO_SetBits(GPIOC,GPIO_Pin_8)
+#define  DHT11_LOW          GPIO_ResetBits(GPIOC,GPIO_Pin_8)
+#define  DHT11_IO_STATE     GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_8)
 
-u8 DHT11_Init(void);
+
+typedef struct
+{
+	B16_B08 Tempure;
+    B16_B08 Humidity;
+	u8 CheckSum;
+}DHT11_Data_t;
 
 
-void DHT11_Read_Data(u8 *temp,u8 *humi);//读取温湿度
-u8 DHT11_Read_Byte(void);//读出一个字节
+void DHT11_GPIO_Init(void);
+void DHT11_Read_Data(DHT11_Data_t *DHT11_Data);//读取温湿度间隔必须大于1s
+
  
-void DHT11_IO_IN(void);
-void DHT11_IO_OUT(u8 DHT11_IO_CMD);
 
 
 #endif

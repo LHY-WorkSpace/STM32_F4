@@ -71,6 +71,35 @@ void u8g2_Init()
 	u8g2_SetPowerSave(&u8g2_Data, 0);
 }
 
+
+void ShowDS18B20TempData(char *Data)
+{
+    u8g2_ClearBuffer(&u8g2_Data);
+    u8g2_SetFont(&u8g2_Data, u8g2_font_10x20_tr);
+    u8g2_DrawStr(&u8g2_Data, 1,20,Data);	
+    // u8g2_SendBuffer(&u8g2_Data);
+
+}
+
+
+
+void ShowTempData(char *Data)
+{
+    u8g2_SetFont(&u8g2_Data, u8g2_font_10x20_tr);
+    u8g2_DrawStr(&u8g2_Data, 1,60,Data);	
+    // u8g2_SendBuffer(&u8g2_Data);
+
+}
+
+void ShowHumanityData(char *Data)
+{
+    // u8g2_ClearBuffer(&u8g2_Data);
+    u8g2_SetFont(&u8g2_Data, u8g2_font_10x20_tr);
+    u8g2_DrawStr(&u8g2_Data, 1,40,Data);	
+    u8g2_SendBuffer(&u8g2_Data);
+}
+
+
 void draw(u8g2_t *u8g2)
 {
     u8g2_SetFontMode(u8g2, 1);  // Transparent
@@ -128,7 +157,7 @@ void Start_Page()
 
 void Test_UI()
 {
-    static u16 x= -150;
+    static s16 x= -150;
      u8g2_ClearBuffer(&u8g2_Data);
 	u8g2_SetFont(&u8g2_Data,u8g2_font_open_iconic_app_2x_t);
     u8g2_DrawGlyph(&u8g2_Data,12+2*x,30,69);
