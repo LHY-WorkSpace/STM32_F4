@@ -7,7 +7,6 @@
 
 #define   DELAY_TYPE    USE_TIMER
 
-
 #define  DS18B20_HIGH           GPIO_SetBits(GPIOC,GPIO_Pin_8)
 #define  DS18B20_LOW            GPIO_ResetBits(GPIOC,GPIO_Pin_8)
 #define  DS18B20_IO_STATE       GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_8)
@@ -30,9 +29,6 @@ typedef struct
 
 
 void DS18B20_GPIO_Init(void);
-u8 DS18B20_Init(void);
-void DS18B20_Write_Byte(u8 Data);
-u8 DS18B20_Read_Byte(void);
 float DS18B20_Get_Temperature(void);
 void DS18B20_GetID(void);
 

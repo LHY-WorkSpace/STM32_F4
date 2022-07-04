@@ -3,8 +3,8 @@
 
 typedef struct 
 {
-	float SetSpeed;//定义设定值
-	float ActualSpeed;//定义实际值
+	float SetValue;//定义设定值
+	float ActualValue;//定义实际值
 	float err;//定义偏差值
 	float err_next;//定义上一个偏差值
 	float err_last;//定义最上前的偏差值
@@ -12,11 +12,12 @@ typedef struct
 }PID_t;
 
 
-void PID_init(void );
-float PID_RealTime(float speed);//参数为目标值
 
-
-
+void PID_Init(PID_t *PID_Data);
+void PID_Change_Kp(PID_t *PID_Data, float k);
+void PID_Change_Ki(PID_t *PID_Data, float k);
+void PID_Change_Kd(PID_t *PID_Data, float k);
+float PID_Process(PID_t *PID_Data,float Target);
 
 #endif
 

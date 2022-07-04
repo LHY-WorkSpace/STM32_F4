@@ -17,7 +17,7 @@ typedef struct
 
 
 void DHT11_GPIO_Init(void);
-void DHT11_Read_Data(DHT11_Data_t *DHT11_Data);//读取温湿度间隔必须大于1s
+u8 DHT11_Read_Data(DHT11_Data_t *DHT11_Data);
 
  
 

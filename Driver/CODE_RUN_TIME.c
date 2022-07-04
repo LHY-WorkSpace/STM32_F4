@@ -93,20 +93,22 @@ void TIM6_DAC_IRQHandler()
 
 
 
-u8 FALSH_GetSumData(u32 StartAddr,u32 EndAddr,u32 *Data)
+u32 FALSH_GetSumData(u32 StartAddr,u32 EndAddr)
 {
 	u32 Temp = 0;
 
 	if(StartAddr > EndAddr)
 	{
-		return FALSE;
+		return 0x00000000;
 	}
 	
 	while ( StartAddr != EndAddr )
 	{
-		Temp += *((u32 *)StartAddr);
+		Temp |= *((u32 *)StartAddr);
 		StartAddr += 4;
 	}
+
+	return Temp;
 }
 
 

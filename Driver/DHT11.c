@@ -4,6 +4,16 @@
 //PC8-----------DATA//
 
 
+//************************// 
+//  功能描述: DHT11 IO 初始化函数
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 初始化后必须立即释放总线
+//  DHT11 和 DS18B20 可以共用一个总线
+//************************//  
 void DHT11_GPIO_Init()
 {
 	GPIO_InitTypeDef GPIOB_Initstruc;
@@ -57,6 +67,7 @@ static u8 DHT11_Init(void)
 static u8 DHT11_Read_Byte(void)
 {
 	u8 Byte_Data=0,i,k;
+	
 	for(i=0;i<8;i++)
 	{
 		k=0;
@@ -88,9 +99,17 @@ static u8 DHT11_Read_Byte(void)
 	return Byte_Data;
 }
 
-
-//读取温湿度间隔必须大于1s
-void DHT11_Read_Data(DHT11_Data_t *DHT11_Data)
+//***************************************************//
+//  功能描述: 获取温度和湿度数据
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 读取温湿度间隔必须大于1s，高字节为整数，低字节为小数
+//  0x1234 = 0x12 . 0x34  = 18.52 
+//***************************************************//
+u8 DHT11_Read_Data(DHT11_Data_t *DHT11_Data)
 {
 	u8 CheckSum;
 
@@ -100,7 +119,7 @@ void DHT11_Read_Data(DHT11_Data_t *DHT11_Data)
 		DHT11_Data->Tempure.B08[0] = 0;
 		DHT11_Data->Humidity.B08[1] = 0;
 		DHT11_Data->Humidity.B08[0] = 0;	
-		return;
+		return FALSE;
 	}
 
 	DHT11_Data->Humidity.B08[1] = DHT11_Read_Byte();
@@ -120,8 +139,10 @@ void DHT11_Read_Data(DHT11_Data_t *DHT11_Data)
 		DHT11_Data->Tempure.B08[0] = 0;
 		DHT11_Data->Humidity.B08[1] = 0;
 		DHT11_Data->Humidity.B08[0] = 0;	
+		return DATA_ERR;
 	}
 
+	return TRUE;
 }
  
 

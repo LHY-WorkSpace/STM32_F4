@@ -62,7 +62,16 @@ static unsigned char FreeRTOS_Logo[] =
 };
 
 
-
+//***************************************************//
+//  功能描述: 
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
 void u8g2_Init()
 {
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 

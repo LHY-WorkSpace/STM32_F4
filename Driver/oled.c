@@ -170,8 +170,6 @@ void OLED_SPI_Init()
 
 	SPI_Cmd(SPI2 ,ENABLE);
 
-
-
 }
 
 
@@ -183,9 +181,9 @@ void OLED_Init(void)
 
 	OLED_SPI_Init();
 	OLED_RST_ON;
-	Delay_us(5);	
+	Delay_us(10);	
 	OLED_RST_OFF;
-	Delay_us(5);	
+	Delay_us(10);	
 
     OLED_SetMode(0xA8);
     OLED_SetMode(0x3F);
@@ -228,7 +226,7 @@ void OLED_Init(void)
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
 	OLED_SetMode(0x7f);
-	Delay_us(2);  
+	Delay_us(10);
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)

@@ -2,11 +2,11 @@
 #define  DATATYPE_H
 
 
-#define  TRUE     0
-#define  FALSE    1
-#define  BUSY    2
-#define  ILDE    3
-
+#define  TRUE       0
+#define  FALSE      1
+#define  BUSY       2
+#define  ILDE       3
+#define  DATA_ERR   4
 
 
 
