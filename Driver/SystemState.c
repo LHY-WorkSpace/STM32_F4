@@ -69,8 +69,19 @@ void SW_Reset()
 }
 
 
+u32 CRC_GetValue(u32 *pBuffer, u32 BufferLength)
+{
+	u32 index = 0;
 
+	CRC->CR = CRC_CR_RESET;//¸´Î»CRC
 
+	for(index = 0; index < BufferLength; index++)
+	{
+		CRC->DR = pBuffer[index];
+	}
+	
+	return (CRC->DR);
+}
 
 
 

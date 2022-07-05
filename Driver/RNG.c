@@ -16,24 +16,24 @@ void RNG_Close()
 }
 
 //获取随机数
-u8 RHG_GetRadomData(u32 *Radom)
+u32 RNG_GetRadomData()
 {
     u8 times;
+
 	while((RNG_GetFlagStatus(RNG_FLAG_DRDY)!=SET)&&(times<10))
     {
         Delay_us(2);
         times++;
     }
+
     if(times==10)
     {
-        return FALSE;
+        return 0xFFFFFFFF;
     }
     else
     {
-        *Radom = RNG->DR;
-        return TRUE;
+        return RNG->DR;
     }
-	
 }
 
 

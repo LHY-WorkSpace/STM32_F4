@@ -23,12 +23,14 @@ void RTC_ConfigInit()
 			}
 			else
 			{
-				Delay_ms(2);
+				Delay_us(5);
 			}
 			retry--;
 		}
 		if (retry == 0)
+		{
 			return;
+		}
 
 		RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);				  //设置RTC时钟(RTCCLK),选择LSE作为RTC时钟
 		RCC_RTCCLKCmd(ENABLE);								  //使能RTC时钟

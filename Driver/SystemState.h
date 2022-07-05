@@ -117,7 +117,12 @@ typedef enum
 
 }SystemState_n;
 
-
+typedef enum
+{
+    PowerOnRuning,
+    PowerOffSleep,
+    PowerOffWake
+}PowerState_n;
 
 
 u8   System_GetState(u8 Device,u8 State);

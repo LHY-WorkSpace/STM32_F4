@@ -4,8 +4,10 @@
 
 
 
-void WDOG_Init();
+void IWDOG_Init();
+void IWDOG_Clear();
 
+void WWDOG_Init();
 
 
 

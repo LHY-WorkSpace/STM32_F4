@@ -1,9 +1,41 @@
 #include "IncludeFile.h"
 
+//***************************************************//
+//  功能描述: 电池检测开关
+//  
+//  参数: PowerState_n
+//  
+//  返回值:无
+//  
+//  说明: 输出低开启检测，输出高关闭检测
+//  
+//***************************************************//
+void ADC_CTRL_IO_Init()
+{
+	GPIO_InitTypeDef GPIOB_Initstruc;
 
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,ENABLE);
 
+	GPIOB_Initstruc.GPIO_Pin = GPIO_Pin_8;                       
+	GPIOB_Initstruc.GPIO_Mode = GPIO_Mode_OUT;
+	GPIOB_Initstruc.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIOB_Initstruc.GPIO_OType = GPIO_OType_OD;
+	GPIOB_Initstruc.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOC,&GPIOB_Initstruc);
 
+	BATTERY_CHECK_DISABLE;
+}
 
+//***************************************************//
+//  功能描述: 电池检测ADC初始化
+//  
+//  参数: 无
+//  
+//  返回值:无
+//  
+//  说明: 无
+//  
+//***************************************************//
 void ADC_UserInit()
 {	
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
@@ -42,25 +74,75 @@ void ADC_UserInit()
 
 }
 
-
-u16 ADC_GetVal()        
+//***************************************************//
+//  功能描述: 启动AD转换
+//  
+//  参数: 
+//  
+//  返回值: u16 AD值
+//  
+//  说明: 无
+//  
+//***************************************************//
+static u16 ADC_GetVal()        
 {
+	u8 time=0;
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_5,1,ADC_SampleTime_480Cycles);
 	ADC_SoftwareStartConv(ADC1);	
-	while(!ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC));	
+	while( !ADC_GetFlagStatus(ADC1,ADC_FLAG_EOC) )
+	{
+		Delay_us(2);
+		time++;
+		if(time >= 10)
+		{
+			return 0;
+		}
+	}
 	return ADC_GetConversionValue(ADC1);
 }
 
-
+//***************************************************//
+//  功能描述: 获取电池电压
+//  
+//  参数: 无
+//  
+//  返回值: float 小数
+//  
+//  说明: 无
+//  
+//***************************************************//
 float BatteryGetVolate()
-{  
-	float Temp;
-	Temp = ( VBAT_MAX * R0 )/ ( R0 + R1 );
-	return ( Temp * (float)ADC_GetVal() / 4096.0 );
+{ 
+	float Temp,Value,V_ADC;
+
+	BATTERY_CHECK_ENABLE;
+
+	Value = ( VBAT_MAX * R0 )/ ( R0 + R1 );
+	V_ADC = ( Value * (float)ADC_GetVal() / 4096.0 );
+	Value = V_ADC * ( R0 + R1 ) / R0;
+
+	BATTERY_CHECK_DISABLE;
+	
+	return	Value;
 }
 
 
-
+//***************************************************//
+//  功能描述: 关闭ADC 及所有有关引脚
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 目前未完成！！！！！！！
+//  
+//***************************************************//
+void PowerDown_Battery()
+{ 
+	
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC,DISABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,DISABLE);
+}
 
 
 
