@@ -23,43 +23,19 @@
 
 
 
-#define BUFFER_SIZE      (512)
+#define BUFFER_SIZE      (1024)
 
 typedef struct 
 {
     u16 RX_Pointer;//已接收数据指针
     u16 TX_Pointer;//已发送数据指针
-    u16 RX_ReadLength; //要读数据长度
-    u16 TX_WriteLength;//要写数据长度
+    u16 RX_Length;//要接收的数据长度
+    u16 TX_Length;//要发送的数据长度
     u8 RX_Data[BUFFER_SIZE]; 
     u8 TX_Data[BUFFER_SIZE];  
 }USART_Data_t;
 
 
-
-
-
-
-typedef struct
-{
-    u8 Length;
-    
-     
-}App_Data_u;
-
-typedef struct 
-{
-    u8 ID_Head[6];
-    App_Data_u App_Data;
-    u8 ID_End[6];
-}FrameData_t;
-
-
-typedef union
-{
-    u8 USART_Data[BUFFER_SIZE];
-    FrameData_t  FrameData; 
-}USART_FrameData_u;
 
 extern USART_Data_t USART1_Buffer;
 extern USART_Data_t USART2_Buffer;

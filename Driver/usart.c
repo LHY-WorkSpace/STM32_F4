@@ -2,8 +2,8 @@
 
 
 
-USART_Data_t USART1_Buffer;
-USART_Data_t USART2_Buffer;
+USART_Data_t USART1_Data;
+USART_Data_t USART2_Data;
 
 
 
@@ -77,7 +77,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART1,USART_IT_RXNE | USART_IT_IDLE | USART_IT_TC,ENABLE);
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -152,14 +152,13 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 
 
 
-/*
-输入参数为浮点数时，速度不宜过快，容易死机 一般在9600
-*/
+
 int fputc(int ch, FILE* stream)          
 {		
-
-	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET))
+	u8 i=0;
+	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET) && ( i < 10))
 	{
+		Delay_us(2);
 	}
 	USART_SendData(USART1, (unsigned char) ch);	
 	USART_ClearFlag(USART1,USART_FLAG_TC);
@@ -169,60 +168,54 @@ int fputc(int ch, FILE* stream)
 
 void USART1_IRQHandler()
 {
-	u8 Data;
-	if(USART_GetITStatus(USART1,USART_IT_RXNE)!=RESET)
-	{
-		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-		Data = USART_ReceiveData(USART1);
-		// while ((USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET));
-		USART_SendData(USART2, Data);	
-		// USART_ClearFlag(USART2,USART_FLAG_TC);
-	}
-	// USARTx_ITHandle(USART1,&USART1_Buffer);
+	USARTx_ITHandle(USART1,&USART1_Data);
 }
 
 void USART2_IRQHandler()
 {
-	u8 Data;
-	if(USART_GetITStatus(USART2,USART_IT_RXNE)!=RESET)
-	{
-		USART_ClearITPendingBit(USART2,USART_IT_RXNE);
-		Data = USART_ReceiveData(USART2);
-		// while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET));
-		USART_SendData(USART1, Data);	
-		// USART_ClearFlag(USART1,USART_FLAG_TC);
-
-	}
-	// USARTx_ITHandle(USART2,&USART2_Buffer);	
+	USARTx_ITHandle(USART2,&USART2_Data);
 }
 
 void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 {
-	if(USART_GetITStatus(USARTx,USART_IT_RXNE)!=RESET)
+	//接收中断
+	if(USART_GetITStatus(USARTx,USART_IT_RXNE) != RESET)
 	{
 		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 		USART_Data->RX_Data[USART_Data->RX_Pointer] = USART_ReceiveData(USARTx);
 		USART_Data->RX_Pointer++;
+		USART_Data->RX_Pointer %= BUFFER_SIZE;
+
+		// if( USART_Data->RX_Pointer >= USART_Data->RX_Length)
+		// {
+		// }
 	}
 
-	if(USART_GetITStatus(USARTx,USART_IT_TC)!=RESET)
+	//发送完成中断
+	if(USART_GetITStatus(USARTx,USART_IT_TC) != RESET)
 	{
 		USART_ClearITPendingBit(USARTx,USART_IT_TC);
 		USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
-		USART_Data->TX_Pointer++; 
-		if(USART_Data->TX_WriteLength <= USART_Data->TX_Pointer)
+		USART_Data->TX_Pointer++;
+		USART_Data->TX_Pointer %= BUFFER_SIZE;
+
+		if( USART_Data->TX_Pointer >= USART_Data->TX_Length)
 		{
 			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
-			USART_Data->TX_Pointer =0;	//发送完毕置为空闲
 		}
+
+	}
+
+	//空闲中断
+	if(USART_GetITStatus(USARTx,USART_IT_IDLE) != RESET)
+	{
+		USART_ClearITPendingBit(USARTx,USART_IT_IDLE);
+		USART_Data->RX_Pointer = 0;
+		USART_Data->TX_Pointer = 0;
 	}
 }
 
-//中断方式
-// USART_TypeDef* USARTx
-// USART_Data_t *USART_Data 
-// u8 *Data
-// u16  Length
+// 启动中断发送
 u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
 {
 	if(Length > BUFFER_SIZE)
@@ -237,7 +230,6 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 
 
 	memcpy(USART_Data->TX_Data,Data,Length);
 	USART_Data->TX_Pointer = 0;
-	USART_Data->TX_WriteLength = Length;
 	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
 	return TRUE;
 }
@@ -279,6 +271,7 @@ u8 USART_ReceiceData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16
 
 
 }
+
 
 
 

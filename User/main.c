@@ -1,8 +1,7 @@
 #include "IncludeFile.h"
 
 
-float DACC = 1.2;
-float ADCC;
+
 
 
 void CreateAllTask(void *pv)

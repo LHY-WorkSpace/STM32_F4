@@ -68,8 +68,8 @@ void SW_Reset()
 	NVIC_SystemReset();
 }
 
-
-u32 CRC_GetValue(u32 *pBuffer, u32 BufferLength)
+//Ó²¼þCRC_32
+u32 CRC32_GetValue(u32 *pBuffer, u32 BufferLength)
 {
 	u32 index = 0;
 
@@ -82,6 +82,34 @@ u32 CRC_GetValue(u32 *pBuffer, u32 BufferLength)
 	
 	return (CRC->DR);
 }
+
+
+u8 Power_GetState()
+{
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

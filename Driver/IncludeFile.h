@@ -69,7 +69,7 @@
 
 #include "../SD/diskio.h"	
 #include "../SD/ff.h"	
-//#include "GUI.H"
+#include "Protocol.H"
 #include "TEST.h"
 #include "FileOperate.h"
 
