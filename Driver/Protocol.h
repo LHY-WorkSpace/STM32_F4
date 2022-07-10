@@ -1,3 +1,13 @@
+//***************************************************//
+ //  Author: LHY-WorkSpace 2371270263@qq.com
+ //  Date: 2022-07-09 22:33:11
+ //  LastEditors: LHY-WorkSpace 2371270263@qq.com
+ //  LastEditTime: 2022-07-09 22:51:58
+ //  FilePath: \STM32_F4\Driver\Protocol.h
+ //  Description: 
+ //  
+ //  Copyright (c) 2022 by LHY-WorkSpace 2371270263@qq.com, All Rights Reserved. 
+//***************************************************//
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 
@@ -6,9 +16,9 @@
 
 //Ð­Òé´íÎó´úÂë
 #define   HEAD_ERR  (0x01)
-#define   HEAD_ERR  (0x02)
-#define   HEAD_ERR  (0x03)
-#define   HEAD_ERR  (0x04)
+#define   HEAD1_ERR  (0x02)
+#define   HEAD2_ERR  (0x03)
+#define   HEAD3_ERR  (0x04)
 
 
 

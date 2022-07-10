@@ -10,7 +10,7 @@ USART_Data_t USART2_Data;
 //使用中断方式发送数据时，应先将数据发送到寄存器中，然后再开启中断，发送完毕后应在中断函数里关闭发送中断！！！！！！！
 // sendBuffer(Data);
 // USART_IT(enbale);
-
+//IDLE空闲中断指对接收有效，对发送无效
 
 
 /*
@@ -71,13 +71,16 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART_Init(USART1,&USART1_Initstruc);
 	
 	NVIC_Initstr.NVIC_IRQChannel=USART1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=7;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=5;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
-	USART_ITConfig(USART1,USART_IT_RXNE | USART_IT_IDLE | USART_IT_TC,ENABLE);
+
+	USART_ITConfig(USART1,USART_IT_RXNE ,ENABLE);
+	USART_ITConfig(USART1,USART_IT_IDLE, ENABLE);//不支持或（ | ）操作
+
 	USART_Cmd(USART1,ENABLE);	
 }
 
@@ -185,10 +188,6 @@ void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 		USART_Data->RX_Data[USART_Data->RX_Pointer] = USART_ReceiveData(USARTx);
 		USART_Data->RX_Pointer++;
 		USART_Data->RX_Pointer %= BUFFER_SIZE;
-
-		// if( USART_Data->RX_Pointer >= USART_Data->RX_Length)
-		// {
-		// }
 	}
 
 	//发送完成中断
@@ -206,12 +205,11 @@ void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 
 	}
 
-	//空闲中断
+	//接收空闲中断
 	if(USART_GetITStatus(USARTx,USART_IT_IDLE) != RESET)
 	{
 		USART_ClearITPendingBit(USARTx,USART_IT_IDLE);
 		USART_Data->RX_Pointer = 0;
-		USART_Data->TX_Pointer = 0;
 	}
 }
 
@@ -223,13 +221,14 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 
 		return FALSE;
 	}
 
-	if( USART_Data->TX_Pointer != 0)//正在发送数据
-	{
-		return BUSY;
-	}
+	// if( USART_Data->TX_Pointer != 0)//正在发送数据
+	// {
+	// 	return BUSY;
+	// }
 
 	memcpy(USART_Data->TX_Data,Data,Length);
 	USART_Data->TX_Pointer = 0;
+	USART_Data->TX_Length = Length;
 	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
 	return TRUE;
 }

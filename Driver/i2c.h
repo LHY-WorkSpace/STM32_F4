@@ -11,6 +11,10 @@
 #define IIC_SCL_HIGH  		 	GPIO_SetBits(PORT_GROUP,IIC_SCL)
 #define IIC_SDA_LOW  			GPIO_ResetBits(PORT_GROUP,IIC_SDA)
 #define IIC_SDA_HIGH 			GPIO_SetBits(PORT_GROUP,IIC_SDA)
+#define IIC_SDA_STATE           GPIO_ReadInputDataBit(PORT_GROUP,IIC_SDA)
+
+
+
 #define CPU_NOP                 0x11
 #define TIMER                   0x22
 
@@ -18,9 +22,6 @@
 //IIC延时类型：定时器/CPU_NOP
 #define IIC_DELAY_TYPE    CPU_NOP
 
-
-static void Pin_out2in(void);
-static void Pin_in2out(void);
 
 
 void Stop_IIC(void);

@@ -1,6 +1,6 @@
 #include"IncludeFile.h"
 
-void AT24C08_init(void)
+void AT24C08_Init(void)
 {
 	IIC_Init();
 }

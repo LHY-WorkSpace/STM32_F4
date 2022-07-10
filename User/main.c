@@ -1,7 +1,7 @@
 #include "IncludeFile.h"
 
 
-
+extern USART_Data_t USART1_Data;
 
 
 void CreateAllTask(void *pv)
@@ -16,6 +16,10 @@ char T[6];
 char H[6];
 char tempchar[6];
 float temp;
+char Data[] = "STM32 NB!!";
+
+u8 eedata[10];
+
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
@@ -23,40 +27,27 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	PWM_Init(0,0);
+	MPU6050_Init();
+
+	// PWM_Init(0,0);
 	// DS18B20_GPIO_Init();
-	// OLED_Init();
+	OLED_Init();
 	// u8g2_Init();
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 	// USB_Task();
 	
+	// AT24C08_Init();
+	// memset(eedata,0x55,sizeof(eedata));
+	// AT24C08WriteData(0,sizeof(eedata),eedata);
+	// memset(eedata,0x00,sizeof(eedata));
+	// AT24C08ReadData(0,sizeof(eedata),eedata);
+
 
 	while (1)
 	{
-
-		Delay_ms(5);
-		LED1_OFF;
-		Delay_ms(5);
-		LED1_ON;
-		PWM_SetPluseWdie(TIM9,dasd);
-		
-		if( Dir == TRUE)
-		{
-			dasd += 10;
-			if(dasd >= 2000)
-			{
-				Dir = FALSE;
-			}
-		}
-		else
-		{
-			dasd -= 10;
-			if(dasd == 10)
-			{
-				Dir = TRUE;
-			}
-		}
+		Delay_ms(50);
+		 MPU6050_Test();
 
 	}
 

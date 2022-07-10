@@ -280,6 +280,12 @@ u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 		*yaw=atan2(2*(q1*q2+q3*q0),q0*q0+q1*q1-q2*q2-q3*q3)*57.3;
 
 	}
+	else
+	{
+		*pitch = 0.0;
+		*roll = 0.0;
+		*yaw = 0.0;
+	}
 
 	return 0;
 }

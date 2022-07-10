@@ -4,7 +4,7 @@
 //  PB13-------SCLK          PB15------SDA
 //  PB12-------D/C           PB14------RST 
 
-#if (USE_U8G2 == FALSE)
+//#if (USE_U8G2 == FALSE)
 
 u8 OLED_GRAM[8][128];
 
@@ -123,7 +123,7 @@ u8 CharModel[][16]=
 	{0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00},/*"¿Õ¸ñ*/
 	{0xFF,0x80,0x9F,0x9F,0x9F,0x9F,0x80,0xFF,0xFF,0x01,0xF1,0xF1,0xF1,0xF1,0x01,0xFF},/*"Î´Öª×Ö·û*/
 };
-#endif
+// #endif
 
 
 	
@@ -394,7 +394,7 @@ void OLED_SetTwinkMode(u8 Mode,u8 Speed)
 
 
 
-#if (USE_U8G2 == FALSE)
+//#if (USE_U8G2 == FALSE)
 
 void OLED_ClearScreen(u8 Data)
 {
@@ -801,6 +801,6 @@ void OLED_MoveDisplay(u8 x,u8 y,u8 High,u8 num,u8 *p)
 
 }
 
-#endif
+// #endif
 
 

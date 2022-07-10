@@ -29,7 +29,7 @@ typedef union
 
 #define EEPROM_ADDR(NUMBER)          ((u16)&(((EEPROM_MAP *)0)->NUMBER))   
 
-void AT24C08_init(void);
+void AT24C08_Init(void);
 u8  AT24C08WriteData(u16 addr,u16 length,u8 *data);
 u8 AT24C08ReadData(u16 addr,u16 length,u8 *data);
 
