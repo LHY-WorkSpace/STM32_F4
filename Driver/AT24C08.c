@@ -49,7 +49,7 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 		//此处必须延时，等待页写入完成，手册最大5ms
 		for ( i = 0; i < 5; i++)
 		{
-			IIC_Delay(2500);
+			IIC_Delay(1000);
 		}
 		
 		MemAddr.B16 += WR_Len;

@@ -9,7 +9,7 @@ void CreateAllTask(void *pv)
 	u8g2_TaskCreate();
 	vTaskDelete(NULL);
 }
-u16 dasd=200;
+u16 i;
 u8 Dir = TRUE;
 DHT11_Data_t DHT11_Data;
 char T[6];
@@ -18,7 +18,7 @@ char tempchar[6];
 float temp;
 char Data[] = "STM32 NB!!";
 
-u8 eedata[10];
+u8 eedata[1024];
 
 int  main()
 {
@@ -38,16 +38,21 @@ int  main()
 	// USB_Task();
 	
 	// AT24C08_Init();
-	// memset(eedata,0x55,sizeof(eedata));
-	// AT24C08WriteData(0,sizeof(eedata),eedata);
-	// memset(eedata,0x00,sizeof(eedata));
-	// AT24C08ReadData(0,sizeof(eedata),eedata);
+	// memset(eedata,0xA5,sizeof(eedata));
+
+	for ( i = 0; i < sizeof(eedata); i++)
+	{
+		eedata[i] = Dir++;
+	}
+	AT24C08WriteData(0,sizeof(eedata),eedata);
+	memset(eedata,0x00,sizeof(eedata));
+	AT24C08ReadData(0,sizeof(eedata),eedata);
 
 
 	while (1)
 	{
-		Delay_ms(50);
-		 MPU6050_Test();
+		Delay_ms(10);
+		MPU6050_Test();
 
 	}
 

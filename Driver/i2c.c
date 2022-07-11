@@ -124,7 +124,8 @@ u8 IIC_Wait_Ack_OK(void)
 			IIC_Delay(2);	
 	}			
 	IIC_SCL_LOW;	
-	IIC_Delay(2);	
+	IIC_Delay(2);
+	IIC_SDA_HIGH;
 	return TRUE;
 }
 
@@ -150,7 +151,8 @@ void IIC_SenddByte(u8 data)
 		IIC_Delay(2);
 		IIC_SCL_LOW;
 	}
-	IIC_Delay(2);                 
+	IIC_Delay(2);  
+	IIC_SDA_HIGH;               
 }
 
 
@@ -176,8 +178,8 @@ u8 IIC_GetByte(void)
 
 	}
  	IIC_SCL_LOW;	
-	// IIC_Delay(2);
-
+	IIC_Delay(2);
+	IIC_SDA_HIGH;
   return data;
 }
 

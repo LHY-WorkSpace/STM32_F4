@@ -103,7 +103,6 @@ void MPU6050_Write_Data(u8 Reg,u8 data)
 	IIC_SenddByte(data);	
 	IIC_Wait_Ack_OK();
 	Stop_IIC();
-	Delay_us(1); 
 }
 
 
