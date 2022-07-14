@@ -6,7 +6,8 @@
 #define  FALSE      1
 #define  BUSY       2
 #define  ILDE       3
-#define  DATA_ERR   4
+#define  OVER_FLOW  4
+#define  DATA_ERR   5
 
 
 

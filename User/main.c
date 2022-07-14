@@ -9,16 +9,17 @@ void CreateAllTask(void *pv)
 	u8g2_TaskCreate();
 	vTaskDelete(NULL);
 }
+
 u16 i;
 u8 Dir = TRUE;
 DHT11_Data_t DHT11_Data;
-char T[6];
+u8 T[6];
 char H[6];
 char tempchar[6];
 float temp;
 char Data[] = "STM32 NB!!";
 
-u8 eedata[1024];
+u8 eedata[100];
 
 int  main()
 {
@@ -40,26 +41,20 @@ int  main()
 	// AT24C08_Init();
 	// memset(eedata,0xA5,sizeof(eedata));
 
-	for ( i = 0; i < sizeof(eedata); i++)
-	{
-		eedata[i] = Dir++;
-	}
-	AT24C08WriteData(0,sizeof(eedata),eedata);
-	memset(eedata,0x00,sizeof(eedata));
-	AT24C08ReadData(0,sizeof(eedata),eedata);
-
 
 	while (1)
 	{
-		Delay_ms(10);
-		MPU6050_Test();
-
+		if( USART_ReceiveData(&USART1_Data,sizeof(eedata),eedata) == TRUE)
+		{
+			T[0] = USART_ITSendData(USART1,&USART1_Data,sizeof(eedata),eedata);
+			memset(eedata,0x00,sizeof(eedata));
+			T[1] = USART_ITSendData(USART1,&USART1_Data,sizeof(eedata),eedata);
+		}
+		Delay_ms(5);
+		LED1_ON;
+		Delay_ms(5);
+		LED1_OFF;s
 	}
-
-
-
-
-
 	// 	XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
 	// 	Delay_ms(10);

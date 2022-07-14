@@ -23,28 +23,30 @@
 
 
 
-#define BUFFER_SIZE      (1024)
+#define BUFFER_SIZE      (2048)
 
 typedef struct 
 {
     u16 RX_Pointer;//已接收数据指针
     u16 TX_Pointer;//已发送数据指针
-    u16 RX_Length;//要接收的数据长度
+    u16 RX_Length;//已接收的数据长度
     u16 TX_Length;//要发送的数据长度
     u8 RX_Data[BUFFER_SIZE]; 
-    u8 TX_Data[BUFFER_SIZE];  
+    u8 TX_Data[BUFFER_SIZE];
 }USART_Data_t;
 
 
-
-extern USART_Data_t USART1_Buffer;
-extern USART_Data_t USART2_Buffer;
+extern USART_Data_t USART1_Data;
+extern USART_Data_t USART2_Data;
 
 void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);   
 void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
 void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data);
-u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length);
+u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8 *Data);
+u8 USART_ReceiveData(USART_Data_t *USART_Data,u16 Length,u8 *Data);
+u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length);
 int fputc(int ch, FILE* stream);
+
 #endif
 
 
