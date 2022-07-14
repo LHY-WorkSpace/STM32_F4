@@ -168,7 +168,164 @@ int fputc(int ch, FILE* stream)
     return ch;
 }
 
+//************************// 
+//  功能描述: USART通用处理函数
+//  
+//  参数: 串口号 串口信息结构体
+//  
+//  返回值: 无
+//  
+//  说明: 后期考虑单次超长的处理以及DMA搬运
+// 
+//************************//  
+void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
+{
+	//接收中断
+	if(USART_GetITStatus(USARTx,USART_IT_RXNE) != RESET)
+	{
+		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
+		USART_Data->RX_Data[ USART_Data->RX_Pointer++ ] = USART_ReceiveData(USARTx);
+		USART_Data->RX_Pointer %= BUFFER_SIZE;//后期考虑单次数据长度溢出的情况
+	}
 
+	//发送完成中断
+	if(USART_GetITStatus(USARTx,USART_IT_TC) != RESET)
+	{
+		USART_ClearITPendingBit(USARTx,USART_IT_TC);
+		USART_SendData(USARTx,USART_Data->TX_Data[ USART_Data->TX_Pointer++ ]);
+
+		if( USART_Data->TX_Pointer >= USART_Data->TX_Length)
+		{
+			USART_Data->TX_Pointer = 0;
+			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
+		}
+	}
+
+	//接收空闲中断
+	if(USART_GetITStatus(USARTx,USART_IT_IDLE) != RESET)
+	{
+		USART_ClearITPendingBit(USARTx,USART_IT_IDLE);
+		
+		//此处可以使用DMA
+		USART_Data->RX_Length = USART_Data->RX_Pointer;
+		USART_Data->RX_Pointer = 0;
+	}
+}
+
+//************************// 
+//  功能描述: 启动中断发送函数
+//  
+//  参数: 串口号,串口信息结构体指针,发送数据指针,数据长度
+//  
+//  返回值: TRUE:成功
+//			OVER_FLOW:数据超长
+//			BUSY:发送正忙
+//  说明: 
+// 
+//************************//  
+u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8 *Data)
+{
+	if(Length > BUFFER_SIZE)
+	{
+		return OVER_FLOW;
+	}
+
+	if( USART_Data->TX_Pointer != 0)//正在发送数据
+	{
+		return BUSY;
+	}
+
+	memcpy(USART_Data->TX_Data,Data,Length);
+	USART_Data->TX_Pointer = 0;
+	USART_Data->TX_Length = Length;
+	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
+	return TRUE;
+}
+
+//************************// 
+//  功能描述: 非中断串口发送函数
+//  
+//  参数: 串口号,串口信息结构体指针,发送数据指针,数据长度
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//
+//************************//  
+u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
+{
+	u16 i,k=0;
+	for ( i = 0; i < Length; i++)
+	{
+		USART_ClearFlag(USARTx,USART_FLAG_TC);
+		USART_SendData(USARTx, *(Data+i));
+		while ((USART_GetFlagStatus(USARTx,USART_FLAG_TC)==RESET) && ( k < 10))
+		{
+			Delay_us(2);
+			k++;
+		}
+	}
+
+	return TRUE;
+}
+
+//************************// 
+//  功能描述: 串口接收函数
+//  
+//  参数: 串口信息结构体指针,数据长度,接收数据指针
+//  
+//  返回值: TRUE:成功
+//			OVER_FLOW:数据超长
+//			BUSY:接收正忙
+//			ILDE:空闲
+//  说明: 
+//
+//************************//  
+u8 USART_ReceiveData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
+{
+
+	if(Length > BUFFER_SIZE)
+	{
+		return OVER_FLOW;
+	}
+
+	memcpy(Data,0x00,Length);
+
+	if( USART_Data->RX_Length  == 0 )
+	{
+		if( USART_Data->RX_Pointer != 0)
+		{
+			return BUSY;//正在接收数据
+		}
+		else
+		{
+			return ILDE;//空闲(上次取走数据后，没有接收到新数据)
+		}
+	}
+
+	if( Length > USART_Data->RX_Length )//要读取的长度超出实际接收的长度
+	{
+		memcpy(Data,USART_Data->RX_Data,USART_Data->RX_Length);
+		USART_Data->RX_Length = 0;
+		return OVER_FLOW;
+	}
+
+	memcpy(Data,USART_Data->RX_Data,Length);
+	USART_Data->RX_Length = 0;
+	return TRUE;
+
+}
+
+//************************// 
+//  功能描述: USARTx_IRQ 函数
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//
+//************************//  
 void USART1_IRQHandler()
 {
 	USARTx_ITHandle(USART1,&USART1_Data);
@@ -178,105 +335,6 @@ void USART2_IRQHandler()
 {
 	USARTx_ITHandle(USART2,&USART2_Data);
 }
-
-void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
-{
-	//接收中断
-	if(USART_GetITStatus(USARTx,USART_IT_RXNE) != RESET)
-	{
-		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
-		USART_Data->RX_Data[USART_Data->RX_Pointer] = USART_ReceiveData(USARTx);
-		USART_Data->RX_Pointer++;
-		USART_Data->RX_Pointer %= BUFFER_SIZE;
-	}
-
-	//发送完成中断
-	if(USART_GetITStatus(USARTx,USART_IT_TC) != RESET)
-	{
-		USART_ClearITPendingBit(USARTx,USART_IT_TC);
-		USART_SendData(USARTx,USART_Data->TX_Data[USART_Data->TX_Pointer]);
-		USART_Data->TX_Pointer++;
-		USART_Data->TX_Pointer %= BUFFER_SIZE;
-
-		if( USART_Data->TX_Pointer >= USART_Data->TX_Length)
-		{
-			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
-		}
-
-	}
-
-	//接收空闲中断
-	if(USART_GetITStatus(USARTx,USART_IT_IDLE) != RESET)
-	{
-		USART_ClearITPendingBit(USARTx,USART_IT_IDLE);
-		USART_Data->RX_Pointer = 0;
-	}
-}
-
-// 启动中断发送
-u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
-{
-	if(Length > BUFFER_SIZE)
-	{
-		return FALSE;
-	}
-
-	// if( USART_Data->TX_Pointer != 0)//正在发送数据
-	// {
-	// 	return BUSY;
-	// }
-
-	memcpy(USART_Data->TX_Data,Data,Length);
-	USART_Data->TX_Pointer = 0;
-	USART_Data->TX_Length = Length;
-	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
-	return TRUE;
-}
-
-//非中断方式
-// USART_TypeDef* USARTx
-// USART_Data_t *USART_Data 
-// u8 *Data
-// u16  Length
-u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
-{
-	u16 i;
-	for ( i = 0; i < Length; i++)
-	{
-		USART_ClearFlag(USARTx,USART_FLAG_TC);
-		USART_SendData(USARTx, *(Data+i));
-		while ((USART_GetFlagStatus(USARTx,USART_FLAG_TC)==RESET));
-	}
-	return TRUE;
-}
-
-
-u8 USART_ReceiceData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
-{
-	if(Length > BUFFER_SIZE)
-	{
-		return FALSE;
-	}
-
-	if( USART_Data->RX_Pointer != 0)//正在接收数据
-	{
-		return BUSY;
-	}
-
-
-
-	return TRUE;
-
-
-
-}
-
-
-
-
-
-
-
 
 
 
