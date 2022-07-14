@@ -165,7 +165,17 @@ static u8 DS18B20_Init()
 		}
 	}
 	DS18B20_HIGH;      		//释放总线
-	while(DS18B20_IO_STATE == LOW);
+	i=0;
+	while( (DS18B20_IO_STATE == LOW ))
+	{
+		DS18B20_Delay_us(2);
+		i++;
+		if( i> 5)
+		{
+			State = FALSE;
+			break;
+		}
+	}
 	DS18B20_Delay_us(10);	//延时
 
 	return State;
