@@ -88,40 +88,40 @@ void TIM1_BRK_TIM9_IRQHandler()
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
 
-        if( Time_Cnt > 200 )
-        {
-            Time_Cnt=0;
-        }
-        else
-        {
-            if( Time_Cnt % 3 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_30ms); 
-            }
-            if( Time_Cnt % 5 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_50ms); 
-            }
-            if( Time_Cnt % 10 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_100ms); 
-            }
-            if( Time_Cnt % 20 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_200ms); 
-            }
-            if( Time_Cnt % 50 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_500ms); 
-            }
-            if( Time_Cnt % 100 == 0 )   
-            {
-               System_SetState(Task_TimeFlag,Task_1s); 
-            }
-        }
+    //     if( Time_Cnt > 200 )
+    //     {
+    //         Time_Cnt=0;
+    //     }
+    //     else
+    //     {
+    //         if( Time_Cnt % 3 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_30ms); 
+    //         }
+    //         if( Time_Cnt % 5 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_50ms); 
+    //         }
+    //         if( Time_Cnt % 10 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_100ms); 
+    //         }
+    //         if( Time_Cnt % 20 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_200ms); 
+    //         }
+    //         if( Time_Cnt % 50 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_500ms); 
+    //         }
+    //         if( Time_Cnt % 100 == 0 )   
+    //         {
+    //            System_SetState(Task_TimeFlag,Task_1s); 
+    //         }
+    //     }
 
-    System_SetState(Task_TimeFlag,Task_10ms);
-    Time_Cnt++;
+    // System_SetState(Task_TimeFlag,Task_10ms);
+    // Time_Cnt++;
 
     }
 

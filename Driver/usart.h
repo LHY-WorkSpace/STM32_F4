@@ -43,7 +43,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
 void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity);
 void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data);
 u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8 *Data);
-u8 USART_ReceiveData(USART_Data_t *USART_Data,u16 Length,u8 *Data);
+u8 USART_GetData(USART_Data_t *USART_Data,u16 Length,u8 *Data);
 u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length);
 int fputc(int ch, FILE* stream);
 

@@ -178,33 +178,40 @@ int fputc(int ch, FILE* stream)
 //  说明: 后期考虑单次超长的处理以及DMA搬运
 // 
 //************************//  
+
 void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 {
+	u16 i;
+
 	//接收中断
 	if(USART_GetITStatus(USARTx,USART_IT_RXNE) != RESET)
 	{
 		USART_ClearITPendingBit(USARTx,USART_IT_RXNE);
 		USART_Data->RX_Data[ USART_Data->RX_Pointer++ ] = USART_ReceiveData(USARTx);
-		USART_Data->RX_Pointer %= BUFFER_SIZE;//后期考虑单次数据长度溢出的情况
+		// USART_Data->RX_Pointer %= BUFFER_SIZE;//后期考虑单次数据长度溢出的情况
 	}
 
 	//发送完成中断
-	if(USART_GetITStatus(USARTx,USART_IT_TC) != RESET)
+	if(USART_GetITStatus(USARTx,USART_IT_TXE) != RESET)
 	{
-		USART_ClearITPendingBit(USARTx,USART_IT_TC);
+		USART_ClearITPendingBit(USARTx,USART_IT_TXE);
+
 		USART_SendData(USARTx,USART_Data->TX_Data[ USART_Data->TX_Pointer++ ]);
 
 		if( USART_Data->TX_Pointer >= USART_Data->TX_Length)
 		{
+			USART_Data->TX_Length = USART_Data->TX_Pointer;
 			USART_Data->TX_Pointer = 0;
-			USART_ITConfig(USARTx,USART_IT_TC,DISABLE);
+			USART_ITConfig(USARTx,USART_IT_TXE,DISABLE);
 		}
 	}
 
 	//接收空闲中断
 	if(USART_GetITStatus(USARTx,USART_IT_IDLE) != RESET)
 	{
-		USART_ClearITPendingBit(USARTx,USART_IT_IDLE);
+		//此处必须先读SR再度DR来清标志位
+		i = USARTx->SR;
+		i = USARTx->DR;
 		
 		//此处可以使用DMA
 		USART_Data->RX_Length = USART_Data->RX_Pointer;
@@ -238,7 +245,7 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8
 	memcpy(USART_Data->TX_Data,Data,Length);
 	USART_Data->TX_Pointer = 0;
 	USART_Data->TX_Length = Length;
-	USART_ITConfig(USARTx,USART_IT_TC,ENABLE);
+	USART_ITConfig(USARTx,USART_IT_TXE,ENABLE);
 	return TRUE;
 }
 
@@ -281,7 +288,7 @@ u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data
 //  说明: 
 //
 //************************//  
-u8 USART_ReceiveData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
+u8 USART_GetData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
 {
 
 	if(Length > BUFFER_SIZE)
@@ -303,12 +310,12 @@ u8 USART_ReceiveData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
 		}
 	}
 
-	if( Length > USART_Data->RX_Length )//要读取的长度超出实际接收的长度
-	{
-		memcpy(Data,USART_Data->RX_Data,USART_Data->RX_Length);
-		USART_Data->RX_Length = 0;
-		return OVER_FLOW;
-	}
+	// if( Length > USART_Data->RX_Length )//要读取的长度超出实际接收的长度
+	// {
+	// 	memcpy(Data,USART_Data->RX_Data,USART_Data->RX_Length);
+	// 	USART_Data->RX_Length = 0;
+	// 	return OVER_FLOW;
+	// }
 
 	memcpy(Data,USART_Data->RX_Data,Length);
 	USART_Data->RX_Length = 0;
