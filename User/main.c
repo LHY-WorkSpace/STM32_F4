@@ -27,18 +27,13 @@ int  main()
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
+	Dir = ESP8266_Init();
 	led_init();
-	// MPU6050_Init();
-	USART_ITSendData(USART1,&USART1_Data,sizeof(Data),Data);
-	// PWM_Init(0,0);
-	// DS18B20_GPIO_Init();
-	// OLED_Init();
-	// u8g2_Init();
-	// Start_Page();
-	// Display_FreeRTOS_Logo();
-	// USB_Task();
-	
-
+	PWM_Init(0,0);
+	OLED_Init();
+	u8g2_Init();
+	Start_Page();
+	Display_FreeRTOS_Logo();
 
 	while (1)
 	{	
@@ -52,12 +47,14 @@ int  main()
 			USART_ITSendData(USART2,&USART2_Data,i,eedata);
 		}
 
-		chk=GetROMCheckSum(ROM_BASE_ADDR,ROM_END_ADDR);
-		USART_ITSendData(USART1,&USART1_Data,sizeof(chk),(u8*)&chk);
-		Delay_ms(100);
-		LED1_ON;
-		Delay_ms(100);
-		LED1_OFF;
+	if( Dir == TRUE)
+	{
+			Delay_ms(100);
+			LED1_ON;
+			Delay_ms(100);
+			LED1_OFF;
+	}
+
 	}
 	// XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
@@ -66,7 +63,7 @@ int  main()
 	// Clock();
 	// Delay_ms(10);
 	// SystemDown();
-}	
+}
 
 
 /*

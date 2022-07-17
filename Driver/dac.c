@@ -33,7 +33,7 @@ void DAC_UserInit()
 void DAC_Out(float vol)
 {
 	u16 DAC_Val;
-	DAC_Val= (u16)(vol*4096.0/VCC);
+	DAC_Val= (u16)(vol*4096.0f/VCC);
 	DAC_SetChannel1Data(DAC_Align_12b_R,DAC_Val);
 }
 

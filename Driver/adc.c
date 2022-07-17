@@ -113,12 +113,12 @@ static u16 ADC_GetVal()
 //***************************************************//
 float BatteryGetVolate()
 { 
-	float Temp,Value,V_ADC;
+	float Value,V_ADC;
 
 	BATTERY_CHECK_ENABLE;
 
 	Value = ( VBAT_MAX * R0 )/ ( R0 + R1 );
-	V_ADC = ( Value * (float)ADC_GetVal() / 4096.0 );
+	V_ADC = ( Value * (float)ADC_GetVal() / 4096.0f );
 	Value = V_ADC * ( R0 + R1 ) / R0;
 
 	BATTERY_CHECK_DISABLE;

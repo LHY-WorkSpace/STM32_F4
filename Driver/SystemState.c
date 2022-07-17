@@ -99,7 +99,7 @@ u8 Power_GetState()
 
 
 
-
+	return 0;
 }
 
 
