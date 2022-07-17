@@ -84,11 +84,12 @@ u32 GetROMCheckSum(u32 StartAddr,u32 EndtAddr)
 		EndtAddr  &= 0xFFFFFFFC;
 	}
 	
-	for ( i = 0; i < (EndtAddr - StartAddr); i+=4)
+	while ( (StartAddr + i ) <= EndtAddr)
 	{
-		Temp |= *((u32 *)StartAddr + i);
+		Temp += *((u32 *)(StartAddr + i));
+		i += 4;
 	}
-
+	
 	return Temp;
 }
 

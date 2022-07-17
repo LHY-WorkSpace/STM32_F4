@@ -9,7 +9,7 @@ void CreateAllTask(void *pv)
 	u8g2_TaskCreate();
 	vTaskDelete(NULL);
 }
-
+u32 chk=0;
 u16 i;
 u8 Dir = TRUE;
 DHT11_Data_t DHT11_Data;
@@ -19,17 +19,17 @@ char tempchar[6];
 float temp;
 char Data[] = "STM32 NB!!";
 
-u8 eedata[100];
+u8 eedata[1024];
 
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
-	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
+	USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	// MPU6050_Init();
-
+	USART_ITSendData(USART1,&USART1_Data,sizeof(Data),Data);
 	// PWM_Init(0,0);
 	// DS18B20_GPIO_Init();
 	// OLED_Init();
@@ -38,24 +38,28 @@ int  main()
 	// Display_FreeRTOS_Logo();
 	// USB_Task();
 	
-	// AT24C08_Init();
-	// memset(eedata,0xA5,sizeof(eedata));
 
 
 	while (1)
-	{
-		if( USART_GetData(&USART1_Data,100,eedata) == TRUE)
+	{	
+
+		if( USART_GetData(&USART2_Data,sizeof(eedata),eedata,&i) == TRUE)
 		{
-			T[0] = USART_ITSendData(USART1,&USART1_Data,sizeof(eedata),eedata);
-			// memset(eedata,0x00,sizeof(eedata));
-			// T[1] = USART_ITSendData(USART1,&USART1_Data,sizeof(eedata),eedata);
+			USART_ITSendData(USART1,&USART1_Data,i,eedata);
 		}
-		Delay_ms(10);
+		if( USART_GetData(&USART1_Data,sizeof(eedata),eedata,&i) == TRUE)
+		{
+			USART_ITSendData(USART2,&USART2_Data,i,eedata);
+		}
+
+		chk=GetROMCheckSum(ROM_BASE_ADDR,ROM_END_ADDR);
+		USART_ITSendData(USART1,&USART1_Data,sizeof(chk),(u8*)&chk);
+		Delay_ms(100);
 		LED1_ON;
-		Delay_ms(10);
+		Delay_ms(100);
 		LED1_OFF;
 	}
-	// 	XPT2046_Read(&NoUse, &TouchData);
+	// XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
 	// 	Delay_ms(10);
 	//Test_UI();

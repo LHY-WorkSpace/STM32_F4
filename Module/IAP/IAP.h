@@ -33,7 +33,7 @@
 
 
 
-#define PLACE_CODE_IN_USER_ROM  __attribute__ ((section("USER_ROM")));//放置升级代码区域
+// #define PLACE_CODE_IN_USER_ROM  __attribute__ ((section("USER_ROM")));//放置升级代码区域
 
 typedef enum
 {
