@@ -3,8 +3,27 @@
 
 static u8 Time_Cnt=0;
 
-//10ms中断一次
-void TaskTimer_Init()
+// 84Mhz:T1,T8,T9,T10,T11
+// 42Mhz:除84之外的
+
+
+//  Timer_10: Delay计数
+//  Timer_9:  Tick计数
+
+
+
+
+//************************// 
+//  功能描述: Tickj计数函数
+//  
+//  参数: Period中断周期(ms)
+//  
+//  返回值: 无
+//			
+//  说明: 
+// 
+//************************//  
+void TickTimer_Init(u16 Period)
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
     NVIC_InitTypeDef  NVIC_Initstr;
@@ -13,8 +32,8 @@ void TaskTimer_Init()
 		
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
-	TIM_TimeBaseInitStr.TIM_Period=10000;
-	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
+	TIM_TimeBaseInitStr.TIM_Period = Period;
+	TIM_TimeBaseInitStr.TIM_Prescaler = 168000-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
@@ -29,7 +48,16 @@ void TaskTimer_Init()
    
 }
 
-//10ms计数一次
+//************************// 
+//  功能描述: Delay计数函数
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//
+//  说明: 
+// 
+//************************//  
 void Delay_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
@@ -38,17 +66,22 @@ void Delay_Init()
 		
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
-	TIM_TimeBaseInitStr.TIM_Period=10000;                    //未开启预装载，此值无用，只是写入一个值而已
-	TIM_TimeBaseInitStr.TIM_Prescaler=168-1;
+	TIM_TimeBaseInitStr.TIM_Period = 10000;  //未开启预装载，此值无用，只是写入一个值而已
+	TIM_TimeBaseInitStr.TIM_Prescaler = 168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
     TIM_ARRPreloadConfig(TIM10,DISABLE);
-    // TIM_Cmd(TIM10,ENABLE);
-   
 }
 
-
-
-//最大65535us=65.535ms
+//************************// 
+//  功能描述: Delay_us函数
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//
+//  说明: 65535us=65.535ms
+// 
+//************************//  
 void Delay_us(u16 nus)
 {
     TIM10->CNT = 0;
@@ -57,7 +90,17 @@ void Delay_us(u16 nus)
     TIM_Cmd(TIM10,DISABLE);
 
 }
-//最大2^16ms
+
+//************************// 
+//  功能描述: Delay_ms函数
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//
+//  说明: 最大65535ms
+// 
+//************************//  
 void Delay_ms(u16 nus)
 {
     u16 i; 
@@ -68,19 +111,9 @@ void Delay_ms(u16 nus)
         TIM_Cmd(TIM10,ENABLE);
         while (TIM10->CNT < 1000); 
         TIM_Cmd(TIM10,DISABLE);
-        
     }
 
-
 }
-
-
-
-
-
-
-
-
 
 
 void TIM1_BRK_TIM9_IRQHandler()
@@ -88,40 +121,6 @@ void TIM1_BRK_TIM9_IRQHandler()
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
 
-    //     if( Time_Cnt > 200 )
-    //     {
-    //         Time_Cnt=0;
-    //     }
-    //     else
-    //     {
-    //         if( Time_Cnt % 3 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_30ms); 
-    //         }
-    //         if( Time_Cnt % 5 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_50ms); 
-    //         }
-    //         if( Time_Cnt % 10 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_100ms); 
-    //         }
-    //         if( Time_Cnt % 20 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_200ms); 
-    //         }
-    //         if( Time_Cnt % 50 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_500ms); 
-    //         }
-    //         if( Time_Cnt % 100 == 0 )   
-    //         {
-    //            System_SetState(Task_TimeFlag,Task_1s); 
-    //         }
-    //     }
-
-    // System_SetState(Task_TimeFlag,Task_10ms);
-    // Time_Cnt++;
 
     }
 

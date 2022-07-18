@@ -51,7 +51,7 @@ void RTC_Set_Time(RTC_Time_t Time)
 	RTC_TimeTypeDefinit.RTC_Hours = Time.hour;
 	RTC_TimeTypeDefinit.RTC_Minutes = Time.minute;
 	RTC_TimeTypeDefinit.RTC_Seconds = Time.second;
-	RTC_TimeTypeDefinit.RTC_H12 = RTC_H12_PM;
+	RTC_TimeTypeDefinit.RTC_H12 = RTC_H12_PM;//24Ð¡Ê±ÖÆ
 
 	RTC_SetTime(RTC_Format_BIN, &RTC_TimeTypeDefinit);
 }
