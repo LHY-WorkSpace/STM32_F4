@@ -235,8 +235,15 @@ Section Cross References
     main.o(i.CreateAllTask) refers to tasks.o(i.vTaskDelete) for vTaskDelete
     main.o(i.main) refers to misc.o(i.NVIC_PriorityGroupConfig) for NVIC_PriorityGroupConfig
     main.o(i.main) refers to usart.o(i.USART1_Init) for USART1_Init
+    main.o(i.main) refers to usart.o(i.USART2_Init) for USART2_Init
     main.o(i.main) refers to timer.o(i.Delay_Init) for Delay_Init
+    main.o(i.main) refers to esp8266.o(i.ESP8266_Init) for ESP8266_Init
     main.o(i.main) refers to led.o(i.led_init) for led_init
+    main.o(i.main) refers to pwm.o(i.PWM_Init) for PWM_Init
+    main.o(i.main) refers to oled.o(i.OLED_Init) for OLED_Init
+    main.o(i.main) refers to u8g2_usergui.o(i.u8g2_Init) for u8g2_Init
+    main.o(i.main) refers to u8g2_usergui.o(i.Start_Page) for Start_Page
+    main.o(i.main) refers to u8g2_usergui.o(i.Display_FreeRTOS_Logo) for Display_FreeRTOS_Logo
     main.o(i.main) refers to usart.o(i.USART_GetData) for USART_GetData
     main.o(i.main) refers to usart.o(i.USART_ITSendData) for USART_ITSendData
     main.o(i.main) refers to timer.o(i.Delay_ms) for Delay_ms
@@ -244,7 +251,7 @@ Section Cross References
     main.o(i.main) refers to stm32f4xx_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
     main.o(i.main) refers to main.o(.data) for .data
     main.o(i.main) refers to main.o(.bss) for .bss
-    main.o(i.main) refers to usart.o(.bss) for USART1_Data
+    main.o(i.main) refers to usart.o(.bss) for USART2_Data
     stm32f4xx_it.o(i.OTG_FS_IRQHandler) refers to usb_dcd_int.o(i.USBD_OTG_ISR_Handler) for USBD_OTG_ISR_Handler
     stm32f4xx_it.o(i.OTG_FS_IRQHandler) refers to test.o(.bss) for USB_OTG_dev
     system_stm32f4xx.o(i.SystemCoreClockUpdate) refers to system_stm32f4xx.o(.data) for .data
@@ -293,10 +300,6 @@ Section Cross References
     code_run_time.o(i.TIM6_DAC_IRQHandler) refers to stm32f4xx_tim.o(i.TIM_Cmd) for TIM_Cmd
     code_run_time.o(i.TIM6_DAC_IRQHandler) refers to stm32f4xx_tim.o(i.TIM_ClearFlag) for TIM_ClearFlag
     code_run_time.o(i.TIM6_DAC_IRQHandler) refers to code_run_time.o(.data) for .data
-    dac.o(i.DAC_Out) refers to f2d.o(.text) for __aeabi_f2d
-    dac.o(i.DAC_Out) refers to dmul.o(.text) for __aeabi_dmul
-    dac.o(i.DAC_Out) refers to ddiv.o(.text) for __aeabi_ddiv
-    dac.o(i.DAC_Out) refers to dfixui.o(.text) for __aeabi_d2uiz
     dac.o(i.DAC_Out) refers to stm32f4xx_dac.o(i.DAC_SetChannel1Data) for DAC_SetChannel1Data
     dac.o(i.DAC_UserInit) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     dac.o(i.DAC_UserInit) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd) for RCC_APB1PeriphClockCmd
@@ -806,6 +809,7 @@ Section Cross References
     usart.o(i.USART2_Init) refers to stm32f4xx_usart.o(i.USART_ClearFlag) for USART_ClearFlag
     usart.o(i.USART2_Init) refers to stm32f4xx_usart.o(i.USART_ITConfig) for USART_ITConfig
     usart.o(i.USART2_Init) refers to stm32f4xx_usart.o(i.USART_Cmd) for USART_Cmd
+    usart.o(i.USART_GetData) refers to memseta.o(.text) for __aeabi_memclr
     usart.o(i.USART_GetData) refers to memcpya.o(.text) for __aeabi_memcpy
     usart.o(i.USART_ITSendData) refers to memcpya.o(.text) for __aeabi_memcpy
     usart.o(i.USART_ITSendData) refers to stm32f4xx_usart.o(i.USART_ITConfig) for USART_ITConfig
@@ -937,6 +941,14 @@ Section Cross References
     xpt2046.o(i.XPT2046_SendData) refers to stm32f4xx_spi.o(i.SPI_I2S_ReceiveData) for SPI_I2S_ReceiveData
     xpt2046.o(i.xpt2046_avg) refers to xpt2046.o(.bss) for .bss
     xpt2046.o(i.xpt2046_avg) refers to xpt2046.o(.data) for .data
+    esp8266.o(i.ESP8266_Init) refers to usart.o(i.USART_ITSendData) for USART_ITSendData
+    esp8266.o(i.ESP8266_Init) refers to timer.o(i.Delay_ms) for Delay_ms
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(i.ESP8266_SearchData) for ESP8266_SearchData
+    esp8266.o(i.ESP8266_Init) refers to esp8266.o(.data) for .data
+    esp8266.o(i.ESP8266_Init) refers to usart.o(.bss) for USART2_Data
+    esp8266.o(i.ESP8266_SearchData) refers to usart.o(i.USART_GetData) for USART_GetData
+    esp8266.o(i.ESP8266_SearchData) refers to memcmp.o(.text) for memcmp
+    esp8266.o(i.ESP8266_SearchData) refers to usart.o(.bss) for USART2_Data
     diskio.o(i.disk_initialize) refers to sdio_sdcard.o(i.SD_Init) for SD_Init
     diskio.o(i.disk_ioctl) refers to sdio_sdcard.o(.bss) for SDCardInfo
     diskio.o(i.disk_read) refers to sdio_sdcard.o(i.SD_ReadDisk) for SD_ReadDisk
@@ -3611,7 +3623,6 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_rcc.o(i.RCC_AHB3PeriphClockCmd), (24 bytes).
     Removing stm32f4xx_rcc.o(i.RCC_AHB3PeriphClockLPModeCmd), (24 bytes).
     Removing stm32f4xx_rcc.o(i.RCC_AHB3PeriphResetCmd), (24 bytes).
-    Removing stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd), (24 bytes).
     Removing stm32f4xx_rcc.o(i.RCC_APB1PeriphClockLPModeCmd), (24 bytes).
     Removing stm32f4xx_rcc.o(i.RCC_APB1PeriphResetCmd), (24 bytes).
     Removing stm32f4xx_rcc.o(i.RCC_APB2PeriphClockLPModeCmd), (24 bytes).
@@ -3794,18 +3805,13 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_spi.o(i.I2S_StructInit), (18 bytes).
     Removing stm32f4xx_spi.o(i.SPI_BiDirectionalLineConfig), (22 bytes).
     Removing stm32f4xx_spi.o(i.SPI_CalculateCRC), (20 bytes).
-    Removing stm32f4xx_spi.o(i.SPI_Cmd), (20 bytes).
     Removing stm32f4xx_spi.o(i.SPI_DataSizeConfig), (16 bytes).
     Removing stm32f4xx_spi.o(i.SPI_GetCRC), (12 bytes).
     Removing stm32f4xx_spi.o(i.SPI_GetCRCPolynomial), (4 bytes).
-    Removing stm32f4xx_spi.o(i.SPI_I2S_ClearFlag), (6 bytes).
     Removing stm32f4xx_spi.o(i.SPI_I2S_DMACmd), (16 bytes).
     Removing stm32f4xx_spi.o(i.SPI_I2S_DeInit), (132 bytes).
-    Removing stm32f4xx_spi.o(i.SPI_I2S_GetFlagStatus), (14 bytes).
     Removing stm32f4xx_spi.o(i.SPI_I2S_ITConfig), (24 bytes).
     Removing stm32f4xx_spi.o(i.SPI_I2S_ReceiveData), (4 bytes).
-    Removing stm32f4xx_spi.o(i.SPI_I2S_SendData), (4 bytes).
-    Removing stm32f4xx_spi.o(i.SPI_Init), (56 bytes).
     Removing stm32f4xx_spi.o(i.SPI_NSSInternalSoftwareConfig), (24 bytes).
     Removing stm32f4xx_spi.o(i.SPI_SSOutputCmd), (20 bytes).
     Removing stm32f4xx_spi.o(i.SPI_StructInit), (24 bytes).
@@ -3863,10 +3869,8 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_tim.o(i.TIM_ITRxExternalClockConfig), (18 bytes).
     Removing stm32f4xx_tim.o(i.TIM_InternalClockConfig), (10 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC1FastConfig), (12 bytes).
-    Removing stm32f4xx_tim.o(i.TIM_OC1Init), (96 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC1NPolarityConfig), (12 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC1PolarityConfig), (12 bytes).
-    Removing stm32f4xx_tim.o(i.TIM_OC1PreloadConfig), (12 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC2FastConfig), (20 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC2Init), (128 bytes).
     Removing stm32f4xx_tim.o(i.TIM_OC2NPolarityConfig), (20 bytes).
@@ -3948,9 +3952,9 @@ Removing Unused input sections from the image.
     Removing main.o(.revsh_text), (4 bytes).
     Removing main.o(.rrx_text), (6 bytes).
     Removing main.o(i.CreateAllTask), (16 bytes).
-    Removing main.o(.data), (1 bytes).
+    Removing main.o(.data), (4 bytes).
     Removing main.o(.data), (11 bytes).
-    Removing main.o(.data), (2 bytes).
+    Removing main.o(.data), (6 bytes).
     Removing main.o(.data), (6 bytes).
     Removing main.o(.data), (6 bytes).
     Removing main.o(.data), (6 bytes).
@@ -3987,7 +3991,7 @@ Removing Unused input sections from the image.
     Removing dac.o(.rev16_text), (4 bytes).
     Removing dac.o(.revsh_text), (4 bytes).
     Removing dac.o(.rrx_text), (6 bytes).
-    Removing dac.o(i.DAC_Out), (68 bytes).
+    Removing dac.o(i.DAC_Out), (40 bytes).
     Removing dac.o(i.DAC_UserInit), (80 bytes).
     Removing delay.o(.rev16_text), (4 bytes).
     Removing delay.o(.revsh_text), (4 bytes).
@@ -4086,17 +4090,12 @@ Removing Unused input sections from the image.
     Removing oled.o(i.OLED_Draw_Line), (148 bytes).
     Removing oled.o(i.OLED_Draw_Point), (48 bytes).
     Removing oled.o(i.OLED_Get_Point), (32 bytes).
-    Removing oled.o(i.OLED_Init), (284 bytes).
     Removing oled.o(i.OLED_MoveDisplay), (58 bytes).
-    Removing oled.o(i.OLED_SPI_Init), (192 bytes).
     Removing oled.o(i.OLED_ScrollStart), (6 bytes).
     Removing oled.o(i.OLED_ScrollStop), (6 bytes).
     Removing oled.o(i.OLED_Scroll_LR), (70 bytes).
     Removing oled.o(i.OLED_Scroll_Vx), (66 bytes).
-    Removing oled.o(i.OLED_SendData), (56 bytes).
     Removing oled.o(i.OLED_SetChargePre), (20 bytes).
-    Removing oled.o(i.OLED_SetContrast), (20 bytes).
-    Removing oled.o(i.OLED_SetMode), (56 bytes).
     Removing oled.o(i.OLED_SetScanFre), (26 bytes).
     Removing oled.o(i.OLED_SetTwinkMode), (24 bytes).
     Removing oled.o(i.OLED_SetVcomLevel), (20 bytes).
@@ -4122,7 +4121,6 @@ Removing Unused input sections from the image.
     Removing pwm.o(.rev16_text), (4 bytes).
     Removing pwm.o(.revsh_text), (4 bytes).
     Removing pwm.o(.rrx_text), (6 bytes).
-    Removing pwm.o(i.PWM_Init), (156 bytes).
     Removing pwm.o(i.PWM_SetPlusePeriod), (6 bytes).
     Removing pwm.o(i.PWM_SetPluseWdie), (6 bytes).
     Removing rng.o(.rev16_text), (4 bytes).
@@ -4179,8 +4177,8 @@ Removing Unused input sections from the image.
     Removing systemstate.o(.revsh_text), (4 bytes).
     Removing systemstate.o(.rrx_text), (6 bytes).
     Removing systemstate.o(i.CRC32_GetValue), (40 bytes).
-    Removing systemstate.o(i.GetROMCheckSum), (56 bytes).
-    Removing systemstate.o(i.Power_GetState), (2 bytes).
+    Removing systemstate.o(i.GetROMCheckSum), (52 bytes).
+    Removing systemstate.o(i.Power_GetState), (4 bytes).
     Removing systemstate.o(i.SW_Reset), (40 bytes).
     Removing systemstate.o(i.SystemDown), (44 bytes).
     Removing test.o(.rev16_text), (4 bytes).
@@ -4196,12 +4194,10 @@ Removing Unused input sections from the image.
     Removing timer.o(.rev16_text), (4 bytes).
     Removing timer.o(.revsh_text), (4 bytes).
     Removing timer.o(.rrx_text), (6 bytes).
-    Removing timer.o(i.Delay_us), (44 bytes).
     Removing timer.o(i.TaskTimer_Init), (104 bytes).
     Removing usart.o(.rev16_text), (4 bytes).
     Removing usart.o(.revsh_text), (4 bytes).
     Removing usart.o(.rrx_text), (6 bytes).
-    Removing usart.o(i.USART2_Init), (196 bytes).
     Removing usart.o(i.USART_PollingSendData), (72 bytes).
     Removing usart.o(i.fputc), (56 bytes).
     Removing wdog.o(.rev16_text), (4 bytes).
@@ -4264,6 +4260,22 @@ Removing Unused input sections from the image.
     Removing xpt2046.o(.bss), (20 bytes).
     Removing xpt2046.o(.data), (1 bytes).
     Removing xpt2046.o(.data), (6 bytes).
+    Removing esp8266.o(.rev16_text), (4 bytes).
+    Removing esp8266.o(.revsh_text), (4 bytes).
+    Removing esp8266.o(.rrx_text), (6 bytes).
+    Removing esp8266.o(i.ESP8266_SendData), (2 bytes).
+    Removing esp8266.o(.bss), (12 bytes).
+    Removing esp8266.o(.bss), (15 bytes).
+    Removing esp8266.o(.bss), (10 bytes).
+    Removing esp8266.o(.bss), (300 bytes).
+    Removing esp8266.o(.data), (14 bytes).
+    Removing esp8266.o(.data), (37 bytes).
+    Removing esp8266.o(.data), (11 bytes).
+    Removing esp8266.o(.data), (18 bytes).
+    Removing esp8266.o(.data), (13 bytes).
+    Removing esp8266.o(.data), (14 bytes).
+    Removing esp8266.o(.data), (10 bytes).
+    Removing esp8266.o(.data), (1 bytes).
     Removing diskio.o(.rev16_text), (4 bytes).
     Removing diskio.o(.revsh_text), (4 bytes).
     Removing diskio.o(.rrx_text), (6 bytes).
@@ -4707,28 +4719,20 @@ Removing Unused input sections from the image.
     Removing usbd_usr.o(i.USBD_USR_Init), (2 bytes).
     Removing usbd_usr.o(.data), (28 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawBitmap), (80 bytes).
-    Removing u8g2_bitmap.o(i.u8g2_DrawHXBM), (144 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawHXBMP), (144 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawHorizontalBitmap), (140 bytes).
-    Removing u8g2_bitmap.o(i.u8g2_DrawXBM), (78 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawXBMP), (78 bytes).
     Removing u8g2_bitmap.o(i.u8g2_SetBitmapMode), (6 bytes).
     Removing u8g2_box.o(i.u8g2_DrawBox), (68 bytes).
     Removing u8g2_box.o(i.u8g2_DrawFrame), (136 bytes).
     Removing u8g2_box.o(i.u8g2_DrawRBox), (230 bytes).
     Removing u8g2_box.o(i.u8g2_DrawRFrame), (258 bytes).
-    Removing u8g2_buffer.o(i.u8g2_ClearBuffer), (20 bytes).
-    Removing u8g2_buffer.o(i.u8g2_FirstPage), (26 bytes).
-    Removing u8g2_buffer.o(i.u8g2_NextPage), (62 bytes).
-    Removing u8g2_buffer.o(i.u8g2_SendBuffer), (18 bytes).
-    Removing u8g2_buffer.o(i.u8g2_SetBufferCurrTileRow), (28 bytes).
     Removing u8g2_buffer.o(i.u8g2_UpdateDisplay), (4 bytes).
     Removing u8g2_buffer.o(i.u8g2_UpdateDisplayArea), (74 bytes).
     Removing u8g2_buffer.o(i.u8g2_WriteBufferPBM), (44 bytes).
     Removing u8g2_buffer.o(i.u8g2_WriteBufferPBM2), (44 bytes).
     Removing u8g2_buffer.o(i.u8g2_WriteBufferXBM), (44 bytes).
     Removing u8g2_buffer.o(i.u8g2_WriteBufferXBM2), (44 bytes).
-    Removing u8g2_buffer.o(i.u8g2_send_buffer), (76 bytes).
     Removing u8g2_circle.o(i.u8g2_DrawCircle), (64 bytes).
     Removing u8g2_circle.o(i.u8g2_DrawDisc), (64 bytes).
     Removing u8g2_circle.o(i.u8g2_DrawEllipse), (68 bytes).
@@ -4741,24 +4745,18 @@ Removing Unused input sections from the image.
     Removing u8g2_circle.o(i.u8g2_draw_ellipse_section), (96 bytes).
     Removing u8g2_circle.o(i.u8g2_draw_filled_ellipse), (230 bytes).
     Removing u8g2_circle.o(i.u8g2_draw_filled_ellipse_section), (106 bytes).
-    Removing u8g2_cleardisplay.o(i.u8g2_ClearDisplay), (30 bytes).
     Removing u8g2_d_memory.o(i.u8g2_m_16_8_1), (12 bytes).
     Removing u8g2_d_memory.o(i.u8g2_m_16_8_2), (12 bytes).
-    Removing u8g2_d_memory.o(i.u8g2_m_16_8_f), (12 bytes).
-    Removing u8g2_d_memory.o(.bss), (1408 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_alt0_1), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_alt0_2), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_alt0_f), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_noname_1), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_noname_2), (56 bytes).
-    Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_noname_f), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_vcomh0_1), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_vcomh0_2), (56 bytes).
     Removing u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_vcomh0_f), (56 bytes).
     Removing u8g2_font.o(i.u8g2_DrawExtUTF8), (160 bytes).
     Removing u8g2_font.o(i.u8g2_DrawExtendedUTF8), (172 bytes).
-    Removing u8g2_font.o(i.u8g2_DrawGlyph), (112 bytes).
-    Removing u8g2_font.o(i.u8g2_DrawStr), (16 bytes).
     Removing u8g2_font.o(i.u8g2_DrawUTF8), (16 bytes).
     Removing u8g2_font.o(i.u8g2_GetFontBBXHeight), (6 bytes).
     Removing u8g2_font.o(i.u8g2_GetFontBBXOffX), (6 bytes).
@@ -4772,32 +4770,15 @@ Removing Unused input sections from the image.
     Removing u8g2_font.o(i.u8g2_GetUTF8Width), (12 bytes).
     Removing u8g2_font.o(i.u8g2_IsAllValidUTF8), (64 bytes).
     Removing u8g2_font.o(i.u8g2_IsGlyph), (14 bytes).
-    Removing u8g2_font.o(i.u8g2_SetFont), (32 bytes).
-    Removing u8g2_font.o(i.u8g2_SetFontDirection), (6 bytes).
-    Removing u8g2_font.o(i.u8g2_SetFontMode), (6 bytes).
-    Removing u8g2_font.o(i.u8g2_SetFontPosBaseline), (12 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontPosBottom), (12 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontPosCenter), (12 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontPosTop), (12 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightAll), (10 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightExtendedText), (10 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightText), (10 bytes).
-    Removing u8g2_font.o(i.u8g2_UpdateRefHeight), (82 bytes).
-    Removing u8g2_font.o(i.u8g2_add_vector_x), (28 bytes).
-    Removing u8g2_font.o(i.u8g2_add_vector_y), (28 bytes).
-    Removing u8g2_font.o(i.u8g2_draw_string), (108 bytes).
     Removing u8g2_font.o(i.u8g2_font_calc_vref_bottom), (8 bytes).
     Removing u8g2_font.o(i.u8g2_font_calc_vref_center), (24 bytes).
-    Removing u8g2_font.o(i.u8g2_font_calc_vref_font), (4 bytes).
     Removing u8g2_font.o(i.u8g2_font_calc_vref_top), (10 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_get_signed_bits), (20 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_get_unsigned_bits), (52 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_glyph), (274 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_len), (138 bytes).
-    Removing u8g2_font.o(i.u8g2_font_get_glyph_data), (114 bytes).
-    Removing u8g2_font.o(i.u8g2_font_get_word), (20 bytes).
-    Removing u8g2_font.o(i.u8g2_font_setup_decode), (52 bytes).
-    Removing u8g2_font.o(i.u8g2_read_font_info), (106 bytes).
     Removing u8g2_font.o(i.u8g2_string_width), (116 bytes).
     Removing u8g2_fonts.o(.constdata), (1838 bytes).
     Removing u8g2_fonts.o(.constdata), (681 bytes).
@@ -4854,7 +4835,6 @@ Removing Unused input sections from the image.
     Removing u8g2_fonts.o(.constdata), (207 bytes).
     Removing u8g2_fonts.o(.constdata), (2115 bytes).
     Removing u8g2_fonts.o(.constdata), (2017 bytes).
-    Removing u8g2_fonts.o(.constdata), (979 bytes).
     Removing u8g2_fonts.o(.constdata), (207 bytes).
     Removing u8g2_fonts.o(.constdata), (2422 bytes).
     Removing u8g2_fonts.o(.constdata), (1170 bytes).
@@ -6440,7 +6420,6 @@ Removing Unused input sections from the image.
     Removing u8g2_fonts.o(.constdata), (7878 bytes).
     Removing u8g2_fonts.o(.constdata), (3538 bytes).
     Removing u8g2_fonts.o(.constdata), (584 bytes).
-    Removing u8g2_fonts.o(.constdata), (8831 bytes).
     Removing u8g2_fonts.o(.constdata), (3920 bytes).
     Removing u8g2_fonts.o(.constdata), (644 bytes).
     Removing u8g2_fonts.o(.constdata), (9863 bytes).
@@ -6448,7 +6427,6 @@ Removing Unused input sections from the image.
     Removing u8g2_fonts.o(.constdata), (747 bytes).
     Removing u8g2_fonts.o(.constdata), (10922 bytes).
     Removing u8g2_fonts.o(.constdata), (4964 bytes).
-    Removing u8g2_fonts.o(.constdata), (805 bytes).
     Removing u8g2_fonts.o(.constdata), (12043 bytes).
     Removing u8g2_fonts.o(.constdata), (5351 bytes).
     Removing u8g2_fonts.o(.constdata), (881 bytes).
@@ -6570,21 +6548,13 @@ Removing Unused input sections from the image.
     Removing u8g2_fonts.o(.constdata), (3089 bytes).
     Removing u8g2_fonts.o(.constdata), (1882 bytes).
     Removing u8g2_fonts.o(.constdata), (330 bytes).
-    Removing u8g2_hvline.o(i.u8g2_DrawHLine), (12 bytes).
-    Removing u8g2_hvline.o(i.u8g2_DrawHVLine), (170 bytes).
     Removing u8g2_hvline.o(i.u8g2_DrawPixel), (46 bytes).
-    Removing u8g2_hvline.o(i.u8g2_DrawVLine), (12 bytes).
     Removing u8g2_hvline.o(i.u8g2_SetDrawColor), (16 bytes).
-    Removing u8g2_hvline.o(i.u8g2_clip_intersection2), (60 bytes).
-    Removing u8g2_hvline.o(i.u8g2_draw_hv_line_2dir), (18 bytes).
     Removing u8g2_input_value.o(i.u8g2_UserInterfaceInputValue), (304 bytes).
-    Removing u8g2_intersection.o(i.u8g2_IsIntersection), (48 bytes).
-    Removing u8g2_intersection.o(i.u8g2_is_intersection_decision_tree), (24 bytes).
     Removing u8g2_kerning.o(i.u8g2_GetKerning), (84 bytes).
     Removing u8g2_kerning.o(i.u8g2_GetKerningByTable), (50 bytes).
     Removing u8g2_line.o(i.u8g2_DrawLine), (172 bytes).
     Removing u8g2_ll_hvline.o(i.u8g2_ll_hvline_horizontal_right_lsb), (116 bytes).
-    Removing u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb), (142 bytes).
     Removing u8g2_message.o(i.u8g2_UserInterfaceMessage), (282 bytes).
     Removing u8g2_message.o(i.u8g2_draw_button_line), (156 bytes).
     Removing u8g2_polygon.o(i.pg_dec), (18 bytes).
@@ -6607,26 +6577,18 @@ Removing Unused input sections from the image.
     Removing u8g2_setup.o(i.u8g2_SendF), (18 bytes).
     Removing u8g2_setup.o(i.u8g2_SetClipWindow), (28 bytes).
     Removing u8g2_setup.o(i.u8g2_SetDisplayRotation), (22 bytes).
-    Removing u8g2_setup.o(i.u8g2_SetMaxClipWindow), (28 bytes).
-    Removing u8g2_setup.o(i.u8g2_SetupBuffer), (66 bytes).
     Removing u8g2_setup.o(i.u8g2_Setup_null), (52 bytes).
-    Removing u8g2_setup.o(i.u8g2_apply_clip_window), (110 bytes).
     Removing u8g2_setup.o(i.u8g2_draw_l90_mirrorr_r0), (32 bytes).
-    Removing u8g2_setup.o(i.u8g2_draw_l90_r0), (12 bytes).
     Removing u8g2_setup.o(i.u8g2_draw_l90_r1), (42 bytes).
     Removing u8g2_setup.o(i.u8g2_draw_l90_r2), (54 bytes).
     Removing u8g2_setup.o(i.u8g2_draw_l90_r3), (42 bytes).
     Removing u8g2_setup.o(i.u8g2_draw_mirror_vertical_r0), (32 bytes).
-    Removing u8g2_setup.o(i.u8g2_update_dimension_common), (70 bytes).
-    Removing u8g2_setup.o(i.u8g2_update_dimension_r0), (4 bytes).
     Removing u8g2_setup.o(i.u8g2_update_dimension_r1), (24 bytes).
     Removing u8g2_setup.o(i.u8g2_update_dimension_r2), (4 bytes).
     Removing u8g2_setup.o(i.u8g2_update_dimension_r3), (24 bytes).
-    Removing u8g2_setup.o(i.u8g2_update_page_win_r0), (34 bytes).
     Removing u8g2_setup.o(i.u8g2_update_page_win_r1), (34 bytes).
     Removing u8g2_setup.o(i.u8g2_update_page_win_r2), (50 bytes).
     Removing u8g2_setup.o(i.u8g2_update_page_win_r3), (50 bytes).
-    Removing u8g2_setup.o(.constdata), (12 bytes).
     Removing u8g2_setup.o(.constdata), (12 bytes).
     Removing u8g2_setup.o(.constdata), (12 bytes).
     Removing u8g2_setup.o(.constdata), (12 bytes).
@@ -6664,7 +6626,6 @@ Removing Unused input sections from the image.
     Removing u8x8_8x8.o(i.u8x8_DrawUTF8), (16 bytes).
     Removing u8x8_8x8.o(i.u8x8_GetUTF8Len), (50 bytes).
     Removing u8x8_8x8.o(i.u8x8_SetFont), (4 bytes).
-    Removing u8x8_8x8.o(i.u8x8_ascii_next), (14 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_1x2_string), (80 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_2x2_string), (84 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_2x2_subglyph), (152 bytes).
@@ -6672,7 +6633,6 @@ Removing Unused input sections from the image.
     Removing u8x8_8x8.o(i.u8x8_get_glyph_data), (106 bytes).
     Removing u8x8_8x8.o(i.u8x8_upscale_buf), (26 bytes).
     Removing u8x8_8x8.o(i.u8x8_upscale_byte), (36 bytes).
-    Removing u8x8_8x8.o(i.u8x8_utf8_init), (8 bytes).
     Removing u8x8_8x8.o(i.u8x8_utf8_next), (146 bytes).
     Removing u8x8_byte.o(i.i2c_clear_scl), (8 bytes).
     Removing u8x8_byte.o(i.i2c_clear_sda), (8 bytes).
@@ -6686,9 +6646,6 @@ Removing Unused input sections from the image.
     Removing u8x8_byte.o(i.u8x8_byte_8bit_6800mode), (208 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_8bit_8080mode), (208 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_EndTransfer), (16 bytes).
-    Removing u8x8_byte.o(i.u8x8_byte_SendByte), (12 bytes).
-    Removing u8x8_byte.o(i.u8x8_byte_SendBytes), (16 bytes).
-    Removing u8x8_byte.o(i.u8x8_byte_SetDC), (16 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_StartTransfer), (16 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_empty), (4 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_ks0108), (204 bytes).
@@ -6697,17 +6654,10 @@ Removing Unused input sections from the image.
     Removing u8x8_byte.o(i.u8x8_byte_sw_i2c), (186 bytes).
     Removing u8x8_byte.o(.data), (2 bytes).
     Removing u8x8_cad.o(i.u8x8_SendF), (18 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_001), (82 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_011), (86 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_100), (86 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_110), (82 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_EndTransfer), (16 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_SendArg), (16 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_SendCmd), (16 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_SendData), (16 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_SendMultipleArg), (38 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_SendSequence), (102 bytes).
-    Removing u8x8_cad.o(i.u8x8_cad_StartTransfer), (16 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_empty), (44 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_ld7032_i2c), (180 bytes).
     Removing u8x8_cad.o(i.u8x8_cad_ssd13xx_fast_i2c), (188 bytes).
@@ -6731,10 +6681,7 @@ Removing Unused input sections from the image.
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_sh1106_128x64_vcomh0), (60 bytes).
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_sh1106_128x64_winstar), (60 bytes).
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_alt0), (60 bytes).
-    Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname), (60 bytes).
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_vcomh0), (60 bytes).
-    Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_sh1106_generic), (200 bytes).
-    Removing u8x8_d_ssd1306_128x64_noname.o(.constdata), (276 bytes).
     Removing u8x8_debounce.o(i.u8x8_GetMenuEvent), (192 bytes).
     Removing u8x8_display.o(.rev16_text), (4 bytes).
     Removing u8x8_display.o(.revsh_text), (4 bytes).
@@ -6742,19 +6689,10 @@ Removing Unused input sections from the image.
     Removing u8x8_display.o(i.u8x8_ClearDisplay), (16 bytes).
     Removing u8x8_display.o(i.u8x8_ClearDisplayWithTile), (58 bytes).
     Removing u8x8_display.o(i.u8x8_ClearLine), (48 bytes).
-    Removing u8x8_display.o(i.u8x8_DrawTile), (30 bytes).
     Removing u8x8_display.o(i.u8x8_FillDisplay), (28 bytes).
-    Removing u8x8_display.o(i.u8x8_InitDisplay), (16 bytes).
     Removing u8x8_display.o(i.u8x8_InitInterface), (32 bytes).
-    Removing u8x8_display.o(i.u8x8_RefreshDisplay), (16 bytes).
     Removing u8x8_display.o(i.u8x8_SetContrast), (16 bytes).
     Removing u8x8_display.o(i.u8x8_SetFlipMode), (16 bytes).
-    Removing u8x8_display.o(i.u8x8_SetPowerSave), (16 bytes).
-    Removing u8x8_display.o(i.u8x8_SetupMemory), (16 bytes).
-    Removing u8x8_display.o(i.u8x8_byte_4wire_hw_spi), (124 bytes).
-    Removing u8x8_display.o(i.u8x8_d_helper_display_init), (96 bytes).
-    Removing u8x8_display.o(i.u8x8_d_helper_display_setup_memory), (10 bytes).
-    Removing u8x8_display.o(i.u8x8_stm32_gpio_and_delay), (64 bytes).
     Removing u8x8_fonts.o(.constdata), (1796 bytes).
     Removing u8x8_fonts.o(.constdata), (764 bytes).
     Removing u8x8_fonts.o(.constdata), (220 bytes).
@@ -6884,7 +6822,6 @@ Removing Unused input sections from the image.
     Removing u8x8_fonts.o(.constdata), (7172 bytes).
     Removing u8x8_fonts.o(.constdata), (3077 bytes).
     Removing u8x8_fonts.o(.constdata), (868 bytes).
-    Removing u8x8_gpio.o(i.u8x8_gpio_call), (12 bytes).
     Removing u8x8_input_value.o(i.u8x8_UserInterfaceInputValue), (266 bytes).
     Removing u8x8_message.o(i.u8x8_UserInterfaceMessage), (246 bytes).
     Removing u8x8_message.o(i.u8x8_draw_button_line), (164 bytes).
@@ -6893,10 +6830,7 @@ Removing Unused input sections from the image.
     Removing u8x8_selection_list.o(i.u8x8_DrawSelectionList), (44 bytes).
     Removing u8x8_selection_list.o(i.u8x8_UserInterfaceSelectionList), (192 bytes).
     Removing u8x8_selection_list.o(i.u8x8_sl_string_line_cb), (76 bytes).
-    Removing u8x8_setup.o(i.u8x8_Setup), (34 bytes).
-    Removing u8x8_setup.o(i.u8x8_SetupDefaults), (36 bytes).
     Removing u8x8_setup.o(i.u8x8_d_null_cb), (32 bytes).
-    Removing u8x8_setup.o(i.u8x8_dummy_cb), (4 bytes).
     Removing u8x8_setup.o(.constdata), (24 bytes).
     Removing u8x8_string.o(i.u8x8_CopyStringLine), (42 bytes).
     Removing u8x8_string.o(i.u8x8_DrawUTF8Line), (116 bytes).
@@ -6922,7 +6856,6 @@ Removing Unused input sections from the image.
     Removing u8g2_usergui.o(i.Clock), (180 bytes).
     Removing u8g2_usergui.o(i.Dir_icon), (108 bytes).
     Removing u8g2_usergui.o(i.DispalyUTF_8Strings), (160 bytes).
-    Removing u8g2_usergui.o(i.Display_FreeRTOS_Logo), (60 bytes).
     Removing u8g2_usergui.o(i.FastCos), (120 bytes).
     Removing u8g2_usergui.o(i.FastSin), (116 bytes).
     Removing u8g2_usergui.o(i.LED_Task), (84 bytes).
@@ -6934,17 +6867,12 @@ Removing Unused input sections from the image.
     Removing u8g2_usergui.o(i.ShowDS18B20TempData), (44 bytes).
     Removing u8g2_usergui.o(i.ShowHumanityData), (44 bytes).
     Removing u8g2_usergui.o(i.ShowTempData), (36 bytes).
-    Removing u8g2_usergui.o(i.Start_Page), (32 bytes).
     Removing u8g2_usergui.o(i.Streamline_icon), (132 bytes).
     Removing u8g2_usergui.o(i.Switch_Task), (188 bytes).
     Removing u8g2_usergui.o(i.Teat_Task), (216 bytes).
     Removing u8g2_usergui.o(i.Test_UI), (304 bytes).
-    Removing u8g2_usergui.o(i.draw), (224 bytes).
-    Removing u8g2_usergui.o(i.u8g2_Init), (56 bytes).
     Removing u8g2_usergui.o(i.u8g2_TaskCreate), (72 bytes).
-    Removing u8g2_usergui.o(.bss), (148 bytes).
     Removing u8g2_usergui.o(.constdata), (2052 bytes).
-    Removing u8g2_usergui.o(.data), (788 bytes).
     Removing dadd.o(.text), (334 bytes).
     Removing dmul.o(.text), (228 bytes).
     Removing ddiv.o(.text), (222 bytes).
@@ -6972,6 +6900,7 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
+    ../clib/../cmprslib/zerorunl2.c          0x00000000   Number         0  __dczerorl2.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  ldiv.o ABSOLUTE
@@ -7006,8 +6935,8 @@ Image Symbol Table
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/streams.c         0x00000000   Number         0  stdout.o ABSOLUTE
     ../clib/microlib/string/memcmp.c         0x00000000   Number         0  memcmp.o ABSOLUTE
-    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
+    ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memset.o ABSOLUTE
     ../clib/microlib/stubs.s                 0x00000000   Number         0  iusefp.o ABSOLUTE
@@ -7021,6 +6950,7 @@ Image Symbol Table
     ../fplib/microlib/fpfix.c                0x00000000   Number         0  dfixui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpflt.c                0x00000000   Number         0  dflti.o ABSOLUTE
+    ../fplib/microlib/fpflt.c                0x00000000   Number         0  dfltui.o ABSOLUTE
     ../fplib/microlib/fpmul.c                0x00000000   Number         0  dmul.o ABSOLUTE
     ../fplib/microlib/fpneg.c                0x00000000   Number         0  dneg.o ABSOLUTE
     ../fplib/microlib/fpscalb.c              0x00000000   Number         0  dscalb.o ABSOLUTE
@@ -7045,6 +6975,7 @@ Image Symbol Table
     ..\Driver\CODE_RUN_TIME.c                0x00000000   Number         0  code_run_time.o ABSOLUTE
     ..\Driver\DHT11.c                        0x00000000   Number         0  dht11.o ABSOLUTE
     ..\Driver\DMA.c                          0x00000000   Number         0  dma.o ABSOLUTE
+    ..\Driver\ESP8266.c                      0x00000000   Number         0  esp8266.o ABSOLUTE
     ..\Driver\FileOperate.c                  0x00000000   Number         0  fileoperate.o ABSOLUTE
     ..\Driver\HC_SR04.c                      0x00000000   Number         0  hc_sr04.o ABSOLUTE
     ..\Driver\MPU6050.c                      0x00000000   Number         0  mpu6050.o ABSOLUTE
@@ -7188,6 +7119,7 @@ Image Symbol Table
     ..\\Driver\\CODE_RUN_TIME.c              0x00000000   Number         0  code_run_time.o ABSOLUTE
     ..\\Driver\\DHT11.c                      0x00000000   Number         0  dht11.o ABSOLUTE
     ..\\Driver\\DMA.c                        0x00000000   Number         0  dma.o ABSOLUTE
+    ..\\Driver\\ESP8266.c                    0x00000000   Number         0  esp8266.o ABSOLUTE
     ..\\Driver\\FileOperate.c                0x00000000   Number         0  fileoperate.o ABSOLUTE
     ..\\Driver\\HC_SR04.c                    0x00000000   Number         0  hc_sr04.o ABSOLUTE
     ..\\Driver\\MPU6050.c                    0x00000000   Number         0  mpu6050.o ABSOLUTE
@@ -7547,7 +7479,6 @@ Image Symbol Table
     _printf_x                                0x00000000   Number         0  stubs.o ABSOLUTE
     __cpp_initialize__aeabi_                  - Undefined Weak Reference
     __cxa_finalize                            - Undefined Weak Reference
-    __decompress                              - Undefined Weak Reference
     _clock_init                               - Undefined Weak Reference
     _microlib_exit                            - Undefined Weak Reference
     __Vectors_Size                           0x00000188   Number         0  startup_stm32f40_41xxx.o ABSOLUTE
@@ -7781,6 +7712,333 @@ Image Symbol Table
     USART1_Data                              0x200009c0   Data        4104  usart.o(.bss)
     USART2_Data                              0x200019c8   Data        4104  usart.o(.bss)
     __initial_sp                             0x2000f360   Data           0  startup_stm32f40_41xxx.o(STACK)
+    __rt_lib_shutdown_fini                   0x08000199   Thumb Code     0  entry12b.o(.ARM.Collect$$$$0000000E)
+    __rt_final_cpp                           0x0800019d   Thumb Code     0  entry10a.o(.ARM.Collect$$$$0000000F)
+    __rt_final_exit                          0x0800019d   Thumb Code     0  entry11a.o(.ARM.Collect$$$$00000011)
+    SVC_Handler                              0x080001a1   Thumb Code    28  port.o(.emb_text)
+    __asm___6_port_c_39a90d8d__prvStartFirstTask 0x080001c1   Thumb Code    36  port.o(.emb_text)
+    __asm___6_port_c_39a90d8d__prvEnableVFP  0x080001e9   Thumb Code    16  port.o(.emb_text)
+    PendSV_Handler                           0x080001fd   Thumb Code    88  port.o(.emb_text)
+    vPortGetIPSR                             0x08000259   Thumb Code     6  port.o(.emb_text)
+    Reset_Handler                            0x08000261   Thumb Code     8  startup_stm32f40_41xxx.o(.text)
+    ADC_IRQHandler                           0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN1_RX0_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN1_RX1_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN1_SCE_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN1_TX_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN2_RX0_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN2_RX1_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN2_SCE_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CAN2_TX_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    CRYP_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DCMI_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream0_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream1_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream2_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream3_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream5_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream6_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA1_Stream7_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream0_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream1_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream2_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream3_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream4_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    DMA2_Stream7_IRQHandler                  0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    ETH_IRQHandler                           0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    ETH_WKUP_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    EXTI15_10_IRQHandler                     0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    EXTI1_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    EXTI3_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    EXTI4_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    EXTI9_5_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    FLASH_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    FPU_IRQHandler                           0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    FSMC_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    HASH_RNG_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C1_ER_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C1_EV_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C2_ER_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C2_EV_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C3_ER_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    I2C3_EV_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    OTG_FS_WKUP_IRQHandler                   0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    OTG_HS_EP1_IN_IRQHandler                 0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    OTG_HS_EP1_OUT_IRQHandler                0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    OTG_HS_IRQHandler                        0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    OTG_HS_WKUP_IRQHandler                   0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    PVD_IRQHandler                           0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    RCC_IRQHandler                           0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    RTC_Alarm_IRQHandler                     0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    RTC_WKUP_IRQHandler                      0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    SPI1_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    SPI3_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TAMP_STAMP_IRQHandler                    0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM1_CC_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM1_TRG_COM_TIM11_IRQHandler            0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM1_UP_TIM10_IRQHandler                 0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM2_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM3_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM4_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM5_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM7_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM8_BRK_TIM12_IRQHandler                0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM8_CC_IRQHandler                       0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM8_TRG_COM_TIM14_IRQHandler            0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    TIM8_UP_TIM13_IRQHandler                 0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    UART4_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    UART5_IRQHandler                         0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    USART3_IRQHandler                        0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    USART6_IRQHandler                        0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    WWDG_IRQHandler                          0x0800027b   Thumb Code     0  startup_stm32f40_41xxx.o(.text)
+    __aeabi_memcpy                           0x08000285   Thumb Code    36  memcpya.o(.text)
+    __aeabi_memcpy4                          0x08000285   Thumb Code     0  memcpya.o(.text)
+    __aeabi_memcpy8                          0x08000285   Thumb Code     0  memcpya.o(.text)
+    __aeabi_memset                           0x080002a9   Thumb Code    14  memseta.o(.text)
+    __aeabi_memset4                          0x080002a9   Thumb Code     0  memseta.o(.text)
+    __aeabi_memset8                          0x080002a9   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr                           0x080002b7   Thumb Code     4  memseta.o(.text)
+    __aeabi_memclr4                          0x080002b7   Thumb Code     0  memseta.o(.text)
+    __aeabi_memclr8                          0x080002b7   Thumb Code     0  memseta.o(.text)
+    memset                                   0x080002bb   Thumb Code    18  memseta.o(.text)
+    memcmp                                   0x080002cd   Thumb Code    26  memcmp.o(.text)
+    __scatterload                            0x080002e9   Thumb Code    28  init.o(.text)
+    __scatterload_rt2                        0x080002e9   Thumb Code     0  init.o(.text)
+    __decompress                             0x0800030d   Thumb Code     0  __dczerorl2.o(.text)
+    __decompress1                            0x0800030d   Thumb Code    86  __dczerorl2.o(.text)
+    BusFault_Handler                         0x08000363   Thumb Code     2  stm32f4xx_it.o(i.BusFault_Handler)
+    CmdResp1Error                            0x08000365   Thumb Code    84  sdio_sdcard.o(i.CmdResp1Error)
+    DCD_EP_ClrStall                          0x080003bd   Thumb Code    56  usb_dcd.o(i.DCD_EP_ClrStall)
+    DCD_EP_Open                              0x080003f5   Thumb Code    60  usb_dcd.o(i.DCD_EP_Open)
+    DCD_EP_PrepareRx                         0x08000431   Thumb Code    68  usb_dcd.o(i.DCD_EP_PrepareRx)
+    DCD_EP_SetAddress                        0x08000475   Thumb Code    16  usb_dcd.o(i.DCD_EP_SetAddress)
+    DCD_EP_Stall                             0x08000485   Thumb Code    56  usb_dcd.o(i.DCD_EP_Stall)
+    DCD_EP_Tx                                0x080004bd   Thumb Code    62  usb_dcd.o(i.DCD_EP_Tx)
+    DMA1_Start                               0x080009b5   Thumb Code    40  dma.o(i.DMA1_Start)
+    DMA1_Stream4_IRQHandler                  0x080009e5   Thumb Code    36  dma.o(i.DMA1_Stream4_IRQHandler)
+    DMA2_Start                               0x08000a11   Thumb Code    40  dma.o(i.DMA2_Start)
+    DMA2_Stream5_IRQHandler                  0x08000a41   Thumb Code    36  dma.o(i.DMA2_Stream5_IRQHandler)
+    DMA2_Stream6_IRQHandler                  0x08000a6d   Thumb Code    32  dma.o(i.DMA2_Stream6_IRQHandler)
+    DMA_ClearFlag                            0x08000a95   Thumb Code    32  stm32f4xx_dma.o(i.DMA_ClearFlag)
+    DMA_ClearITPendingBit                    0x08000ac1   Thumb Code    32  stm32f4xx_dma.o(i.DMA_ClearITPendingBit)
+    DMA_Cmd                                  0x08000aed   Thumb Code    20  stm32f4xx_dma.o(i.DMA_Cmd)
+    DMA_GetITStatus                          0x08000b01   Thumb Code    68  stm32f4xx_dma.o(i.DMA_GetITStatus)
+    DMA_SetCurrDataCounter                   0x08000b55   Thumb Code     4  stm32f4xx_dma.o(i.DMA_SetCurrDataCounter)
+    DebugMon_Handler                         0x08000b59   Thumb Code     2  stm32f4xx_it.o(i.DebugMon_Handler)
+    Delay_Init                               0x08000b5d   Thumb Code    52  timer.o(i.Delay_Init)
+    Delay_ms                                 0x08000b95   Thumb Code    62  timer.o(i.Delay_ms)
+    Delay_us                                 0x08000bd9   Thumb Code    40  timer.o(i.Delay_us)
+    Display_FreeRTOS_Logo                    0x08000c05   Thumb Code    52  u8g2_usergui.o(i.Display_FreeRTOS_Logo)
+    ESP8266_Init                             0x08000c41   Thumb Code   108  esp8266.o(i.ESP8266_Init)
+    ESP8266_SearchData                       0x08000cc5   Thumb Code    68  esp8266.o(i.ESP8266_SearchData)
+    EXTI0_IRQHandler                         0x08000d0d   Thumb Code    48  exti.o(i.EXTI0_IRQHandler)
+    EXTI2_IRQHandler                         0x08000d45   Thumb Code   116  exti.o(i.EXTI2_IRQHandler)
+    EXTI_ClearFlag                           0x08000dc1   Thumb Code     6  stm32f4xx_exti.o(i.EXTI_ClearFlag)
+    EXTI_GetFlagStatus                       0x08000dcd   Thumb Code    16  stm32f4xx_exti.o(i.EXTI_GetFlagStatus)
+    GPIO_Init                                0x08000de1   Thumb Code   120  stm32f4xx_gpio.o(i.GPIO_Init)
+    GPIO_PinAFConfig                         0x08000e59   Thumb Code    32  stm32f4xx_gpio.o(i.GPIO_PinAFConfig)
+    GPIO_ResetBits                           0x08000e79   Thumb Code     4  stm32f4xx_gpio.o(i.GPIO_ResetBits)
+    GPIO_SetBits                             0x08000e7d   Thumb Code     4  stm32f4xx_gpio.o(i.GPIO_SetBits)
+    HardFault_Handler                        0x08000e81   Thumb Code     2  stm32f4xx_it.o(i.HardFault_Handler)
+    MemManage_Handler                        0x08000e83   Thumb Code     2  stm32f4xx_it.o(i.MemManage_Handler)
+    NMI_Handler                              0x08000e85   Thumb Code     2  stm32f4xx_it.o(i.NMI_Handler)
+    NVIC_Init                                0x08000e89   Thumb Code    96  misc.o(i.NVIC_Init)
+    NVIC_PriorityGroupConfig                 0x08000eed   Thumb Code    10  misc.o(i.NVIC_PriorityGroupConfig)
+    OLED_Init                                0x08000f01   Thumb Code   278  oled.o(i.OLED_Init)
+    OLED_SPI_Init                            0x0800101d   Thumb Code   182  oled.o(i.OLED_SPI_Init)
+    OLED_SendData                            0x080010dd   Thumb Code    46  oled.o(i.OLED_SendData)
+    OLED_SetContrast                         0x08001115   Thumb Code    20  oled.o(i.OLED_SetContrast)
+    OLED_SetMode                             0x08001129   Thumb Code    46  oled.o(i.OLED_SetMode)
+    OTG_FS_IRQHandler                        0x08001161   Thumb Code     6  stm32f4xx_it.o(i.OTG_FS_IRQHandler)
+    PWM_Init                                 0x0800116d   Thumb Code   146  pwm.o(i.PWM_Init)
+    RCC_AHB1PeriphClockCmd                   0x08001209   Thumb Code    18  stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd)
+    RCC_APB1PeriphClockCmd                   0x08001221   Thumb Code    18  stm32f4xx_rcc.o(i.RCC_APB1PeriphClockCmd)
+    RCC_APB2PeriphClockCmd                   0x08001239   Thumb Code    18  stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd)
+    RCC_GetClocksFreq                        0x08001251   Thumb Code   132  stm32f4xx_rcc.o(i.RCC_GetClocksFreq)
+    SDIO_ClearFlag                           0x080012e5   Thumb Code     6  stm32f4xx_sdio.o(i.SDIO_ClearFlag)
+    SDIO_GetFlagStatus                       0x080012f1   Thumb Code    16  stm32f4xx_sdio.o(i.SDIO_GetFlagStatus)
+    SDIO_IRQHandler                          0x08001305   Thumb Code     4  sdio_sdcard.o(i.SDIO_IRQHandler)
+    SDIO_SendCommand                         0x08001309   Thumb Code    36  stm32f4xx_sdio.o(i.SDIO_SendCommand)
+    SD_ProcessIRQSrc                         0x08001331   Thumb Code   228  sdio_sdcard.o(i.SD_ProcessIRQSrc)
+    SPI2_IRQHandler                          0x08001421   Thumb Code    48  spi.o(i.SPI2_IRQHandler)
+    SPI_Cmd                                  0x08001459   Thumb Code    20  stm32f4xx_spi.o(i.SPI_Cmd)
+    SPI_I2S_ClearFlag                        0x0800146d   Thumb Code     6  stm32f4xx_spi.o(i.SPI_I2S_ClearFlag)
+    SPI_I2S_ClearITPendingBit                0x08001473   Thumb Code    14  stm32f4xx_spi.o(i.SPI_I2S_ClearITPendingBit)
+    SPI_I2S_GetFlagStatus                    0x08001481   Thumb Code    14  stm32f4xx_spi.o(i.SPI_I2S_GetFlagStatus)
+    SPI_I2S_GetITStatus                      0x0800148f   Thumb Code    44  stm32f4xx_spi.o(i.SPI_I2S_GetITStatus)
+    SPI_I2S_SendData                         0x080014bb   Thumb Code     4  stm32f4xx_spi.o(i.SPI_I2S_SendData)
+    SPI_Init                                 0x080014bf   Thumb Code    56  stm32f4xx_spi.o(i.SPI_Init)
+    Start_Page                               0x080015ad   Thumb Code    26  u8g2_usergui.o(i.Start_Page)
+    SysTick_Handler                          0x080015cd   Thumb Code    38  port.o(i.SysTick_Handler)
+    SystemInit                               0x080015f9   Thumb Code    74  system_stm32f4xx.o(i.SystemInit)
+    TIM1_BRK_TIM9_IRQHandler                 0x08001655   Thumb Code    24  timer.o(i.TIM1_BRK_TIM9_IRQHandler)
+    TIM6_DAC_IRQHandler                      0x08001671   Thumb Code    68  code_run_time.o(i.TIM6_DAC_IRQHandler)
+    TIM_ARRPreloadConfig                     0x080016bd   Thumb Code    20  stm32f4xx_tim.o(i.TIM_ARRPreloadConfig)
+    TIM_ClearFlag                            0x080016d1   Thumb Code     6  stm32f4xx_tim.o(i.TIM_ClearFlag)
+    TIM_Cmd                                  0x080016d7   Thumb Code    20  stm32f4xx_tim.o(i.TIM_Cmd)
+    TIM_GetFlagStatus                        0x080016eb   Thumb Code    14  stm32f4xx_tim.o(i.TIM_GetFlagStatus)
+    TIM_OC1Init                              0x080016f9   Thumb Code    88  stm32f4xx_tim.o(i.TIM_OC1Init)
+    TIM_OC1PreloadConfig                     0x08001759   Thumb Code    12  stm32f4xx_tim.o(i.TIM_OC1PreloadConfig)
+    TIM_TimeBaseInit                         0x08001765   Thumb Code    96  stm32f4xx_tim.o(i.TIM_TimeBaseInit)
+    USART1_IRQHandler                        0x080017e1   Thumb Code     8  usart.o(i.USART1_IRQHandler)
+    USART1_Init                              0x080017f1   Thumb Code   200  usart.o(i.USART1_Init)
+    USART2_IRQHandler                        0x080018c1   Thumb Code     8  usart.o(i.USART2_IRQHandler)
+    USART2_Init                              0x080018d1   Thumb Code   198  usart.o(i.USART2_Init)
+    USART_ClearFlag                          0x080019a1   Thumb Code     6  stm32f4xx_usart.o(i.USART_ClearFlag)
+    USART_ClearITPendingBit                  0x080019a7   Thumb Code    12  stm32f4xx_usart.o(i.USART_ClearITPendingBit)
+    USART_Cmd                                0x080019b3   Thumb Code    20  stm32f4xx_usart.o(i.USART_Cmd)
+    USART_GetData                            0x080019c7   Thumb Code    96  usart.o(i.USART_GetData)
+    USART_GetITStatus                        0x08001a27   Thumb Code    62  stm32f4xx_usart.o(i.USART_GetITStatus)
+    USART_ITConfig                           0x08001a65   Thumb Code    48  stm32f4xx_usart.o(i.USART_ITConfig)
+    USART_ITSendData                         0x08001a95   Thumb Code    58  usart.o(i.USART_ITSendData)
+    USART_Init                               0x08001ad1   Thumb Code   164  stm32f4xx_usart.o(i.USART_Init)
+    USART_ReceiveData                        0x08001b7d   Thumb Code     8  stm32f4xx_usart.o(i.USART_ReceiveData)
+    USART_SendData                           0x08001b85   Thumb Code     8  stm32f4xx_usart.o(i.USART_SendData)
+    USARTx_ITHandle                          0x08001b8d   Thumb Code   140  usart.o(i.USARTx_ITHandle)
+    USBD_ClrCfg                              0x08001c19   Thumb Code    14  usbd_core.o(i.USBD_ClrCfg)
+    USBD_CtlContinueRx                       0x08001c27   Thumb Code    18  usbd_ioreq.o(i.USBD_CtlContinueRx)
+    USBD_CtlContinueSendData                 0x08001c39   Thumb Code    18  usbd_ioreq.o(i.USBD_CtlContinueSendData)
+    USBD_CtlError                            0x08001c4b   Thumb Code    28  usbd_req.o(i.USBD_CtlError)
+    USBD_CtlReceiveStatus                    0x08001c67   Thumb Code    34  usbd_ioreq.o(i.USBD_CtlReceiveStatus)
+    USBD_CtlSendData                         0x08001c89   Thumb Code    32  usbd_ioreq.o(i.USBD_CtlSendData)
+    USBD_CtlSendStatus                       0x08001ca9   Thumb Code    34  usbd_ioreq.o(i.USBD_CtlSendStatus)
+    USBD_OTG_ISR_Handler                     0x08001ed1   Thumb Code   236  usb_dcd_int.o(i.USBD_OTG_ISR_Handler)
+    USBD_ParseSetupRequest                   0x08001fc1   Thumb Code    68  usbd_req.o(i.USBD_ParseSetupRequest)
+    USBD_SetCfg                              0x08002059   Thumb Code    26  usbd_core.o(i.USBD_SetCfg)
+    USBD_StdDevReq                           0x080021ad   Thumb Code   236  usbd_req.o(i.USBD_StdDevReq)
+    USBD_StdEPReq                            0x0800229d   Thumb Code   236  usbd_req.o(i.USBD_StdEPReq)
+    USBD_StdItfReq                           0x0800238d   Thumb Code    54  usbd_req.o(i.USBD_StdItfReq)
+    USB_OTG_BSP_uDelay                       0x080023df   Thumb Code    14  usb_bsp.o(i.USB_OTG_BSP_uDelay)
+    USB_OTG_EP0Activate                      0x080023ed   Thumb Code    54  usb_core.o(i.USB_OTG_EP0Activate)
+    USB_OTG_EP0StartXfer                     0x08002423   Thumb Code   176  usb_core.o(i.USB_OTG_EP0StartXfer)
+    USB_OTG_EP0_OutStart                     0x080024d5   Thumb Code    32  usb_core.o(i.USB_OTG_EP0_OutStart)
+    USB_OTG_EPActivate                       0x080024f9   Thumb Code    82  usb_core.o(i.USB_OTG_EPActivate)
+    USB_OTG_EPClearStall                     0x0800254b   Thumb Code    50  usb_core.o(i.USB_OTG_EPClearStall)
+    USB_OTG_EPSetStall                       0x0800257d   Thumb Code    48  usb_core.o(i.USB_OTG_EPSetStall)
+    USB_OTG_EPStartXfer                      0x080025ad   Thumb Code   306  usb_core.o(i.USB_OTG_EPStartXfer)
+    USB_OTG_FlushTxFifo                      0x080026e1   Thumb Code    62  usb_core.o(i.USB_OTG_FlushTxFifo)
+    USB_OTG_GetDeviceSpeed                   0x08002725   Thumb Code    30  usb_core.o(i.USB_OTG_GetDeviceSpeed)
+    USB_OTG_IsDeviceMode                     0x08002743   Thumb Code    18  usb_core.o(i.USB_OTG_IsDeviceMode)
+    USB_OTG_ReadCoreItr                      0x08002755   Thumb Code    10  usb_core.o(i.USB_OTG_ReadCoreItr)
+    USB_OTG_ReadDevAllInEPItr                0x0800275f   Thumb Code    12  usb_core.o(i.USB_OTG_ReadDevAllInEPItr)
+    USB_OTG_ReadDevAllOutEp_itr              0x0800276b   Thumb Code    12  usb_core.o(i.USB_OTG_ReadDevAllOutEp_itr)
+    USB_OTG_ReadDevOutEP_itr                 0x08002777   Thumb Code    16  usb_core.o(i.USB_OTG_ReadDevOutEP_itr)
+    USB_OTG_ReadPacket                       0x08002787   Thumb Code    32  usb_core.o(i.USB_OTG_ReadPacket)
+    USB_OTG_WritePacket                      0x080027a7   Thumb Code    42  usb_core.o(i.USB_OTG_WritePacket)
+    UsageFault_Handler                       0x080027d1   Thumb Code     2  stm32f4xx_it.o(i.UsageFault_Handler)
+    __scatterload_copy                       0x080027d3   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x080027e1   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x080027e3   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    draw                                     0x080027f1   Thumb Code   178  u8g2_usergui.o(i.draw)
+    led_init                                 0x080028d1   Thumb Code    48  led.o(i.led_init)
+    main                                     0x08002905   Thumb Code   184  main.o(i.main)
+    u8g2_ClearBuffer                         0x080029f9   Thumb Code    20  u8g2_buffer.o(i.u8g2_ClearBuffer)
+    u8g2_ClearDisplay                        0x08002a0d   Thumb Code    30  u8g2_cleardisplay.o(i.u8g2_ClearDisplay)
+    u8g2_DrawGlyph                           0x08002a2b   Thumb Code   112  u8g2_font.o(i.u8g2_DrawGlyph)
+    u8g2_DrawHLine                           0x08002a9b   Thumb Code    12  u8g2_hvline.o(i.u8g2_DrawHLine)
+    u8g2_DrawHVLine                          0x08002aa7   Thumb Code   170  u8g2_hvline.o(i.u8g2_DrawHVLine)
+    u8g2_DrawHXBM                            0x08002b51   Thumb Code   144  u8g2_bitmap.o(i.u8g2_DrawHXBM)
+    u8g2_DrawStr                             0x08002be1   Thumb Code    12  u8g2_font.o(i.u8g2_DrawStr)
+    u8g2_DrawVLine                           0x08002bf1   Thumb Code    12  u8g2_hvline.o(i.u8g2_DrawVLine)
+    u8g2_DrawXBM                             0x08002bfd   Thumb Code    78  u8g2_bitmap.o(i.u8g2_DrawXBM)
+    u8g2_FirstPage                           0x08002c4b   Thumb Code    26  u8g2_buffer.o(i.u8g2_FirstPage)
+    u8g2_Init                                0x08002c65   Thumb Code    38  u8g2_usergui.o(i.u8g2_Init)
+    u8g2_IsIntersection                      0x08002c9d   Thumb Code    48  u8g2_intersection.o(i.u8g2_IsIntersection)
+    u8g2_NextPage                            0x08002ccd   Thumb Code    62  u8g2_buffer.o(i.u8g2_NextPage)
+    u8g2_SendBuffer                          0x08002d0b   Thumb Code    18  u8g2_buffer.o(i.u8g2_SendBuffer)
+    u8g2_SetBufferCurrTileRow                0x08002d1d   Thumb Code    28  u8g2_buffer.o(i.u8g2_SetBufferCurrTileRow)
+    u8g2_SetFont                             0x08002d39   Thumb Code    32  u8g2_font.o(i.u8g2_SetFont)
+    u8g2_SetFontDirection                    0x08002d59   Thumb Code     6  u8g2_font.o(i.u8g2_SetFontDirection)
+    u8g2_SetFontMode                         0x08002d5f   Thumb Code     6  u8g2_font.o(i.u8g2_SetFontMode)
+    u8g2_SetFontPosBaseline                  0x08002d65   Thumb Code     6  u8g2_font.o(i.u8g2_SetFontPosBaseline)
+    u8g2_SetMaxClipWindow                    0x08002d71   Thumb Code    28  u8g2_setup.o(i.u8g2_SetMaxClipWindow)
+    u8g2_SetupBuffer                         0x08002d8d   Thumb Code    66  u8g2_setup.o(i.u8g2_SetupBuffer)
+    u8g2_Setup_ssd1306_128x64_noname_f       0x08002dd1   Thumb Code    42  u8g2_d_setup.o(i.u8g2_Setup_ssd1306_128x64_noname_f)
+    u8g2_UpdateRefHeight                     0x08002e09   Thumb Code    82  u8g2_font.o(i.u8g2_UpdateRefHeight)
+    u8g2_add_vector_x                        0x08002e5b   Thumb Code    28  u8g2_font.o(i.u8g2_add_vector_x)
+    u8g2_add_vector_y                        0x08002e77   Thumb Code    28  u8g2_font.o(i.u8g2_add_vector_y)
+    u8g2_draw_hv_line_2dir                   0x08002f3d   Thumb Code    18  u8g2_hvline.o(i.u8g2_draw_hv_line_2dir)
+    u8g2_draw_l90_r0                         0x08002f4f   Thumb Code    12  u8g2_setup.o(i.u8g2_draw_l90_r0)
+    u8g2_font_calc_vref_font                 0x08002fc7   Thumb Code     4  u8g2_font.o(i.u8g2_font_calc_vref_font)
+    u8g2_font_decode_get_signed_bits         0x08002fcb   Thumb Code    20  u8g2_font.o(i.u8g2_font_decode_get_signed_bits)
+    u8g2_font_decode_get_unsigned_bits       0x08002fdf   Thumb Code    52  u8g2_font.o(i.u8g2_font_decode_get_unsigned_bits)
+    u8g2_font_decode_glyph                   0x08003013   Thumb Code   274  u8g2_font.o(i.u8g2_font_decode_glyph)
+    u8g2_font_decode_len                     0x08003125   Thumb Code   138  u8g2_font.o(i.u8g2_font_decode_len)
+    u8g2_font_get_glyph_data                 0x080031af   Thumb Code   114  u8g2_font.o(i.u8g2_font_get_glyph_data)
+    u8g2_is_intersection_decision_tree       0x08003269   Thumb Code    24  u8g2_intersection.o(i.u8g2_is_intersection_decision_tree)
+    u8g2_ll_hvline_vertical_top_lsb          0x08003281   Thumb Code   142  u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb)
+    u8g2_m_16_8_f                            0x08003311   Thumb Code     8  u8g2_d_memory.o(i.u8g2_m_16_8_f)
+    u8g2_read_font_info                      0x0800331d   Thumb Code   106  u8g2_font.o(i.u8g2_read_font_info)
+    u8g2_update_dimension_r0                 0x08003419   Thumb Code     4  u8g2_setup.o(i.u8g2_update_dimension_r0)
+    u8g2_update_page_win_r0                  0x0800341d   Thumb Code    34  u8g2_setup.o(i.u8g2_update_page_win_r0)
+    u8x8_DrawTile                            0x0800343f   Thumb Code    30  u8x8_display.o(i.u8x8_DrawTile)
+    u8x8_InitDisplay                         0x0800345d   Thumb Code    16  u8x8_display.o(i.u8x8_InitDisplay)
+    u8x8_RefreshDisplay                      0x0800346d   Thumb Code    16  u8x8_display.o(i.u8x8_RefreshDisplay)
+    u8x8_SetPowerSave                        0x0800347d   Thumb Code    16  u8x8_display.o(i.u8x8_SetPowerSave)
+    u8x8_Setup                               0x0800348d   Thumb Code    34  u8x8_setup.o(i.u8x8_Setup)
+    u8x8_SetupDefaults                       0x080034b1   Thumb Code    32  u8x8_setup.o(i.u8x8_SetupDefaults)
+    u8x8_SetupMemory                         0x080034d5   Thumb Code    16  u8x8_display.o(i.u8x8_SetupMemory)
+    u8x8_ascii_next                          0x080034e5   Thumb Code    14  u8x8_8x8.o(i.u8x8_ascii_next)
+    u8x8_byte_4wire_hw_spi                   0x080034f5   Thumb Code   116  u8x8_display.o(i.u8x8_byte_4wire_hw_spi)
+    u8x8_byte_SendByte                       0x08003571   Thumb Code    12  u8x8_byte.o(i.u8x8_byte_SendByte)
+    u8x8_byte_SendBytes                      0x0800357d   Thumb Code    16  u8x8_byte.o(i.u8x8_byte_SendBytes)
+    u8x8_byte_SetDC                          0x0800358d   Thumb Code    16  u8x8_byte.o(i.u8x8_byte_SetDC)
+    u8x8_cad_001                             0x0800359d   Thumb Code    82  u8x8_cad.o(i.u8x8_cad_001)
+    u8x8_cad_EndTransfer                     0x080035ef   Thumb Code    16  u8x8_cad.o(i.u8x8_cad_EndTransfer)
+    u8x8_cad_SendArg                         0x080035ff   Thumb Code    16  u8x8_cad.o(i.u8x8_cad_SendArg)
+    u8x8_cad_SendCmd                         0x0800360f   Thumb Code    16  u8x8_cad.o(i.u8x8_cad_SendCmd)
+    u8x8_cad_SendData                        0x0800361f   Thumb Code    16  u8x8_cad.o(i.u8x8_cad_SendData)
+    u8x8_cad_SendSequence                    0x0800362f   Thumb Code   102  u8x8_cad.o(i.u8x8_cad_SendSequence)
+    u8x8_cad_StartTransfer                   0x08003695   Thumb Code    16  u8x8_cad.o(i.u8x8_cad_StartTransfer)
+    u8x8_d_helper_display_init               0x080036a5   Thumb Code    96  u8x8_display.o(i.u8x8_d_helper_display_init)
+    u8x8_d_helper_display_setup_memory       0x08003705   Thumb Code    10  u8x8_display.o(i.u8x8_d_helper_display_setup_memory)
+    u8x8_d_ssd1306_128x64_noname             0x08003711   Thumb Code    54  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname)
+    u8x8_dummy_cb                            0x08003815   Thumb Code     4  u8x8_setup.o(i.u8x8_dummy_cb)
+    u8x8_gpio_call                           0x08003819   Thumb Code    12  u8x8_gpio.o(i.u8x8_gpio_call)
+    u8x8_stm32_gpio_and_delay                0x08003825   Thumb Code    58  u8x8_display.o(i.u8x8_stm32_gpio_and_delay)
+    u8x8_utf8_init                           0x08003865   Thumb Code     8  u8x8_8x8.o(i.u8x8_utf8_init)
+    uxListRemove                             0x0800386d   Thumb Code    38  list.o(i.uxListRemove)
+    vListInsertEnd                           0x08003893   Thumb Code    24  list.o(i.vListInsertEnd)
+    vTaskSwitchContext                       0x080038ad   Thumb Code    82  tasks.o(i.vTaskSwitchContext)
+    xTaskIncrementTick                       0x08003909   Thumb Code   192  tasks.o(i.xTaskIncrementTick)
+    u8g2_font_6x10_tr                        0x080039d0   Data         979  u8g2_fonts.o(.constdata)
+    u8g2_font_inb24_mf                       0x08003da3   Data        8831  u8g2_fonts.o(.constdata)
+    u8g2_font_inb30_mn                       0x08006022   Data         805  u8g2_fonts.o(.constdata)
+    u8g2_cb_r0                               0x08006348   Data          12  u8g2_setup.o(.constdata)
+    Region$$Table$$Base                      0x08006468   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08006498   Number         0  anon$$obj.o(Region$$Table)
+    SET_TEST_MODE                            0x10000014   Data           4  usbd_core.o(.data)
+    USBD_ep_status                           0x1000001c   Data           4  usbd_req.o(.data)
+    USBD_default_cfg                         0x10000020   Data           4  usbd_req.o(.data)
+    USBD_cfg_status                          0x10000024   Data           4  usbd_req.o(.data)
+    Dir                                      0x20000000   Data           1  main.o(.data)
+    i                                        0x20000002   Data           2  main.o(.data)
+    Run_Time                                 0x20000006   Data           2  code_run_time.o(.data)
+    Menu_Num                                 0x20000008   Data           1  exti.o(.data)
+    Temperature_HIGH                         0x20000009   Data           1  exti.o(.data)
+    Temperature_LOW                          0x2000000a   Data           1  exti.o(.data)
+    Humidity_HIGH                            0x2000000b   Data           1  exti.o(.data)
+    Humidity_LOW                             0x2000000c   Data           1  exti.o(.data)
+    TransferError                            0x20000013   Data           1  sdio_sdcard.o(.data)
+    TransferEnd                              0x20000014   Data           1  sdio_sdcard.o(.data)
+    tempbuff                                 0x2000001c   Data           4  sdio_sdcard.o(.data)
+    CMD_RST                                  0x20000020   Data           9  esp8266.o(.data)
+    CMD_CIPMUX                               0x20000029   Data          14  esp8266.o(.data)
+    CMD_CIPSERVER                            0x20000037   Data          22  esp8266.o(.data)
+    pxCurrentTCB                             0x20000050   Data           4  tasks.o(.data)
+    USBD_DCD_INT_cb                          0x2000008c   Data          44  usbd_core.o(.data)
+    USBD_DCD_INT_fops                        0x200000b8   Data           4  usbd_core.o(.data)
+    flag                                     0x200000bc   Data           1  u8g2_usergui.o(.data)
+    eedata                                   0x200003d0   Data        1024  main.o(.bss)
+    SDIO_InitStructure                       0x200007d0   Data          24  sdio_sdcard.o(.bss)
+    SDIO_CmdInitStructure                    0x200007e8   Data          20  sdio_sdcard.o(.bss)
+    SDIO_DataInitStructure                   0x200007fc   Data          24  sdio_sdcard.o(.bss)
+    SDCardInfo                               0x20000834   Data          80  sdio_sdcard.o(.bss)
+    SDIO_DATA_BUFFER                         0x20000884   Data         512  sdio_sdcard.o(.bss)
+    USB_OTG_dev                              0x20000a84   Data        1524  test.o(.bss)
+    USART1_Data                              0x20001078   Data        4104  usart.o(.bss)
+    USART2_Data                              0x20002080   Data        4104  usart.o(.bss)
+    __initial_sp                             0x20010030   Data           0  startup_stm32f40_41xxx.o(STACK)
 
 
 
@@ -7953,6 +8211,9 @@ Memory Map of the image
     0x08002230   0x0000005c   Code   RO         1482    i.vTaskSwitchContext  tasks.o
     0x0800228c   0x000000c8   Code   RO         1490    i.xTaskIncrementTick  tasks.o
     0x08002354   0x00000020   Data   RO         4175    Region$$Table       anon$$obj.o
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00006890, Max: 0x00060000, ABSOLUTE, COMPRESSED[0x000066c4])
+
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00006498, Max: 0x00060000, ABSOLUTE)
 
 
     Execution Region USER_IROM (Base: 0x08060000, Size: 0x00000000, Max: 0x00020000, ABSOLUTE)
@@ -7962,8 +8223,12 @@ Memory Map of the image
 
     Execution Region RW_IRAM2 (Base: 0x10000000, Size: 0x00000000, Max: 0x00010000, ABSOLUTE)
 
-    **** No section assigned to this execution region ****
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
+    0x10000000   0x0800669c   0x00000010   Data   RW         2972    .data               stm32f4xx_rcc.o
+    0x10000010   0x080066ac   0x00000004   Data   RW         7069    .data               spi.o
+    0x10000014   0x080066b0   0x00000004   Data   RW        10114    .data               usbd_core.o
+    0x10000018   0x080066b4   0x00000010   Data   RW        10621    .data               usbd_req.o
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x0000f360, Max: 0x00020000, ABSOLUTE)
 
@@ -8038,6 +8303,7 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Library Member Name
 
+        86          0          0          0          0          0   __dczerorl2.o
          0          0          0          0          0          0   entry.o
          0          0          0          0          0          0   entry10a.o
          0          0          0          0          0          0   entry11a.o

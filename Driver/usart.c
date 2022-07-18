@@ -148,7 +148,8 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART2,0x3ff);
-	USART_ITConfig(USART2,USART_IT_RXNE,ENABLE);
+	USART_ITConfig(USART2,USART_IT_RXNE ,ENABLE);
+	USART_ITConfig(USART2,USART_IT_IDLE, ENABLE);//不支持或（ | ）操作
 	USART_Cmd(USART2,ENABLE);	
 }
 
@@ -212,7 +213,7 @@ void USARTx_ITHandle(USART_TypeDef* USARTx,USART_Data_t *USART_Data)
 		//此处必须先读SR再度DR来清标志位
 		i = USARTx->SR;
 		i = USARTx->DR;
-		
+		i++;
 		//此处可以使用DMA
 		USART_Data->RX_Length = USART_Data->RX_Pointer;
 		USART_Data->RX_Pointer = 0;
@@ -279,27 +280,31 @@ u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data
 //************************// 
 //  功能描述: 串口接收函数
 //  
-//  参数: 串口信息结构体指针,数据长度,接收数据指针
+//  参数: 串口信息结构体指针,缓冲数据长度，数据地址，实际接收长度
 //  
 //  返回值: TRUE:成功
-//			OVER_FLOW:数据超长
 //			BUSY:接收正忙
 //			ILDE:空闲
-//  说明: 
+//
+//  说明: 传入缓冲区长度，返回实际读出的数据长度
 //
 //************************//  
-u8 USART_GetData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
+u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length)
 {
 
-	if(Length > BUFFER_SIZE)
+	if( Buffsize > BUFFER_SIZE)
 	{
-		return OVER_FLOW;
+		memset(Data,0x00,Buffsize);
+		*Length = 0;
+		return FALSE;
 	}
-
-	memcpy(Data,0x00,Length);
-
+	
+	memset(Data,0x00,Buffsize);
+	
 	if( USART_Data->RX_Length  == 0 )
 	{
+		*Length = 0;
+
 		if( USART_Data->RX_Pointer != 0)
 		{
 			return BUSY;//正在接收数据
@@ -309,17 +314,23 @@ u8 USART_GetData(USART_Data_t *USART_Data,u16 Length,u8 *Data)
 			return ILDE;//空闲(上次取走数据后，没有接收到新数据)
 		}
 	}
-
-	// if( Length > USART_Data->RX_Length )//要读取的长度超出实际接收的长度
-	// {
-	// 	memcpy(Data,USART_Data->RX_Data,USART_Data->RX_Length);
-	// 	USART_Data->RX_Length = 0;
-	// 	return OVER_FLOW;
-	// }
-
-	memcpy(Data,USART_Data->RX_Data,Length);
-	USART_Data->RX_Length = 0;
-	return TRUE;
+	else
+	{
+		if( Buffsize >= USART_Data->RX_Length )//实际接收数据长度小于缓冲长度，则返回实际长度
+		{
+			*Length = USART_Data->RX_Length;
+			memcpy(Data,USART_Data->RX_Data,USART_Data->RX_Length);
+			USART_Data->RX_Length = 0;
+			return TRUE;
+		}
+		else//实际接收数据长度大于缓冲长度，则返回缓冲长度
+		{
+			*Length = Buffsize;
+			memcpy(Data,USART_Data->RX_Data,Buffsize);
+			USART_Data->RX_Length = 0;
+			return OVER_FLOW;
+		}
+	}
 
 }
 

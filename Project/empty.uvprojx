@@ -403,7 +403,7 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>.\Objects\1.sct</ScatterFile>
+            <ScatterFile>.\Listings\1.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -1065,6 +1065,16 @@
               <FileName>DataType.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Driver\DataType.h</FilePath>
+            </File>
+            <File>
+              <FileName>ESP8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\ESP8266.c</FilePath>
+            </File>
+            <File>
+              <FileName>ESP8266.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Driver\ESP8266.h</FilePath>
             </File>
           </Files>
         </Group>
