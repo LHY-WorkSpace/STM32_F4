@@ -234,12 +234,6 @@ void  UpdateCode_BySD()
 				ReadState = BCanRead;
 			}
 		}
-
-
-
-
-
-
 			printf("文件系统初始化失败\r\n");
 			Goto_UserCode(); 
 		}
@@ -265,6 +259,7 @@ void Goto_UserCode()
 		JumpAddress = *(vu32*) (USERCODE_BASE_ADDR + 4);   //取复位中断入口地址           
 		Jump_To_Application = (pFunction) JumpAddress;                             
 
+		CLOSE_ALL_IRQ;
 		__set_MSP(*(vu32*) USERCODE_BASE_ADDR);    //设置栈顶地址                      
 		Jump_To_Application();   
     }
