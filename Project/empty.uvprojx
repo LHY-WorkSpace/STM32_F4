@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,ARM_MATH_CM4, __FPU_PRESENT, __FPU_USED, __CC_ARM,USE_EMBEDDED_PHY,USE_USB_OTG_FS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal;..\Module\lvgl-v7\src\lv_widgets;..\Module\lvgl-v7\examples\Mark;..\Module\lvgl-v7\examples\Mark\assets;..\Module\lvgl-v7\lv_demos-7.11.0;..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets;..\Module\lvgl-v7\src\lv_core;..\Module\lvgl-v7\examples\porting;..\Module\u8g2_src</IncludePath>
+              <IncludePath>..\CMSIS;..\FreeRTOS\include;..\Module;..\STM32F4_Lib\inc;..\User;..\STM32F4_Lib\src;..\FreeRTOS\portable;..\FreeRTOS\Source;..\Module\MPU6050DMP;..\Module\SD;..\Driver;..\Module\USB_lib;..\Module\lvgl-v7;..\Module\lvgl-v7\src;..\Module\lvgl-v7\src\lv_hal;..\Module\lvgl-v7\src\lv_widgets;..\Module\lvgl-v7\examples\Mark;..\Module\lvgl-v7\examples\Mark\assets;..\Module\lvgl-v7\lv_demos-7.11.0;..\Module\lvgl-v7\lv_demos-7.11.0\src\lv_ex_widgets;..\Module\lvgl-v7\src\lv_core;..\Module\lvgl-v7\examples\porting;..\Module\u8g2_src;..\Module\EasyFlash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1019,19 +1019,9 @@
               <FilePath>..\Driver\lcd.c</FilePath>
             </File>
             <File>
-              <FileName>lcd.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Driver\lcd.h</FilePath>
-            </File>
-            <File>
               <FileName>XPT2046.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\XPT2046.c</FilePath>
-            </File>
-            <File>
-              <FileName>DataType.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Driver\DataType.h</FilePath>
             </File>
             <File>
               <FileName>ESP8266.c</FileName>
@@ -1039,9 +1029,9 @@
               <FilePath>..\Driver\ESP8266.c</FilePath>
             </File>
             <File>
-              <FileName>ESP8266.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Driver\ESP8266.h</FilePath>
+              <FileName>SPI_FLASH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\SPI_FLASH.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1117,21 +1107,6 @@
               <FileName>inv_mpu_dmp_motion_driver.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\MPU6050DMP\inv_mpu_dmp_motion_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Module\LVGL\lv_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>lvgl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Module\LVGL\lvgl.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_obj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Module\LVGL\src\core\lv_obj.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1667,6 +1642,51 @@
               <FileName>u8g2_UserGUI.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Module\u8g2_src\u8g2_UserGUI.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EasyFlash</GroupName>
+          <Files>
+            <File>
+              <FileName>easyflash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\easyflash.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_env.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_env.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_env_legacy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_env_legacy.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_env_legacy_wl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_env_legacy_wl.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_iap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_iap.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>ef_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\EasyFlash\ef_utils.c</FilePath>
             </File>
           </Files>
         </Group>

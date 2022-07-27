@@ -59,10 +59,11 @@ extern "C" {
 /* EasyFlash routine print function. Must be implement by user. */
 #define EF_INFO(...)  ef_log_info(__VA_ARGS__)
 /* EasyFlash assert for developer. */
-#define EF_ASSERT(EXPR)                                                       \
+#define EF_ASSERT(EXPR,ADDR)                                                       \
 if (!(EXPR))                                                                  \
 {                                                                             \
     EF_DEBUG("(%s) has assert failed at %s.\n", #EXPR, __FUNCTION__);         \
+    EF_DEBUG("Error: The ENV @0x%08X  \r\n",ADDR);               \
     while (1);                                                                \
 }
 

@@ -26,7 +26,7 @@
  * Created on: 2014-10-06
  */
 
-#include <easyflash.h>
+#include "easyflash.h"
 #include <string.h>
 #include <stdlib.h>
 
@@ -153,7 +153,7 @@ EfErrCode ef_env_init(ef_env const *default_env, size_t default_env_size) {
     default_env_set = default_env;
     default_env_set_size = default_env_size;
 
-    EF_DEBUG("ENV start address is 0x%08X, size is %d bytes.\n", EF_START_ADDR, ENV_AREA_SIZE);
+    EF_DEBUG("ENV start address is 0x%08X, size is %d bytes.\r\n", EF_START_ADDR, ENV_AREA_SIZE);
 
     result = ef_load_env();
 
@@ -363,7 +363,7 @@ static char *find_env(const char *key) {
     size_t key_len = strlen(key), env_len;
 
     if ((key == NULL) || *key == '\0') {
-        EF_INFO("Flash ENV name must be not empty!\n");
+        EF_INFO("Flash ENV name must be not empty!\r\n");
         return NULL;
     }
 
@@ -412,18 +412,18 @@ static EfErrCode create_env(const char *key, const char *value) {
     EF_ASSERT(value);
 
     if ((key == NULL) || *key == '\0') {
-        EF_INFO("Flash ENV name must be not empty!\n");
+        EF_INFO("Flash ENV name must be not empty!\r\n");
         return EF_ENV_NAME_ERR;
     }
 
     if (strchr(key, '=')) {
-        EF_INFO("Flash ENV name can't contain '='.\n");
+        EF_INFO("Flash ENV name can't contain '='.\r\n");
         return EF_ENV_NAME_ERR;
     }
 
     /* find ENV */
     if (find_env(key)) {
-        EF_INFO("The name of \"%s\" is already exist.\n", key);
+        EF_INFO("The name of \"%s\" is already exist.\r\n", key);
         return EF_ENV_NAME_EXIST;
     }
     /* write ENV at the end of cache */
@@ -447,12 +447,12 @@ static EfErrCode del_env(const char *key) {
     EF_ASSERT(key);
 
     if ((key == NULL) || *key == '\0') {
-        EF_INFO("Flash ENV name must be not NULL!\n");
+        EF_INFO("Flash ENV name must be not NULL!\r\n");
         return EF_ENV_NAME_ERR;
     }
 
     if (strchr(key, '=')) {
-        EF_INFO("Flash ENV name or value can't contain '='.\n");
+        EF_INFO("Flash ENV name or value can't contain '='.\r\n");
         return EF_ENV_NAME_ERR;
     }
 
@@ -460,7 +460,7 @@ static EfErrCode del_env(const char *key) {
     del_env = find_env(key);
 
     if (!del_env) {
-        EF_INFO("Not find \"%s\" in ENV.\n", key);
+        EF_INFO("Not find \"%s\" in ENV.\r\n", key);
         return EF_ENV_NAME_ERR;
     }
     del_env_length = strlen(del_env);
@@ -497,7 +497,7 @@ EfErrCode ef_set_env(const char *key, const char *value) {
     char *old_env, *old_value;
 
     if (!init_ok) {
-        EF_INFO("ENV isn't initialize OK.\n");
+        EF_INFO("ENV isn't initialize OK.\r\n");
         return EF_ENV_INIT_FAILED;
     }
 
@@ -543,7 +543,7 @@ EfErrCode ef_del_env(const char *key) {
     EfErrCode result = EF_NO_ERR;
 
     if (!init_ok) {
-        EF_INFO("ENV isn't initialize OK.\n");
+        EF_INFO("ENV isn't initialize OK.\r\n");
         return EF_ENV_INIT_FAILED;
     }
 
@@ -569,7 +569,7 @@ char *ef_get_env(const char *key) {
     char *env = NULL, *value = NULL;
 
     if (!init_ok) {
-        EF_INFO("ENV isn't initialize OK.\n");
+        EF_INFO("ENV isn't initialize OK.\r\n");
         return NULL;
     }
 
@@ -598,7 +598,7 @@ void ef_print_env(void) {
     char c;
 
     if (!init_ok) {
-        EF_INFO("ENV isn't initialize OK.\n");
+        EF_INFO("ENV isn't initialize OK.\r\n");
         return;
     }
 
@@ -607,7 +607,7 @@ void ef_print_env(void) {
             c = (*env_cache_data_addr) >> (8 * j);
             ef_print("%c", c);
             if (c == '\0') {
-                ef_print("\n");
+                ef_print("\r\n");
                 break;
             }
         }
@@ -615,16 +615,16 @@ void ef_print_env(void) {
 
 #ifndef EF_ENV_USING_PFS_MODE
     ef_print("\nmode: normal\n");
-    ef_print("size: %ld/%ld bytes.\n", get_env_user_used_size(), ENV_USER_SETTING_SIZE);
+    ef_print("size: %ld/%ld bytes.\r\n", get_env_user_used_size(), ENV_USER_SETTING_SIZE);
 #else
     ef_print("\nmode: power fail safeguard\n");
-    ef_print("size: %ld/%ld bytes, write bytes %ld/%ld.\n", get_env_user_used_size(),
+    ef_print("size: %ld/%ld bytes, write bytes %ld/%ld.\r\n", get_env_user_used_size(),
              ENV_USER_SETTING_SIZE, ef_get_env_write_bytes(), ENV_AREA_SIZE);
-    ef_print("saved count: %ld\n", env_cache[ENV_PARAM_INDEX_SAVED_COUNT]);
+    ef_print("saved count: %ld\r\n", env_cache[ENV_PARAM_INDEX_SAVED_COUNT]);
 #endif
 
 #ifdef EF_ENV_AUTO_UPDATE
-    ef_print("ver num: %d\n", env_cache[ENV_PARAM_INDEX_VER_NUM]);
+    ef_print("ver num: %d\r\n", env_cache[ENV_PARAM_INDEX_VER_NUM]);
 #endif
 }
 
@@ -656,7 +656,7 @@ EfErrCode ef_load_env(void) {
                      &env_cache[ENV_PARAM_INDEX_DATA_CRC] , 4);
         /* if ENV CRC32 check is fault, set default for it */
         if (!env_crc_is_ok()) {
-            EF_INFO("Warning: ENV CRC check failed. Set it to default.\n");
+            EF_INFO("Warning: ENV CRC check failed. Set it to default.\r\n");
             result = ef_env_set_default();
         }
     }
@@ -775,11 +775,11 @@ EfErrCode ef_save_env(void) {
     result = ef_port_erase(write_addr, write_size);
     switch (result) {
     case EF_NO_ERR: {
-        EF_DEBUG("Erased ENV OK.\n");
+        EF_DEBUG("Erased ENV OK.\r\n");
         break;
     }
     case EF_ERASE_ERR: {
-        EF_INFO("Error: Erased ENV fault! Start address is 0x%08X, size is %ld.\n", write_addr, write_size);
+        EF_INFO("Error: Erased ENV fault! Start address is 0x%08X, size is %ld.\r\n", write_addr, write_size);
         /* will return when erase fault */
         return result;
     }
@@ -789,11 +789,11 @@ EfErrCode ef_save_env(void) {
     result = ef_port_write(write_addr, env_cache, write_size);
     switch (result) {
     case EF_NO_ERR: {
-        EF_DEBUG("Saved ENV OK.\n");
+        EF_DEBUG("Saved ENV OK.\r\n");
         break;
     }
     case EF_WRITE_ERR: {
-        EF_INFO("Error: Saved ENV fault! Start address is 0x%08X, size is %ld.\n", write_addr, write_size);
+        EF_INFO("Error: Saved ENV fault! Start address is 0x%08X, size is %ld.\r\n", write_addr, write_size);
         break;
     }
     }
@@ -822,7 +822,7 @@ static uint32_t calc_env_crc(void) {
     /* Calculate the all ENV data CRC32. */
     crc32 = ef_calc_crc32(crc32, &env_cache[ENV_PARAM_WORD_SIZE], get_env_data_size());
 
-    EF_DEBUG("Calculate ENV CRC32 number is 0x%08X.\n", crc32);
+    EF_DEBUG("Calculate ENV CRC32 number is 0x%08X.\r\n", crc32);
 
     return crc32;
 }
@@ -834,7 +834,7 @@ static uint32_t calc_env_crc(void) {
  */
 static bool env_crc_is_ok(void) {
     if (calc_env_crc() == env_cache[ENV_PARAM_INDEX_DATA_CRC]) {
-        EF_DEBUG("Verify ENV CRC32 result is OK.\n");
+        EF_DEBUG("Verify ENV CRC32 result is OK.\r\n");
         return true;
     } else {
         return false;

@@ -26,100 +26,100 @@ u8 DataBuff[1024];
 
 
 
-u8 ESP8266_GetDaTaState()
-{
-	if( USART_GetData(&USART2_Data,sizeof(DataBuff),DataBuff,&length) != TRUE)
-	{
-		return FALSE;
-	}
-	return TRUE;
-}
+// u8 ESP8266_GetDaTaState()
+// {
+// 	if( USART_GetData(&USART2_Data,sizeof(DataBuff),DataBuff,&length) != TRUE)
+// 	{
+// 		return FALSE;
+// 	}
+// 	return TRUE;
+// }
 
 
 
 
-void ESP8266_SendData(u8 *Data)
-{
+// void ESP8266_SendData(u8 *Data)
+// {
 
-}
-
-
-
-u8 ESP8266_SearchData(char *Data,u16 DataSzie,u16 *Position)
-{	
-	u8 i;
-	u16 length,k=0;
-
-	if( USART_GetData(&USART2_Data,sizeof(DataBuff),DataBuff,&length) == TRUE)
-	{
-		do
-		{
-			if(memcmp(Data,(char *)(DataBuff+k),DataSzie) == 0 )
-			{
-				*Position = k;
-				return TRUE;
-			}
-			k++;
-		}
-		while( k < sizeof(DataBuff) );
-	}
-
-	return FALSE;
-
-}
+// }
 
 
-void GetConnectState()
-{
 
-	if( ESP8266_SearchData("CONNECT",strlen("CONNECT")) != TRUE)
-	{
-		return 2;
-	}
+// u8 ESP8266_SearchData(char *Data,u16 DataSzie,u16 *Position)
+// {	
+// 	u8 i;
+// 	u16 length,k=0;
 
-}
+// 	if( USART_GetData(&USART2_Data,sizeof(DataBuff),DataBuff,&length) == TRUE)
+// 	{
+// 		do
+// 		{
+// 			if(memcmp(Data,(char *)(DataBuff+k),DataSzie) == 0 )
+// 			{
+// 				*Position = k;
+// 				return TRUE;
+// 			}
+// 			k++;
+// 		}
+// 		while( k < sizeof(DataBuff) );
+// 	}
+
+// 	return FALSE;
+
+// }
 
 
-u8 ESP8266_CMD_Check()
-{
+// void GetConnectState()
+// {
 
-	if ( ESP8266_GetDaTaState() != TRUE )
-	{
+// 	if( ESP8266_SearchData("CONNECT",strlen("CONNECT")) != TRUE)
+// 	{
+// 		return 2;
+// 	}
+
+// }
+
+
+// u8 ESP8266_CMD_Check()
+// {
+
+// 	if ( ESP8266_GetDaTaState() != TRUE )
+// 	{
 		
-	}
+// 	}
 
 
 
 
-}
+// }
 
 
 
 
 
-u8 ESP8266_Init()
-{
-	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_RST),(u8 *)CMD_RST);
-	Delay_ms(500);
-	if( ESP8266_SearchData("ready",strlen("ready")) != TRUE)
-	{
-		return 2;
-	}
-	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_CIPMUX),(u8 *)CMD_CIPMUX);
-	Delay_ms(100);
-	if( ESP8266_SearchData("OK",strlen("OK")) != TRUE)
-	{
-		return 3;
-	}
-	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_CIPSERVER),(u8 *)CMD_CIPSERVER);
-	Delay_ms(100);
-	if( ESP8266_SearchData("OK",strlen("OK")) != TRUE)
-	{
-		return 4;
-	}
+// u8 ESP8266_Init()
+// {
+// 	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_RST),(u8 *)CMD_RST);
+// 	Delay_ms(500);
+// 	if( ESP8266_SearchData("ready",strlen("ready")) != TRUE)
+// 	{
+// 		return 2;
+// 	}
+// 	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_CIPMUX),(u8 *)CMD_CIPMUX);
+// 	Delay_ms(100);
+// 	if( ESP8266_SearchData("OK",strlen("OK")) != TRUE)
+// 	{
+// 		return 3;
+// 	}
+// 	USART_ITSendData(USART2,&USART2_Data,sizeof(CMD_CIPSERVER),(u8 *)CMD_CIPSERVER);
+// 	Delay_ms(100);
+// 	if( ESP8266_SearchData("OK",strlen("OK")) != TRUE)
+// 	{
+// 		return 4;
+// 	}
 
-	return TRUE;
-}
+// 	return TRUE;
+// }
 
 
 

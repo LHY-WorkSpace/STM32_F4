@@ -8,7 +8,7 @@
 #define  ILDE       3
 #define  OVER_FLOW  4
 #define  DATA_ERR   5
-
+#define  OVER_TIME  6
 
 
 #define  HIGH   1

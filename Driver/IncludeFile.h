@@ -2,7 +2,7 @@
 #define  _INCLUDE_FILE_H_
 
 //标准文件
-#include "../User/stm32f4xx.h"
+#include "stm32f4xx.h"
 #include "string.h"
 #include "stdint.h"
 #include "stdlib.h"
@@ -37,6 +37,7 @@
 #include "DHT11.h"
 #include "DS18B20.h"
 #include "oled.h"
+#include "SPI_FLASH.h"
 #include "ESP8266.h"
 // #include "lcd1602.h"
 #include "HC_SR04.h"
@@ -94,6 +95,7 @@
 #endif
 
 
+#include "easyflash.h"
 
 #endif
 

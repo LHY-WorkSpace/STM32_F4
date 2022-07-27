@@ -26,13 +26,18 @@
  * Created on: 2015-01-16
  */
 
-#include <easyflash.h>
+#include "easyflash.h"
 #include <stdarg.h>
+#include "IncludeFile.h"
 
 /* default environment variables set for user */
 static const ef_env default_env_set[] = {
-
+    {"BT-XXXX","7274", 0},
+	{"Jack Cooper","Titanfall-2", 0},
 };
+
+char log_buf[300];
+
 
 /**
  * Flash port for hardware initialize.
@@ -65,7 +70,7 @@ EfErrCode ef_port_read(uint32_t addr, uint32_t *buf, size_t size) {
     EfErrCode result = EF_NO_ERR;
 
     /* You can add your code under here. */
-
+    Flash_Read_Data(addr,(uint8_t *)buf,size);
     return result;
 }
 
@@ -83,10 +88,10 @@ EfErrCode ef_port_erase(uint32_t addr, size_t size) {
     EfErrCode result = EF_NO_ERR;
 
     /* make sure the start address is a multiple of EF_ERASE_MIN_SIZE */
-    EF_ASSERT(addr % EF_ERASE_MIN_SIZE == 0);
+    EF_ASSERT(addr % EF_ERASE_MIN_SIZE == 0,0);
 
     /* You can add your code under here. */
-
+    Flash_Sector_Erase(addr,ERASE_MODE_ADDR);
     return result;
 }
 /**
@@ -104,7 +109,7 @@ EfErrCode ef_port_write(uint32_t addr, const uint32_t *buf, size_t size) {
     EfErrCode result = EF_NO_ERR;
     
     /* You can add your code under here. */
-
+    Flash_Write_Data(addr,(uint8_t *)buf,size);
     return result;
 }
 
@@ -146,7 +151,11 @@ void ef_log_debug(const char *file, const long line, const char *format, ...) {
     va_start(args, format);
 
     /* You can add your code under here. */
-    
+	// printf("[Flash](%s:%ld) ", file, line);
+    /* must use vprintf to print */
+    vsprintf(log_buf, format, args);
+    ef_print("%s", log_buf);
+
     va_end(args);
 
 #endif
@@ -166,7 +175,12 @@ void ef_log_info(const char *format, ...) {
     va_start(args, format);
 
     /* You can add your code under here. */
-    
+        /* You can add your code under here. */
+	// printf("[Flash]");
+    /* must use vprintf to print */
+    vsprintf(log_buf, format, args);
+    ef_print("%s", log_buf);
+
     va_end(args);
 }
 /**
@@ -180,8 +194,8 @@ void ef_print(const char *format, ...) {
 
     /* args point to the first variable parameter */
     va_start(args, format);
-
-    /* You can add your code under here. */
     
+    printf("%s", log_buf);
+    /* You can add your code under here. */
     va_end(args);
 }

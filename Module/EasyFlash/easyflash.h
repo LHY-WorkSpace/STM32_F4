@@ -33,8 +33,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <ef_cfg.h>
-#include <ef_def.h>
+#include "ef_cfg.h"
+#include "ef_def.h"
 
 #ifdef __cplusplus
 extern "C" {
