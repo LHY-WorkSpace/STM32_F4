@@ -78,68 +78,6 @@
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>18</CpuCode>
-      <Books>
-        <Book>
-          <Number>0</Number>
-          <Title>MCBSTM32F400 Quick Start Guide (MCBSTM32F400)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\MCBSTM32F400_QSG.pdf</Path>
-        </Book>
-        <Book>
-          <Number>1</Number>
-          <Title>User Manual (MCBSTM32F400)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f200.chm</Path>
-        </Book>
-        <Book>
-          <Number>2</Number>
-          <Title>Schematics V1.1 (MCBSTM32F400)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f400-schematics.pdf</Path>
-        </Book>
-        <Book>
-          <Number>3</Number>
-          <Title>Schematics V1.2 (MCBSTM32F400)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\Keil\MCBSTM32F400\Documentation\mcbstm32f400-schematics_V1.2.pdf</Path>
-        </Book>
-        <Book>
-          <Number>4</Number>
-          <Title>STM32F4-Discovery Quick Start Guide (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\32F4-DISCOVERY_QSG.pdf</Path>
-        </Book>
-        <Book>
-          <Number>5</Number>
-          <Title>Getting Started (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00037368.pdf</Path>
-        </Book>
-        <Book>
-          <Number>6</Number>
-          <Title>User Manual (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\DM00039084.pdf</Path>
-        </Book>
-        <Book>
-          <Number>7</Number>
-          <Title>Bill of Materials (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_bom.zip</Path>
-        </Book>
-        <Book>
-          <Number>8</Number>
-          <Title>Gerber Files (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_gerber.zip</Path>
-        </Book>
-        <Book>
-          <Number>9</Number>
-          <Title>Schematics (STM32F4-Discovery)</Title>
-          <Path>D:\SoftWare\MDK\ARM\PACK\Keil\STM32F4xx_DFP\2.15.0\MDK\Boards\ST\STM32F4-Discovery\Documentation\stm32f4discovery_sch.zip</Path>
-        </Book>
-        <Book>
-          <Number>10</Number>
-          <Title>MCBSTM32F400 Evaluation Board Web Page (MCBSTM32F400)</Title>
-          <Path>http://www.keil.com/mcbstm32f400/</Path>
-        </Book>
-        <Book>
-          <Number>11</Number>
-          <Title>STM32F4-Discovery Web Page (STM32F4-Discovery)</Title>
-          <Path>http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1199/PF252419</Path>
-        </Book>
-      </Books>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -162,7 +100,10 @@
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>11</nTsel>
+        <bEvRecOn>1</bEvRecOn>
+        <bSchkAxf>0</bSchkAxf>
+        <bTchkAxf>0</bTchkAxf>
+        <nTsel>6</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -221,66 +162,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>629</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>134236636</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Module\EasyFlash\ef_env.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\1\../Module/EasyFlash/ef_env.c\629</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>1846</LineNumber>
+          <LineNumber>28</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134233056</Address>
+          <Address>134224626</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Module\EasyFlash\ef_env.c</Filename>
+          <Filename>..\FreeRTOS\FreeROS_Communication.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../Module/EasyFlash/ef_env.c\1846</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>1789</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134233688</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Module\EasyFlash\ef_env.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\1\../Module/EasyFlash/ef_env.c\1789</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>210</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134235472</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\User\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\1\../User/main.c\210</Expression>
+          <Expression>\\1\../FreeRTOS/FreeROS_Communication.c\28</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -375,14 +268,19 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
       <bLintAuto>0</bLintAuto>
-      <SystemViewers>
-        <Entry>
-          <Name>System Viewer\USART1</Name>
-          <WinId>35905</WinId>
-        </Entry>
-      </SystemViewers>
+      <bAutoGenD>0</bAutoGenD>
+      <LntExFlags>0</LntExFlags>
+      <pMisraName></pMisraName>
+      <pszMrule></pszMrule>
+      <pSingCmds></pSingCmds>
+      <pMultCmds></pMultCmds>
+      <pMisraNamep></pMisraNamep>
+      <pszMrulep></pszMrulep>
+      <pSingCmdsp></pSingCmdsp>
+      <pMultCmdsp></pMultCmdsp>
       <DebugDescription>
         <Enable>0</Enable>
+        <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
         <DbgClock>20000000</DbgClock>
@@ -1464,7 +1362,7 @@
 
   <Group>
     <GroupName>User</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -1568,7 +1466,7 @@
 
   <Group>
     <GroupName>Driver</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3396,7 +3294,7 @@
 
   <Group>
     <GroupName>EasyFlash</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

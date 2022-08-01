@@ -2,7 +2,16 @@
 
 
 
-//窗口看门狗   4 秒
+//***************************************************//
+//  功能描述: 看门狗初始化
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 4秒
+//  
+//***************************************************//
 void IWDOG_Init()
 {
     IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
@@ -15,7 +24,16 @@ void IWDOG_Init()
 }
 
 
-//喂狗
+//***************************************************//
+//  功能描述: 喂狗
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
 void IWDOG_Clear()
 {
     IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
@@ -25,6 +43,12 @@ void IWDOG_Clear()
 
     IWDG_WriteAccessCmd(IWDG_WriteAccess_Disable);
 }
+
+
+
+
+
+
 
 
 //独立看门狗
