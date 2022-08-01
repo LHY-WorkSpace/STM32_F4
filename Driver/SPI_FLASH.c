@@ -361,7 +361,7 @@ u8 Flash_Write_Data(u32 Addr,u8 *Data,u32 Length)
 
 		for ( i = 0; i < WR_Len; i++)
 		{
-			FLASH_SendData(Data[i]);
+			FLASH_SendData(Data[LenCount]);
 			LenCount++;
 		}
 

@@ -350,28 +350,28 @@ QueueHandle_t USART1_TaskHandle;
 //************************//  
 void USART1_IRQHandler()
 {
-	u8 Buff,i;
-		//接收中断
-	if(USART_GetITStatus(USART1,USART_IT_RXNE) != RESET)
-	{
-		USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-		Buff = USART_ReceiveData(USART1);
-		xQueueSendFromISR( USART1_TaskHandle,&Buff,NULL);
-	}
+	// u8 Buff,i;
+	// 	//接收中断
+	// if(USART_GetITStatus(USART1,USART_IT_RXNE) != RESET)
+	// {
+	// 	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+	// 	Buff = USART_ReceiveData(USART1);
+	// 	xQueueSendFromISR( USART1_TaskHandle,&Buff,NULL);
+	// }
 
-	//接收空闲中断
-	if(USART_GetITStatus(USART1,USART_IT_IDLE) != RESET)
-	{
-		//此处必须先读SR再度DR来清标志位
-		i = USART1->SR;
-		i = USART1->DR;
-		i++;
+	// //接收空闲中断
+	// if(USART_GetITStatus(USART1,USART_IT_IDLE) != RESET)
+	// {
+	// 	//此处必须先读SR再度DR来清标志位
+	// 	i = USART1->SR;
+	// 	i = USART1->DR;
+	// 	i++;
 
-	}
+	// }
 
 
 
-	//USARTx_ITHandle(USART1,&USART1_Data);
+	USARTx_ITHandle(USART1,&USART1_Data);
 }
 
 void USART2_IRQHandler()

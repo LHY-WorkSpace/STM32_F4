@@ -2,6 +2,260 @@
 
 
 
+
+
+u8 eedata[4096];
+
+void test_env(void)
+{
+	char wifi_ssid[20] = {0};
+	char wifi_passwd[20] = {0};
+	size_t len = 0;
+	
+
+
+	/* 读取默认环境变量值 */
+	//环境变量长度未知，先获取 Flash 上存储的实际长度 */
+	ef_get_env_blob("BT-XXXX", NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob("BT-XXXX", wifi_ssid, len, NULL);
+	//打印获取的环境变量值
+	printf("BT-XXXX env is:%s\r\n", wifi_ssid);
+	
+	//环境变量长度未知，先获取 Flash 上存储的实际长度 */
+	ef_get_env_blob("Jack Cooper", NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob("Jack Cooper", wifi_passwd, len, NULL);
+	//打印获取的环境变量值
+	printf("Jack Cooper env is:%s\r\n", wifi_passwd);
+
+
+	// // // /* 将环境变量值改变 */
+	// ef_set_env_blob("BT-XXXX", "12345", 5);
+	// ef_set_env_blob("Jack Cooper", "54321", 5);
+
+
+	// memset(wifi_ssid,0x00,sizeof(wifi_ssid));
+	// memset(wifi_passwd,0x00,sizeof(wifi_passwd));
+
+
+	// // /* 读取默认环境变量值 */
+	// //环境变量长度未知，先获取 Flash 上存储的实际长度 */
+	// ef_get_env_blob("BT-XXXX", NULL, 0, &len);
+	// //获取环境变量
+	// ef_get_env_blob("BT-XXXX", wifi_ssid, len, NULL);
+	// //打印获取的环境变量值
+	// printf("BT-XXXX env is:%s\r\n", wifi_ssid);
+	
+	// //环境变量长度未知，先获取 Flash 上存储的实际长度 */
+	// ef_get_env_blob("Jack Cooper", NULL, 0, &len);
+	// //获取环境变量
+	// ef_get_env_blob("Jack Cooper", wifi_passwd, len, NULL);
+	// //打印获取的环境变量值
+	// printf("Jack Cooper env is:%s\r\n", wifi_passwd);
+	
+}
+
+
+void Test_Save()
+{
+	char Name[10];
+	char Val[10];
+
+	u8 i,k;
+	printf("Write======================================\r\n");
+	for ( i = 0; i < 10; i++)
+	{
+		memset(Name,0X00,sizeof(Name));
+		memset(Val,0X00,sizeof(Val));
+		sprintf(Name,"%d",i);
+		sprintf(Val,"%d",i);
+		ef_set_env_blob(Name,Val,5);
+		for ( k = 0; k < sizeof(Name); k++)
+		{
+			printf("%c",Name[k]);
+		}
+		printf(" ");
+		for ( k = 0; k < sizeof(Val); k++)
+		{
+			printf("%c",Val[k]);
+		}
+			printf("\r\n");
+
+	}
+	printf("Read======================================\r\n");
+	for ( i = 0; i < 10; i++)
+	{
+		memset(Name,0X00,sizeof(Name));
+		memset(Val,0X00,sizeof(Val));
+		sprintf(Name,"%d",i);
+		sprintf(Val,"%d",i);
+		ef_get_env_blob(Name,Val,5,NULL);
+
+		for ( k = 0; k < sizeof(Name); k++)
+		{
+			printf("%c",Name[k]);
+		}
+		printf(" ");
+		for ( k = 0; k < sizeof(Val); k++)
+		{
+			printf("%c",Val[k]);
+		}
+		printf("\r\n");
+	}
+
+}
+
+void GetData()
+{
+
+
+	char Name[10];
+	char Val[10];
+
+	u8 i,k;
+	printf("Read======================================\r\n");
+	for ( i = 0; i < 10; i++)
+	{
+		memset(Name,0X00,sizeof(Name));
+		memset(Val,0X00,sizeof(Val));
+		sprintf(Name,"%d",i);
+		// sprintf(Val,"%d",i);
+		ef_get_env_blob(Name,Val,5,NULL);
+
+		for ( k = 0; k < sizeof(Name); k++)
+		{
+			printf("%c",Name[k]);
+		}
+		printf(" ");
+		for ( k = 0; k < sizeof(Val); k++)
+		{
+			printf("%c",Val[k]);
+		}
+		printf("\r\n");
+	}
+
+
+
+}
+
+
+
+
+
+
+
+void Set_New()
+{
+
+	size_t len = 0;
+	printf("=================================\r\n");
+
+	ef_get_env_blob("KFC", NULL, 0, &len);
+	eedata[4095]=0;
+	printf("KFC env  %d  is:%s\r\n",len, eedata);
+
+	memset(eedata,'A',sizeof(eedata));
+
+	ef_set_env_blob("KFC",eedata ,sizeof(eedata));
+	ef_get_env_blob("KFC", NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob("KFC", eedata, len, NULL);
+	//打印获取的环境变量值
+	eedata[4095]=0;
+	printf("KFC env  %d  is:%s\r\n",len, eedata);
+
+	memset(eedata,0,sizeof(eedata));
+	ef_get_env_blob("KFC", eedata, sizeof(eedata), NULL);
+	//打印获取的环境变量值
+	eedata[4095]=0;
+	printf("sizeof  KFC env is:%s\r\n", eedata);
+
+}
+
+
+
+void Write_Test()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u8 V_Data[50];
+	char K_Data[10];
+
+	memcpy(K_Data,"BT-",3);
+	sprintf(K_Data+3,"%d",K++);
+
+	memset(V_Data,0x72,sizeof(V_Data));
+
+	ef_set_env_blob(K_Data,V_Data ,sizeof(V_Data));
+	ef_get_env_blob(K_Data, NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%c ",K_Data[i]);
+	}
+	printf("  :  ");
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%x ",V_Data[i]);
+	}
+	printf("\r\n");
+	
+}
+
+
+void Read_Data()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u16 j; 
+	u8 V_Data[50];
+	char K_Data[10];
+
+	for ( j = 0; j < 5000; j++)
+	{
+		memcpy(K_Data,"BT-",3);
+		sprintf(K_Data+3,"%d",K++);
+
+		ef_get_env_blob(K_Data, NULL, 0, &len);
+		//获取环境变量
+		ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%c ",K_Data[i]);
+		}
+		printf("  :  ");
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%x ",V_Data[i]);
+		}
+		printf("\r\n");
+		IWDOG_Clear();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+u16 i;
+
+u8 UARTDATA[10];
+
 void CreateAllTask()
 {
 	//u8g2_TaskCreate();
@@ -18,13 +272,7 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	
-	printf("Power Online\r\n");
-
-
-
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
-	vTaskStartScheduler();
+	Flash_IO_Init();
 	// AT24C08_Init();
 	// PWM_Init(0,0);
 	// OLED_Init();
@@ -32,45 +280,52 @@ int  main()
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 
-	// while (1)
-	// {	
 
 
-	// 	if( USART_GetData(&USART1_Data,sizeof(UARTDATA),UARTDATA,&i) == TRUE)
-	// 	{
-	// 		if(UARTDATA[0] == 1)
-	// 		{
-	// 			ef_env_set_default();
-	// 			printf("ReBoot\r\n", eedata);
-	// 			IWDOG_Init();
-	// 			SW_Reset();
-	// 		}
-	// 		if(UARTDATA[0] == 2)
-	// 		{
-	// 			Test_Save();
-	// 			ef_save_env();
-	// 		}
-	// 		if(UARTDATA[0] == 3)
-	// 		{
-	// 			easyflash_init();
-	// 			IWDOG_Init();
-	// 		}
-	// 		if(UARTDATA[0] == 4)
-	// 		{
-	// 			GetData();
-	// 			test_env();
-	// 		}		
-			
-			
-	// 		UARTDATA[0]=0;
-	// 	}
-	// 	Delay_ms(500);
-	// 	LED1_ON;
-	// 	Delay_ms(500);
-	// 	LED1_OFF;
-	// 	IWDOG_Clear();
+	printf("Power Online\r\n");
 
-	// }
+
+
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
+	// vTaskStartScheduler();
+
+
+	while (1)
+	{	
+
+
+		if( USART_GetData(&USART1_Data,sizeof(UARTDATA),UARTDATA,&i) == TRUE)
+		{
+			if(UARTDATA[0] == 1)
+			{
+				ef_env_set_default();
+				printf("ReBoot\r\n", eedata);
+				IWDOG_Init();
+				SW_Reset();
+			}
+			if(UARTDATA[0] == 2)
+			{
+				Write_Test();
+				ef_save_env();
+			}
+			if(UARTDATA[0] == 3)
+			{
+				easyflash_init();
+				IWDOG_Init();
+			}
+			if(UARTDATA[0] == 4)
+			{
+				Read_Data();
+			}
+			UARTDATA[0]=0;
+		}
+		Delay_ms(10);
+		LED1_ON;
+		Delay_ms(10);
+		LED1_OFF;
+		IWDOG_Clear();
+
+	}
 
 }
 	// XPT2046_Read(&NoUse, &TouchData);
