@@ -398,6 +398,79 @@ u8 Flash_Write_Data(u32 Addr,u8 *Data,u32 Length)
 }
 
 
+//***************************************************//
+//  功能描述: Flash写数据函数(任意地址，任意长度)
+//  
+//  参数: 地址，数据指针，长度
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 带自动擦除的写入
+//  
+//***************************************************//
+u8 Flash_AnyAddr_Write_Data(u32 Addr,u8 *Data,u32 Length)
+{
+	u8 *Data_Point = NULL;
+	u32 i,k;
+	u32 EndAddr,Offset,WR_Len;
+	u32 WriteAddr;
+	u8 SectorBufff[FLASH_SECTOR_SIZE];
+
+	Data_Point = Data;
+	WriteAddr = Addr;
+	EndAddr = Addr + Length;
+
+	if( ( Addr >= FLASH_SIZE )  || (  EndAddr > FLASH_SIZE ) )
+	{
+		return FALSE;
+	}
+
+	while(1)
+	{
+
+		//读取整个扇区数据
+		Flash_Read_Data( (WriteAddr / FLASH_SECTOR_SIZE)*FLASH_SECTOR_SIZE ,SectorBufff,FLASH_SECTOR_SIZE);
+		Offset = WriteAddr % FLASH_SECTOR_SIZE;
+		WR_Len = FLASH_SECTOR_SIZE - Offset;//该扇区剩余空间
+		
+		if( WR_Len >= Length) 
+		{
+			WR_Len = Length;
+		}
+
+		for(k=0; k < WR_Len; k++)
+		{
+			if( SectorBufff[Offset+k] != 0xFF)
+			{
+				break;
+			}
+		}
+
+		if( k < WR_Len )//需要擦除
+		{
+			WriteAddr = (WriteAddr / FLASH_SECTOR_SIZE)*FLASH_SECTOR_SIZE;
+			Flash_Sector_Erase(WriteAddr,ERASE_MODE_ADDR);
+			Offset = 0;
+			WR_Len = FLASH_SECTOR_SIZE;
+		}
+
+		memcpy((SectorBufff + Offset),Data_Point,WR_Len);
+
+		Flash_Write_Data( WriteAddr,(SectorBufff + Offset),WR_Len);
+
+		WriteAddr += WR_Len;
+		Data_Point += WR_Len;
+		Length -= WR_Len;
+
+		if( WriteAddr >= (EndAddr) )
+		{
+			break;
+		}
+	}
+	return TRUE;
+}
+
+
  u8 FLASH_ID[20];
 void Flash_GetID()
 {
