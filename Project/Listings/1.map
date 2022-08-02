@@ -1,4 +1,4 @@
-Component: ARM Compiler 5.06 update 1 (build 61) Tool: armlink [4d35a8]
+Component: ARM Compiler 5.06 update 7 (build 960) Tool: armlink [4d3601]
 
 ==============================================================================
 
@@ -231,11 +231,16 @@ Section Cross References
     stm32f4xx_usart.o(i.USART_DeInit) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphResetCmd) for RCC_APB1PeriphResetCmd
     stm32f4xx_usart.o(i.USART_Init) refers to stm32f4xx_rcc.o(i.RCC_GetClocksFreq) for RCC_GetClocksFreq
     stm32f4xx_wwdg.o(i.WWDG_DeInit) refers to stm32f4xx_rcc.o(i.RCC_APB1PeriphResetCmd) for RCC_APB1PeriphResetCmd
-    main.o(i.CreateAllTask) refers to u8g2_usergui.o(i.u8g2_TaskCreate) for u8g2_TaskCreate
+    main.o(i.CreateAllTask) refers to freeros_communication.o(i.Create_Task) for Create_Task
     main.o(i.CreateAllTask) refers to tasks.o(i.vTaskDelete) for vTaskDelete
     main.o(i.GetData) refers to printfa.o(i.__0printf) for __2printf
     main.o(i.GetData) refers to printfa.o(i.__0sprintf) for __2sprintf
     main.o(i.GetData) refers to ef_env.o(i.ef_get_env_blob) for ef_get_env_blob
+    main.o(i.Read_Data) refers to printfa.o(i.__0sprintf) for __2sprintf
+    main.o(i.Read_Data) refers to ef_env.o(i.ef_get_env_blob) for ef_get_env_blob
+    main.o(i.Read_Data) refers to printfa.o(i.__0printf) for __2printf
+    main.o(i.Read_Data) refers to wdog.o(i.IWDOG_Clear) for IWDOG_Clear
+    main.o(i.Read_Data) refers to main.o(.data) for .data
     main.o(i.Set_New) refers to printfa.o(i.__0printf) for __2printf
     main.o(i.Set_New) refers to ef_env.o(i.ef_get_env_blob) for ef_get_env_blob
     main.o(i.Set_New) refers to memseta.o(.text) for __aeabi_memset
@@ -245,21 +250,28 @@ Section Cross References
     main.o(i.Test_Save) refers to printfa.o(i.__0sprintf) for __2sprintf
     main.o(i.Test_Save) refers to ef_env.o(i.ef_set_env_blob) for ef_set_env_blob
     main.o(i.Test_Save) refers to ef_env.o(i.ef_get_env_blob) for ef_get_env_blob
+    main.o(i.Write_Test) refers to printfa.o(i.__0sprintf) for __2sprintf
+    main.o(i.Write_Test) refers to memseta.o(.text) for __aeabi_memset
+    main.o(i.Write_Test) refers to ef_env.o(i.ef_set_env_blob) for ef_set_env_blob
+    main.o(i.Write_Test) refers to ef_env.o(i.ef_get_env_blob) for ef_get_env_blob
+    main.o(i.Write_Test) refers to printfa.o(i.__0printf) for __2printf
+    main.o(i.Write_Test) refers to main.o(.data) for .data
     main.o(i.main) refers to misc.o(i.NVIC_PriorityGroupConfig) for NVIC_PriorityGroupConfig
     main.o(i.main) refers to usart.o(i.USART1_Init) for USART1_Init
     main.o(i.main) refers to timer.o(i.Delay_Init) for Delay_Init
-    main.o(i.main) refers to spi_flash.o(i.Flash_IO_Init) for Flash_IO_Init
     main.o(i.main) refers to led.o(i.led_init) for led_init
+    main.o(i.main) refers to spi_flash.o(i.Flash_IO_Init) for Flash_IO_Init
     main.o(i.main) refers to printfa.o(i.__0printf) for __2printf
     main.o(i.main) refers to usart.o(i.USART_GetData) for USART_GetData
     main.o(i.main) refers to ef_env.o(i.ef_env_set_default) for ef_env_set_default
     main.o(i.main) refers to wdog.o(i.IWDOG_Init) for IWDOG_Init
     main.o(i.main) refers to systemstate.o(i.SW_Reset) for SW_Reset
-    main.o(i.main) refers to main.o(i.Test_Save) for Test_Save
+    main.o(i.main) refers to main.o(i.Write_Test) for Write_Test
     main.o(i.main) refers to ef_env.o(i.ef_save_env) for ef_save_env
     main.o(i.main) refers to easyflash.o(i.easyflash_init) for easyflash_init
     main.o(i.main) refers to main.o(i.GetData) for GetData
     main.o(i.main) refers to main.o(i.test_env) for test_env
+    main.o(i.main) refers to main.o(i.Read_Data) for Read_Data
     main.o(i.main) refers to timer.o(i.Delay_ms) for Delay_ms
     main.o(i.main) refers to stm32f4xx_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
     main.o(i.main) refers to stm32f4xx_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
@@ -1764,6 +1776,25 @@ Section Cross References
     tasks.o(i.xTaskResumeFromISR) refers to list.o(i.vListInsertEnd) for vListInsertEnd
     tasks.o(i.xTaskResumeFromISR) refers to tasks.o(.data) for .data
     tasks.o(i.xTaskResumeFromISR) refers to tasks.o(.bss) for .bss
+    freeros_communication.o(i.Create_Task) refers to tasks.o(i.xTaskCreate) for xTaskCreate
+    freeros_communication.o(i.Create_Task) refers to freeros_communication.o(.data) for .data
+    freeros_communication.o(i.Create_Task) refers to freeros_communication.o(i.LED_Task_A) for LED_Task_A
+    freeros_communication.o(i.Create_Task) refers to freeros_communication.o(i.LED_Task_B) for LED_Task_B
+    freeros_communication.o(i.Create_Task) refers to freeros_communication.o(i.USART_Task) for USART_Task
+    freeros_communication.o(i.LED_Task_A) refers to tasks.o(i.xTaskGetTickCount) for xTaskGetTickCount
+    freeros_communication.o(i.LED_Task_A) refers to stm32f4xx_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
+    freeros_communication.o(i.LED_Task_A) refers to tasks.o(i.vTaskDelayUntil) for vTaskDelayUntil
+    freeros_communication.o(i.LED_Task_A) refers to stm32f4xx_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
+    freeros_communication.o(i.LED_Task_B) refers to tasks.o(i.xTaskGetTickCount) for xTaskGetTickCount
+    freeros_communication.o(i.LED_Task_B) refers to stm32f4xx_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
+    freeros_communication.o(i.LED_Task_B) refers to tasks.o(i.vTaskDelayUntil) for vTaskDelayUntil
+    freeros_communication.o(i.LED_Task_B) refers to stm32f4xx_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
+    freeros_communication.o(i.USART_Task) refers to queue.o(i.xQueueGenericCreate) for xQueueGenericCreate
+    freeros_communication.o(i.USART_Task) refers to queue.o(i.xQueueReceive) for xQueueReceive
+    freeros_communication.o(i.USART_Task) refers to tasks.o(i.vTaskResume) for vTaskResume
+    freeros_communication.o(i.USART_Task) refers to tasks.o(i.vTaskSuspend) for vTaskSuspend
+    freeros_communication.o(i.USART_Task) refers to usart.o(.data) for USART1_TaskHandle
+    freeros_communication.o(i.USART_Task) refers to freeros_communication.o(.data) for .data
     usb_bsp.o(i.USB_OTG_BSP_EnableInterrupt) refers to misc.o(i.NVIC_Init) for NVIC_Init
     usb_bsp.o(i.USB_OTG_BSP_Init) refers to stm32f4xx_rcc.o(i.RCC_AHB1PeriphClockCmd) for RCC_AHB1PeriphClockCmd
     usb_bsp.o(i.USB_OTG_BSP_Init) refers to stm32f4xx_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
@@ -1954,7 +1985,7 @@ Section Cross References
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(i.SCSI_ReadCapacity10) for SCSI_ReadCapacity10
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(i.SCSI_Read10) for SCSI_Read10
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(i.SCSI_Write10) for SCSI_Write10
-    usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(i.SCSI_CheckAddressRange) for SCSI_CheckAddressRange
+    usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(i.SCSI_Verify10) for SCSI_Verify10
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_scsi.o(.data) for .data
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_bot.o(.data) for MSC_BOT_DataLen
     usbd_msc_scsi.o(i.SCSI_ProcessCmd) refers to usbd_msc_bot.o(.bss) for MSC_BOT_Data
@@ -1996,6 +2027,10 @@ Section Cross References
     usbd_msc_scsi.o(i.SCSI_RequestSense) refers to usbd_msc_bot.o(.data) for MSC_BOT_DataLen
     usbd_msc_scsi.o(i.SCSI_SenseCode) refers to usbd_msc_scsi.o(.bss) for .bss
     usbd_msc_scsi.o(i.SCSI_SenseCode) refers to usbd_msc_scsi.o(.data) for .data
+    usbd_msc_scsi.o(i.SCSI_Verify10) refers to usbd_msc_scsi.o(i.SCSI_SenseCode) for SCSI_SenseCode
+    usbd_msc_scsi.o(i.SCSI_Verify10) refers to usbd_msc_scsi.o(i.SCSI_CheckAddressRange) for SCSI_CheckAddressRange
+    usbd_msc_scsi.o(i.SCSI_Verify10) refers to usbd_msc_scsi.o(.data) for .data
+    usbd_msc_scsi.o(i.SCSI_Verify10) refers to usbd_msc_bot.o(.data) for MSC_BOT_DataLen
     usbd_msc_scsi.o(i.SCSI_Write10) refers to usbd_msc_scsi.o(i.SCSI_ProcessWrite) for SCSI_ProcessWrite
     usbd_msc_scsi.o(i.SCSI_Write10) refers to usbd_msc_scsi.o(i.SCSI_SenseCode) for SCSI_SenseCode
     usbd_msc_scsi.o(i.SCSI_Write10) refers to usbd_msc_scsi.o(i.SCSI_CheckAddressRange) for SCSI_CheckAddressRange
@@ -2727,7 +2762,7 @@ Section Cross References
     u8g2_usergui.o(i.Switch_Task) refers to u8g2_font.o(i.u8g2_DrawStr) for u8g2_DrawStr
     u8g2_usergui.o(i.Switch_Task) refers to u8g2_buffer.o(i.u8g2_SendBuffer) for u8g2_SendBuffer
     u8g2_usergui.o(i.Switch_Task) refers to tasks.o(i.vTaskSuspend) for vTaskSuspend
-    u8g2_usergui.o(i.Switch_Task) refers to freeros_communication.o(.data) for USART1_TaskHandle
+    u8g2_usergui.o(i.Switch_Task) refers to usart.o(.data) for USART1_TaskHandle
     u8g2_usergui.o(i.Switch_Task) refers to u8g2_usergui.o(.data) for .data
     u8g2_usergui.o(i.Switch_Task) refers to u8g2_usergui.o(.bss) for .bss
     u8g2_usergui.o(i.Switch_Task) refers to u8g2_fonts.o(.constdata) for u8g2_font_5x7_tr
@@ -3035,6 +3070,8 @@ Section Cross References
     atan2.o(i.__hardfp_atan2) refers to ddiv.o(.text) for __aeabi_ddiv
     atan2.o(i.__hardfp_atan2) refers to fabs.o(i.fabs) for fabs
     atan2.o(i.__hardfp_atan2) refers to dadd.o(.text) for __aeabi_dsub
+    atan2.o(i.__hardfp_atan2) refers to cdcmple.o(.text) for __aeabi_cdcmpeq
+    atan2.o(i.__hardfp_atan2) refers to errno.o(i.__set_errno) for __set_errno
     atan2.o(i.__hardfp_atan2) refers to qnan.o(.constdata) for __mathlib_zero
     atan2.o(i.__softfp_atan2) refers (Special) to iusefp.o(.text) for __I$use$fp
     atan2.o(i.__softfp_atan2) refers to atan2.o(i.__hardfp_atan2) for __hardfp_atan2
@@ -3047,6 +3084,7 @@ Section Cross References
     atan2_x.o(i.____hardfp_atan2$lsc) refers to ddiv.o(.text) for __aeabi_ddiv
     atan2_x.o(i.____hardfp_atan2$lsc) refers to fabs.o(i.fabs) for fabs
     atan2_x.o(i.____hardfp_atan2$lsc) refers to dadd.o(.text) for __aeabi_dsub
+    atan2_x.o(i.____hardfp_atan2$lsc) refers to cdcmple.o(.text) for __aeabi_cdcmpeq
     atan2_x.o(i.____hardfp_atan2$lsc) refers to qnan.o(.constdata) for __mathlib_zero
     atan2_x.o(i.____softfp_atan2$lsc) refers (Special) to iusefp.o(.text) for __I$use$fp
     atan2_x.o(i.____softfp_atan2$lsc) refers to atan2_x.o(i.____hardfp_atan2$lsc) for ____hardfp_atan2$lsc
@@ -3116,8 +3154,9 @@ Section Cross References
     sqrt_x.o(i.__sqrt$lsc) refers to cdcmple.o(.text) for __aeabi_cdcmple
     sqrt_x.o(i.__sqrt$lsc) refers to errno.o(i.__set_errno) for __set_errno
     sqrt_x.o(i.__sqrt$lsc) refers to dsqrt.o(.text) for _dsqrt
-    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
-    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000F) for __rt_final_cpp
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$00000011) for __rt_final_exit
+    entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry12b.o(.ARM.Collect$$$$0000000E) for __rt_lib_shutdown_fini
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry8b.o(.ARM.Collect$$$$0000000A) for _main_cpp_init
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry9a.o(.ARM.Collect$$$$0000000B) for _main_init
@@ -3517,7 +3556,7 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_can.o(i.CAN_Sleep), (30 bytes).
     Removing stm32f4xx_can.o(i.CAN_StructInit), (32 bytes).
     Removing stm32f4xx_can.o(i.CAN_TTComModeCmd), (90 bytes).
-    Removing stm32f4xx_can.o(i.CAN_Transmit), (164 bytes).
+    Removing stm32f4xx_can.o(i.CAN_Transmit), (190 bytes).
     Removing stm32f4xx_can.o(i.CAN_TransmitStatus), (108 bytes).
     Removing stm32f4xx_can.o(i.CAN_WakeUp), (40 bytes).
     Removing stm32f4xx_can.o(i.CheckITStatus), (12 bytes).
@@ -3617,7 +3656,7 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_dcmi.o(i.DCMI_Init), (60 bytes).
     Removing stm32f4xx_dcmi.o(i.DCMI_JPEGCmd), (28 bytes).
     Removing stm32f4xx_dcmi.o(i.DCMI_ReadData), (12 bytes).
-    Removing stm32f4xx_dcmi.o(i.DCMI_SetEmbeddedSynchroCodes), (20 bytes).
+    Removing stm32f4xx_dcmi.o(i.DCMI_SetEmbeddedSynchroCodes), (24 bytes).
     Removing stm32f4xx_dcmi.o(i.DCMI_StructInit), (18 bytes).
     Removing stm32f4xx_dfsdm.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_dfsdm.o(.revsh_text), (4 bytes).
@@ -4233,7 +4272,7 @@ Removing Unused input sections from the image.
     Removing main.o(.rrx_text), (6 bytes).
     Removing main.o(i.CreateAllTask), (16 bytes).
     Removing main.o(i.Set_New), (228 bytes).
-    Removing main.o(.data), (1 bytes).
+    Removing main.o(i.Test_Save), (368 bytes).
     Removing stm32f4xx_it.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_it.o(.revsh_text), (4 bytes).
     Removing stm32f4xx_it.o(.rrx_text), (6 bytes).
@@ -4481,6 +4520,7 @@ Removing Unused input sections from the image.
     Removing usart.o(i.USART2_Init), (208 bytes).
     Removing usart.o(i.USART_ITSendData), (58 bytes).
     Removing usart.o(i.USART_PollingSendData), (72 bytes).
+    Removing usart.o(.data), (4 bytes).
     Removing wdog.o(.rev16_text), (4 bytes).
     Removing wdog.o(.revsh_text), (4 bytes).
     Removing wdog.o(.rrx_text), (6 bytes).
@@ -4592,12 +4632,12 @@ Removing Unused input sections from the image.
     Removing ff.o(i.f_closedir), (20 bytes).
     Removing ff.o(i.f_findfirst), (32 bytes).
     Removing ff.o(i.f_findnext), (52 bytes).
-    Removing ff.o(i.f_getfree), (198 bytes).
+    Removing ff.o(i.f_getfree), (200 bytes).
     Removing ff.o(i.f_lseek), (510 bytes).
     Removing ff.o(i.f_mkdir), (260 bytes).
     Removing ff.o(i.f_mkfs), (1356 bytes).
     Removing ff.o(i.f_mount), (72 bytes).
-    Removing ff.o(i.f_open), (416 bytes).
+    Removing ff.o(i.f_open), (418 bytes).
     Removing ff.o(i.f_opendir), (98 bytes).
     Removing ff.o(i.f_read), (326 bytes).
     Removing ff.o(i.f_readdir), (64 bytes).
@@ -4701,10 +4741,10 @@ Removing Unused input sections from the image.
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_enable_lp_quat), (58 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_enabled_features), (16 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_fifo_rate), (16 bytes).
-    Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_pedometer_step_count), (48 bytes).
-    Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_pedometer_walk_time), (54 bytes).
+    Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_pedometer_step_count), (56 bytes).
+    Removing inv_mpu_dmp_motion_driver.o(i.dmp_get_pedometer_walk_time), (62 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_load_motion_driver_firmware), (20 bytes).
-    Removing inv_mpu_dmp_motion_driver.o(i.dmp_read_fifo), (328 bytes).
+    Removing inv_mpu_dmp_motion_driver.o(i.dmp_read_fifo), (360 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_register_android_orient_cb), (12 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_register_tap_cb), (12 bytes).
     Removing inv_mpu_dmp_motion_driver.o(i.dmp_set_accel_bias), (216 bytes).
@@ -4864,7 +4904,11 @@ Removing Unused input sections from the image.
     Removing freeros_communication.o(.rev16_text), (4 bytes).
     Removing freeros_communication.o(.revsh_text), (4 bytes).
     Removing freeros_communication.o(.rrx_text), (6 bytes).
-    Removing freeros_communication.o(.data), (4 bytes).
+    Removing freeros_communication.o(i.Create_Task), (108 bytes).
+    Removing freeros_communication.o(i.LED_Task_A), (84 bytes).
+    Removing freeros_communication.o(i.LED_Task_B), (52 bytes).
+    Removing freeros_communication.o(i.USART_Task), (88 bytes).
+    Removing freeros_communication.o(.data), (8 bytes).
     Removing usb_bsp.o(.rev16_text), (4 bytes).
     Removing usb_bsp.o(.revsh_text), (4 bytes).
     Removing usb_bsp.o(.rrx_text), (6 bytes).
@@ -4876,7 +4920,7 @@ Removing Unused input sections from the image.
     Removing usb_core.o(.rrx_text), (6 bytes).
     Removing usb_core.o(i.USB_OTG_ActiveRemoteWakeup), (64 bytes).
     Removing usb_core.o(i.USB_OTG_CoreInit), (128 bytes).
-    Removing usb_core.o(i.USB_OTG_CoreInitDev), (300 bytes).
+    Removing usb_core.o(i.USB_OTG_CoreInitDev), (304 bytes).
     Removing usb_core.o(i.USB_OTG_CoreReset), (88 bytes).
     Removing usb_core.o(i.USB_OTG_DisableGlobalInt), (16 bytes).
     Removing usb_core.o(i.USB_OTG_EPDeactivate), (42 bytes).
@@ -4966,14 +5010,15 @@ Removing Unused input sections from the image.
     Removing usbd_msc_scsi.o(.revsh_text), (4 bytes).
     Removing usbd_msc_scsi.o(.rrx_text), (6 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_CheckAddressRange), (36 bytes).
-    Removing usbd_msc_scsi.o(i.SCSI_ProcessCmd), (376 bytes).
+    Removing usbd_msc_scsi.o(i.SCSI_ProcessCmd), (336 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_ProcessRead), (136 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_ProcessWrite), (144 bytes).
-    Removing usbd_msc_scsi.o(i.SCSI_Read10), (164 bytes).
+    Removing usbd_msc_scsi.o(i.SCSI_Read10), (168 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_ReadCapacity10), (104 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_ReadFormatCapacity), (112 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_RequestSense), (104 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_SenseCode), (44 bytes).
+    Removing usbd_msc_scsi.o(i.SCSI_Verify10), (80 bytes).
     Removing usbd_msc_scsi.o(i.SCSI_Write10), (196 bytes).
     Removing usbd_msc_scsi.o(.bss), (32 bytes).
     Removing usbd_msc_scsi.o(.data), (24 bytes).
@@ -7318,6 +7363,7 @@ Image Symbol Table
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memset.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
+    ../clib/microlib/string/memset.c         0x00000000   Number         0  memset.o ABSOLUTE
     ../clib/microlib/string/strlen.c         0x00000000   Number         0  strlen.o ABSOLUTE
     ../clib/microlib/string/strncmp.c        0x00000000   Number         0  strncmp.o ABSOLUTE
     ../clib/microlib/string/strncpy.c        0x00000000   Number         0  strncpy.o ABSOLUTE
@@ -7336,12 +7382,12 @@ Image Symbol Table
     ../fplib/microlib/fpneg.c                0x00000000   Number         0  dneg.o ABSOLUTE
     ../fplib/microlib/fpscalb.c              0x00000000   Number         0  dscalb.o ABSOLUTE
     ../fplib/microlib/fpsqrt.c               0x00000000   Number         0  dsqrt.o ABSOLUTE
-    ../mathlib/asin.c                        0x00000000   Number         0  asin_x.o ABSOLUTE
     ../mathlib/asin.c                        0x00000000   Number         0  asin.o ABSOLUTE
-    ../mathlib/atan.c                        0x00000000   Number         0  atan_x.o ABSOLUTE
+    ../mathlib/asin.c                        0x00000000   Number         0  asin_x.o ABSOLUTE
     ../mathlib/atan.c                        0x00000000   Number         0  atan.o ABSOLUTE
-    ../mathlib/atan2.c                       0x00000000   Number         0  atan2_x.o ABSOLUTE
+    ../mathlib/atan.c                        0x00000000   Number         0  atan_x.o ABSOLUTE
     ../mathlib/atan2.c                       0x00000000   Number         0  atan2.o ABSOLUTE
+    ../mathlib/atan2.c                       0x00000000   Number         0  atan2_x.o ABSOLUTE
     ../mathlib/dunder.c                      0x00000000   Number         0  dunder.o ABSOLUTE
     ../mathlib/fabs.c                        0x00000000   Number         0  fabs.o ABSOLUTE
     ../mathlib/fpclassify.c                  0x00000000   Number         0  fpclassify.o ABSOLUTE
@@ -8048,6 +8094,7 @@ Image Symbol Table
     _printf_wctomb                           0x00000000   Number         0  stubs.o ABSOLUTE
     _printf_widthprec                        0x00000000   Number         0  stubs.o ABSOLUTE
     _printf_x                                0x00000000   Number         0  stubs.o ABSOLUTE
+    __arm_fini_                               - Undefined Weak Reference
     __cpp_initialize__aeabi_                  - Undefined Weak Reference
     __cxa_finalize                            - Undefined Weak Reference
     __decompress                              - Undefined Weak Reference
@@ -8351,28 +8398,32 @@ Image Symbol Table
     USBD_ep_status                           0x10000014   Data           4  usbd_req.o(.data)
     USBD_default_cfg                         0x10000018   Data           4  usbd_req.o(.data)
     USBD_cfg_status                          0x1000001c   Data           4  usbd_req.o(.data)
-    log_buf                                  0x100001b0   Data         300  ef_port.o(.bss)
-    Run_Time                                 0x20000012   Data           2  code_run_time.o(.data)
-    TransferError                            0x20000017   Data           1  sdio_sdcard.o(.data)
-    TransferEnd                              0x20000018   Data           1  sdio_sdcard.o(.data)
-    tempbuff                                 0x20000020   Data           4  sdio_sdcard.o(.data)
-    pxCurrentTCB                             0x20000024   Data           4  tasks.o(.data)
-    USBD_DCD_INT_cb                          0x20000060   Data          44  usbd_core.o(.data)
-    USBD_DCD_INT_fops                        0x2000008c   Data           4  usbd_core.o(.data)
-    __stdout                                 0x200000a4   Data           4  stdout.o(.data)
-    eedata                                   0x200000a8   Data        4096  main.o(.bss)
-    UARTDATA                                 0x200010a8   Data          10  main.o(.bss)
-    SDIO_InitStructure                       0x200010b4   Data          24  sdio_sdcard.o(.bss)
-    SDIO_CmdInitStructure                    0x200010cc   Data          20  sdio_sdcard.o(.bss)
-    SDIO_DataInitStructure                   0x200010e0   Data          24  sdio_sdcard.o(.bss)
-    SDCardInfo                               0x20001118   Data          80  sdio_sdcard.o(.bss)
-    SDIO_DATA_BUFFER                         0x20001168   Data         512  sdio_sdcard.o(.bss)
-    USB_OTG_dev                              0x20001368   Data        1524  test.o(.bss)
-    USART1_Data                              0x2000195c   Data        4104  usart.o(.bss)
-    USART2_Data                              0x20002964   Data        4104  usart.o(.bss)
-    env_cache_table                          0x2000396c   Data         128  ef_env.o(.bss)
-    sector_cache_table                       0x200039ec   Data          32  ef_env.o(.bss)
-    __initial_sp                             0x200102e0   Data           0  startup_stm32f40_41xxx.o(STACK)
+    __stdout                                 0x10000020   Data           4  stdout.o(.data)
+    log_buf                                  0x100001b4   Data         300  ef_port.o(.bss)
+    Menu_Num                                 0x20000010   Data           1  exti.o(.data)
+    Temperature_HIGH                         0x20000011   Data           1  exti.o(.data)
+    Temperature_LOW                          0x20000012   Data           1  exti.o(.data)
+    Humidity_HIGH                            0x20000013   Data           1  exti.o(.data)
+    Humidity_LOW                             0x20000014   Data           1  exti.o(.data)
+    TransferError                            0x2000001b   Data           1  sdio_sdcard.o(.data)
+    TransferEnd                              0x2000001c   Data           1  sdio_sdcard.o(.data)
+    tempbuff                                 0x20000024   Data           4  sdio_sdcard.o(.data)
+    pxCurrentTCB                             0x2000002c   Data           4  tasks.o(.data)
+    USBD_DCD_INT_cb                          0x20000068   Data          44  usbd_core.o(.data)
+    SET_TEST_MODE                            0x20000094   Data           4  usbd_core.o(.data)
+    eedata                                   0x200000ac   Data        4096  main.o(.bss)
+    UARTDATA                                 0x200010ac   Data          10  main.o(.bss)
+    SDIO_InitStructure                       0x200010b8   Data          24  sdio_sdcard.o(.bss)
+    SDIO_CmdInitStructure                    0x200010d0   Data          20  sdio_sdcard.o(.bss)
+    SDIO_DataInitStructure                   0x200010e4   Data          24  sdio_sdcard.o(.bss)
+    SDCardInfo                               0x2000111c   Data          80  sdio_sdcard.o(.bss)
+    SDIO_DATA_BUFFER                         0x2000116c   Data         512  sdio_sdcard.o(.bss)
+    USB_OTG_dev                              0x2000136c   Data        1524  test.o(.bss)
+    USART1_Data                              0x20001960   Data        4104  usart.o(.bss)
+    USART2_Data                              0x20002968   Data        4104  usart.o(.bss)
+    env_cache_table                          0x20003970   Data         128  ef_env.o(.bss)
+    sector_cache_table                       0x200039f0   Data          32  ef_env.o(.bss)
+    __initial_sp                             0x200102e8   Data           0  startup_stm32f40_41xxx.o(STACK)
 
 
 
@@ -8666,6 +8717,7 @@ Memory Map of the image
     0x08005998   0x00000028   Data   RO         4047    .conststring        ef_port.o
     0x080059c0   0x00000040   Data   RO         4284    Region$$Table       anon$$obj.o
 
+    Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     Execution Region RW_IRAM2 (Base: 0x10000000, Size: 0x000002dc, Max: 0x00010000, ABSOLUTE)
 
@@ -8772,6 +8824,7 @@ Image component sizes
          0          0          0          0          0          0   entry.o
          0          0          0          0          0          0   entry10a.o
          0          0          0          0          0          0   entry11a.o
+         4          0          0          0          0          0   entry12b.o
          8          4          0          0          0          0   entry2.o
          4          0          0          0          0          0   entry5.o
          0          0          0          0          0          0   entry7b.o

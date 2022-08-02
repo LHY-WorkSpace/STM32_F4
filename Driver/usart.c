@@ -334,6 +334,10 @@ u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length)
 
 }
 
+
+
+QueueHandle_t USART1_TaskHandle;
+
 //************************// 
 //  功能描述: USARTx_IRQ 函数
 //  
@@ -346,6 +350,27 @@ u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length)
 //************************//  
 void USART1_IRQHandler()
 {
+	// u8 Buff,i;
+	// 	//接收中断
+	// if(USART_GetITStatus(USART1,USART_IT_RXNE) != RESET)
+	// {
+	// 	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
+	// 	Buff = USART_ReceiveData(USART1);
+	// 	xQueueSendFromISR( USART1_TaskHandle,&Buff,NULL);
+	// }
+
+	// //接收空闲中断
+	// if(USART_GetITStatus(USART1,USART_IT_IDLE) != RESET)
+	// {
+	// 	//此处必须先读SR再度DR来清标志位
+	// 	i = USART1->SR;
+	// 	i = USART1->DR;
+	// 	i++;
+
+	// }
+
+
+
 	USARTx_ITHandle(USART1,&USART1_Data);
 }
 

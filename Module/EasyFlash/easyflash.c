@@ -105,3 +105,80 @@ EfErrCode easyflash_init(void) {
     }
     return result;
 }
+
+
+/*
+
+
+easyflash_init();上电初始化
+ef_env_set_default();格式化
+
+
+//写入测试数据
+void Write_Test()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u8 V_Data[50];
+	char K_Data[10];
+
+	memcpy(K_Data,"BT-",3);
+	sprintf(K_Data+3,"%d",K++);
+
+	memset(V_Data,0x72,sizeof(V_Data));
+
+	ef_set_env_blob(K_Data,V_Data ,sizeof(V_Data));
+	ef_get_env_blob(K_Data, NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%c ",K_Data[i]);
+	}
+	printf("  :  ");
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%x ",V_Data[i]);
+	}
+	printf("\r\n");
+	
+}
+
+//读取测试数据
+void Read_Data()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u16 j; 
+	u8 V_Data[50];
+	char K_Data[10];
+
+	for ( j = 0; j < 5000; j++)
+	{
+		memcpy(K_Data,"BT-",3);
+		sprintf(K_Data+3,"%d",K++);
+
+		ef_get_env_blob(K_Data, NULL, 0, &len);
+		//获取环境变量
+		ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%c ",K_Data[i]);
+		}
+		printf("  :  ");
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%x ",V_Data[i]);
+		}
+		printf("\r\n");
+		IWDOG_Clear();
+	}
+}
+
+*/
+
+

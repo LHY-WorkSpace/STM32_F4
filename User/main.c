@@ -1,16 +1,7 @@
 #include "IncludeFile.h"
 
 
-extern USART_Data_t USART1_Data;
 
-
-void CreateAllTask(void *pv)
-{
-	u8g2_TaskCreate();
-	vTaskDelete(NULL);
-}
-
-u8 Dir = TRUE;
 
 
 u8 eedata[4096];
@@ -154,9 +145,6 @@ void GetData()
 
 
 
-
-
-
 void Set_New()
 {
 
@@ -184,21 +172,107 @@ void Set_New()
 	printf("sizeof  KFC env is:%s\r\n", eedata);
 
 }
+
+
+
+void Write_Test()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u8 V_Data[50];
+	char K_Data[10];
+
+	memcpy(K_Data,"BT-",3);
+	sprintf(K_Data+3,"%d",K++);
+
+	memset(V_Data,0x72,sizeof(V_Data));
+
+	ef_set_env_blob(K_Data,V_Data ,sizeof(V_Data));
+	ef_get_env_blob(K_Data, NULL, 0, &len);
+	//获取环境变量
+	ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%c ",K_Data[i]);
+	}
+	printf("  :  ");
+	for ( i = 0; i < sizeof(K_Data); i++)
+	{
+		printf("%x ",V_Data[i]);
+	}
+	printf("\r\n");
+	
+}
+
+
+void Read_Data()
+{
+	static u16 K=0;
+	u8 i;
+	size_t len = 0;
+	u16 j; 
+	u8 V_Data[50];
+	char K_Data[10];
+
+	for ( j = 0; j < 5000; j++)
+	{
+		memcpy(K_Data,"BT-",3);
+		sprintf(K_Data+3,"%d",K++);
+
+		ef_get_env_blob(K_Data, NULL, 0, &len);
+		//获取环境变量
+		ef_get_env_blob(K_Data, V_Data, len, NULL);
+
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%c ",K_Data[i]);
+		}
+		printf("  :  ");
+		for ( i = 0; i < sizeof(K_Data); i++)
+		{
+			printf("%x ",V_Data[i]);
+		}
+		printf("\r\n");
+		IWDOG_Clear();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 u16 i;
 
 u8 UARTDATA[10];
+
+void CreateAllTask()
+{
+	//u8g2_TaskCreate();
+	Create_Task();
+	vTaskDelete(NULL);
+}
+
+
+
 int  main()
 {
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
-	Flash_IO_Init();
-	// Dir = ESP8266_Init();
 	led_init();
-	
-	printf("Power Online\r\n");
-
+	Flash_IO_Init();
 	// AT24C08_Init();
 	// PWM_Init(0,0);
 	// OLED_Init();
@@ -206,24 +280,15 @@ int  main()
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 
-	//test_env();
-
-	// Set_New();
-	// ef_save_env();
 
 
+	printf("Power Online\r\n");
 
-	// ef_env_set_default();
 
 
-	// Flash_Read_Data(0,eedata,500);
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
+	// vTaskStartScheduler();
 
-	
-	// for (i = 0; i < 500; i++)
-	// {
-	// 	printf("addr:%x  %x  \r\n",i,eedata[i]);
-	// }
-	
 
 	while (1)
 	{	
@@ -240,7 +305,7 @@ int  main()
 			}
 			if(UARTDATA[0] == 2)
 			{
-				Test_Save();
+				Write_Test();
 				ef_save_env();
 			}
 			if(UARTDATA[0] == 3)
@@ -250,20 +315,19 @@ int  main()
 			}
 			if(UARTDATA[0] == 4)
 			{
-				GetData();
-				test_env();
-			}		
-			
-			
+				Read_Data();
+			}
 			UARTDATA[0]=0;
 		}
-		Delay_ms(500);
+		Delay_ms(10);
 		LED1_ON;
-		Delay_ms(500);
+		Delay_ms(10);
 		LED1_OFF;
 		IWDOG_Clear();
 
 	}
+
+}
 	// XPT2046_Read(&NoUse, &TouchData);
 	// 	Mov(TouchData.point.x,TouchData.point.y);
 	// 	Delay_ms(10);
@@ -271,8 +335,6 @@ int  main()
 	// Clock();
 	// Delay_ms(10);
 	// SystemDown();
-}
-
 
 /*
 void Function_list()
