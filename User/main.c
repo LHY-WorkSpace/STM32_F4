@@ -6,175 +6,6 @@
 
 u8 eedata[4096];
 
-void test_env(void)
-{
-	char wifi_ssid[20] = {0};
-	char wifi_passwd[20] = {0};
-	size_t len = 0;
-	
-
-
-	/* 读取默认环境变量值 */
-	//环境变量长度未知，先获取 Flash 上存储的实际长度 */
-	ef_get_env_blob("BT-XXXX", NULL, 0, &len);
-	//获取环境变量
-	ef_get_env_blob("BT-XXXX", wifi_ssid, len, NULL);
-	//打印获取的环境变量值
-	printf("BT-XXXX env is:%s\r\n", wifi_ssid);
-	
-	//环境变量长度未知，先获取 Flash 上存储的实际长度 */
-	ef_get_env_blob("Jack Cooper", NULL, 0, &len);
-	//获取环境变量
-	ef_get_env_blob("Jack Cooper", wifi_passwd, len, NULL);
-	//打印获取的环境变量值
-	printf("Jack Cooper env is:%s\r\n", wifi_passwd);
-
-
-	// // // /* 将环境变量值改变 */
-	// ef_set_env_blob("BT-XXXX", "12345", 5);
-	// ef_set_env_blob("Jack Cooper", "54321", 5);
-
-
-	// memset(wifi_ssid,0x00,sizeof(wifi_ssid));
-	// memset(wifi_passwd,0x00,sizeof(wifi_passwd));
-
-
-	// // /* 读取默认环境变量值 */
-	// //环境变量长度未知，先获取 Flash 上存储的实际长度 */
-	// ef_get_env_blob("BT-XXXX", NULL, 0, &len);
-	// //获取环境变量
-	// ef_get_env_blob("BT-XXXX", wifi_ssid, len, NULL);
-	// //打印获取的环境变量值
-	// printf("BT-XXXX env is:%s\r\n", wifi_ssid);
-	
-	// //环境变量长度未知，先获取 Flash 上存储的实际长度 */
-	// ef_get_env_blob("Jack Cooper", NULL, 0, &len);
-	// //获取环境变量
-	// ef_get_env_blob("Jack Cooper", wifi_passwd, len, NULL);
-	// //打印获取的环境变量值
-	// printf("Jack Cooper env is:%s\r\n", wifi_passwd);
-	
-}
-
-
-void Test_Save()
-{
-	char Name[10];
-	char Val[10];
-
-	u8 i,k;
-	printf("Write======================================\r\n");
-	for ( i = 0; i < 10; i++)
-	{
-		memset(Name,0X00,sizeof(Name));
-		memset(Val,0X00,sizeof(Val));
-		sprintf(Name,"%d",i);
-		sprintf(Val,"%d",i);
-		ef_set_env_blob(Name,Val,5);
-		for ( k = 0; k < sizeof(Name); k++)
-		{
-			printf("%c",Name[k]);
-		}
-		printf(" ");
-		for ( k = 0; k < sizeof(Val); k++)
-		{
-			printf("%c",Val[k]);
-		}
-			printf("\r\n");
-
-	}
-	printf("Read======================================\r\n");
-	for ( i = 0; i < 10; i++)
-	{
-		memset(Name,0X00,sizeof(Name));
-		memset(Val,0X00,sizeof(Val));
-		sprintf(Name,"%d",i);
-		sprintf(Val,"%d",i);
-		ef_get_env_blob(Name,Val,5,NULL);
-
-		for ( k = 0; k < sizeof(Name); k++)
-		{
-			printf("%c",Name[k]);
-		}
-		printf(" ");
-		for ( k = 0; k < sizeof(Val); k++)
-		{
-			printf("%c",Val[k]);
-		}
-		printf("\r\n");
-	}
-
-}
-
-void GetData()
-{
-
-
-	char Name[10];
-	char Val[10];
-
-	u8 i,k;
-	printf("Read======================================\r\n");
-	for ( i = 0; i < 10; i++)
-	{
-		memset(Name,0X00,sizeof(Name));
-		memset(Val,0X00,sizeof(Val));
-		sprintf(Name,"%d",i);
-		// sprintf(Val,"%d",i);
-		ef_get_env_blob(Name,Val,5,NULL);
-
-		for ( k = 0; k < sizeof(Name); k++)
-		{
-			printf("%c",Name[k]);
-		}
-		printf(" ");
-		for ( k = 0; k < sizeof(Val); k++)
-		{
-			printf("%c",Val[k]);
-		}
-		printf("\r\n");
-	}
-
-
-
-}
-
-
-
-
-
-
-
-void Set_New()
-{
-
-	size_t len = 0;
-	printf("=================================\r\n");
-
-	ef_get_env_blob("KFC", NULL, 0, &len);
-	eedata[4095]=0;
-	printf("KFC env  %d  is:%s\r\n",len, eedata);
-
-	memset(eedata,'A',sizeof(eedata));
-
-	ef_set_env_blob("KFC",eedata ,sizeof(eedata));
-	ef_get_env_blob("KFC", NULL, 0, &len);
-	//获取环境变量
-	ef_get_env_blob("KFC", eedata, len, NULL);
-	//打印获取的环境变量值
-	eedata[4095]=0;
-	printf("KFC env  %d  is:%s\r\n",len, eedata);
-
-	memset(eedata,0,sizeof(eedata));
-	ef_get_env_blob("KFC", eedata, sizeof(eedata), NULL);
-	//打印获取的环境变量值
-	eedata[4095]=0;
-	printf("sizeof  KFC env is:%s\r\n", eedata);
-
-}
-
-
-
 void Write_Test()
 {
 	static u16 K=0;
@@ -186,7 +17,7 @@ void Write_Test()
 	memcpy(K_Data,"BT-",3);
 	sprintf(K_Data+3,"%d",K++);
 
-	memset(V_Data,0x72,sizeof(V_Data));
+	memset(V_Data,K&0XFF,sizeof(V_Data));
 
 	ef_set_env_blob(K_Data,V_Data ,sizeof(V_Data));
 	ef_get_env_blob(K_Data, NULL, 0, &len);
@@ -197,8 +28,8 @@ void Write_Test()
 	{
 		printf("%c ",K_Data[i]);
 	}
-	printf("  :  ");
-	for ( i = 0; i < sizeof(K_Data); i++)
+	printf(":");
+	for ( i = 0; i < sizeof(V_Data); i++)
 	{
 		printf("%x ",V_Data[i]);
 	}
@@ -229,12 +60,13 @@ void Read_Data()
 		{
 			printf("%c ",K_Data[i]);
 		}
-		printf("  :  ");
-		for ( i = 0; i < sizeof(K_Data); i++)
+		printf(":");
+		for ( i = 0; i < sizeof(V_Data); i++)
 		{
 			printf("%x ",V_Data[i]);
 		}
 		printf("\r\n");
+		memset(V_Data,'0',sizeof(V_Data));
 		IWDOG_Clear();
 	}
 }

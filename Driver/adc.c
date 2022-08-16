@@ -53,10 +53,10 @@ void ADC_UserInit()
 	GPIO_Init(GPIOA,&GPIO_Initstruc);
 
 
-	ADC_CommonInitTypeDefstruct.ADC_Mode=ADC_Mode_Independent;
-	ADC_CommonInitTypeDefstruct.ADC_Prescaler=ADC_Prescaler_Div8;                                   //PLCLK 8·ÖÆµ
-	ADC_CommonInitTypeDefstruct.ADC_DMAAccessMode=ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay=ADC_TwoSamplingDelay_5Cycles;
+	ADC_CommonInitTypeDefstruct.ADC_Mode = ADC_Mode_Independent;
+	ADC_CommonInitTypeDefstruct.ADC_Prescaler = ADC_Prescaler_Div8;                                   //PLCLK 8·ÖÆµ
+	ADC_CommonInitTypeDefstruct.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
 	
 	ADC_CommonInit(&ADC_CommonInitTypeDefstruct);
 	

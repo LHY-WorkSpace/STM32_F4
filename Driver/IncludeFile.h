@@ -96,6 +96,7 @@
 
 
 #include "easyflash.h"
+#include "FFT.h"
 
 #endif
 
