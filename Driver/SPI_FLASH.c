@@ -487,3 +487,43 @@ void Flash_GetID()
 	}
 }
 
+void Flash_Test()
+{
+
+	u16 i,k,j;
+	u8 W_Data[FLASH_SECTOR_SIZE];
+	u8 R_Data[FLASH_SECTOR_SIZE];
+
+	for ( i = 0; i < 10; i++)
+	{
+		if( Flash_Sector_Erase(10,ERASE_MODE_NUM) == TRUE )
+		{
+			memset(W_Data,i,sizeof(W_Data));
+			memset(R_Data,0,sizeof(R_Data));
+			Flash_Write_Data(10*FLASH_SECTOR_SIZE,W_Data,sizeof(W_Data));
+			Flash_Read_Data(10*FLASH_SECTOR_SIZE,R_Data,sizeof(R_Data));
+
+			for ( k = 0; k < sizeof(FLASH_SECTOR_SIZE); k++)
+			{
+				if( W_Data[k] != R_Data[k])
+				{
+					printf("Data Err Addr ! @%x \r\n",k);
+
+					for (  j= 0;  j< sizeof(FLASH_SECTOR_SIZE); j++)
+					{
+						printf("Addr:%x  W_Data:%x  R_Data:%x   \r\n",j,W_Data[j],R_Data[j]);
+					}
+					return;
+				}
+			}
+		}
+		else
+		{
+			printf("Erase Err\r\n");
+			break;
+		}
+	}
+
+}
+
+
