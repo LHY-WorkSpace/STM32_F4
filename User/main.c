@@ -3,91 +3,6 @@
 
 
 
-
-u8 eedata[4096];
-
-void Write_Test()
-{
-	static u16 K=0;
-	u8 i;
-	size_t len = 0;
-	u8 V_Data[50];
-	char K_Data[10];
-
-	memcpy(K_Data,"BT-",3);
-	sprintf(K_Data+3,"%d",K++);
-
-	memset(V_Data,K&0XFF,sizeof(V_Data));
-
-	ef_set_env_blob(K_Data,V_Data ,sizeof(V_Data));
-	ef_get_env_blob(K_Data, NULL, 0, &len);
-	//获取环境变量
-	ef_get_env_blob(K_Data, V_Data, len, NULL);
-
-	for ( i = 0; i < sizeof(K_Data); i++)
-	{
-		printf("%c ",K_Data[i]);
-	}
-	printf(":");
-	for ( i = 0; i < sizeof(V_Data); i++)
-	{
-		printf("%x ",V_Data[i]);
-	}
-	printf("\r\n");
-	
-}
-
-
-void Read_Data()
-{
-	static u16 K=0;
-	u8 i;
-	size_t len = 0;
-	u16 j; 
-	u8 V_Data[50];
-	char K_Data[10];
-
-	for ( j = 0; j < 5000; j++)
-	{
-		memcpy(K_Data,"BT-",3);
-		sprintf(K_Data+3,"%d",K++);
-
-		ef_get_env_blob(K_Data, NULL, 0, &len);
-		//获取环境变量
-		ef_get_env_blob(K_Data, V_Data, len, NULL);
-
-		for ( i = 0; i < sizeof(K_Data); i++)
-		{
-			printf("%c ",K_Data[i]);
-		}
-		printf(":");
-		for ( i = 0; i < sizeof(V_Data); i++)
-		{
-			printf("%x ",V_Data[i]);
-		}
-		printf("\r\n");
-		memset(V_Data,'0',sizeof(V_Data));
-		IWDOG_Clear();
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-u16 i;
-
-u8 UARTDATA[10];
-
 void CreateAllTask()
 {
 	//u8g2_TaskCreate();
@@ -104,15 +19,15 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	Flash_IO_Init();
-	// AT24C08_Init();
+	// Flash_IO_Init();
+	AT24C08_Init();
 	// PWM_Init(0,0);
 	// OLED_Init();
 	// u8g2_Init();
 	// Start_Page();
 	// Display_FreeRTOS_Logo();
 
-
+	FFT_Init();
 
 	printf("Power Online\r\n");
 
@@ -125,35 +40,9 @@ int  main()
 	while (1)
 	{	
 
-
-		if( USART_GetData(&USART1_Data,sizeof(UARTDATA),UARTDATA,&i) == TRUE)
-		{
-			if(UARTDATA[0] == 1)
-			{
-				ef_env_set_default();
-				printf("ReBoot\r\n", eedata);
-				IWDOG_Init();
-				SW_Reset();
-			}
-			if(UARTDATA[0] == 2)
-			{
-				Write_Test();
-				ef_save_env();
-			}
-			if(UARTDATA[0] == 3)
-			{
-				easyflash_init();
-				IWDOG_Init();
-			}
-			if(UARTDATA[0] == 4)
-			{
-				Read_Data();
-			}
-			UARTDATA[0]=0;
-		}
-		Delay_ms(10);
+		Delay_ms(500);
 		LED1_ON;
-		Delay_ms(10);
+		Delay_ms(500);
 		LED1_OFF;
 		IWDOG_Clear();
 

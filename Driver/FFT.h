@@ -2,7 +2,7 @@
 #define FFT_H_
 
 
-
+void FFT_Init(void);
 
 #endif
 
