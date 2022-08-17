@@ -238,8 +238,8 @@ typedef struct
   * @{
   */ 
 #define ADC_ExternalTrigConvEdge_None          ((uint32_t)0x00000000)
-#define ADC_ExternalTrigConvEdge_Rising        ((uint32_t)0x10000000)
 #define ADC_ExternalTrigConvEdge_Falling       ((uint32_t)0x20000000)
+#define ADC_ExternalTrigConvEdge_Rising        ((uint32_t)0x10000000)
 #define ADC_ExternalTrigConvEdge_RisingFalling ((uint32_t)0x30000000)
 #define IS_ADC_EXT_TRIG_EDGE(EDGE) (((EDGE) == ADC_ExternalTrigConvEdge_None) || \
                              ((EDGE) == ADC_ExternalTrigConvEdge_Rising) || \

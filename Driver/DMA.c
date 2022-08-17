@@ -178,7 +178,6 @@ void DMA2_Stream5_IRQHandler()
 		{
 		DMA_ClearITPendingBit(DMA2_Stream5,DMA_IT_TCIF5);
 		DMA1_Start();
-		//DMA2_Start();
 		}    
 
 
