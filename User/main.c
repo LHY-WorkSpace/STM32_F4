@@ -20,7 +20,7 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	// Flash_IO_Init();
-	AT24C08_Init();
+	//AT24C08_Init();
 	// PWM_Init(0,0);
 	// OLED_Init();
 	// u8g2_Init();
@@ -40,10 +40,10 @@ int  main()
 	while (1)
 	{	
 
-		Delay_ms(500);
-		LED1_ON;
-		Delay_ms(500);
-		LED1_OFF;
+		// Delay_ms(500);
+		// LED1_ON;
+		// Delay_ms(500);
+		// LED1_OFF;
 		IWDOG_Clear();
 
 	}
