@@ -5,10 +5,11 @@
 
 
 
-u16 ADC_Data[5];
+u16 ADC_Data[10];
+u8 ADC_DataFlag = RESET;
 arm_cfft_instance_f32 FFT_Info;
 
-
+//  PA1 - ADC1_CH1 -  DMA2_S0_CH0
 
 
 void ADCTimer_Init()
@@ -26,13 +27,12 @@ void ADCTimer_Init()
 	TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_PWM1;
 	TIM_OCInitTypestuc.TIM_OutputState=TIM_OutputState_Enable;
 	TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_High;
-	TIM_OCInitTypestuc.TIM_Pulse = 200;
+	TIM_OCInitTypestuc.TIM_Pulse = SAMPLE_PERIOD/2;
 	TIM_OC2Init(TIM2,&TIM_OCInitTypestuc);
 
 	TIM_OC2PreloadConfig(TIM2,TIM_OCPreload_Enable);
-    TIM_ARRPreloadConfig(TIM2,ENABLE);
 	TIM_SelectOutputTrigger(TIM2,TIM_TRGOSource_OC2Ref);
-	// TIM_GenerateEvent(TIM2,TIM_EventSource_Trigger);
+    TIM_ARRPreloadConfig(TIM2,ENABLE);
     TIM_ITConfig(TIM2,TIM_IT_CC2,ENABLE);
     TIM_Cmd(TIM2,ENABLE);
 }
@@ -56,25 +56,23 @@ void DMA_ConfigInit()
   	DMA_InitConfig.DMA_DIR = DMA_DIR_PeripheralToMemory; 
 	DMA_InitConfig.DMA_MemoryInc = DMA_MemoryInc_Enable;
 	DMA_InitConfig.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-
 	DMA_InitConfig.DMA_FIFOMode = DMA_FIFOMode_Disable;
 	DMA_InitConfig.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
 	DMA_InitConfig.DMA_MemoryBurst = DMA_MemoryBurst_Single;
 	DMA_InitConfig.DMA_Mode = DMA_Mode_Circular;
 	DMA_InitConfig.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
 	DMA_InitConfig.DMA_Priority = DMA_Priority_Medium;
-
 	DMA_Init(DMA2_Stream0,&DMA_InitConfig);
-	DMA_ITConfig(DMA2_Stream0,DMA_IT_TC,ENABLE);
-	
+
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream0_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=0;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
+
+	DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
+	DMA_ITConfig(DMA2_Stream0,DMA_IT_TC,ENABLE);
 	DMA_Cmd(DMA2_Stream0,ENABLE);
-
-
 
 }
 
@@ -113,7 +111,7 @@ void FFT_ADCInit()
 	ADC_InitTypeDefstruct.ADC_Resolution = ADC_Resolution_12b;              
 	ADC_InitTypeDefstruct.ADC_ScanConvMode = DISABLE;
 	ADC_InitTypeDefstruct.ADC_ContinuousConvMode = ENABLE;
-	ADC_InitTypeDefstruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+	ADC_InitTypeDefstruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_Rising;
 	ADC_InitTypeDefstruct.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_CC2;
 	ADC_InitTypeDefstruct.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitTypeDefstruct.ADC_NbrOfConversion = 1;
@@ -130,11 +128,9 @@ void FFT_ADCInit()
 
 void FFT_Init()
 {
-// ADCTimer_Init();
-DMA_ConfigInit();
-FFT_ADCInit();
-
-	
+	ADCTimer_Init();
+	DMA_ConfigInit();
+	FFT_ADCInit();
 }
 
 
@@ -146,9 +142,11 @@ FFT_ADCInit();
 
 void FFT_Process()
 {
-	//arm_cfft_f32(&arm_cfft_sR_f32_len256,(float32_t)ADC_Data,0,1);
-
-
+	if( ADC_DataFlag == SET)
+	{
+		arm_cfft_f32(&arm_cfft_sR_f32_len256,(float32_t)ADC_Data,0,1);
+		ADC_DataFlag = RESET;
+	}
 }
 
 
@@ -157,6 +155,7 @@ void DMA2_Stream0_IRQHandler()
 		if(DMA_GetITStatus(DMA2_Stream0,DMA_IT_TCIF0)  == SET )
 		{
 			DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
+			ADC_DataFlag = SET;
 		}    
 
 }

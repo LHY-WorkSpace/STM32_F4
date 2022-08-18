@@ -8,7 +8,6 @@ TaskHandle_t B_LED_Handle;
 
 void USART_Task()
 {
-    TickType_t xTicksToWait = 100/portTICK_PERIOD_MS;
     BaseType_t  State;
     u8 Data;
 

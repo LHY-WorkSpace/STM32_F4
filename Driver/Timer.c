@@ -1,7 +1,6 @@
 #include "IncludeFile.h"
 
 
-static u8 Time_Cnt=0;
 
 // 84Mhz:T1,T8,T9,T10,T11
 // 42Mhz:³ý84Ö®ÍâµÄ

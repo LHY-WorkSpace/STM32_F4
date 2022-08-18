@@ -3,10 +3,12 @@
 
 //标准文件
 #include "stm32f4xx.h"
+#include "stm32f4xx_conf.h"
 #include "string.h"
 #include "stdint.h"
 #include "stdlib.h"
 #include "arm_math.h"
+#include "arm_const_structs.h"
 #include "math.h"
 #include "stdio.h"
 #include "DataType.h"

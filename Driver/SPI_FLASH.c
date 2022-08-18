@@ -411,7 +411,7 @@ u8 Flash_Write_Data(u32 Addr,u8 *Data,u32 Length)
 u8 Flash_AnyAddr_Write_Data(u32 Addr,u8 *Data,u32 Length)
 {
 	u8 *Data_Point = NULL;
-	u32 i,k;
+	u32 k;
 	u32 EndAddr,Offset,WR_Len;
 	u32 WriteAddr;
 	u8 SectorBufff[FLASH_SECTOR_SIZE];
