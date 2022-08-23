@@ -75,9 +75,9 @@ static unsigned char FreeRTOS_Logo[] =
 void u8g2_Init()
 {
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
-    u8g2_ClearDisplay(&u8g2_Data);
 	u8g2_InitDisplay(&u8g2_Data);
 	u8g2_SetPowerSave(&u8g2_Data, 0);
+     u8g2_ClearDisplay(&u8g2_Data);
 }
 
 
@@ -158,6 +158,7 @@ void Start_Page()
     draw(&u8g2_Data);
     u8g2_SendBuffer(&u8g2_Data); 
     Delay_ms(500);  
+    u8g2_ClearBuffer(&u8g2_Data);
 }
 
     #define CIRCLE_SEC_X 60

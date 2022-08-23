@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>182</LineNumber>
+          <LineNumber>181</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221990</Address>
+          <Address>134226378</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,7 +173,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\Driver\FFT.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\1\../Driver/FFT.c\182</Expression>
+          <Expression>\\1\../Driver/FFT.c\181</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>195</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134226464</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Driver\FFT.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../Driver/FFT.c\195</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>95</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134235994</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Module\u8g2_src\u8g2_buffer.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../Module/u8g2_src/u8g2_buffer.c\95</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -182,12 +214,17 @@
           <WinNumber>1</WinNumber>
           <ItemText>ADC_Data</ItemText>
         </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>FFT_Data</ItemText>
+        </Ww>
       </WatchWindow1>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>1</SubType>
-          <ItemText>0x2000F4F0</ItemText>
+          <ItemText>0x2000FE50</ItemText>
           <AccSizeX>4</AccSizeX>
         </Mm>
       </MemoryWindow1>

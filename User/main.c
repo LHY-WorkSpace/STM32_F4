@@ -22,9 +22,9 @@ int  main()
 	// Flash_IO_Init();
 	//AT24C08_Init();
 	// PWM_Init(0,0);
-	// OLED_Init();
-	// u8g2_Init();
-	// Start_Page();
+	OLED_Init();
+	u8g2_Init();
+	Start_Page();
 	// Display_FreeRTOS_Logo();
 
 	FFT_Init();
@@ -40,11 +40,12 @@ int  main()
 	while (1)
 	{	
 
-		// Delay_ms(500);
+		Delay_ms(50);
 		// LED1_ON;
 		// Delay_ms(500);
 		// LED1_OFF;
 		IWDOG_Clear();
+		FFT_Process();
 
 	}
 

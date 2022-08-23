@@ -83,9 +83,9 @@ ARM Macro Assembler    Page 2
    49 0000C800         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
    50 0000C800         ; </h>
    51 0000C800         
-   52 0000C800 00000200 
+   52 0000C800 00002800 
                        Heap_Size
-                               EQU              0x00000200  ;512×Ö½Ú£¬Ê¹ÓÃmallo
+                               EQU              0x00002800  ;512×Ö½Ú£¬Ê¹ÓÃmallo
                                                             cÊ±²Å»á±àÒë½øÈ¥ ²»Ê
                                                             ¹ÓÃ²»»á±»Ê¹ÓÃ
    53 0000C800         
@@ -94,14 +94,14 @@ ARM Macro Assembler    Page 2
    55 00000000         __heap_base
    56 00000000         Heap_Mem
                                SPACE            Heap_Size
-   57 00000200         __heap_limit
-   58 00000200         
-   59 00000200                 PRESERVE8
-   60 00000200                 THUMB
-   61 00000200         
-   62 00000200         
-   63 00000200         ; Vector Table Mapped to Address 0 at Reset
-   64 00000200                 AREA             RESET, DATA, READONLY
+   57 00002800         __heap_limit
+   58 00002800         
+   59 00002800                 PRESERVE8
+   60 00002800                 THUMB
+   61 00002800         
+   62 00002800         
+   63 00002800         ; Vector Table Mapped to Address 0 at Reset
+   64 00002800                 AREA             RESET, DATA, READONLY
    65 00000000                 EXPORT           __Vectors
    66 00000000                 EXPORT           __Vectors_End
    67 00000000                 EXPORT           __Vectors_Size
@@ -925,7 +925,7 @@ Symbol: __heap_base
    Uses
       At line 412 in file ..\CMSIS\startup_stm32f40_41xxx.s
 Comment: __heap_base used once
-__heap_limit 00000200
+__heap_limit 00002800
 
 Symbol: __heap_limit
    Definitions
@@ -1908,7 +1908,7 @@ Symbol: WWDG_IRQHandler
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-Heap_Size 00000200
+Heap_Size 00002800
 
 Symbol: Heap_Size
    Definitions

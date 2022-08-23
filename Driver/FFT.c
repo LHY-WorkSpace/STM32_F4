@@ -1,13 +1,18 @@
 #include "IncludeFile.h"
 
-//采样周期：us
-#define  SAMPLE_PERIOD   (500)
+//采样周期：ms
+#define  SAMPLE_PERIOD   (10)
+
+#define  POINT   (128)
+FFT_Data_t FFT_Data[POINT];
+u16 ADC_Data[POINT];
+
+u8 ADC_DataFlag = RESET,ADC_DataFlagA = RESET;
+
+static u8g2_t u8g2_Data;
 
 
 
-u16 ADC_Data[1024];
-u8 ADC_DataFlag = RESET;
-arm_cfft_instance_f32 FFT_Info;
 
 //  PA1 - ADC1_CH1 -  DMA2_S0_CH0
 
@@ -25,11 +30,11 @@ void ADCTimer_Init()
 	TIM_TimeBaseInitStr.TIM_Prescaler = 42-1;
     TIM_TimeBaseInit(TIM2,&TIM_TimeBaseInitStr);
 
-	TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_PWM1;
-	TIM_OCInitTypestuc.TIM_OutputState=TIM_OutputState_Enable;
-	TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_Low;
-	TIM_OCInitTypestuc.TIM_Pulse = SAMPLE_PERIOD/2-1;
-	TIM_OC2Init(TIM2,&TIM_OCInitTypestuc);
+	// TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_Toggle;
+	// TIM_OCInitTypestuc.TIM_OutputState=TIM_OutputState_Enable;
+	// TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_Low;
+	// TIM_OCInitTypestuc.TIM_Pulse = SAMPLE_PERIOD/2-1;
+	// TIM_OC2Init(TIM2,&TIM_OCInitTypestuc);
 
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM2_IRQn;
@@ -39,14 +44,14 @@ void ADCTimer_Init()
 	NVIC_Init(&NVIC_Initstr);
 
 
-	TIM_OC2PreloadConfig(TIM2,TIM_OCPreload_Enable);
-	TIM_SelectOutputTrigger(TIM2,TIM_TRGOSource_OC2Ref);
+	// TIM_OC2PreloadConfig(TIM2,TIM_OCPreload_Enable);
+	// TIM_SelectOutputTrigger(TIM2,TIM_TRGOSource_OC1);
     TIM_ARRPreloadConfig(TIM2,ENABLE);
 	// TIM_GenerateEvent(TIM2,TIM_EventSource_Update);
 	// // TIM_InternalClockConfig(TIM2);
 	// TIM_UpdateDisableConfig(TIM2,DISABLE);
-    // TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
-    TIM_ITConfig(TIM2,TIM_IT_CC2,ENABLE);
+    TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+    TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM2,ENABLE);
 }
 
@@ -126,7 +131,7 @@ void FFT_ADCInit()
 	ADC_InitTypeDefstruct.ADC_ScanConvMode = DISABLE;
 	ADC_InitTypeDefstruct.ADC_ContinuousConvMode = ENABLE;
 	ADC_InitTypeDefstruct.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
-	ADC_InitTypeDefstruct.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_CC2;
+	ADC_InitTypeDefstruct.ADC_ExternalTrigConv = ADC_ExternalTrigConv_T2_TRGO;
 	ADC_InitTypeDefstruct.ADC_DataAlign = ADC_DataAlign_Right;
 	ADC_InitTypeDefstruct.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC1,&ADC_InitTypeDefstruct);
@@ -143,21 +148,26 @@ void FFT_ADCInit()
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_28Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
 	ADC_Cmd(ADC1,ENABLE);
-
-
-
-
+	ADC_SoftwareStartConv(ADC1);
 
 }
 
 
 void FFT_Init()
 {
+	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_MIRROR_VERTICAL, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
+	u8g2_InitDisplay(&u8g2_Data);
+	u8g2_SetPowerSave(&u8g2_Data, 0);
+     u8g2_ClearDisplay(&u8g2_Data);
+
 
 	DMA_ConfigInit();
 	FFT_ADCInit();
 	ADCTimer_Init();
 	ADC_DataFlag = RESET;
+	ADC_DataFlagA = RESET;
+
+	u8g2_ClearBuffer(&u8g2_Data);
 }
 
 
@@ -169,10 +179,26 @@ void FFT_Init()
 
 void FFT_Process()
 {
+	u16 i;
+
 	if( ADC_DataFlag == SET)
 	{
-		//arm_cfft_f32(&arm_cfft_sR_f32_len256,(float32_t)ADC_Data,0,1);
+		u8g2_ClearBuffer(&u8g2_Data);
+
+		for ( i = 0; i < POINT; i++)
+		{
+			FFT_Data[i].Real = (float32_t)ADC_Data[i];
+			FFT_Data[i].Image = 0;
+		}
+		arm_cfft_f32(&arm_cfft_sR_f32_len128,(float32_t *)FFT_Data,0,1);
+
+		for ( i = 0; i < POINT; i++)
+		{
+			// u8g2_DrawLine(&u8g2_Data,i,0,i,FFT_Data[i].Real/10);
+			u8g2_DrawVLine(&u8g2_Data,i,0,FFT_Data[i].Real/10);
+		}
 		ADC_DataFlag = RESET;
+		u8g2_SendBuffer(&u8g2_Data);
 	}
 }
 
@@ -183,16 +209,18 @@ void DMA2_Stream0_IRQHandler()
 		{
 			DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
 
-				if( ADC_DataFlag == RESET)
-				{
-					ADC_DataFlag = SET;
-					LED1_ON;
-				}
-				else
-				{	
-					ADC_DataFlag = RESET;
-					LED1_OFF;
-				}
+		// if( ADC_DataFlag == RESET)
+		// {
+			ADC_DataFlag = SET;
+		// 	LED1_ON;
+		// }
+		// else
+		// {	
+		// 	LED1_OFF;
+		// }
+
+
+
 		}    
 }
 
@@ -212,22 +240,33 @@ void DMA2_Stream0_IRQHandler()
 
 
 
-void ADC_IRQHandler()
-{
-	if( ADC_GetITStatus(ADC1,ADC_IT_EOC) == SET) 
-	{
+// void ADC_IRQHandler()
+// {
+// 	if( ADC_GetITStatus(ADC1,ADC_IT_EOC) == SET) 
+// 	{
+// 		ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
+// 	}
 
-	}
-	ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
-}
+// }
 
 void TIM2_IRQHandler()
 {
 
-    if( TIM_GetITStatus(TIM2,TIM_IT_CC2) == SET)
+    if( TIM_GetITStatus(TIM2,TIM_IT_Update) == SET)
     {
+		TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
+		if( ADC_DataFlagA == RESET)
+		{
+			ADC_DataFlagA = SET;
+			LED2_ON;
+		}
+		else
+		{	
+			ADC_DataFlagA = RESET;
+			LED2_OFF;
+		}
     }
-    TIM_ClearITPendingBit(TIM2,TIM_IT_CC2);
+
 
 }
