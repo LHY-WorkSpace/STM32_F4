@@ -3,9 +3,12 @@
 //采样周期：ms
 #define  SAMPLE_PERIOD   (10)
 
-#define  POINT   (128)
-FFT_Data_t FFT_Data[POINT];
-u16 ADC_Data[POINT];
+#define  POINT   (256)
+FFT_Data_t FFT_Data[POINT*2];
+u16 ADC_Data[POINT*2];
+
+float32_t FFT_R[256],FFT_R1[128];
+
 
 u8 ADC_DataFlag = RESET,ADC_DataFlagA = RESET;
 
@@ -124,7 +127,7 @@ void FFT_ADCInit()
 	ADC_CommonInitTypeDefstruct.ADC_Mode = ADC_Mode_Independent;
 	ADC_CommonInitTypeDefstruct.ADC_Prescaler = ADC_Prescaler_Div6;                                   //PLCLK 8分频
 	ADC_CommonInitTypeDefstruct.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_10Cycles;
+	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_15Cycles;
 	ADC_CommonInit(&ADC_CommonInitTypeDefstruct);
 
 	ADC_InitTypeDefstruct.ADC_Resolution = ADC_Resolution_12b;              
@@ -145,7 +148,7 @@ void FFT_ADCInit()
 	// ADC_ITConfig(ADC1,ADC_IT_EOC,ENABLE);
 
 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_28Cycles);
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_112Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
 	ADC_Cmd(ADC1,ENABLE);
 	ADC_SoftwareStartConv(ADC1);
@@ -172,7 +175,21 @@ void FFT_Init()
 
 
 
-
+void FFTTEasst()
+{
+	u16 i;
+	for ( i = 0; i < 256; i++)
+	{
+		if((i&0x08) == 8)
+		{
+			ADC_Data[i]=60;
+		}
+		else
+		{
+			ADC_Data[i]=0;
+		}
+	}
+}
 
 
 
@@ -181,21 +198,26 @@ void FFT_Process()
 {
 	u16 i;
 
-	if( ADC_DataFlag == SET)
+	// if( ADC_DataFlag == SET)
 	{
 		u8g2_ClearBuffer(&u8g2_Data);
 
-		for ( i = 0; i < POINT; i++)
+
+		for ( i = 0; i < POINT*2; i++)
 		{
 			FFT_Data[i].Real = (float32_t)ADC_Data[i];
 			FFT_Data[i].Image = 0;
+
+			// FFT_Data[i].Real = 10*arm_sin_f32(0.01745*i*5);
+			// FFT_Data[i].Image = 0;
+
 		}
-		arm_cfft_f32(&arm_cfft_sR_f32_len128,(float32_t *)FFT_Data,0,1);
+		arm_cfft_f32(&arm_cfft_sR_f32_len256,(float32_t *)FFT_Data,0,1);
+		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R1,128);
 
 		for ( i = 0; i < POINT; i++)
 		{
-			// u8g2_DrawLine(&u8g2_Data,i,0,i,FFT_Data[i].Real/10);
-			u8g2_DrawVLine(&u8g2_Data,i,0,FFT_Data[i].Real/10);
+			u8g2_DrawVLine(&u8g2_Data,i,0,FFT_R1[i]/150);
 		}
 		ADC_DataFlag = RESET;
 		u8g2_SendBuffer(&u8g2_Data);
