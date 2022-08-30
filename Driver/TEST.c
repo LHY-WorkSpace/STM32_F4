@@ -30,10 +30,10 @@ void MPU6050_Test()
 	sprintf(YData,"%3.2f",yaw);
 	sprintf(RData,"%3.2f",roll);
 
-	OLED_ShowStrings(50,0,PData,6);
-	OLED_ShowStrings(50,1,YData,6); 
-	OLED_ShowStrings(50,2,RData,6);
-	OLED_UpdateGRAM();
+//	OLED_ShowStrings(50,0,PData,6);
+//	OLED_ShowStrings(50,1,YData,6); 
+//	OLED_ShowStrings(50,2,RData,6);
+//	OLED_UpdateGRAM();
 
 
 }

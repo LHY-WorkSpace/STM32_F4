@@ -32,7 +32,7 @@ void TickTimer_Init(u16 Period)
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitStr.TIM_Period = Period;
-	TIM_TimeBaseInitStr.TIM_Prescaler = 168000-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler = 16800-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;

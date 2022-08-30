@@ -6,7 +6,7 @@
 void CreateAllTask()
 {
 	//u8g2_TaskCreate();
-	Create_Task();
+	//Create_Task();
 	vTaskDelete(NULL);
 }
 
@@ -39,7 +39,6 @@ int  main()
 
 	while (1)
 	{	
-
 		Delay_ms(50);
 		// LED1_ON;
 		// Delay_ms(500);

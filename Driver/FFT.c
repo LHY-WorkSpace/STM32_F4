@@ -3,12 +3,12 @@
 //采样周期：ms
 #define  SAMPLE_PERIOD   (10)
 
-#define  POINT   (256)
-FFT_Data_t FFT_Data[POINT*2];
-u16 ADC_Data[POINT*2];
+#define  POINT   (1024)
+FFT_Data_t FFT_Data[POINT];
+u16 ADC_Data[POINT];
 
-float32_t FFT_R[256],FFT_R1[128];
-
+float32_t FFT_R[1024];
+u8 PointY[128];
 
 u8 ADC_DataFlag = RESET,ADC_DataFlagA = RESET;
 
@@ -23,7 +23,7 @@ static u8g2_t u8g2_Data;
 void ADCTimer_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
-	TIM_OCInitTypeDef TIM_OCInitTypestuc;
+//	TIM_OCInitTypeDef TIM_OCInitTypestuc;
 	NVIC_InitTypeDef  NVIC_Initstr;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 	
@@ -114,7 +114,7 @@ void FFT_ADCInit()
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA,ENABLE);	
 	
-	NVIC_InitTypeDef  NVIC_Initstr;
+	//NVIC_InitTypeDef  NVIC_Initstr;
 	GPIO_InitTypeDef GPIO_Initstruc;
 	ADC_InitTypeDef   ADC_InitTypeDefstruct;
 	ADC_CommonInitTypeDef   ADC_CommonInitTypeDefstruct;
@@ -127,7 +127,7 @@ void FFT_ADCInit()
 	ADC_CommonInitTypeDefstruct.ADC_Mode = ADC_Mode_Independent;
 	ADC_CommonInitTypeDefstruct.ADC_Prescaler = ADC_Prescaler_Div6;                                   //PLCLK 8分频
 	ADC_CommonInitTypeDefstruct.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
-	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_15Cycles;
+	ADC_CommonInitTypeDefstruct.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_10Cycles;
 	ADC_CommonInit(&ADC_CommonInitTypeDefstruct);
 
 	ADC_InitTypeDefstruct.ADC_Resolution = ADC_Resolution_12b;              
@@ -148,7 +148,7 @@ void FFT_ADCInit()
 	// ADC_ITConfig(ADC1,ADC_IT_EOC,ENABLE);
 
 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_112Cycles);
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_56Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
 	ADC_Cmd(ADC1,ENABLE);
 	ADC_SoftwareStartConv(ADC1);
@@ -161,7 +161,7 @@ void FFT_Init()
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_MIRROR_VERTICAL, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
 	u8g2_InitDisplay(&u8g2_Data);
 	u8g2_SetPowerSave(&u8g2_Data, 0);
-     u8g2_ClearDisplay(&u8g2_Data);
+    u8g2_ClearDisplay(&u8g2_Data);
 
 
 	DMA_ConfigInit();
@@ -193,32 +193,40 @@ void FFTTEasst()
 
 
 
-
+// FFT_Data[i].Real = 10*arm_sin_f32(0.01745*i*5);
+// FFT_Data[i].Image = 0;
 void FFT_Process()
 {
 	u16 i;
 
-	// if( ADC_DataFlag == SET)
+	if( ADC_DataFlag == SET)
 	{
 		u8g2_ClearBuffer(&u8g2_Data);
-
-
-		for ( i = 0; i < POINT*2; i++)
+		for ( i = 1; i < POINT; i++)
 		{
 			FFT_Data[i].Real = (float32_t)ADC_Data[i];
 			FFT_Data[i].Image = 0;
-
-			// FFT_Data[i].Real = 10*arm_sin_f32(0.01745*i*5);
-			// FFT_Data[i].Image = 0;
-
 		}
-		arm_cfft_f32(&arm_cfft_sR_f32_len256,(float32_t *)FFT_Data,0,1);
-		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R1,128);
 
-		for ( i = 0; i < POINT; i++)
+		arm_cfft_f32(&arm_cfft_sR_f32_len1024,(float32_t *)FFT_Data,0,1);
+		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R,POINT);
+
+		for ( i = 1; i < 128; i++)
 		{
-			u8g2_DrawVLine(&u8g2_Data,i,0,FFT_R1[i]/150);
+			FFT_R[i]=2*log(i)*FFT_R[i]/200;
+
+			if( PointY[i] < FFT_R[i] )
+			{
+				PointY[i] = FFT_R[i];
+			}
+			else
+			{
+				PointY[i]-=2;
+			}
+			u8g2_DrawVLine(&u8g2_Data,i,0,PointY[i]);
+			u8g2_DrawPixel(&u8g2_Data,i,PointY[i]+1);
 		}
+
 		ADC_DataFlag = RESET;
 		u8g2_SendBuffer(&u8g2_Data);
 	}
@@ -227,23 +235,11 @@ void FFT_Process()
 
 void DMA2_Stream0_IRQHandler()
 {
-		if(DMA_GetITStatus(DMA2_Stream0,DMA_IT_TCIF0)  == SET )
-		{
-			DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
-
-		// if( ADC_DataFlag == RESET)
-		// {
-			ADC_DataFlag = SET;
-		// 	LED1_ON;
-		// }
-		// else
-		// {	
-		// 	LED1_OFF;
-		// }
-
-
-
-		}    
+	if(DMA_GetITStatus(DMA2_Stream0,DMA_IT_TCIF0)  == SET )
+	{
+		DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
+		ADC_DataFlag = SET;
+	} 
 }
 
 
