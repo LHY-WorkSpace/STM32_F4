@@ -39,7 +39,7 @@ int  main()
 
 	while (1)
 	{	
-		Delay_ms(50);
+		Delay_ms(20);
 		// LED1_ON;
 		// Delay_ms(500);
 		// LED1_OFF;

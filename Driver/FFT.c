@@ -6,8 +6,7 @@
 #define  POINT   (1024)
 FFT_Data_t FFT_Data[POINT];
 u16 ADC_Data[POINT];
-
-float32_t FFT_R[1024];
+float32_t FFT_R[128];
 u8 PointY[128];
 
 u8 ADC_DataFlag = RESET,ADC_DataFlagA = RESET;
@@ -23,7 +22,6 @@ static u8g2_t u8g2_Data;
 void ADCTimer_Init()
 {
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
-//	TIM_OCInitTypeDef TIM_OCInitTypestuc;
 	NVIC_InitTypeDef  NVIC_Initstr;
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
 	
@@ -175,88 +173,79 @@ void FFT_Init()
 
 
 
-void FFTTEasst()
-{
-	u16 i;
-	for ( i = 0; i < 256; i++)
-	{
-		if((i&0x08) == 8)
-		{
-			ADC_Data[i]=60;
-		}
-		else
-		{
-			ADC_Data[i]=0;
-		}
-	}
-}
-
-
-
-// FFT_Data[i].Real = 10*arm_sin_f32(0.01745*i*5);
-// FFT_Data[i].Image = 0;
 void FFT_Process()
 {
 	u16 i;
+	u8 High;
 
 	if( ADC_DataFlag == SET)
 	{
 		u8g2_ClearBuffer(&u8g2_Data);
-		for ( i = 1; i < POINT; i++)
+
+		for ( i = 0; i < POINT; i++)
 		{
 			FFT_Data[i].Real = (float32_t)ADC_Data[i];
 			FFT_Data[i].Image = 0;
+
 		}
-
+		
 		arm_cfft_f32(&arm_cfft_sR_f32_len1024,(float32_t *)FFT_Data,0,1);
-		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R,POINT);
+		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R,128);
 
-		for ( i = 1; i < 128; i++)
+
+		for ( i = 0; i < 128/2; i++)
 		{
-			FFT_R[i]=2*log(i)*FFT_R[i]/200;
+			High = log10(i)*FFT_R[i]/500;
 
-			if( PointY[i] < FFT_R[i] )
+			if( PointY[i] < High)
 			{
-				PointY[i] = FFT_R[i];
+				PointY[i] = High;
+
+				if( PointY[i] > 63)
+				{
+					PointY[i] = 60;
+				}
+
 			}
 			else
 			{
-				PointY[i]-=2;
+				if(PointY[i]>=1)
+				{
+					PointY[i] -=1;
+				}
+				else
+				{
+					PointY[i] =0;
+				}
+
 			}
-			u8g2_DrawVLine(&u8g2_Data,i,0,PointY[i]);
-			u8g2_DrawPixel(&u8g2_Data,i,PointY[i]+1);
+			
+			// u8g2_DrawVLine(&u8g2_Data,i,0,High);
+			// u8g2_DrawPixel(&u8g2_Data,i,PointY[i]);
+
+			u8g2_DrawVLine(&u8g2_Data,i*2,0,High);
+			u8g2_DrawVLine(&u8g2_Data,i*2+1,0,High);
+			u8g2_DrawPixel(&u8g2_Data,i*2,PointY[i]);
+			u8g2_DrawPixel(&u8g2_Data,i*2+1,PointY[i]);
+			
 		}
 
 		ADC_DataFlag = RESET;
 		u8g2_SendBuffer(&u8g2_Data);
+		LED1_ON;
 	}
 }
 
 
 void DMA2_Stream0_IRQHandler()
 {
+
 	if(DMA_GetITStatus(DMA2_Stream0,DMA_IT_TCIF0)  == SET )
 	{
 		DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
 		ADC_DataFlag = SET;
-	} 
+	}    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // void ADC_IRQHandler()
 // {
