@@ -123,7 +123,7 @@ void FFT_ADCInit()
 	ADC_Init(ADC1,&ADC_InitTypeDefstruct);
 
 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_56Cycles);
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_28Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
 	ADC_Cmd(ADC1,ENABLE);
 	ADC_SoftwareStartConv(ADC1);
@@ -140,7 +140,7 @@ void FFT_Init()
 
 	DMA_ConfigInit();
 	FFT_ADCInit();
-	ADCTimer_Init();
+	// ADCTimer_Init();
 
 	DMADataReady = RESET;
 }
@@ -160,7 +160,7 @@ void DisplayMode_1(u8g2_t *u8g2_Data)
 	for ( i = 0; i < SCREEN_LENGTH; i++)
 	{
 		//非线性放大，主要放大高频区域
-		High = (u8)log10(i)*FFT_Display[i]/500;
+		High = (u8)(log10(i+2)*FFT_Display[i+1]/500);
 
 		if( PointY[i] < High)
 		{
@@ -201,7 +201,14 @@ void DisplayMode_2(u8g2_t *u8g2_Data)
 	for ( i = 0; i < SCREEN_LENGTH/2; i++)
 	{
 		//非线性放大，主要放大高频区域
-		High = (u8)log10(i)*FFT_Display[i]/500;
+		if(i<15)
+		{
+			High = (u8)(FFT_Display[i+1]/600);
+		}
+		else
+		{
+			High = (u8)(2*log10(i-10)*FFT_Display[i+1]/500);
+		}
 
 		if( PointY[i] < High)
 		{
@@ -313,7 +320,7 @@ void DisplayMode_4(u8g2_t *u8g2)
 //***************************************************//
 void FFT_Process()
 {
-	u8 i;
+	u16 i;
 
 	if( DMADataReady == SET)
 	{
@@ -329,6 +336,9 @@ void FFT_Process()
 
 		//取幅值
 		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_Display,SCREEN_LENGTH);
+
+		u8g2_DispalyFFT(&u8g2_Data,1);
+
 	}
 }
 
@@ -387,8 +397,8 @@ void TIM2_IRQHandler()
     {
 		TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
 
-		FFT_Process();
-		u8g2_DispalyFFT(&u8g2_Data,3);
+		// FFT_Process();
+		// u8g2_DispalyFFT(&u8g2_Data,3);
 
     }
 }

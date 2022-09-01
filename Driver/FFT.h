@@ -15,7 +15,7 @@ typedef struct
 
 
 void FFT_Init(void);
-
+void u8g2_DispalyFFT(u8g2_t *u8g2,u8 Mode);
 #endif
 
 
