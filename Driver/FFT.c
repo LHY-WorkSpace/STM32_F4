@@ -1,23 +1,21 @@
 #include "IncludeFile.h"
 
-//采样周期：ms
-#define  SAMPLE_PERIOD   (10)
 
-#define  POINT   (1024)
-FFT_Data_t FFT_Data[POINT];
+//屏幕长度
+#define  SCREEN_LENGTH   (128)
+//采样点数
+#define  POINT   		(1024)
+
 u16 ADC_Data[POINT];
-float32_t FFT_R[128];
-u8 PointY[128];
-
-u8 ADC_DataFlag = RESET,ADC_DataFlagA = RESET;
+FFT_Data_t FFT_Data[POINT];
+float32_t FFT_Display[SCREEN_LENGTH];
+u8 PointY[SCREEN_LENGTH];//记录上次的点位置
+u8 DMADataReady = RESET;
 
 static u8g2_t u8g2_Data;
 
 
-
-
 //  PA1 - ADC1_CH1 -  DMA2_S0_CH0
-
 //目前采用ADC一直连续转换，DMA一直传送数据，没有使用定时器定时采样，可根据DMA中断，判断数据是否完成
 void ADCTimer_Init()
 {
@@ -27,16 +25,9 @@ void ADCTimer_Init()
 	
 	TIM_TimeBaseInitStr.TIM_ClockDivision = TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode = TIM_CounterMode_Up;
-	TIM_TimeBaseInitStr.TIM_Period = SAMPLE_PERIOD-1;
-	TIM_TimeBaseInitStr.TIM_Prescaler = 42-1;
+	TIM_TimeBaseInitStr.TIM_Period = 20-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler = 42000-1;
     TIM_TimeBaseInit(TIM2,&TIM_TimeBaseInitStr);
-
-	// TIM_OCInitTypestuc.TIM_OCMode=TIM_OCMode_Toggle;
-	// TIM_OCInitTypestuc.TIM_OutputState=TIM_OutputState_Enable;
-	// TIM_OCInitTypestuc.TIM_OCPolarity=TIM_OCPolarity_Low;
-	// TIM_OCInitTypestuc.TIM_Pulse = SAMPLE_PERIOD/2-1;
-	// TIM_OC2Init(TIM2,&TIM_OCInitTypestuc);
-
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM2_IRQn;
 	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
@@ -44,13 +35,7 @@ void ADCTimer_Init()
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
-
-	// TIM_OC2PreloadConfig(TIM2,TIM_OCPreload_Enable);
-	// TIM_SelectOutputTrigger(TIM2,TIM_TRGOSource_OC1);
     TIM_ARRPreloadConfig(TIM2,ENABLE);
-	// TIM_GenerateEvent(TIM2,TIM_EventSource_Update);
-	// // TIM_InternalClockConfig(TIM2);
-	// TIM_UpdateDisableConfig(TIM2,DISABLE);
     TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
     TIM_ITConfig(TIM2,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM2,ENABLE);
@@ -98,13 +83,13 @@ void DMA_ConfigInit()
 
 
 //***************************************************//
-//  功能描述: 电池检测ADC初始化
+//  功能描述: FFT ADC初始化
 //  
 //  参数: 无
 //  
 //  返回值:无
 //  
-//  说明: 无
+//  说明: 连续模式，DMA传输
 //  
 //***************************************************//
 void FFT_ADCInit()
@@ -137,14 +122,6 @@ void FFT_ADCInit()
 	ADC_InitTypeDefstruct.ADC_NbrOfConversion = 1;
 	ADC_Init(ADC1,&ADC_InitTypeDefstruct);
 
-	// NVIC_Initstr.NVIC_IRQChannel=ADC_IRQn;
-	// NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
-	// NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
-	// NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
-	// NVIC_Init(&NVIC_Initstr);
-	// ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
-	// ADC_ITConfig(ADC1,ADC_IT_EOC,ENABLE);
-
 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
 	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_56Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
@@ -159,92 +136,261 @@ void FFT_Init()
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_MIRROR_VERTICAL, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
 	u8g2_InitDisplay(&u8g2_Data);
 	u8g2_SetPowerSave(&u8g2_Data, 0);
-    u8g2_ClearDisplay(&u8g2_Data);
-
+  	u8g2_ClearDisplay(&u8g2_Data);
 
 	DMA_ConfigInit();
 	FFT_ADCInit();
 	ADCTimer_Init();
-	ADC_DataFlag = RESET;
-	ADC_DataFlagA = RESET;
 
-	u8g2_ClearBuffer(&u8g2_Data);
+	DMADataReady = RESET;
 }
 
 
-
-void FFT_Process()
+//***************************************************//
+//  功能描述: 显示模式 1
+//  
+//  说明: 128点，单线宽，点降落
+//  
+//***************************************************//
+void DisplayMode_1(u8g2_t *u8g2_Data)
 {
 	u16 i;
 	u8 High;
 
-	if( ADC_DataFlag == SET)
+	for ( i = 0; i < SCREEN_LENGTH; i++)
 	{
-		u8g2_ClearBuffer(&u8g2_Data);
+		//非线性放大，主要放大高频区域
+		High = (u8)log10(i)*FFT_Display[i]/500;
 
+		if( PointY[i] < High)
+		{
+			PointY[i] = High;
+
+			if( PointY[i] > 63)
+			{
+				PointY[i] = 62;
+			}
+		}
+		else
+		{
+			if(PointY[i]>=1)
+			{
+				PointY[i] -= 1;
+			}
+			else
+			{
+				PointY[i] = 0;
+			}
+		}
+		u8g2_DrawVLine(u8g2_Data,i,0,High);
+		u8g2_DrawPixel(u8g2_Data,i,PointY[i]);
+	}
+}
+
+//***************************************************//
+//  功能描述: 显示模式 2
+//  
+//  说明: 64点，双线宽，点降落
+//  
+//***************************************************//
+void DisplayMode_2(u8g2_t *u8g2_Data)
+{
+	u16 i;
+	u8 High;
+
+	for ( i = 0; i < SCREEN_LENGTH/2; i++)
+	{
+		//非线性放大，主要放大高频区域
+		High = (u8)log10(i)*FFT_Display[i]/500;
+
+		if( PointY[i] < High)
+		{
+			PointY[i] = High;
+
+			if( PointY[i] > 63)
+			{
+				PointY[i] = 62;
+			}
+		}
+		else
+		{
+			if(PointY[i]>=1)
+			{
+				PointY[i] -=1;
+			}
+			else
+			{
+				PointY[i] =0;
+			}
+		}
+
+		u8g2_DrawVLine(u8g2_Data,i*2,0,High);
+		u8g2_DrawVLine(u8g2_Data,i*2+1,0,High);
+		u8g2_DrawPixel(u8g2_Data,i*2,PointY[i]);
+		u8g2_DrawPixel(u8g2_Data,i*2+1,PointY[i]);
+	}
+}
+
+//***************************************************//
+//  功能描述: 显示模式 3
+//  
+//  说明: 指定起始位置，单线宽，无点
+//  
+//***************************************************//
+void DisplayMode_3(u8g2_t *u8g2,u8 x)
+{
+	u16 i;
+	u8 High;
+
+	if(x >= SCREEN_LENGTH)
+	{
+		return;
+	}
+
+	for ( i = x; i < SCREEN_LENGTH ; i++)
+	{
+		//非线性放大，主要放大高频区域
+		High = (u8)log10(i-x)*FFT_Display[i-x]/500;
+		u8g2_DrawVLine(u8g2,i,0,High);
+	}
+}
+
+
+//***************************************************//
+//  功能描述: 显示模式 4
+//  
+//  说明: 128点，双线宽，水平中心对称
+//  
+//***************************************************//
+void DisplayMode_4(u8g2_t *u8g2)
+{
+	u16 i;
+	u8 High;
+
+	for ( i = 0; i < SCREEN_LENGTH/2; i++)
+	{
+		//非线性放大，主要放大高频区域
+		High = (u8)log10(i)*FFT_Display[i]/500;
+
+		if( PointY[i] < High)
+		{
+			PointY[i] = High;
+
+			if( PointY[i] > 63)
+			{
+				PointY[i] = 62;
+			}
+		}
+		else
+		{
+			if(PointY[i]>=1)
+			{
+				PointY[i] -=1;
+			}
+			else
+			{
+				PointY[i] =0;
+			}
+		}
+
+		u8g2_DrawVLine(u8g2,i*2,0,High);
+		u8g2_DrawVLine(u8g2,i*2+1,0,High);
+		u8g2_DrawPixel(u8g2,i*2,PointY[i]);
+		u8g2_DrawPixel(u8g2,i*2+1,PointY[i]);
+	}
+}
+
+
+//***************************************************//
+//  功能描述: ADC数据FFT处理
+//  
+//  参数: 无
+//  
+//  返回值:无
+//  
+//  说明: 无
+//  
+//***************************************************//
+void FFT_Process()
+{
+	u8 i;
+
+	if( DMADataReady == SET)
+	{
+		//转换成复数形式,填充实部
 		for ( i = 0; i < POINT; i++)
 		{
 			FFT_Data[i].Real = (float32_t)ADC_Data[i];
 			FFT_Data[i].Image = 0;
-
 		}
-		
+
+		//1024点FFT处理
 		arm_cfft_f32(&arm_cfft_sR_f32_len1024,(float32_t *)FFT_Data,0,1);
-		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_R,128);
+
+		//取幅值
+		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_Display,SCREEN_LENGTH);
+	}
+}
 
 
-		for ( i = 0; i < 128/2; i++)
+//***************************************************//
+//  功能描述: u8g2  FFT显示
+//  
+//  参数: u8g2指针,显示模式
+//  
+//  返回值:无
+//  
+//  说明: 无
+//  
+//***************************************************//
+void u8g2_DispalyFFT(u8g2_t *u8g2,u8 Mode)
+{
+	if( DMADataReady == SET)
+	{
+		u8g2_ClearBuffer(u8g2);
+		switch (Mode)
 		{
-			High = log10(i)*FFT_R[i]/500;
-
-			if( PointY[i] < High)
-			{
-				PointY[i] = High;
-
-				if( PointY[i] > 63)
-				{
-					PointY[i] = 60;
-				}
-
-			}
-			else
-			{
-				if(PointY[i]>=1)
-				{
-					PointY[i] -=1;
-				}
-				else
-				{
-					PointY[i] =0;
-				}
-
-			}
-			
-			// u8g2_DrawVLine(&u8g2_Data,i,0,High);
-			// u8g2_DrawPixel(&u8g2_Data,i,PointY[i]);
-
-			u8g2_DrawVLine(&u8g2_Data,i*2,0,High);
-			u8g2_DrawVLine(&u8g2_Data,i*2+1,0,High);
-			u8g2_DrawPixel(&u8g2_Data,i*2,PointY[i]);
-			u8g2_DrawPixel(&u8g2_Data,i*2+1,PointY[i]);
-			
+			case 0:
+				DisplayMode_1(u8g2);
+				break;
+			case 1:
+				DisplayMode_2(u8g2);				
+				break;
+			case 2:
+				DisplayMode_3(u8g2,60);				
+				break;
+			case 3:
+				DisplayMode_4(u8g2);				
+				break;		
+			default:
+				DisplayMode_1(u8g2);
+				break;
 		}
-
-		ADC_DataFlag = RESET;
-		u8g2_SendBuffer(&u8g2_Data);
-		LED1_ON;
+		DMADataReady = RESET;
+		u8g2_SendBuffer(u8g2);
 	}
 }
 
 
 void DMA2_Stream0_IRQHandler()
 {
-
 	if(DMA_GetITStatus(DMA2_Stream0,DMA_IT_TCIF0)  == SET )
 	{
 		DMA_ClearITPendingBit(DMA2_Stream0,DMA_IT_TCIF0);
-		ADC_DataFlag = SET;
-	}    
+		DMADataReady = SET;
+	}
+}
+
+void TIM2_IRQHandler()
+{
+    if( TIM_GetITStatus(TIM2,TIM_IT_Update) == SET)
+    {
+		TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
+
+		FFT_Process();
+		u8g2_DispalyFFT(&u8g2_Data,3);
+
+    }
 }
 
 // void ADC_IRQHandler()
@@ -253,27 +399,4 @@ void DMA2_Stream0_IRQHandler()
 // 	{
 // 		ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
 // 	}
-
 // }
-
-void TIM2_IRQHandler()
-{
-
-    if( TIM_GetITStatus(TIM2,TIM_IT_Update) == SET)
-    {
-		TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
-
-		if( ADC_DataFlagA == RESET)
-		{
-			ADC_DataFlagA = SET;
-			LED2_ON;
-		}
-		else
-		{	
-			ADC_DataFlagA = RESET;
-			LED2_OFF;
-		}
-    }
-
-
-}
