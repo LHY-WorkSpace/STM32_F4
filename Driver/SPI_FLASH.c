@@ -133,17 +133,17 @@ static u8 Flash_ReadStateReg(u8 CMD)
 //  说明:无
 //  
 //***************************************************//
-static void Flash_WriteStateReg(u8 CMD,u8 Data)
-{
+//static void Flash_WriteStateReg(u8 CMD,u8 Data)
+//{
 
-	SPI_FLASH_ENABLE; 
+//	SPI_FLASH_ENABLE; 
 
-	FLASH_SendData(CMD);
-	
-	FLASH_SendData(Data);
+//	FLASH_SendData(CMD);
+//	
+//	FLASH_SendData(Data);
 
-	SPI_FLASH_DISABLE;
-}
+//	SPI_FLASH_DISABLE;
+//}
 
 //***************************************************//
 //  功能描述:发送地址

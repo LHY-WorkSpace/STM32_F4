@@ -87,7 +87,7 @@
 
 #if (USE_LVGL == TRUE)
 #include "lvgl.h"
-#include "LVGL_Init.h"
+//#include "LVGL_Init.h"
 #endif
 
 #if (USE_U8G2 == TRUE)
