@@ -45,6 +45,8 @@
 #include "HC_SR04.h"
 #include "lcd.h"
 #include "PID.h"
+#include "ST7789.h"
+
 
 // TRUE     使用
 // FALSE    不使用
@@ -86,8 +88,9 @@
 
 
 #if (USE_LVGL == TRUE)
-#include "lvgl.h"
-//#include "LVGL_Init.h"
+#include "../Module/LVGL/lvgl.h"
+#include "../Module/LVGL/src/lvgl.h"
+
 #endif
 
 #if (USE_U8G2 == TRUE)

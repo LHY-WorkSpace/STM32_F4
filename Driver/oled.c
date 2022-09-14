@@ -133,7 +133,7 @@ void OLED_SPI_Init()
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2,ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
-	
+
 	GPIO_InitTypeDef GPIOB_InitTypeDefinsture;
 	SPI_InitTypeDef SPI_InitTypeDefinsture;
 	
@@ -156,7 +156,7 @@ void OLED_SPI_Init()
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource13,GPIO_AF_SPI2);
 	GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_SPI2);	
 	
-	SPI_InitTypeDefinsture.SPI_Direction=SPI_Direction_2Lines_FullDuplex;
+	SPI_InitTypeDefinsture.SPI_Direction=SPI_Direction_1Line_Tx;
 	SPI_InitTypeDefinsture.SPI_Mode=SPI_Mode_Master;
 	SPI_InitTypeDefinsture.SPI_DataSize=SPI_DataSize_8b;
 	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;

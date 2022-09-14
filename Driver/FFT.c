@@ -116,7 +116,7 @@ void FFT_ADCInit()
 
 
 	ADC_DMARequestAfterLastTransferCmd(ADC1,ENABLE);
-	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_28Cycles);
+	ADC_RegularChannelConfig(ADC1,ADC_Channel_1,1,ADC_SampleTime_15Cycles);
 	ADC_DMACmd(ADC1,ENABLE);
 	ADC_Cmd(ADC1,ENABLE);
 	// ADC_SoftwareStartConv(ADC1);
@@ -153,7 +153,7 @@ void DisplayMode_1(u8g2_t *u8g2_Data)
 	for ( i = 0; i < SCREEN_LENGTH; i++)
 	{
 		//非线性放大，主要放大高频区域
-		High = (u8)(2*log10(i+3)*FFT_Display[i+1]/500);
+		High = (u8)(log10(i+3)*FFT_Display[i+1]/500);
 
 		if( PointY[i] < High)
 		{
@@ -194,13 +194,13 @@ void DisplayMode_2(u8g2_t *u8g2_Data)
 	for ( i = 0; i < SCREEN_LENGTH/2; i++)
 	{
 		//非线性放大，主要放大高频区域
-		if(i<10)
+		// if(i<10)
+		// {
+		// 	High = (u8)(FFT_Display[i+1]/800);
+		// }
+		// else
 		{
-			High = (u8)(FFT_Display[i+1]/800);
-		}
-		else
-		{
-			High = (u8)(2*log10(i-7)*FFT_Display[i+1]/500);
+			High = (u8)(log10(i+3)*FFT_Display[i+1]/500);
 		}
 
 		if( PointY[i] < High)
@@ -266,22 +266,12 @@ void DisplayMode_4(u8g2_t *u8g2)
 {
 	u16 i;
 	u8 High;
+	const u8 Wide = 3;
 
-	for ( i = 0; i < SCREEN_LENGTH/2; i++)
+	for ( i = 0; i < SCREEN_LENGTH/Wide; i++)
 	{
-		// //非线性放大，主要放大高频区域
-		// High = (u8)log10(i)*FFT_Display[i]/500;
 
-		//非线性放大，主要放大高频区域
-		if(i<10)
-		{
-			High = (u8)(FFT_Display[i+1]/800);
-		}
-		else
-		{
-			High = (u8)(log(i-7)*FFT_Display[i+1]/500);
-		}
-
+		High = (u8)(log(i+3)*FFT_Display[i+1]/500);
 
 		if( PointY[i] < High)
 		{
@@ -300,14 +290,16 @@ void DisplayMode_4(u8g2_t *u8g2)
 			}
 			else
 			{
-				PointY[i] =0;
+				PointY[i] = 0;
 			}
 		}
 
-		u8g2_DrawVLine(u8g2,i*2,0,High);
-		u8g2_DrawVLine(u8g2,i*2+1,0,High);
-		u8g2_DrawPixel(u8g2,i*2,PointY[i]);
-		u8g2_DrawPixel(u8g2,i*2+1,PointY[i]);
+		u8g2_DrawVLine(u8g2,i*Wide,0,High);
+		u8g2_DrawVLine(u8g2,i*Wide+1,0,High);
+		u8g2_DrawVLine(u8g2,i*Wide+2,0,High);		
+		u8g2_DrawPixel(u8g2,i*Wide,PointY[i]);
+		u8g2_DrawPixel(u8g2,i*Wide+1,PointY[i]);
+		u8g2_DrawPixel(u8g2,i*Wide+2,PointY[i]);
 	}
 }
 
@@ -341,7 +333,7 @@ void FFT_Process()
 		//取幅值
 		arm_cmplx_mag_f32((float32_t *)FFT_Data,FFT_Display,SCREEN_LENGTH);
 
-		u8g2_DispalyFFT(&u8g2_Data,1);
+		u8g2_DispalyFFT(&u8g2_Data,2);
 
 	}
 }
@@ -364,16 +356,16 @@ void u8g2_DispalyFFT(u8g2_t *u8g2,u8 Mode)
 		u8g2_ClearBuffer(u8g2);
 		switch (Mode)
 		{
-			case 0:
+			case 1:
 				DisplayMode_1(u8g2);
 				break;
-			case 1:
+			case 2:
 				DisplayMode_2(u8g2);				
 				break;
-			case 2:
+			case 3:
 				DisplayMode_3(u8g2,60);				
 				break;
-			case 3:
+			case 4:
 				DisplayMode_4(u8g2);				
 				break;		
 			default:

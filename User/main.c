@@ -23,6 +23,7 @@ int  main()
 	//AT24C08_Init();
 	// PWM_Init(0,0);
 	OLED_Init();
+	// TFT_Init();
 	u8g2_Init();
 	Start_Page();
 	// Display_FreeRTOS_Logo();
@@ -39,13 +40,10 @@ int  main()
 
 	while (1)
 	{	
-		Delay_ms(20);
-		// LED1_ON;
-		// Delay_ms(500);
-		// LED1_OFF;
+		Delay_ms(10);
 		IWDOG_Clear();
 		FFT_Process();
-
+		//TFT_full(0x1345);
 	}
 
 }
