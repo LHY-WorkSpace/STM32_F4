@@ -14,6 +14,7 @@ void CreateAllTask()
 
 int  main()
 {
+	u16 i=0;
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
@@ -22,13 +23,13 @@ int  main()
 	// Flash_IO_Init();
 	//AT24C08_Init();
 	// PWM_Init(0,0);
-	OLED_Init();
-	// TFT_Init();
-	u8g2_Init();
-	Start_Page();
+	// OLED_Init();
+	TFT_Init();
+	// u8g2_Init();
+	// Start_Page();
 	// Display_FreeRTOS_Logo();
 
-	FFT_Init();
+	// FFT_Init();
 
 	printf("Power Online\r\n");
 
@@ -40,10 +41,42 @@ int  main()
 
 	while (1)
 	{	
-		Delay_ms(10);
-		IWDOG_Clear();
-		FFT_Process();
-		//TFT_full(0x1345);
+		// Delay_ms(500);
+		// OLED_ClearScreen(0x55);
+		// Delay_ms(500);
+		// OLED_ClearScreen(0xAA);
+
+
+		TFT_full(TFT_RED);
+		Delay_ms(500);
+		Lcd_SetRegion(50,50,100,100);
+		for ( i = 0; i < 2500; i++)
+		{
+			WrData(TFT_BLUE);
+		}
+		Delay_ms(500);
+		
+
+
+
+		// TFT_full(TFT_GREEN);
+		// // Delay_ms(500);
+		// TFT_full(TFT_BLUE);
+		// // Delay_ms(500);
+		// TFT_full(TFT_WHITE);
+		// // Delay_ms(500);
+		// TFT_full(TFT_YELLOW);
+		// // Delay_ms(500);
+		// TFT_full(TFT_GRAY0);
+		// // Delay_ms(500);
+		// TFT_full(TFT_GRAY1);
+		// // Delay_ms(500);
+		// TFT_full(TFT_GRAY2);
+		// // Delay_ms(500);
+
+		// IWDOG_Clear();
+		// FFT_Process();
+
 	}
 
 }

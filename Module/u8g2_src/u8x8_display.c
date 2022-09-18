@@ -214,10 +214,12 @@ uint8_t u8x8_byte_4wire_hw_spi(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int,
         data = (uint8_t*)arg_ptr;
         do
         {
-            while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);            
-            SPI_I2S_SendData(SPI2,*(data++));			
-            SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-            arg_int--;
+          
+          SPI_I2S_SendData(SPI2,*(data++));		
+          while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET); 
+          while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) != RESET);    
+          arg_int--;
+
         }while(arg_int > 0);
     break;
   case U8X8_MSG_BYTE_INIT:

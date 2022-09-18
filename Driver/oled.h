@@ -1,6 +1,5 @@
 #ifndef  OLED_H
 #define  OLED_H
-#include "stm32f4xx.h"
 
 
 	
@@ -32,8 +31,6 @@
 
 
 void OLED_Init(void);
-void OLED_SendData(u8 Tdata);
-void OLED_SetMode(u8 Tdata);
 void OLED_SetScanFre(u8 fre,u8 div);   
 void OLED_SetContrast(u8 value); 
 void OLED_SetTwinkMode(u8 Mode,u8 Speed);

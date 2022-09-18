@@ -150,6 +150,7 @@
     "includefile.h": "c",
     "spi_flash.h": "c",
     "RNG.H": "cpp",
-    "at24c08.h": "c"
+    "at24c08.h": "c",
+    "oled.h": "c"
   }
 }

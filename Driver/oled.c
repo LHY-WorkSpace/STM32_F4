@@ -1,9 +1,6 @@
 #include "IncludeFile.h"
 
 
-//  PB13-------SCLK          PB15------SDA
-//  PB12-------D/C           PB14------RST 
-
 //#if (USE_U8G2 == FALSE)
 
 u8 OLED_GRAM[8][128];
@@ -127,7 +124,17 @@ u8 CharModel[][16]=
 
 
 	
-
+//***************************************************//
+//  功能描述: OLED  spi IO 初始化
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 2分频 = 20Mhz
+//  PB13-------SCLK          PB15------SDA
+//  PB12-------D/C           PB14------RST 
+//***************************************************//
 void OLED_SPI_Init()
 {
 
@@ -162,7 +169,7 @@ void OLED_SPI_Init()
 	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;
 	SPI_InitTypeDefinsture.SPI_CPHA=SPI_CPHA_2Edge;
 	SPI_InitTypeDefinsture.SPI_NSS=SPI_NSS_Soft;
-	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_2;  
+	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_16;  
 	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
 	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
@@ -173,6 +180,32 @@ void OLED_SPI_Init()
 }
 
 
+//***************************************************//
+//  功能描述: 命令/数据发送函数
+//  
+//  参数: 数据/命令
+//  
+//  返回值: 无
+//  
+//  说明: 单线只发送模式需注意还要单独判 BSY 位！！！详细说明见手册
+//    	 不判会导致低速时发送异常
+//  
+//***************************************************//
+static void OLED_SendData(u8 Tdata)
+{
+	OLED_DATA;	
+	SPI_I2S_SendData(SPI2,Tdata);		
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET); 
+    while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) != RESET);    
+}
+
+static void OLED_SetMode(u8 Tdata)
+{
+	OLED_ORDER;	
+	SPI_I2S_SendData(SPI2,Tdata);	
+	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET); 
+    while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) != RESET);    
+}
 
 
 
@@ -180,11 +213,12 @@ void OLED_Init(void)
 {
 
 	OLED_SPI_Init();
-	OLED_RST_ON;
-	Delay_us(10);	
-	OLED_RST_OFF;
-	Delay_us(10);	
 
+#if (USE_U8G2 == FALSE)
+	OLED_RST_ON;
+	Delay_ms(10);	
+	OLED_RST_OFF;
+	Delay_ms(10);	
     OLED_SetMode(0xA8);
     OLED_SetMode(0x3F);
     OLED_SetMode(0xD3);
@@ -214,47 +248,12 @@ void OLED_Init(void)
 	OLED_SetMode(0x14);      //0x14-----开启     0x10----关闭
 	OLED_SetMode(0xAf);
 
-
-
-#if (USE_U8G2 == FALSE)
 	OLED_ClearScreen(0x00);	
-#else
-	u8 i,j;
-	OLED_SetMode(0x22);	            
-	OLED_SetMode(0x00);	          	
-	OLED_SetMode(0x07);           
-	OLED_SetMode(0x21);           
-	OLED_SetMode(0x00);	        
-	OLED_SetMode(0x7f);
-	Delay_us(10);
-	for(i=0;i<8;i++)
-	{
-		for(j=0;j<128;j++)
-		{
-			OLED_SendData(0);
-		}
-	}
+
 #endif
 
 }
 
-
-
-void OLED_SendData(u8 Tdata)
-{
-	OLED_DATA;	
-	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);
-	SPI_I2S_SendData(SPI2,Tdata);		
-	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);      
-}
-
-void OLED_SetMode(u8 Tdata)
-{
-	OLED_ORDER;	
-	SPI_I2S_ClearFlag(SPI2,SPI_I2S_FLAG_TXE);	
-	SPI_I2S_SendData(SPI2,Tdata);	
-	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET);           
-}
 
 /*
 打开显示
@@ -410,8 +409,8 @@ void OLED_UpdateGRAM()
 	OLED_SetMode(0x07);           
 	OLED_SetMode(0x21);           
 	OLED_SetMode(0x00);	        
-	OLED_SetMode(0x7f);
-	Delay_us(2);  
+	OLED_SetMode(0x7f); 
+
 	for(i=0;i<8;i++)
 	{
 		for(j=0;j<128;j++)
