@@ -10,8 +10,8 @@ void CreateAllTask()
 	vTaskDelete(NULL);
 }
 
-
-
+u16 MemAddr[2500];
+u16 Colour=0;
 int  main()
 {
 	u16 i=0;
@@ -20,20 +20,21 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	// Flash_IO_Init();
-	//AT24C08_Init();
-	// PWM_Init(0,0);
-	// OLED_Init();
-	TFT_Init();
-	// u8g2_Init();
-	// Start_Page();
-	// Display_FreeRTOS_Logo();
 
-	// FFT_Init();
+	TFT_Init();
 
 	printf("Power Online\r\n");
 
+	// lv_init();
+	// lv_port_disp_init();
+	// lv_port_indev_init();
 
+	// lv_ex_img_1();
+	//lv_ex_img_2();
+	//lv_ex_keyboard_1();
+	//lv_demo_widgets();
+	// lv_demo_stress();
+	// lv_demo_benchmark();
 
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
@@ -41,41 +42,47 @@ int  main()
 
 	while (1)
 	{	
-		// Delay_ms(500);
-		// OLED_ClearScreen(0x55);
-		// Delay_ms(500);
-		// OLED_ClearScreen(0xAA);
+		// lv_task_handler();
+		// lv_tick_inc(10);
 
+
+		// TFT_full(TFT_RED);
+		// Delay_ms(500);
+		// ST7789_SetArea(50,50,100,100);
+		// for ( i = 0; i < sizeof(MemAddr)/sizeof(MemAddr[0]); i++)
+		// {
+		// 	MemAddr[i]=TFT_BLUE;
+		// }
+		// TFT_DMA_Start((u32)&MemAddr[0],2500*2);
+		// Delay_ms(100);
+		// ST7789_SetArea(100,50,150,100);
+		// for ( i = 0; i < 2500; i++)
+		// {
+		// 	ST7789_DrawPoint(TFT_BLUE);
+		// }
+		// Delay_ms(100);
+
+		// ST7789_SetArea(0,0,240,240);
+		// Colour = TFT_RED;
+		// TFT_DMA_Start((u32)&Colour,240*240);
+		// Delay_ms(300);
+
+		// ST7789_SetArea(0,0,240,240);
+		// Colour = TFT_GREEN;
+		// TFT_DMA_Start((u32)&Colour,240*240);
+		// Delay_ms(300);
+
+
+		// ST7789_SetArea(0,0,240,240);
+		// Colour = TFT_BLUE;
+		// TFT_DMA_Start((u32)&Colour,240*240);
+		// Delay_ms(300);
 
 		TFT_full(TFT_RED);
-		Delay_ms(500);
-		Lcd_SetRegion(50,50,100,100);
-		for ( i = 0; i < 2500; i++)
-		{
-			WrData(TFT_BLUE);
-		}
-		Delay_ms(500);
-		
+		Delay_ms(300);
+		TFT_full_DMA(TFT_BLUE);
+		Delay_ms(300);
 
-
-
-		// TFT_full(TFT_GREEN);
-		// // Delay_ms(500);
-		// TFT_full(TFT_BLUE);
-		// // Delay_ms(500);
-		// TFT_full(TFT_WHITE);
-		// // Delay_ms(500);
-		// TFT_full(TFT_YELLOW);
-		// // Delay_ms(500);
-		// TFT_full(TFT_GRAY0);
-		// // Delay_ms(500);
-		// TFT_full(TFT_GRAY1);
-		// // Delay_ms(500);
-		// TFT_full(TFT_GRAY2);
-		// // Delay_ms(500);
-
-		// IWDOG_Clear();
-		// FFT_Process();
 
 	}
 

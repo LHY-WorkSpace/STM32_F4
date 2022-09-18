@@ -3,10 +3,10 @@
 ; *************************************************************
  
 ; load region size_region
-LR_IROM1 0x08000000 0x00060000  
+LR_IROM1 0x08000000 0x00080000  
 {   
   ; load address = execution address
-  ER_IROM1 0x08000000 0x00060000 
+  ER_IROM1 0x08000000 0x00080000 
   {  
    *.o (RESET, +First)
    *(InRoot$$Sections)
@@ -26,11 +26,11 @@ LR_IROM1 0x08000000 0x00060000
 }
 
 ;必须单独再开一个加载域，使加载域与其中的执行域地址相等
-LR_IROM2 0x08060000 0x00020000 
-{  
-  USER_IROM 0x08060000 0x00020000 
-  {  
-    .ANY (USER_ROM, +RO)
-  }
-}
+;LR_IROM2 0x08060000 0x00020000 
+;{  
+;  USER_IROM 0x08060000 0x00020000 
+;  {  
+;    .ANY (USER_ROM, +RO)
+;  }
+;}
 

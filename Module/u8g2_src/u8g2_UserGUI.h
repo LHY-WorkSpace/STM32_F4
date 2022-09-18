@@ -4,8 +4,8 @@
 
 
 void u8g2_TaskCreate(void);
-
-
+void u8g2_Init(void);
+void Display_U8g2_Logo(void);
 
 
 

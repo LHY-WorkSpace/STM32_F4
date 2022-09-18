@@ -151,6 +151,8 @@
     "spi_flash.h": "c",
     "RNG.H": "cpp",
     "at24c08.h": "c",
-    "oled.h": "c"
-  }
+    "oled.h": "c",
+    "u8g2_usergui.h": "c"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
 }

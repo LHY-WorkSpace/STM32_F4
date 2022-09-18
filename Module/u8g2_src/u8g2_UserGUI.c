@@ -109,7 +109,7 @@ void ShowHumanityData(char *Data)
 }
 
 
-void draw(u8g2_t *u8g2)
+void u8g2_Logo(u8g2_t *u8g2)
 {
     u8g2_SetFontMode(u8g2, 1);  // Transparent
     u8g2_SetFontDirection(u8g2, 0);
@@ -152,10 +152,10 @@ void Display_FreeRTOS_Logo()
 }
 
 
-void Start_Page()
+void Display_U8g2_Logo()
 {
 
-    draw(&u8g2_Data);
+    u8g2_Logo(&u8g2_Data);
     u8g2_SendBuffer(&u8g2_Data); 
     Delay_ms(500);  
     u8g2_ClearBuffer(&u8g2_Data);

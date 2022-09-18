@@ -54,10 +54,88 @@ static void TFT_IOInit()
 
 	SPI_Init(SPI1,&SPI_InitTypeDefinsture);
 
+    SPI_I2S_DMACmd(SPI1,SPI_I2S_DMAReq_Tx,ENABLE);
+
 	SPI_Cmd(SPI1 ,ENABLE);
 
 
 }
+
+void ST7789_DMA_Init()
+{
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
+
+  	DMA_InitTypeDef DMA_InitConfig;
+	
+	NVIC_InitTypeDef  NVIC_Initstr;
+	
+	DMA_InitConfig.DMA_Memory0BaseAddr=0;	
+	   
+	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI1->DR);
+	
+	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
+	
+	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
+	
+	DMA_InitConfig.DMA_BufferSize=100;//单次传输的大小
+	
+	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; //先试试从内存到外设  
+	
+	DMA_InitConfig.DMA_Channel=DMA_Channel_3; 
+	
+	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Disable;
+	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_Full;
+	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
+	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
+	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
+	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
+	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
+	DMA_InitConfig.DMA_Priority=DMA_Priority_Medium;
+	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
+
+
+	// DMA_ITConfig(DMA2_Stream3,DMA_IT_TC,ENABLE);	
+	// NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
+	// NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	// NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	// NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
+	// NVIC_Init(&NVIC_Initstr);
+
+
+
+	DMA_ClearFlag(DMA2_Stream3,DMA_FLAG_TCIF3);
+	DMA_Cmd(DMA2_Stream3,DISABLE);
+
+
+}
+
+
+void TFT_DMA_Start(u32 MemAddr,u16 size)
+{    
+    TFT_DATA;
+    DMA_ClearFlag(DMA2_Stream3,DMA_FLAG_TCIF3);
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+    DMA_MemoryTargetConfig(DMA2_Stream3,MemAddr,DMA_Memory_0);
+    DMA_SetCurrDataCounter(DMA2_Stream3,size);
+    DMA_Cmd(DMA2_Stream3,ENABLE);
+    while (DMA_GetFlagStatus(DMA2_Stream3,DMA_FLAG_TCIF3) == RESET);
+
+}
+
+
+
+// void DMA2_Stream3_IRQHandler()
+// {
+// 		if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+// 		{
+//             DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
+// 		}    
+
+
+// }
+
+
 
 
 
@@ -85,6 +163,7 @@ void TFT_Init()
 {
 
     TFT_IOInit();
+    ST7789_DMA_Init();
 
 	TFT_RST_ON;
 	Delay_ms(10);
@@ -263,7 +342,7 @@ void TFT_full(u16 color)
 }
   
 
-void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
+void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 {	
 
 	TFT_SetCmd(0x2a);
@@ -280,10 +359,44 @@ void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 	TFT_SetCmd(0x2c);
 }
 
-void WrData(u16 color)
+void ST7789_DrawPoint(u16 color)
 {
     TFT_SendData(color>>8);
     TFT_SendData(color);
 }
+
+    u8 Data[480];
+void TFT_full_DMA(u16 Color)
+{
+
+    u16 i;
+    TFT_SetCmd(0x2a);     //Column address set
+    TFT_SendData(0x00);    //start column
+    TFT_SendData(0x00); 
+    TFT_SendData(0x00);    //end column
+    TFT_SendData(0xF0);
+
+    TFT_SetCmd(0x2b);     //Row address set
+    TFT_SendData(0x00);    //start row
+    TFT_SendData(0x00); 
+    TFT_SendData(0x00);    //end row
+    TFT_SendData(0xF0);
+    TFT_SetCmd(0x2C);     //Memory write
+
+    for ( i = 0; i < 240; i++)
+    {
+       Data[i*2]=Color>>8;
+       Data[i*2+1]=Color&0xff;
+    }
+    TFT_DATA;
+    for ( i = 0; i < 240; i++)
+    {
+        TFT_DMA_Start((u32)Data,240*2);
+    }
+
+}
+
+
+
 
 

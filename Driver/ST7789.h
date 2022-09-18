@@ -28,6 +28,9 @@
 
 void TFT_Init(void);
 void TFT_full(u16 color);
-void Lcd_SetRegion(u16 x_start,u16 y_start,u16 x_end,u16 y_end);
-void WrData(u16 color);
+void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end);
+void ST7789_DrawPoint(u16 color);
+void TFT_DMA_Start(u32 MemAddr,u16 size);
+void TFT_full_DMA(u16 Color);
+
 #endif
