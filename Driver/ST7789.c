@@ -396,7 +396,17 @@ void TFT_full_DMA(u16 Color)
 
 }
 
+void TFT_SwapDataForDMA(u16 *Data)
+{
+    u16 Buf;
 
+    Buf = *Data;
+
+    *Data >>= 8;
+
+    *Data |= (Buf&0xFF)<<8;
+
+}
 
 
 

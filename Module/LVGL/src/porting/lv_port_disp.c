@@ -167,19 +167,23 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
         int32_t x;
         int32_t y;
-        int32_t Size;
+        int32_t Size = 0;
+        lv_color_t * PointBuf = color_p;
 
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
-        Size = (area->x2 - area->x1 +1)*(area->y2 - area->y1 +1);
-        TFT_DMA_Start((int32_t)color_p,Size);
-        // for(y = area->y1; y <= area->y2; y++) 
-        // {
-        //     for(x = area->x1; x <= area->x2; x++)
-        //     {
-        //     ST7789_DrawPoint(*color_p);
-        //     color_p++;
-        //     }
-        // }
+
+        for(y = area->y1; y <= area->y2; y++) 
+        {
+            PointBuf = color_p; 
+            for(x = area->x1; x <= area->x2; x++)
+            {
+                TFT_SwapDataForDMA(color_p);
+                // ST7789_DrawPoint(*color_p);
+                color_p++;
+                Size++;
+            }
+            TFT_DMA_Start((int32_t)PointBuf,Size*2);
+        }
     }
 
     /*IMPORTANT!!!
