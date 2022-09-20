@@ -39,4 +39,5 @@
 // void lcd_init(void);
 void led_init(void);
 void Led_Test(void);
+void FreqTest(void);
 #endif

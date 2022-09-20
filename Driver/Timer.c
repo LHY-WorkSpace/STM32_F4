@@ -10,7 +10,7 @@
 //  Timer_9:  Tick计数
 
 
-
+static u32 TickCount;
 
 //************************// 
 //  功能描述: Tickj计数函数
@@ -31,13 +31,13 @@ void TickTimer_Init(u16 Period)
 		
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
-	TIM_TimeBaseInitStr.TIM_Period = Period;
+	TIM_TimeBaseInitStr.TIM_Period = Period*10;
 	TIM_TimeBaseInitStr.TIM_Prescaler = 16800-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
 	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=3;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
@@ -114,13 +114,18 @@ void Delay_ms(u16 nus)
 
 }
 
+u32 GetTick()
+{
+    return TickCount;
+}
+
+
 
 void TIM1_BRK_TIM9_IRQHandler()
 {
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
-
-
+        TickCount++;
     }
 
     TIM_ClearFlag(TIM9,TIM_IT_Update);

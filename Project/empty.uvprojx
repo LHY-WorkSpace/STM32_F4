@@ -53,8 +53,8 @@
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
-          <DebugInformation>1</DebugInformation>
-          <BrowseInformation>1</BrowseInformation>
+          <DebugInformation>0</DebugInformation>
+          <BrowseInformation>0</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -3430,6 +3430,11 @@
               <FileName>lv_font_bechmark_montserrat_28_compr_az.c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\LVGL\Test_Demo\assets\lv_font_bechmark_montserrat_28_compr_az.c.c</FilePath>
+            </File>
+            <File>
+              <FileName>GIF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Module\LVGL\Test_Demo\GIF.c</FilePath>
             </File>
           </Files>
         </Group>

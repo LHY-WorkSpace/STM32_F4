@@ -20,6 +20,25 @@ void led_init()
 }
 
 
+void FreqTest()
+{
+    static u8 ms = 0;
+
+	if( ms == 0 )
+	{
+		LED1_OFF;
+		ms = 1;
+	}
+	else
+	{ 
+		LED1_ON;
+		ms = 0;
+	}
+
+}
+
+
+
 
 
 

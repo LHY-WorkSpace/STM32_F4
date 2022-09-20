@@ -365,7 +365,7 @@ void ST7789_DrawPoint(u16 color)
     TFT_SendData(color);
 }
 
-    u8 Data[480];
+u8 Data[480];
 void TFT_full_DMA(u16 Color)
 {
 

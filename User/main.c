@@ -1,6 +1,6 @@
 #include "IncludeFile.h"
 
-
+extern const lv_img_dsc_t ASSD;
 
 
 void CreateAllTask()
@@ -10,7 +10,22 @@ void CreateAllTask()
 	vTaskDelete(NULL);
 }
 
-u16 MemAddr[2500];
+
+
+void lv_example_gif_1(void)
+{
+    // LV_IMG_DECLARE(ASSD);
+    // lv_obj_t * img;
+    
+    // img = lv_gif_create(lv_scr_act());
+    // lv_gif_set_src(img, &ASSD);
+    // lv_obj_align(img, LV_ALIGN_LEFT_MID, 0, 0);
+
+}
+
+
+
+// u16 MemAddr[2500];
 u16 Colour=0;
 int  main()
 {
@@ -21,30 +36,33 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 
+	TickTimer_Init(1);
+
+
 	TFT_Init();
 
 	printf("Power Online\r\n");
 
-	// lv_init();
-	// lv_port_disp_init();
+	lv_init();
+	lv_port_disp_init();
 	// lv_port_indev_init();
 
 	// lv_ex_img_1();
-	//lv_ex_img_2();
+	// lv_ex_img_2();
 	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
 	// lv_demo_stress();
-	// lv_demo_benchmark();
-
+	lv_demo_benchmark();
+	// lv_example_gif_1();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
 
 
 	while (1)
 	{	
-		// lv_task_handler();
-		// lv_tick_inc(10);
-
+		lv_task_handler();
+		// lv_tick_inc(20);
+		// Delay_ms(20);
 
 		// TFT_full(TFT_RED);
 		// Delay_ms(500);
@@ -78,10 +96,10 @@ int  main()
 		// TFT_DMA_Start((u32)&Colour,240*240);
 		// Delay_ms(300);
 
-		TFT_full(TFT_RED);
-		Delay_ms(300);
-		TFT_full_DMA(TFT_BLUE);
-		Delay_ms(300);
+		// TFT_full(TFT_RED);
+		// Delay_ms(300);
+		// TFT_full_DMA(TFT_BLUE);
+		// Delay_ms(300);
 
 
 	}
