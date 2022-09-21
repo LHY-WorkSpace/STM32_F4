@@ -16,7 +16,7 @@ void CreateAllTask()
 
 
 
-u16 Colour=0;
+
 int  main()
 {
 	u16 i=0;
@@ -39,22 +39,19 @@ int  main()
 
 	// lv_ex_img_1();
 	// lv_ex_img_2();
-	//lv_ex_keyboard_1();
-	//lv_demo_widgets();
+	// lv_ex_keyboard_1();
+	// lv_demo_widgets();
 	// lv_demo_stress();
 	// lv_demo_benchmark();
 	// lv_example_gif_1();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
-
+	lv_demo_keypad_encoder();
 
 	while (1)
 	{	
 		lv_task_handler();
-
-
-
-		// lv_tick_inc(20);
+		// lv_tick_inc(10);
 		// Delay_ms(20);
 
 		// TFT_full(TFT_RED);

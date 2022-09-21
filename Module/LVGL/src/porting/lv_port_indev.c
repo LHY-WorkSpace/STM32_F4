@@ -119,13 +119,13 @@ void lv_port_indev_init(void)
      * -----------------*/
 
     /*Initialize your keypad or keyboard if you have*/
-    // keypad_init();
+    keypad_init();
 
-    // /*Register a keypad input device*/
-    // lv_indev_drv_init(&indev_drv);
-    // indev_drv.type = LV_INDEV_TYPE_KEYPAD;
-    // indev_drv.read_cb = keypad_read;
-    // indev_keypad = lv_indev_drv_register(&indev_drv);
+    /*Register a keypad input device*/
+    lv_indev_drv_init(&indev_drv);
+    indev_drv.type = LV_INDEV_TYPE_KEYPAD;
+    indev_drv.read_cb = keypad_read;
+    indev_keypad = lv_indev_drv_register(&indev_drv);
 
     /*Later you should create group(s) with `lv_group_t * group = lv_group_create()`,
      *add objects to the group with `lv_group_add_obj(group, obj)`
@@ -137,13 +137,13 @@ void lv_port_indev_init(void)
      * -----------------*/
 
     /*Initialize your encoder if you have*/
-    encoder_init();
+    // encoder_init();
 
-    /*Register a encoder input device*/
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_ENCODER;
-    indev_drv.read_cb = encoder_read;
-    indev_encoder = lv_indev_drv_register(&indev_drv);
+    // /*Register a encoder input device*/
+    // lv_indev_drv_init(&indev_drv);
+    // indev_drv.type = LV_INDEV_TYPE_ENCODER;
+    // indev_drv.read_cb = encoder_read;
+    // indev_encoder = lv_indev_drv_register(&indev_drv);
 
     /*Later you should create group(s) with `lv_group_t * group = lv_group_create()`,
      *add objects to the group with `lv_group_add_obj(group, obj)`
@@ -318,9 +318,7 @@ static void keypad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 /*Get the currently being pressed key.  0 if no key is pressed*/
 static uint32_t keypad_get_key(void)
 {
-    /*Your code comes here*/
-
-    return 0;
+    return (uint32_t)Enocde_Data();
 }
 
 /*------------------
@@ -337,8 +335,10 @@ static void encoder_init(void)
 static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
 
+    encoder_handler();
     data->enc_diff = encoder_diff;
     data->state = encoder_state;
+
 }
 
 /*Call this function in an interrupt to process encoder events (turn, press)*/
@@ -351,25 +351,32 @@ static void encoder_handler(void)
     switch (Val)
     {
         case 1:
-            encoder_diff ++;
+            encoder_diff =1;
+             encoder_state = LV_INDEV_STATE_REL;
             break;
         case 2:
-           encoder_diff --;
+           encoder_diff =-1;
+            encoder_state = LV_INDEV_STATE_REL;
             break;
         case 3:
+            encoder_diff  =0;
             encoder_state = LV_INDEV_STATE_PR;
             break;
         case 4:
+            encoder_diff  =0;
             encoder_state = LV_INDEV_STATE_REL;
             break;
         default:
+             encoder_diff  =0;
             encoder_state = LV_INDEV_STATE_REL;
             break;
     }
-
-
-
 }
+
+
+
+
+
 
 /*------------------
  * Button

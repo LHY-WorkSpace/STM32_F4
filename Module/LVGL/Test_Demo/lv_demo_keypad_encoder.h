@@ -1,10 +1,10 @@
 /**
- * @file lv_demos.h
+ * @file lv_demo_keypad_encoder.h
  *
  */
 
-#ifndef LV_DEMOS_H
-#define LV_DEMOS_H
+#ifndef LV_DEMO_KEYPAD_ENCODER_H
+#define LV_DEMO_KEYPAD_ENCODER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,27 +13,7 @@ extern "C" {
 /*********************
  *      INCLUDES
  *********************/
-#include "../lvgl.h"
-
-#if LV_USE_DEMO_BENCHMARK
-#include "lv_demo_benchmark.h"
-#endif
-
-#if LV_USE_DEMO_KEYPAD_AND_ENCODER
-#include "lv_demo_keypad_encoder.h"
-#endif
-
-#if LV_USE_DEMO_MUSIC
-#include "music/lv_demo_music.h"
-#endif
-
-#if LV_USE_DEMO_STRESS
-#include "lv_demo_stress.h"
-#endif
-
-#if LV_USE_DEMO_WIDGETS
-#include "lv_demo_widgets.h"
-#endif
+#include "lv_demos.h"
 
 /*********************
  *      DEFINES
@@ -46,7 +26,7 @@ extern "C" {
 /**********************
  * GLOBAL PROTOTYPES
  **********************/
-
+void lv_demo_keypad_encoder(void);
 
 /**********************
  *      MACROS
@@ -56,4 +36,4 @@ extern "C" {
 } /* extern "C" */
 #endif
 
-#endif /*LV_DEMO_H*/
+#endif /*LV_DEMO_KEYPAD_ENCODER_H*/
