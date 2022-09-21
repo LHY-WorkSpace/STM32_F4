@@ -239,80 +239,6 @@ void TFT_Init()
     TFT_SetCmd(0x21); 		//∑¥œ‘
     TFT_SetCmd(0x29);         //ø™∆Ùœ‘ æ 
 
-
-    // TFT_SetCmd(0x36);
-    // TFT_SendData(0x00);
-    // /* RGB 5-6-5-bit  */
-    // TFT_SetCmd(0x3A);
-    // TFT_SendData(0x65);
-    // /* Porch Setting */
-    // TFT_SetCmd(0xB2);
-    // TFT_SendData(0x0C);
-    // TFT_SendData(0x0C);
-    // TFT_SendData(0x00);
-    // TFT_SendData(0x33);
-    // TFT_SendData(0x33);
-    // /* Gate Control */
-    // TFT_SetCmd(0xB7);
-    // TFT_SendData(0x35);
-    // /* VCOM Setting */
-    // TFT_SetCmd(0xBB);
-    // TFT_SendData(0x19);
-    // /* LCM Control */
-    // TFT_SetCmd(0xC0);
-    // TFT_SendData(0x2C);
-    // /* VDV and VRH Command Enable */
-    // TFT_SetCmd(0xC2);
-    // TFT_SendData(0x01);
-    // /* VRH Set */
-    // TFT_SetCmd(0xC3);
-    // TFT_SendData(0x12);
-    // /* VDV Set */
-    // TFT_SetCmd(0xC4);
-    // TFT_SendData(0x20);
-    // /* Frame Rate Control in Normal Mode */
-    // TFT_SetCmd(0xC6);
-    // TFT_SendData(0x0F);
-    // /* Power Control 1 */
-    // TFT_SetCmd(0xD0);
-    // TFT_SendData(0xA4);
-    // TFT_SendData(0xA1);
-    // /* Positive Voltage Gamma Control */
-    // TFT_SetCmd(0xE0);
-    // TFT_SendData(0xD0);
-    // TFT_SendData(0x04);
-    // TFT_SendData(0x0D);
-    // TFT_SendData(0x11);
-    // TFT_SendData(0x13);
-    // TFT_SendData(0x2B);
-    // TFT_SendData(0x3F);
-    // TFT_SendData(0x54);
-    // TFT_SendData(0x4C);
-    // TFT_SendData(0x18);
-    // TFT_SendData(0x0D);
-    // TFT_SendData(0x0B);
-    // TFT_SendData(0x1F);
-    // TFT_SendData(0x23);
-    // /* Negative Voltage Gamma Control */
-    // TFT_SetCmd(0xE1);
-    // TFT_SendData(0xD0);
-    // TFT_SendData(0x04);
-    // TFT_SendData(0x0C);
-    // TFT_SendData(0x11);
-    // TFT_SendData(0x13);
-    // TFT_SendData(0x2C);
-    // TFT_SendData(0x3F);
-    // TFT_SendData(0x44);
-    // TFT_SendData(0x51);
-    // TFT_SendData(0x2F);
-    // TFT_SendData(0x1F);
-    // TFT_SendData(0x1F);
-    // TFT_SendData(0x20);
-    // TFT_SendData(0x23);
-    // /* Display Inversion On */
-    // TFT_SetCmd(0x21);
-    // TFT_SetCmd(0x29);
-
 }
 
 
@@ -365,10 +291,10 @@ void ST7789_DrawPoint(u16 color)
     TFT_SendData(color);
 }
 
-u8 Data[480];
+
 void TFT_full_DMA(u16 Color)
 {
-
+    u8 Data[480];
     u16 i;
     TFT_SetCmd(0x2a);     //Column address set
     TFT_SendData(0x00);    //start column

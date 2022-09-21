@@ -280,13 +280,13 @@ u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data
 //************************// 
 //  功能描述: 串口接收函数
 //  
-//  参数: 串口信息结构体指针,缓冲数据长度，数据地址，实际接收长度
+//  参数: 串口信息结构体指针,缓冲区大小，数据地址，实际接收长度
 //  
 //  返回值: TRUE:成功
 //			BUSY:接收正忙
 //			ILDE:空闲
 //
-//  说明: 传入缓冲区长度，返回实际读出的数据长度
+//  说明: 
 //
 //************************//  
 u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length)
@@ -382,8 +382,39 @@ void USART2_IRQHandler()
 
 
 
+u8 RX_Data[20],Length;
 
+u8 Enocde_Data()
+{
+	u8 Sta;
+	if( USART_GetData(USART1_Data,sizeof(RX_Data),RX_Data,Length) == TRUE)
+	{
+		switch (RX_Data[0])
+		{
+			case '+':
+				Sta = 1;
+				break;
+			case '-':
+				Sta = 2;
+				break;
+			case '1':
+				Sta = 3;
+				break;		
+			case '0':
+				Sta = 4;
+				break;						
+			default:
+				Sta = 5;
+				break;
+		}
+	}
+	else
+	{
+		Sta = 5;
+	}
 
+	return Sta;
+}
 
 
 

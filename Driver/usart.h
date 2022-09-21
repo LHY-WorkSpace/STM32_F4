@@ -46,6 +46,7 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8
 u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length);
 u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length);
 int fputc(int ch, FILE* stream);
+u8 Enocde_Data(void);
 
 #endif
 

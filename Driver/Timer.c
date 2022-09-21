@@ -65,7 +65,7 @@ void Delay_Init()
 		
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
-	TIM_TimeBaseInitStr.TIM_Period = 10000;  //未开启预装载，此值无用，只是写入一个值而已
+	TIM_TimeBaseInitStr.TIM_Period = 0xFFFFFFFF;
 	TIM_TimeBaseInitStr.TIM_Prescaler = 168-1;
     TIM_TimeBaseInit(TIM10,&TIM_TimeBaseInitStr);
     TIM_ARRPreloadConfig(TIM10,DISABLE);

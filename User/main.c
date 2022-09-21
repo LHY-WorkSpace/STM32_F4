@@ -1,6 +1,6 @@
 #include "IncludeFile.h"
 
-extern const lv_img_dsc_t ASSD;
+
 
 
 void CreateAllTask()
@@ -12,20 +12,10 @@ void CreateAllTask()
 
 
 
-void lv_example_gif_1(void)
-{
-    // LV_IMG_DECLARE(ASSD);
-    // lv_obj_t * img;
-    
-    // img = lv_gif_create(lv_scr_act());
-    // lv_gif_set_src(img, &ASSD);
-    // lv_obj_align(img, LV_ALIGN_LEFT_MID, 0, 0);
-
-}
 
 
 
-// u16 MemAddr[2500];
+
 u16 Colour=0;
 int  main()
 {
@@ -45,14 +35,14 @@ int  main()
 
 	lv_init();
 	lv_port_disp_init();
-	// lv_port_indev_init();
+	lv_port_indev_init();
 
 	// lv_ex_img_1();
 	// lv_ex_img_2();
 	//lv_ex_keyboard_1();
 	//lv_demo_widgets();
 	// lv_demo_stress();
-	lv_demo_benchmark();
+	// lv_demo_benchmark();
 	// lv_example_gif_1();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
@@ -61,6 +51,9 @@ int  main()
 	while (1)
 	{	
 		lv_task_handler();
+
+
+
 		// lv_tick_inc(20);
 		// Delay_ms(20);
 
