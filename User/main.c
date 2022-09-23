@@ -35,18 +35,17 @@ int  main()
 
 	lv_init();
 	lv_port_disp_init();
-	lv_port_indev_init();
+	// lv_port_indev_init();
 
 	// lv_ex_img_1();
 	// lv_ex_img_2();
 	// lv_ex_keyboard_1();
-	// lv_demo_widgets();
 	// lv_demo_stress();
-	// lv_demo_benchmark();
+	lv_demo_benchmark();
 	// lv_example_gif_1();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
-	lv_demo_keypad_encoder();
+	// lv_demo_keypad_encoder();
 
 	while (1)
 	{	

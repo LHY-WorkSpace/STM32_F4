@@ -10,7 +10,7 @@
 #include <stddef.h>
 
 #if LV_TICK_CUSTOM == 1
-   #include LV_TICK_CUSTOM_INCLUDE
+    #include LV_TICK_CUSTOM_INCLUDE
 #endif
 
 /*********************
