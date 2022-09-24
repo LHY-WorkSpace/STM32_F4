@@ -1,6 +1,13 @@
 #include "IncludeFile.h"
 
 
+#define POINT_SIZE  (sizeof(u16))
+#define DMA_MAX_BUFF  (60000)
+
+
+static u32 DMA_TXCurrentAddr,DMA_EndAddr;
+
+
 
 
 //***************************************************//
@@ -78,7 +85,7 @@ void ST7789_DMA_Init()
 	
 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
 	
-	DMA_InitConfig.DMA_BufferSize=100;//单次传输的大小
+	DMA_InitConfig.DMA_BufferSize=DMA_MAX_BUFF;//单次传输的大小
 	
 	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; //先试试从内存到外设  
 	
@@ -94,46 +101,114 @@ void ST7789_DMA_Init()
 	DMA_InitConfig.DMA_Priority=DMA_Priority_Medium;
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
-
-	// DMA_ITConfig(DMA2_Stream3,DMA_IT_TC,ENABLE);	
-	// NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
-	// NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
-	// NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
-	// NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
-	// NVIC_Init(&NVIC_Initstr);
-
-
+	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
+	NVIC_Init(&NVIC_Initstr);
 
 	DMA_ClearFlag(DMA2_Stream3,DMA_FLAG_TCIF3);
+	DMA_ITConfig(DMA2_Stream3,DMA_IT_TC,ENABLE);	
 	DMA_Cmd(DMA2_Stream3,DISABLE);
 
-
 }
 
 
-void TFT_DMA_Start(u32 MemAddr,u16 size)
-{    
+//***************************************************//
+//  功能描述: DMA发送数据起始地址和长度
+//  
+//  参数: 数据地址，点数
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 
+//  
+//***************************************************//
+void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
+{
+    DMA_TXCurrentAddr = StartAddr;
+    DMA_EndAddr = StartAddr + Point*POINT_SIZE;
+}
+
+//***************************************************//
+//  功能描述: 获取当前发送地址
+//  
+//  参数: 无
+//  
+//  返回值: u32
+//  
+//  说明: 无
+//  
+//***************************************************//
+u32 TFT_DMA_GetCurrentAddr()
+{
+    return DMA_TXCurrentAddr;
+}
+
+//***************************************************//
+//  功能描述: 获取DMA发送状态
+//  
+//  参数: 
+//  
+//  返回值: TRUE：已完成/ FALSE：未完成
+//  
+//  说明: 无
+//  
+//***************************************************//
+u8 TFT_DMA_GetTXComplateFlag()
+{
+    if( DMA_TXCurrentAddr < DMA_EndAddr )
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+
+//***************************************************//
+//  功能描述: 启动传输
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
+void TFT_DMA_Start()
+{
+    u32 Length;
+
     TFT_DATA;
-    DMA_ClearFlag(DMA2_Stream3,DMA_FLAG_TCIF3);
+
+    Length = (DMA_EndAddr - DMA_TXCurrentAddr);
+
+    if( Length > DMA_MAX_BUFF )
+    {
+         Length = DMA_MAX_BUFF;
+    }
+
     DMA_Cmd(DMA2_Stream3,DISABLE);
-    DMA_MemoryTargetConfig(DMA2_Stream3,MemAddr,DMA_Memory_0);
-    DMA_SetCurrDataCounter(DMA2_Stream3,size);
+    DMA_MemoryTargetConfig(DMA2_Stream3,DMA_TXCurrentAddr,DMA_Memory_0);
+    DMA_SetCurrDataCounter(DMA2_Stream3,Length);
     DMA_Cmd(DMA2_Stream3,ENABLE);
-    while (DMA_GetFlagStatus(DMA2_Stream3,DMA_FLAG_TCIF3) == RESET);
+    
+    DMA_TXCurrentAddr += Length;
 
 }
 
 
+void TFT_DMA_Stop()
+{
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+    DMA_TXCurrentAddr = 0;
+    DMA_EndAddr = 0;
 
-// void DMA2_Stream3_IRQHandler()
-// {
-// 		if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
-// 		{
-//             DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
-// 		}    
+}
 
 
-// }
 
 
 

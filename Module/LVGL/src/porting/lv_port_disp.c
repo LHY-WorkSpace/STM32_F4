@@ -33,7 +33,7 @@
  *  STATIC PROTOTYPES
  **********************/
 static void disp_init(void);
-
+lv_disp_drv_t * disp_DMA;
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p);
 //static void gpu_fill(lv_disp_drv_t * disp_drv, lv_color_t * dest_buf, lv_coord_t dest_width,
 //        const lv_area_t * fill_area, lv_color_t color);
@@ -167,23 +167,28 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
         int32_t x;
         int32_t y;
-        int32_t Size = 0;
-        lv_color_t * PointBuf = color_p;
-
+        int32_t Point = 0;
+        disp_DMA = disp_drv;
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
 
-        PointBuf = color_p; 
-        for(y = area->y1; y <= area->y2; y++) 
-        {
-            for(x = area->x1; x <= area->x2; x++)
-            {
-                // ST7789_DrawPoint(color_p->full);
-                TFT_SwapDataForDMA((u16 *)(&color_p->full));
-                Size++;
-                color_p++;
-            }
-        }
-        TFT_DMA_Start((int32_t)(&PointBuf->full),Size*2);
+        Point = ( area->x2 - area->x1 + 1 )*(area->y2 - area->y1 + 1 );
+
+        TFT_DMA_SetAddr((u32)(&color_p->full),Point);
+
+        TFT_DMA_Start();
+
+        // PointBuf = color_p; 
+        // for(y = area->y1; y <= area->y2; y++) 
+        // {
+        //     for(x = area->x1; x <= area->x2; x++)
+        //     {
+        //         // ST7789_DrawPoint(color_p->full);
+        //         TFT_SwapDataForDMA((u16 *)(&color_p->full));
+        //         Size++;
+        //         color_p++;
+        //     }
+        // }
+        // TFT_DMA_Start((int32_t)(&PointBuf->full),Size*2);
 
         // for(y = area->y1; y <= area->y2; y++) 
         // {
@@ -202,7 +207,28 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-    lv_disp_flush_ready(disp_drv);
+    
+}
+
+
+void DMA2_Stream3_IRQHandler()
+{
+    if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+    {
+        DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
+
+        if( TFT_DMA_GetTXComplateFlag() == TRUE )
+        {
+            TFT_DMA_Stop();
+            lv_disp_flush_ready(disp_DMA);
+        }
+        else
+        {
+            TFT_DMA_Start();
+        }
+        
+    }    
+
 }
 
 /*OPTIONAL: GPU INTERFACE*/
