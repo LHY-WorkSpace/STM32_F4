@@ -14,6 +14,35 @@ void CreateAllTask()
 
 
 
+void ASD()
+{
+    lv_obj_t *Btn = lv_btn_create(lv_scr_act());
+    lv_obj_align(Btn,LV_ALIGN_CENTER,0,0);
+    lv_obj_set_size(Btn,100,100);
+    lv_obj_set_style_bg_color(Btn,lv_palette_main( LV_PALETTE_BLUE),0);
+    lv_obj_set_style_bg_grad_color(Btn, lv_palette_main(LV_PALETTE_RED), 0);
+    lv_obj_set_style_bg_grad_dir(Btn, LV_GRAD_DIR_HOR, 0);
+    lv_obj_set_style_border_width(Btn,3,LV_PART_MAIN);
+    lv_obj_set_style_shadow_color(Btn,lv_color_black(),0);
+    lv_obj_set_style_shadow_ofs_x(Btn,3,0);
+    lv_obj_add_flag(Btn,LV_OBJ_FLAG_CHECKABLE);
+    // lv_obj_add_event_cb(Btn,Btn_Handle,LV_EVENT_ALL,NULL);
+
+    lv_obj_t *label_A = lv_label_create(Btn);
+    lv_label_set_text(label_A,"1 2 3 4 5 6 7 8 9 ");
+    lv_obj_set_align(label_A,LV_ALIGN_TOP_MID);
+    lv_label_set_long_mode(label_A, LV_LABEL_LONG_SCROLL );
+    lv_obj_set_size(label_A,40,50);
+
+
+    lv_obj_t *label_B = lv_label_create(Btn);
+    lv_label_set_text(label_B,"1 2 3 4 5 6 7 8 9 ");
+    lv_obj_set_align(label_B,LV_ALIGN_BOTTOM_MID);
+    lv_label_set_long_mode(label_B, LV_LABEL_LONG_SCROLL );
+    lv_obj_set_size(label_B,40,50);
+
+
+}
 
 
 
@@ -28,7 +57,6 @@ int  main()
 
 	TickTimer_Init(1);
 
-
 	TFT_Init();
 
 	printf("Power Online\r\n");
@@ -41,16 +69,16 @@ int  main()
 	// lv_ex_img_2();
 	// lv_ex_keyboard_1();
 	// lv_demo_stress();
-	lv_demo_benchmark();
+	// lv_demo_benchmark();
 	// lv_example_gif_1();
 	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
 	// vTaskStartScheduler();
 	// lv_demo_keypad_encoder();
-
+	ASD();
 	while (1)
 	{	
 		lv_task_handler();
-		// lv_tick_inc(10);
+		// lv_tick_inc(30);
 		// Delay_ms(20);
 
 		// TFT_full(TFT_RED);
@@ -89,8 +117,6 @@ int  main()
 		// Delay_ms(300);
 		// TFT_full_DMA(TFT_BLUE);
 		// Delay_ms(300);
-
-
 	}
 
 }

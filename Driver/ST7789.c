@@ -77,6 +77,9 @@ void ST7789_DMA_Init()
 	
 	NVIC_InitTypeDef  NVIC_Initstr;
 	
+
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+
 	DMA_InitConfig.DMA_Memory0BaseAddr=0;	
 	   
 	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI1->DR);
@@ -85,7 +88,7 @@ void ST7789_DMA_Init()
 	
 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
 	
-	DMA_InitConfig.DMA_BufferSize=DMA_MAX_BUFF;//单次传输的大小
+	DMA_InitConfig.DMA_BufferSize=100;//单次传输的大小
 	
 	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; //先试试从内存到外设  
 	
@@ -98,11 +101,11 @@ void ST7789_DMA_Init()
 	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
 	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
 	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
-	DMA_InitConfig.DMA_Priority=DMA_Priority_Medium;
+	DMA_InitConfig.DMA_Priority=DMA_Priority_VeryHigh;
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -369,7 +372,7 @@ void ST7789_DrawPoint(u16 color)
 
 void TFT_full_DMA(u16 Color)
 {
-    u8 Data[480];
+    u16 Data[5760];
     u16 i;
     TFT_SetCmd(0x2a);     //Column address set
     TFT_SendData(0x00);    //start column
@@ -384,16 +387,12 @@ void TFT_full_DMA(u16 Color)
     TFT_SendData(0xF0);
     TFT_SetCmd(0x2C);     //Memory write
 
-    for ( i = 0; i < 240; i++)
-    {
-       Data[i*2]=Color>>8;
-       Data[i*2+1]=Color&0xff;
-    }
+
+    memset((u8*)Data,0xff,sizeof(Data));
+
     TFT_DATA;
-    for ( i = 0; i < 240; i++)
-    {
-        TFT_DMA_Start((u32)Data,240*2);
-    }
+    TFT_DMA_SetAddr((u32)(Data),5760);
+    TFT_DMA_Start();
 
 }
 
