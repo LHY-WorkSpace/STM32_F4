@@ -384,9 +384,10 @@ void USART2_IRQHandler()
 
 u8 RX_Data[20];
 u16 Length;
+u8 Sta;
 u8 Enocde_Data()
 {
-	u8 Sta;
+
 	if( USART_GetData(&USART1_Data,sizeof(RX_Data),RX_Data,&Length) == TRUE)
 	{
 		switch (RX_Data[0])
@@ -403,17 +404,17 @@ u8 Enocde_Data()
 			case '4':
 				Sta = 4;
 				break;		
-			case '5':
-				Sta = 5;
+			case '0':
+				Sta = 0;
 				break;						
 			default:
-				Sta = 0;
+				Sta = 10;
 				break;
 		}
 	}
 	else
 	{
-		Sta = 0;
+		Sta = 10;
 	}
 
 	return Sta;
