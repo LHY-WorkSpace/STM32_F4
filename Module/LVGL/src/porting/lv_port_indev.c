@@ -11,7 +11,7 @@
  *********************/
 #include "lv_port_indev.h"
 #include "../../lvgl.h"
-
+#include "IncludeFile.h"
 /*********************
  *      DEFINES
  *********************/
@@ -74,10 +74,10 @@ static bool button_is_pressed(uint8_t id);
 lv_indev_t * indev_button;
 static const lv_point_t btn_points[BUTTON_NUM] = 
 {
-    {10, 195},   /*Button 0 -&gt; x:10; y:10*/
-    {210, 195},  /*Button 1 -&gt; x:40; y:100*/
-    {15, 220},   /*Button 2 -&gt; x:10; y:10*/
-    {210, 225},  /*Button 3 -&gt; x:40; y:100*/
+    {10, 195},   /*Button OK -&gt; x:10; y:10*/
+    {210, 195},  /*Button BACK -&gt; x:40; y:100*/
+    {15, 220},   /*Button UP -&gt; x:10; y:10*/
+    {210, 225},  /*Button DOWN -&gt; x:40; y:100*/
 };
 
 #endif
@@ -437,12 +437,12 @@ static void button_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 /*Get ID  (0, 1, 2 ..) of the pressed button*/
 static int8_t button_get_pressed_id(void)
 {
-    uint8_t i,t;
-    t = Enocde_Data();
+    uint8_t i;
+
     /*Check to buttons see which is being pressed (assume there are 2 buttons)*/
     for(i = 0; i < BUTTON_NUM; i++) {
         /*Return the pressed button's ID*/
-        if(t==i) {
+        if(KeyGetID(i)==i) {
             return i;
         }
     }
@@ -455,14 +455,14 @@ static int8_t button_get_pressed_id(void)
 static bool button_is_pressed(uint8_t id)
 {
     /*Your code comes here*/
-    if ( Enocde_Data()== id) 
-    {
-        return LV_INDEV_STATE_PR;  // 和 LV_INDEV_STATE_PR 对应 
-    }
-    else 
-    {
-        return LV_INDEV_STATE_REL; // 自己添加和 LV_INDEV_STATE_REL 对应
-    } 
+    // if ( KeyGetID(id)== id) 
+    // {
+    //     return LV_INDEV_STATE_PR;  // 和 LV_INDEV_STATE_PR 对应 
+    // }
+    // else 
+    // {
+    //     return LV_INDEV_STATE_REL; // 自己添加和 LV_INDEV_STATE_REL 对应
+    // } 
     return false;
 }
 
