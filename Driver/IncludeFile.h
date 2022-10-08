@@ -90,7 +90,7 @@
 #if (USE_LVGL == TRUE)
 #include "../Module/LVGL/lvgl.h"
 #include "../Module/LVGL/src/lvgl.h"
-
+#include "../Module/LVGL/LVGL_UI.h"
 #endif
 
 #if (USE_U8G2 == TRUE)
