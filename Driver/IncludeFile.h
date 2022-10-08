@@ -30,7 +30,7 @@
 #include "RNG.h"
 #include "lcd.h"
 #include "XPT2046.h"
-
+#include "KeyPad.h"
 
 
 //Æ÷¼þÇý¶¯²ã
@@ -94,6 +94,7 @@
 #include "../Module/LVGL/Test_Demo/lv_demos.h"
 #include "../Module/LVGL/src/porting/lv_port_disp.h"
 #include "../Module/LVGL/src/porting/lv_port_indev.h"
+#include "../Module/LVGL/LVGL_UI.h"
 #endif
 
 #if (USE_U8G2 == TRUE)
