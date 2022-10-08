@@ -277,7 +277,7 @@ void LVGL_Demo()
 {
 	// lv_ex_keyboard_1();
 	// lv_demo_stress();
-	lv_demo_benchmark();
+	lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER);
 	// lv_demo_keypad_encoder();
 }
 
