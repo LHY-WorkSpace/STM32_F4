@@ -277,7 +277,7 @@ void LVGL_Demo()
 {
 	// lv_ex_keyboard_1();
 	// lv_demo_stress();
-	// lv_demo_benchmark();
+	lv_demo_benchmark();
 	// lv_demo_keypad_encoder();
 }
 
@@ -299,8 +299,8 @@ void LVGL_Init()
 	lv_port_indev_init();
 #endif
 
-    LVGL_Build_GUI();
-    //LVGL_Demo();
+    // LVGL_Build_GUI();
+    LVGL_Demo();
 }
 
 

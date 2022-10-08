@@ -1,11 +1,32 @@
 #include "IncludeFile.h"
 
+void lvgl_Task()
+{
+
+    TickType_t Time;	
+    Time=xTaskGetTickCount();
+    while (1)
+    {
+		taskENTER_CRITICAL();
+		LVGL_Task();
+        taskEXIT_CRITICAL();
+        vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
+    }
+}
+
+
+
+void CreateAllTask()
+{
+	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",100,NULL,12,NULL);
+	// vTaskDelete(NULL);
+}
 
 
 
 int  main()
 {
-	u16 i=0;
+
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
@@ -19,8 +40,8 @@ int  main()
 	printf("Power Online\r\n");
 
     LVGL_Init();
-	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
-	// vTaskStartScheduler();
+	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
+	vTaskStartScheduler();
 
 	while (1)
 	{	
