@@ -1,12 +1,14 @@
 #include "IncludeFile.h"
 
 
+//单个点的数据的大小
 #define POINT_SIZE  (sizeof(u16))
+
+//DMA 单次最大传输个数
 #define DMA_MAX_BUFF  (60000)
 
-
+//DMA传输控制参数
 static u32 DMA_TXCurrentAddr,DMA_EndAddr;
-
 
 
 
@@ -60,48 +62,44 @@ static void TFT_IOInit()
 	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
 	SPI_Init(SPI1,&SPI_InitTypeDefinsture);
-
     SPI_I2S_DMACmd(SPI1,SPI_I2S_DMAReq_Tx,ENABLE);
-
 	SPI_Cmd(SPI1 ,ENABLE);
-
-
 }
 
+//***************************************************//
+//  功能描述: 7789 DMA初始化
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
 void ST7789_DMA_Init()
 {
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
 
   	DMA_InitTypeDef DMA_InitConfig;
-	
 	NVIC_InitTypeDef  NVIC_Initstr;
-	
 
     DMA_Cmd(DMA2_Stream3,DISABLE);
-
-	DMA_InitConfig.DMA_Memory0BaseAddr=0;	
-	   
+	DMA_InitConfig.DMA_Memory0BaseAddr = 0;	
 	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI1->DR);
-	
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
-	
 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
-	
-	DMA_InitConfig.DMA_BufferSize=100;//单次传输的大小
-	
+	DMA_InitConfig.DMA_BufferSize = DMA_MAX_BUFF;//初始化单次传输的大小
 	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; //先试试从内存到外设  
-	
 	DMA_InitConfig.DMA_Channel=DMA_Channel_3; 
-	
+	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
+	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
+	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
+	DMA_InitConfig.DMA_Priority=DMA_Priority_VeryHigh;
 	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Disable;
 	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_Full;
 	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
-	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
-	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
 	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
-	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
-	DMA_InitConfig.DMA_Priority=DMA_Priority_VeryHigh;
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
@@ -118,106 +116,15 @@ void ST7789_DMA_Init()
 
 
 //***************************************************//
-//  功能描述: DMA发送数据起始地址和长度
+//  功能描述: 发送命令和数据
 //  
-//  参数: 数据地址，点数
-//  
-//  返回值: TRUE / FALSE
-//  
-//  说明: 
-//  
-//***************************************************//
-void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
-{
-    DMA_TXCurrentAddr = StartAddr;
-    DMA_EndAddr = StartAddr + Point*POINT_SIZE;
-}
-
-//***************************************************//
-//  功能描述: 获取当前发送地址
-//  
-//  参数: 无
-//  
-//  返回值: u32
-//  
-//  说明: 无
-//  
-//***************************************************//
-u32 TFT_DMA_GetCurrentAddr()
-{
-    return DMA_TXCurrentAddr;
-}
-
-//***************************************************//
-//  功能描述: 获取DMA发送状态
-//  
-//  参数: 
-//  
-//  返回值: TRUE：已完成/ FALSE：未完成
-//  
-//  说明: 无
-//  
-//***************************************************//
-u8 TFT_DMA_GetTXComplateFlag()
-{
-    if( DMA_TXCurrentAddr < DMA_EndAddr )
-    {
-        return FALSE;
-    }
-    else
-    {
-        return TRUE;
-    }
-}
-
-//***************************************************//
-//  功能描述: 启动传输
-//  
-//  参数: 无
+//  参数: 数据
 //  
 //  返回值: TRUE / FALSE
 //  
 //  说明: 无
 //  
 //***************************************************//
-void TFT_DMA_Start()
-{
-    u32 Length;
-
-    TFT_DATA;
-
-    Length = (DMA_EndAddr - DMA_TXCurrentAddr);
-
-    if( Length > DMA_MAX_BUFF )
-    {
-         Length = DMA_MAX_BUFF;
-    }
-
-    DMA_Cmd(DMA2_Stream3,DISABLE);
-    DMA_MemoryTargetConfig(DMA2_Stream3,DMA_TXCurrentAddr,DMA_Memory_0);
-    DMA_SetCurrDataCounter(DMA2_Stream3,Length);
-    DMA_Cmd(DMA2_Stream3,ENABLE);
-    
-    DMA_TXCurrentAddr += Length;
-
-}
-
-
-void TFT_DMA_Stop()
-{
-    DMA_Cmd(DMA2_Stream3,DISABLE);
-    DMA_TXCurrentAddr = 0;
-    DMA_EndAddr = 0;
-
-}
-
-
-
-
-
-
-
-
 static void TFT_SendData(u8 Data)
 {
 	
@@ -236,7 +143,16 @@ static void TFT_SetCmd(u8 CMD)
 
 }
 
-
+//***************************************************//
+//  功能描述: ST7789 设置初始化
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//  
+//***************************************************//
 void TFT_Init()
 {
 
@@ -317,10 +233,67 @@ void TFT_Init()
     TFT_SetCmd(0x21); 		//反显
     TFT_SetCmd(0x29);         //开启显示 
 
+    DMA_TXCurrentAddr = 0;
+    DMA_EndAddr = 0;
 }
 
 
-void TFT_full(u16 color)
+//***************************************************//
+//  功能描述: 设置绘图区域
+//  
+//  参数: 起始和结束坐标
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//  
+//***************************************************//
+void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
+{	
+
+	TFT_SetCmd(0x2a);
+	TFT_SendData(0x00);
+	TFT_SendData(x_start);
+	TFT_SendData(0x00);
+	TFT_SendData(x_end);
+
+	TFT_SetCmd(0x2b);
+	TFT_SendData(0x00);
+	TFT_SendData(y_start);
+	TFT_SendData(0x00);
+	TFT_SendData(y_end);	
+	TFT_SetCmd(0x2c);
+}
+
+
+//***************************************************//
+//  功能描述: 画点
+//  
+//  参数: 颜色值
+//  
+//  返回值: 
+//  
+//  说明: 画点前先指定绘图范围
+//  
+//***************************************************//
+void ST7789_DrawPoint(u16 color)
+{
+    TFT_SendData(color>>8);
+    TFT_SendData(color);
+}
+
+
+//***************************************************//
+//  功能描述: 清屏
+//  
+//  参数: 颜色值
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
+void TFT_Full(u16 color)
 {
     u32 ROW,column;
     TFT_SetCmd(0x2a);     //Column address set
@@ -344,58 +317,18 @@ void TFT_full(u16 color)
         }
     }
 }
-  
-
-void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
-{	
-
-	TFT_SetCmd(0x2a);
-	TFT_SendData(0x00);
-	TFT_SendData(x_start);
-	TFT_SendData(0x00);
-	TFT_SendData(x_end);
-
-	TFT_SetCmd(0x2b);
-	TFT_SendData(0x00);
-	TFT_SendData(y_start);
-	TFT_SendData(0x00);
-	TFT_SendData(y_end);	
-	TFT_SetCmd(0x2c);
-}
-
-void ST7789_DrawPoint(u16 color)
-{
-    TFT_SendData(color>>8);
-    TFT_SendData(color);
-}
 
 
-void TFT_full_DMA(u16 Color)
-{
-    u16 Data[5760];
-    u16 i;
-    TFT_SetCmd(0x2a);     //Column address set
-    TFT_SendData(0x00);    //start column
-    TFT_SendData(0x00); 
-    TFT_SendData(0x00);    //end column
-    TFT_SendData(0xF0);
-
-    TFT_SetCmd(0x2b);     //Row address set
-    TFT_SendData(0x00);    //start row
-    TFT_SendData(0x00); 
-    TFT_SendData(0x00);    //end row
-    TFT_SendData(0xF0);
-    TFT_SetCmd(0x2C);     //Memory write
-
-
-    memset((u8*)Data,0xff,sizeof(Data));
-
-    TFT_DATA;
-    TFT_DMA_SetAddr((u32)(Data),5760);
-    TFT_DMA_Start();
-
-}
-
+//***************************************************//
+//  功能描述: 交换数据高低字节
+//  
+//  参数: u16 ( RGB565 )
+//  
+//  返回值: 无
+//  
+//  说明: 交换后为 BGR 565  ,7789先接收高字节数据
+//  
+//***************************************************//
 void TFT_SwapDataForDMA(u16 *Data)
 {
     u16 Buf;
@@ -407,6 +340,113 @@ void TFT_SwapDataForDMA(u16 *Data)
     *Data |= (Buf&0xFF)<<8;
 
 }
+
+//***************************************************//
+//  功能描述: DMA发送数据起始地址和长度
+//  
+//  参数: 数据地址，点数
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 
+//  
+//***************************************************//
+void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
+{
+    DMA_TXCurrentAddr = StartAddr;
+    DMA_EndAddr = StartAddr + Point*POINT_SIZE;
+}
+
+//***************************************************//
+//  功能描述: 获取当前发送地址
+//  
+//  参数: 无
+//  
+//  返回值: u32
+//  
+//  说明: 无
+//  
+//***************************************************//
+u32 TFT_DMA_GetCurrentAddr()
+{
+    return DMA_TXCurrentAddr;
+}
+
+//***************************************************//
+//  功能描述: 获取DMA发送状态
+//  
+//  参数: 
+//  
+//  返回值: TRUE：已完成/ FALSE：未完成
+//  
+//  说明: 无
+//  
+//***************************************************//
+u8 TFT_DMA_GetTXComplateFlag()
+{
+    if( DMA_TXCurrentAddr < DMA_EndAddr )
+    {
+        return FALSE;
+    }
+    else
+    {
+        return TRUE;
+    }
+}
+
+//***************************************************//
+//  功能描述: 启动DMA传输
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 启动DMA传输时先调用 TFT_DMA_SetAddr(),确定数据起始地址和长度
+//        中断里直接调用
+//***************************************************//
+void TFT_DMA_Start()
+{
+    u32 Length;
+
+    TFT_DATA;
+
+    Length = (DMA_EndAddr - DMA_TXCurrentAddr);
+
+    if( Length > DMA_MAX_BUFF )
+    {
+         Length = DMA_MAX_BUFF;
+    }
+
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+    DMA_MemoryTargetConfig(DMA2_Stream3,DMA_TXCurrentAddr,DMA_Memory_0);
+    DMA_SetCurrDataCounter(DMA2_Stream3,Length);
+    DMA_Cmd(DMA2_Stream3,ENABLE);
+    
+    DMA_TXCurrentAddr += Length;
+
+}
+
+//***************************************************//
+//  功能描述: 停止DMA
+//  
+//  参数: 无
+//  
+//  返回值: 
+//  
+//  说明: 数据传输到达设定长度后停止DMA
+//  
+//***************************************************//
+void TFT_DMA_Stop()
+{
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+    DMA_TXCurrentAddr = 0;
+    DMA_EndAddr = 0;
+
+}
+
+
+
+
 
 
 

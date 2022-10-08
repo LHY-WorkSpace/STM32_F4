@@ -90,7 +90,10 @@
 #if (USE_LVGL == TRUE)
 #include "../Module/LVGL/lvgl.h"
 #include "../Module/LVGL/src/lvgl.h"
-
+#include "../Module/LVGL/lv_conf.h"
+#include "../Module/LVGL/Test_Demo/lv_demos.h"
+#include "../Module/LVGL/src/porting/lv_port_disp.h"
+#include "../Module/LVGL/src/porting/lv_port_indev.h"
 #endif
 
 #if (USE_U8G2 == TRUE)
