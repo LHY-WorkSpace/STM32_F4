@@ -26,7 +26,7 @@
 
 
 
-void TFT_Init(void);
+void ST7789_Init(void);
 void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end);
 void ST7789_DrawPoint(u16 color);
 void TFT_Full(u16 Color);

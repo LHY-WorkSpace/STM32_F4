@@ -71,7 +71,7 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART_Init(USART1,&USART1_Initstruc);
 	
 	NVIC_Initstr.NVIC_IRQChannel=USART1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=5;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=4;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);

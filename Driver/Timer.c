@@ -19,7 +19,7 @@ static u32 TickCount;
 //  
 //  返回值: 无
 //			
-//  说明: 
+//  说明: LVGL 计时器
 // 
 //************************//  
 void TickTimer_Init(u16 Period)
@@ -36,7 +36,7 @@ void TickTimer_Init(u16 Period)
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);

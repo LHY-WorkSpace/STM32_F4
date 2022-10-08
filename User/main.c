@@ -1,5 +1,23 @@
 #include "IncludeFile.h"
 
+void LED_Tasssk(void)
+{
+	TickType_t Time;
+	Time=xTaskGetTickCount();
+	while(1)
+	{	
+		LED1_ON;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_OFF;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_ON;
+		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
+		LED1_OFF;
+		vTaskDelayUntil(&Time,1000/portTICK_PERIOD_MS);
+
+	}
+}
+
 void lvgl_Task()
 {
 
@@ -7,9 +25,7 @@ void lvgl_Task()
     Time=xTaskGetTickCount();
     while (1)
     {
-		taskENTER_CRITICAL();
 		LVGL_Task();
-        taskEXIT_CRITICAL();
         vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
     }
 }
@@ -18,8 +34,9 @@ void lvgl_Task()
 
 void CreateAllTask()
 {
-	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",100,NULL,12,NULL);
-	// vTaskDelete(NULL);
+	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",500,NULL,9,NULL);
+    xTaskCreate( (TaskFunction_t)LED_Tasssk,"LVGL",200,NULL,10,NULL);
+	vTaskDelete(NULL);
 }
 
 
@@ -34,58 +51,13 @@ int  main()
 	led_init();
     KeyInit();
 	TickTimer_Init(1);
-
-	TFT_Init();
+	ST7789_Init();
 
 	printf("Power Online\r\n");
 
     LVGL_Init();
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",100,NULL,10,NULL);
+	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
 	vTaskStartScheduler();
-
-	while (1)
-	{	
-		LVGL_Task();
-		// lv_tick_inc(30);
-		// Delay_ms(20);
-
-		// TFT_full(TFT_RED);
-		// Delay_ms(500);
-		// ST7789_SetArea(50,50,100,100);
-		// for ( i = 0; i < sizeof(MemAddr)/sizeof(MemAddr[0]); i++)
-		// {
-		// 	MemAddr[i]=TFT_BLUE;
-		// }
-		// TFT_DMA_Start((u32)&MemAddr[0],2500*2);
-		// Delay_ms(100);
-		// ST7789_SetArea(100,50,150,100);
-		// for ( i = 0; i < 2500; i++)
-		// {
-		// 	ST7789_DrawPoint(TFT_BLUE);
-		// }
-		// Delay_ms(100);
-
-		// ST7789_SetArea(0,0,240,240);
-		// Colour = TFT_RED;
-		// TFT_DMA_Start((u32)&Colour,240*240);
-		// Delay_ms(300);
-
-		// ST7789_SetArea(0,0,240,240);
-		// Colour = TFT_GREEN;
-		// TFT_DMA_Start((u32)&Colour,240*240);
-		// Delay_ms(300);
-
-
-		// ST7789_SetArea(0,0,240,240);
-		// Colour = TFT_BLUE;
-		// TFT_DMA_Start((u32)&Colour,240*240);
-		// Delay_ms(300);
-
-		// TFT_full(TFT_RED);
-		// Delay_ms(300);
-		// TFT_full_DMA(TFT_BLUE);
-		// Delay_ms(300);
-	}
 
 }
 	// XPT2046_Read(&NoUse, &TouchData);

@@ -277,7 +277,7 @@ void LVGL_Demo()
 {
 	// lv_ex_keyboard_1();
 	// lv_demo_stress();
-	lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_RENDER_AND_DRIVER);
+	lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_REAL);
 	// lv_demo_keypad_encoder();
 }
 
@@ -299,8 +299,8 @@ void LVGL_Init()
 	lv_port_indev_init();
 #endif
 
-    // LVGL_Build_GUI();
-    LVGL_Demo();
+    LVGL_Build_GUI();
+    // LVGL_Demo();
 }
 
 
@@ -311,7 +311,8 @@ void LVGL_Init()
 //  
 //  返回值: 无
 //  
-//  说明: 无
+//  说明: RTOS中不建议加临界保护,周期不小于 10 ms
+// 	      建议lv_tick_inc()执行后在执行此函数
 //  
 //***************************************************//
 void LVGL_Task()

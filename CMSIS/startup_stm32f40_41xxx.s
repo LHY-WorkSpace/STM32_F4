@@ -38,7 +38,7 @@
 ;   <o> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Stack_Size      EQU     0x00005000      ;20K
+Stack_Size      EQU     0x00002800      ;10K
 
                 AREA    STACK, NOINIT, READWRITE, ALIGN=3
 Stack_Mem       SPACE   Stack_Size
@@ -49,7 +49,7 @@ __initial_sp
 ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
 
-Heap_Size       EQU     0x00002800       ;512字节，使用malloc时才会编译进去 不使用不会被使用
+Heap_Size       EQU     0x00000280       ;512字节，使用malloc时才会编译进去 不使用不会被使用
 
                 AREA    HEAP, NOINIT, READWRITE, ALIGN=3
 __heap_base

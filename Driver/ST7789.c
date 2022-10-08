@@ -103,7 +103,7 @@ void ST7789_DMA_Init()
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=1;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -153,7 +153,7 @@ static void TFT_SetCmd(u8 CMD)
 //  ËµÃ÷: ÎÞ
 //  
 //***************************************************//
-void TFT_Init()
+void ST7789_Init()
 {
 
     TFT_IOInit();
