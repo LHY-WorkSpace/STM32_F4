@@ -20,7 +20,7 @@ void led_init()
 }
 
 
-void FreqTest()
+void LED_Freq()
 {
     static u8 ms = 0;
 

@@ -323,6 +323,11 @@ u16 LCD_BGR2RGB(u16 c);
 void LCD_Delay(u8 i);
 void LCD_Set_BackLight(u8 pwm);
 
+void LCD_DMA_SetAddr(u32 StartAddr, u32 Point);
+u32 LCD_DMA_GetCurrentAddr(void);
+u8 LCD_DMA_GetTXComplateFlag(void);
+void LCD_DMA_Start(void);
+void LCD_DMA_Stop(void);
 
 //LCD分辨率设置
 #define SSD_HOR_RESOLUTION		800		//LCD水平分辨率

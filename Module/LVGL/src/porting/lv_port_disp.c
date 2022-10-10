@@ -169,12 +169,16 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         int32_t y;
         int32_t Point = 0;
         disp_DMA = disp_drv;
-        ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
 
         Point = ( area->x2 - area->x1 + 1 )*(area->y2 - area->y1 + 1 );
 
+        ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         TFT_DMA_SetAddr((u32)(&color_p->full),Point);
         TFT_DMA_Start();
+
+        LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
+        LCD_DMA_SetAddr((u32)(&color_p->full),Point);
+        LCD_DMA_Start();
 
         // for(y = area->y1; y <= area->y2; y++) 
         // {
@@ -207,11 +211,29 @@ void DMA2_Stream3_IRQHandler()
         {
             TFT_DMA_Start();
         }
+    }    
+}
+
+
+void DMA2_Stream1_IRQHandler()
+{
+    if(DMA_GetITStatus(DMA2_Stream1,DMA_IT_TCIF1))
+    {
+        DMA_ClearITPendingBit(DMA2_Stream1,DMA_IT_TCIF1);
+
+        if( LCD_DMA_GetTXComplateFlag() == TRUE )
+        {
+            LCD_DMA_Stop();
+            lv_disp_flush_ready(disp_DMA);
+        }
+        else
+        {
+            LCD_DMA_Start();
+        }
         
     }    
 
 }
-
 /*OPTIONAL: GPU INTERFACE*/
 
 /*If your MCU has hardware accelerator (GPU) then you can use it to fill a memory with a color*/
