@@ -134,6 +134,49 @@ void LCD_Delay(u8 i)
 	}
 }
 
+
+void LCD_DMA_Init()
+{
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
+
+  	DMA_InitTypeDef DMA_InitConfig;
+	NVIC_InitTypeDef  NVIC_Initstr;
+
+    DMA_Cmd(DMA2_Stream3,DISABLE);
+	DMA_InitConfig.DMA_Memory0BaseAddr = (u32)&(LCD->LCD_RAM);	
+	DMA_InitConfig.DMA_PeripheralBaseAddr= (u32)0;
+	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_HalfWord;
+	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_HalfWord;
+	DMA_InitConfig.DMA_BufferSize = DMA_MAX_BUFF;
+	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToMemory;
+	DMA_InitConfig.DMA_Channel=DMA_Channel_0; 
+	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal;
+	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Disable;
+	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Enable;
+	DMA_InitConfig.DMA_Priority=DMA_Priority_High;
+	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Enable;
+	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_HalfFull;
+	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
+	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
+	DMA_Init(DMA2_Stream1,&DMA_InitConfig);
+
+	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream1_IRQn;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
+	NVIC_Init(&NVIC_Initstr);
+
+	DMA_ClearFlag(DMA2_Stream1,DMA_FLAG_TCIF1);
+	DMA_ITConfig(DMA2_Stream1,DMA_IT_TC,ENABLE);	
+	DMA_Cmd(DMA2_Stream1,DISABLE);
+
+    DMA_TXCurrentAddr = 0;
+    DMA_EndAddr = 0;
+}
+
+
+
 void LCD_IO_Init()
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
@@ -635,8 +678,8 @@ void LCD_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height)
 //³õÊ¼»¯lcd
 void LCD_Init(void)
 { 	
-	vu32 i=0;
 	LCD_IO_Init();
+	LCD_DMA_Init();
 
 	LCD_Reset();
 	LCD_Delay(100);//NOP
@@ -1120,50 +1163,6 @@ void LCD_ShowString(u16 x,u16 y,u16 Width,u16 Height,u8 size,u8 *p)
         x+=size/2;
         p++;
     }  
-}
-
-
-
-
-
-void LCD_DMA_Init()
-{
-
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
-
-  	DMA_InitTypeDef DMA_InitConfig;
-	NVIC_InitTypeDef  NVIC_Initstr;
-
-    DMA_Cmd(DMA2_Stream3,DISABLE);
-	DMA_InitConfig.DMA_Memory0BaseAddr = &(LCD->LCD_RAM);	
-	DMA_InitConfig.DMA_PeripheralBaseAddr=0;
-	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_HalfWord;
-	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_HalfWord;
-	DMA_InitConfig.DMA_BufferSize = DMA_MAX_BUFF;
-	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToMemory;
-	DMA_InitConfig.DMA_Channel=DMA_Channel_0; 
-	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal;
-	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Disable;
-	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Enable;
-	DMA_InitConfig.DMA_Priority=DMA_Priority_High;
-	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Enable;
-	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_HalfFull;
-	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
-	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
-	DMA_Init(DMA2_Stream1,&DMA_InitConfig);
-
-	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
-	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_Init(&NVIC_Initstr);
-
-	DMA_ClearFlag(DMA2_Stream1,DMA_FLAG_TCIF1);
-	DMA_ITConfig(DMA2_Stream1,DMA_IT_TC,ENABLE);	
-	DMA_Cmd(DMA2_Stream1,DISABLE);
-
-    DMA_TXCurrentAddr = 0;
-    DMA_EndAddr = 0;
 }
 
 

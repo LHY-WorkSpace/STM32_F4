@@ -147,6 +147,9 @@
   "editor.mouseWheelZoom": true,
   "workbench.editor.enablePreview": false,
   "files.associations": {
+    "*.C": "c",
+    "*.c": "c",
+    "*.h": "c",
     "includefile.h": "c",
     "spi_flash.h": "c",
     "RNG.H": "cpp",
@@ -165,7 +168,8 @@
     "lcd.h": "c",
     "dma.h": "c",
     "systemstate.h": "c",
-    "lv_timer.h": "c"
+    "lv_timer.h": "c",
+    "FONT.H": "cpp"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

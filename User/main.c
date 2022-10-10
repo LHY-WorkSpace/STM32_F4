@@ -51,7 +51,8 @@ int  main()
 	led_init();
     KeyInit();
 	TickTimer_Init(1);
-	ST7789_Init();
+	// ST7789_Init();
+	LCD_Init();
 
 	printf("Power Online\r\n");
 

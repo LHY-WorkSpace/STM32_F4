@@ -59,6 +59,9 @@
 /**************************** LVGL ***************************************/
 #define USE_LVGL    TRUE
 
+
+
+
 //”¶”√≤„
 #if (USE_RTOS == TRUE)
 #include "../FreeRTOS/include/FreeRTOS.h"
@@ -88,6 +91,11 @@
 
 
 #if (USE_LVGL == TRUE)
+
+#define ST7789      0    
+#define ILI9341     1    
+#define DISPLAY_DEV    ILI9341
+
 #include "../Module/LVGL/lvgl.h"
 #include "../Module/LVGL/src/lvgl.h"
 #include "../Module/LVGL/lv_conf.h"

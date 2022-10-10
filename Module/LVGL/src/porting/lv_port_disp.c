@@ -171,15 +171,16 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         disp_DMA = disp_drv;
 
         Point = ( area->x2 - area->x1 + 1 )*(area->y2 - area->y1 + 1 );
-
+        
+#if (DISPLAY_DEV == ST7789)
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         TFT_DMA_SetAddr((u32)(&color_p->full),Point);
         TFT_DMA_Start();
-
+#elif (DISPLAY_DEV == ILI9341)
         LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         LCD_DMA_SetAddr((u32)(&color_p->full),Point);
         LCD_DMA_Start();
-
+#endif
         // for(y = area->y1; y <= area->y2; y++) 
         // {
         //     for(x = area->x1; x <= area->x2; x++)
@@ -196,6 +197,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 }
 
 
+#if (DISPLAY_DEV == ST7789)
 void DMA2_Stream3_IRQHandler()
 {
     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
@@ -215,6 +217,7 @@ void DMA2_Stream3_IRQHandler()
 }
 
 
+#elif (DISPLAY_DEV == ILI9341)
 void DMA2_Stream1_IRQHandler()
 {
     if(DMA_GetITStatus(DMA2_Stream1,DMA_IT_TCIF1))
@@ -234,6 +237,8 @@ void DMA2_Stream1_IRQHandler()
     }    
 
 }
+
+#endif
 /*OPTIONAL: GPU INTERFACE*/
 
 /*If your MCU has hardware accelerator (GPU) then you can use it to fill a memory with a color*/
