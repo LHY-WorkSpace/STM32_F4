@@ -248,21 +248,21 @@ void LCD_IO_Init()
 
 
 	readWriteTiming.FSMC_AddressSetupTime = 0X0F;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
-	readWriteTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（ADDHLD）模式A未用到	
+	readWriteTiming.FSMC_AddressHoldTime = 0x0F;	 //地址保持时间（ADDHLD）模式A未用到	
 	readWriteTiming.FSMC_DataSetupTime = 60;			//数据保存时间为60个HCLK	=6*60=360ns
 	readWriteTiming.FSMC_BusTurnAroundDuration = 0x00;
 	readWriteTiming.FSMC_CLKDivision = 0x00;
 	readWriteTiming.FSMC_DataLatency = 0x00;
-	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
+	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
 
 
 	writeTiming.FSMC_AddressSetupTime =0x0F;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
-	writeTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（A		
+	writeTiming.FSMC_AddressHoldTime = 0x0F;	 //地址保持时间（A		
 	writeTiming.FSMC_DataSetupTime = 60;		 //数据保存时间为6ns*9个HCLK=54ns
 	writeTiming.FSMC_BusTurnAroundDuration = 0x00;
 	writeTiming.FSMC_CLKDivision = 0x00;
 	writeTiming.FSMC_DataLatency = 0x00;
-	writeTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
+	writeTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
 
 
 	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;//  这里我们使用NE4 ，也就对应BTCR[6],[7]。
@@ -279,6 +279,7 @@ void LCD_IO_Init()
 	FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Enable; // 读写使用不同的时序
 	FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable; 
 	FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &readWriteTiming; //读写时序
+	// FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = NULL; //读写时序
 	FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &writeTiming;  //写时序
 
 	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);  //初始化FSMC配置
@@ -1179,7 +1180,7 @@ void LCD_ShowString(u16 x,u16 y,u16 Width,u16 Height,u8 size,u8 *p)
 void LCD_DMA_SetAddr(u32 StartAddr, u32 Point)
 {
     DMA_TXCurrentAddr = StartAddr;
-    DMA_EndAddr = StartAddr + Point*POINT_SIZE;
+    DMA_EndAddr = StartAddr + Point;
 }
 
 //***************************************************//
@@ -1242,8 +1243,6 @@ void LCD_DMA_Start()
          Length = DMA_MAX_BUFF;
     }
 	
-	LCD_WriteToRAM();
-
     DMA_Cmd(DMA2_Stream1,DISABLE);
 	DMA2_Stream1->PAR = DMA_TXCurrentAddr;
 	DMA2_Stream1->NDTR = Length;

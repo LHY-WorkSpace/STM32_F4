@@ -89,7 +89,7 @@ void XPT2046_Init(void)
 	SPI_InitTypeDefinsture.SPI_CPOL=SPI_CPOL_High;
 	SPI_InitTypeDefinsture.SPI_CPHA=SPI_CPHA_2Edge;
 	SPI_InitTypeDefinsture.SPI_NSS=SPI_NSS_Soft;
-	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_256;
+	SPI_InitTypeDefinsture.SPI_BaudRatePrescaler=SPI_BaudRatePrescaler_16;
 	SPI_InitTypeDefinsture.SPI_CRCPolynomial = 7;
 	SPI_InitTypeDefinsture.SPI_FirstBit=SPI_FirstBit_MSB;
 
@@ -135,6 +135,66 @@ void XPT2046_CS(u8 State)
         XPT2046_SPI_NO_SEL;
     }
 }
+
+u8 XPT2046_Press()
+{
+    if( GPIO_ReadInputDataBit(GPIOE,GPIO_Pin_3) == 0) 
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+
+}
+
+void XPT2046_GetXY(u16 *X_Data,u16 *Y_Data)
+{
+    uint8_t buf;
+    int16_t x = 0;
+    int16_t y = 0;
+
+    LV_DRV_INDEV_SPI_CS(0);
+
+    LV_DRV_INDEV_SPI_XCHG_BYTE(CMD_X_READ);         /*Start x read*/
+
+    buf = LV_DRV_INDEV_SPI_XCHG_BYTE(0);           /*Read x MSB*/
+    x = buf << 8;
+        buf = LV_DRV_INDEV_SPI_XCHG_BYTE(0);           /*Read x MSB*/
+    x += buf;
+        
+    LV_DRV_INDEV_SPI_XCHG_BYTE(CMD_Y_READ);  /*Until x LSB converted y command can be sent*/
+
+    buf =  LV_DRV_INDEV_SPI_XCHG_BYTE(0);   /*Read y MSB*/
+    y = buf << 8;
+
+    buf =  LV_DRV_INDEV_SPI_XCHG_BYTE(0);   /*Read y LSB*/
+    y += buf;
+
+    /*Normalize Data*/
+    x = x >> 3;
+    y = y >> 3;
+
+    if( x > 4000 )
+    {
+        x=0;
+    }
+
+    if( y > 4000 )
+    {
+        y=0;
+    }
+
+    // xpt2046_corr(&x, &y);
+    // xpt2046_avg(&x, &y);
+
+    *X_Data = x;
+    *Y_Data = y;
+    LV_DRV_INDEV_SPI_CS(1);
+
+}
+
 
 
 /**
@@ -204,9 +264,6 @@ u8 XPT2046_Read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 
     data->point.x = x;
     data->point.y = y;
-
-
-
 
     return false;
 }

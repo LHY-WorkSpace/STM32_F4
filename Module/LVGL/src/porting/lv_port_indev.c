@@ -211,7 +211,6 @@ void lv_port_indev_init(void)
 static void touchpad_init(void)
 {
     /*Your code comes here*/
-    XPT2046_Init();
 }
 
 /*Will be called by the library to read the touchpad*/
@@ -220,34 +219,37 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     static lv_coord_t last_x = 0;
     static lv_coord_t last_y = 0;
 
-    XPT2046_Read(indev_drv,data);
+    //XPT2046_Read(indev_drv,data);
 
     // /*Save the pressed coordinates and the state*/
-    // if(touchpad_is_pressed()) {
-    //     touchpad_get_xy(&last_x, &last_y);
-    //     data->state = LV_INDEV_STATE_PR;
-    // }
-    // else {
-    //     data->state = LV_INDEV_STATE_REL;
-    // }
+    if(touchpad_is_pressed()) {
+        touchpad_get_xy(&last_x, &last_y);
+        data->state = LV_INDEV_STATE_PR;
+    }
+    else {
+        data->state = LV_INDEV_STATE_REL;
+    }
 
-    // /*Set the last pressed coordinates*/
-    // data->point.x = last_x;
-    // data->point.y = last_y;
+    /*Set the last pressed coordinates*/
+    data->point.x = last_x;
+    data->point.y = last_y;
+
+    printf("x:%d \r\n",data->point.x);
+    printf("y:%d \r\n",data->point.y);
 }
 
 /*Return true is the touchpad is pressed*/
 static bool touchpad_is_pressed(void)
 {
     /*Your code comes here*/
-
-    return false;
+    return XPT2046_Press();
 }
 
 /*Get the x and y coordinates if the touchpad is pressed*/
 static void touchpad_get_xy(lv_coord_t * x, lv_coord_t * y)
 {
     /*Your code comes here*/
+    XPT2046_GetXY(x,y);
 }
 
 /*------------------

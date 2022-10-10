@@ -66,6 +66,8 @@ void XPT2046_Init(void);
 u8 XPT2046_Read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data);
 void xpt2046_corr(int16_t * x, int16_t * y);
 void xpt2046_avg(int16_t * x, int16_t * y);
+u8 XPT2046_Press(void);
+void XPT2046_GetXY(u16 *X_Data,u16 *Y_Data);
 /**********************
  *      MACROS
  **********************/

@@ -325,8 +325,8 @@ void roller_show_3(void)
                         "December",
                         LV_ROLLER_MODE_NORMAL);
 
-    // lv_obj_center(roller1);                             //居中对象
-    lv_roller_set_visible_row_count(roller1, 3);        //设置对象间距
+    lv_obj_center(roller1);                             //居中对象
+    lv_roller_set_visible_row_count(roller1, 5);        //设置对象间距
     lv_obj_add_event_cb(roller1, mask_event_cb, LV_EVENT_ALL, NULL);   //设置回调
 }
 
@@ -392,8 +392,8 @@ void LVGL_Init()
 	lv_port_indev_init();
 #endif
 
-   // LVGL_Build_GUI();
-    roller_show_3();
+   LVGL_Build_GUI();
+    // roller_show_3();
     // LVGL_Demo();
 }
 

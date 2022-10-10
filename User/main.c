@@ -49,7 +49,8 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-    KeyInit();
+	XPT2046_Init();
+   // KeyInit();
 	TickTimer_Init(1);
 	// ST7789_Init();
 	LCD_Init();
@@ -57,8 +58,15 @@ int  main()
 	printf("Power Online\r\n");
 
     LVGL_Init();
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
-	vTaskStartScheduler();
+	while (1)
+	{
+	// lv_tick_inc(1);
+	LVGL_Task();
+	}
+	
+
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
+	// vTaskStartScheduler();
 	SystemDown();
 }
 

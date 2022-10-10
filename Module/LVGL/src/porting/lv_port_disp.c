@@ -83,15 +83,15 @@ void lv_port_disp_init(void)
      */
 
     /* Example for 1) */
-    static lv_disp_draw_buf_t draw_buf_dsc_1;
-    static lv_color_t buf_1[MY_DISP_HOR_RES * 20];                          /*A buffer for 10 rows*/
-    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 20);   /*Initialize the display buffer*/
+    // static lv_disp_draw_buf_t draw_buf_dsc_1;
+    // static lv_color_t buf_1[MY_DISP_HOR_RES * 10];                          /*A buffer for 10 rows*/
+    // lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
     /* Example for 2) */
-    // static lv_disp_draw_buf_t draw_buf_dsc_2;
-    // static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*A buffer for 10 rows*/
-    // static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
-    // lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
+    static lv_disp_draw_buf_t draw_buf_dsc_2;
+    static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*A buffer for 10 rows*/
+    static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
+    lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
     // /* Example for 3) also set disp_drv.full_refresh = 1 below*/
     // static lv_disp_draw_buf_t draw_buf_dsc_3;
@@ -117,7 +117,7 @@ void lv_port_disp_init(void)
     disp_drv.flush_cb = disp_flush;
 
     /*Set a display buffer*/
-    disp_drv.draw_buf = &draw_buf_dsc_1;
+    disp_drv.draw_buf = &draw_buf_dsc_2;
 
     /*Required for Example 3)*/
     //disp_drv.full_refresh = 1;
@@ -162,7 +162,9 @@ void disp_disable_update(void)
  *'lv_disp_flush_ready()' has to be called when finished.*/
 static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_color_t * color_p)
 {
-    if(disp_flush_enabled) {
+
+    if(disp_flush_enabled) 
+    {
         /*The most simple case (but also the slowest) to put all pixels to the screen one-by-one*/
 
         int32_t x;
@@ -179,13 +181,17 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 #elif (DISPLAY_DEV == ILI9341)
         LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         LCD_DMA_SetAddr((u32)(&color_p->full),Point);
+        LCD_WriteToRAM();
         LCD_DMA_Start();
 #endif
+        // LCD_WriteToRAM();
         // for(y = area->y1; y <= area->y2; y++) 
         // {
         //     for(x = area->x1; x <= area->x2; x++)
         //     {
-        //         ST7789_DrawPoint(color_p->full);
+        //        // ST7789_DrawPoint(color_p->full);
+        //        LCD_DrawPoint(x,y,color_p->full);
+        //         //LCD_WriteData(color_p->full);
         //         color_p++;
         //     }
         // }
@@ -193,7 +199,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-    
+   //lv_disp_flush_ready(disp_DMA);
 }
 
 
