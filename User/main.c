@@ -61,6 +61,8 @@ int  main()
 	while (1)
 	{
 	// lv_tick_inc(1);
+	// DMATest();
+	// Delay_ms(100);
 	LVGL_Task();
 	}
 	

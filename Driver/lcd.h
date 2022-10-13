@@ -312,7 +312,7 @@ void LCD_Display_Dir(u8 Dir);
 void LCD_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height);
 
 
-
+void DMATest(void);
 void LCD_WriteCMD(vu16 regval);
 void LCD_WriteData(vu16 data);
 u16 LCD_ReadData(void);

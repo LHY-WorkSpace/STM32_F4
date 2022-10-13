@@ -162,7 +162,7 @@ void LCD_DMA_Init()
 	DMA_Init(DMA2_Stream1,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -184,7 +184,7 @@ void LCD_IO_Init()
 	FSMC_NORSRAMTimingInitTypeDef  readWriteTiming; 
 	FSMC_NORSRAMTimingInitTypeDef  writeTiming;
 		
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB|RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOE|RCC_AHB1Periph_GPIOF|RCC_AHB1Periph_GPIOG, ENABLE);//使能PD,PE,PF,PG时钟  
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD|RCC_AHB1Periph_GPIOE, ENABLE);//使能PD,PE,PF,PG时钟  
 	RCC_AHB3PeriphClockCmd(RCC_AHB3Periph_FSMC,ENABLE);//使能FSMC时钟  
 	
  
@@ -247,22 +247,22 @@ void LCD_IO_Init()
 	GPIO_PinAFConfig(GPIOD,GPIO_PinSource7,GPIO_AF_FSMC);
 
 
-	readWriteTiming.FSMC_AddressSetupTime = 0X0F;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
-	readWriteTiming.FSMC_AddressHoldTime = 0x0F;	 //地址保持时间（ADDHLD）模式A未用到	
-	readWriteTiming.FSMC_DataSetupTime = 60;			//数据保存时间为60个HCLK	=6*60=360ns
+	readWriteTiming.FSMC_AddressSetupTime = 0X01;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
+	readWriteTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（ADDHLD）模式A未用到	
+	readWriteTiming.FSMC_DataSetupTime = 10;			//数据保存时间为60个HCLK	=6*60=360ns
 	readWriteTiming.FSMC_BusTurnAroundDuration = 0x00;
 	readWriteTiming.FSMC_CLKDivision = 0x00;
 	readWriteTiming.FSMC_DataLatency = 0x00;
-	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
+	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
 
 
-	writeTiming.FSMC_AddressSetupTime =0x0F;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
-	writeTiming.FSMC_AddressHoldTime = 0x0F;	 //地址保持时间（A		
-	writeTiming.FSMC_DataSetupTime = 60;		 //数据保存时间为6ns*9个HCLK=54ns
+	writeTiming.FSMC_AddressSetupTime =0x01;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
+	writeTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（A		
+	writeTiming.FSMC_DataSetupTime = 10;		 //数据保存时间为6ns*9个HCLK=54ns
 	writeTiming.FSMC_BusTurnAroundDuration = 0x00;
 	writeTiming.FSMC_CLKDivision = 0x00;
 	writeTiming.FSMC_DataLatency = 0x00;
-	writeTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
+	writeTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
 
 
 	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;//  这里我们使用NE4 ，也就对应BTCR[6],[7]。
@@ -279,7 +279,6 @@ void LCD_IO_Init()
 	FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Enable; // 读写使用不同的时序
 	FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable; 
 	FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &readWriteTiming; //读写时序
-	// FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = NULL; //读写时序
 	FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &writeTiming;  //写时序
 
 	FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);  //初始化FSMC配置
@@ -740,7 +739,7 @@ void LCD_Init(void)
 
 	LCD_WriteCMD(LCD_FRMCTR1);   //帧速率控制
 	LCD_WriteData(0x00);   
-	LCD_WriteData(0x1A); 
+	LCD_WriteData(0x10); 
 
 	LCD_WriteCMD(LCD_DFC);    // 显示功能控制
 	LCD_WriteData(0x0A); 
@@ -935,238 +934,6 @@ void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 
 
 
-
-//画线
-//x1,y1:起点坐标
-//x2,y2:终点坐标  
-void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2,u16 color)
-{
-	u16 t; 
-	int xerr=0,yerr=0,delta_x,delta_y,distance; 
-	int incx,incy,uRow,uCol; 
-	delta_x=x2-x1; //计算坐标增量 
-	delta_y=y2-y1; 
-	uRow=x1; 
-	uCol=y1; 
-	if(delta_x>0)incx=1; //设置单步方向 
-	else if(delta_x==0)incx=0;//垂直线 
-	else {incx=-1;delta_x=-delta_x;} 
-	if(delta_y>0)incy=1; 
-	else if(delta_y==0)incy=0;//水平线 
-	else{incy=-1;delta_y=-delta_y;} 
-	if( delta_x>delta_y)distance=delta_x; //选取基本增量坐标轴 
-	else distance=delta_y; 
-	for(t=0;t<=distance+1;t++ )//画线输出 
-	{  
-		LCD_DrawPoint(uRow,uCol,color);//画点 
-		xerr+=delta_x ; 
-		yerr+=delta_y ; 
-		if(xerr>distance) 
-		{ 
-			xerr-=distance; 
-			uRow+=incx; 
-		} 
-		if(yerr>distance) 
-		{ 
-			yerr-=distance; 
-			uCol+=incy; 
-		} 
-	}  
-}  
-
-
-
-
-//画矩形	  
-//(x1,y1),(x2,y2):矩形的对角坐标
-void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2,u16 color)
-{
-	LCD_DrawLine(x1,y1,x2,y1,color);
-	LCD_DrawLine(x1,y1,x1,y2,color);
-	LCD_DrawLine(x1,y2,x2,y2,color);
-	LCD_DrawLine(x2,y1,x2,y2,color);
-}
-
-
-
-
-
-//在指定位置画一个指定大小的圆
-//(x,y):中心点
-//r    :半径
-void LCD_Draw_Circle(u16 x0,u16 y0,u8 r,u16 color)
-{
-	int a,b;
-	int di;
-	a=0;b=r;	  
-	di=3-(r<<1);             //判断下个点位置的标志
-	while(a<=b)
-	{
-		LCD_DrawPoint(x0+a,y0-b,color);             //5
- 		LCD_DrawPoint(x0+b,y0-a,color);             //0           
-		LCD_DrawPoint(x0+b,y0+a,color);             //4               
-		LCD_DrawPoint(x0+a,y0+b,color);             //6 
-		LCD_DrawPoint(x0-a,y0+b,color);             //1       
- 		LCD_DrawPoint(x0-b,y0+a,color);             
-		LCD_DrawPoint(x0-a,y0-b,color);             //2             
-  		LCD_DrawPoint(x0-b,y0-a,color);             //7     	         
-		a++;
-		//使用Bresenham算法画圆     
-		if(di<0)di +=4*a+6;	  
-		else
-		{
-			di+=10+4*(a-b);   
-			b--;
-		} 						    
-	}
-} 
-
-
-
-
-
-
-//在指定位置显示一个字符
-//x,y:起始坐标
-//num:要显示的字符:" "--->"~"
-//size:字体大小 12/16/24
-//mode:叠加方式(1)还是非叠加方式(0)
-void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
-{  							  
-    u8 temp,t1,t;
-	u16 y0=y;
-	u8 csize=(size/8+((size%8)?1:0))*(size/2);		//得到字体一个字符对应点阵集所占的字节数	
- 	num=num-' ';//得到偏移后的值（ASCII字库是从空格开始取模，所以-' '就是对应字符的字库）
-	for(t=0;t<csize;t++)
-	{   
-		if(size==12)temp=asc2_1206[num][t]; 	 	//调用1206字体
-		else if(size==16)temp=asc2_1608[num][t];	//调用1608字体
-		else if(size==24)temp=asc2_2412[num][t];	//调用2412字体
-		else return;								//没有的字库
-		for(t1=0;t1<8;t1++)
-		{			    
-			if(temp&0x80)LCD_DrawPoint(x,y,POINT_COLOR);
-			else if(mode==0)LCD_DrawPoint(x,y,BACK_COLOR);
-			temp<<=1;
-			y++;
-			if(y>=LCD_Dev.Height)return;		//超区域了
-			if((y-y0)==size)
-			{
-				y=y0;
-				x++;
-				if(x>=LCD_Dev.Width)return;	//超区域了
-				break;
-			}
-		}  	 
-	}  	    	   	 	  
-}   
-
-
-
-
-
-//m^n函数
-//返回值:m^n次方.
-u32 LCD_Pow(u8 m,u8 n)
-{
-	u32 result=1;	 
-	while(n--)result*=m;    
-	return result;
-}			 
-//显示数字,高位为0,则不显示
-//x,y :起点坐标	 
-//len :数字的位数
-//size:字体大小
-//color:颜色 
-//num:数值(0~4294967295);	 
-void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size)
-{         	
-	u8 t,temp;
-	u8 enshow=0;						   
-	for(t=0;t<len;t++)
-	{
-		temp=(num/LCD_Pow(10,len-t-1))%10;
-		if(enshow==0&&t<(len-1))
-		{
-			if(temp==0)
-			{
-				LCD_ShowChar(x+(size/2)*t,y,' ',size,0);
-				continue;
-			}else enshow=1; 
-		 	 
-		}
-	 	LCD_ShowChar(x+(size/2)*t,y,temp+'0',size,0); 
-	}
-} 
-
-
-
-
-
-//显示数字,高位为0,还是显示
-//x,y:起点坐标
-//num:数值(0~999999999);	 
-//len:长度(即要显示的位数)
-//size:字体大小
-//mode:
-//[7]:0,不填充;1,填充0.
-//[6:1]:保留
-//[0]:0,非叠加显示;1,叠加显示.
-void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode)
-{  
-	u8 t,temp;
-	u8 enshow=0;						   
-	for(t=0;t<len;t++)
-	{
-		temp=(num/LCD_Pow(10,len-t-1))%10;
-		if(enshow==0&&t<(len-1))
-		{
-			if(temp==0)
-			{
-				if(mode&0X80)
-					LCD_ShowChar(x+(size/2)*t,y,'0',size,mode&0X01);  
-				else 
-					LCD_ShowChar(x+(size/2)*t,y,' ',size,mode&0X01);  
- 				continue;
-			}else enshow=1; 
-		 	 
-		}
-	 	LCD_ShowChar(x+(size/2)*t,y,temp+'0',size,mode&0X01); 
-	}
-} 
-
-
-
-
-
-//显示字符串
-//x,y:起点坐标
-//Width,Height:区域大小  
-//size:字体大小
-//*p:字符串起始地址		  
-void LCD_ShowString(u16 x,u16 y,u16 Width,u16 Height,u8 size,u8 *p)
-{         
-	u8 x0=x;
-	Width+=x;
-	Height+=y;
-    while(1)//判断是不是非法字符!
-    {       
-        if(x>=Width){x=x0;y+=size;}
-        if(y>=Height)break;//退出
-		if((*p<='~')&&(*p>=' '))
-		{
-			LCD_ShowChar(x,y,*p,size,1);
-		}
-		else
-		{
-			LCD_ShowChar(x,y,' ',size,1);
-		}
-        x+=size/2;
-        p++;
-    }  
-}
-
-
 //***************************************************//
 //  功能描述: DMA发送数据起始地址和长度
 //  
@@ -1234,8 +1001,6 @@ void LCD_DMA_Start()
 {
     u32 Length;
 
-    TFT_DATA;
-
     Length = (DMA_EndAddr - DMA_TXCurrentAddr);
 
     if( Length > DMA_MAX_BUFF )
@@ -1274,6 +1039,108 @@ void LCD_DMA_Stop()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// u32 i=0,k=0;
+
+// u8 Flag=TRUE;
+
+// u32 Total=240*320;
+// u32 Lengthddd=0;
+// u32 SendLen=0;
+
+// u16 CData[] = {WHITE,BLACK,BLUE,GBLUE,RED,GREEN,YELLOW,BRRED,MAGENTA,BLUE,GRAY,RED,GRED,MAGENTA,WHITE,BLACK,BLUE,GBLUE,RED,GREEN,YELLOW};
+
+// void DMATest()
+// {
+// 	if( Flag == TRUE )
+// 	{
+
+//         LCD_SetXY_Area(0,0,239,319);
+//         LCD_WriteToRAM();
+
+// 		LED1_ON;
+// 		for (i = 0; i < 240*80; i++)
+// 		{
+// 			LCD_WriteData(CData[k]);
+// 		}
+// 		k++;
+
+// 		// if( Total >= DMA_MAX_BUFF)
+// 		// {
+// 		// 	Lengthddd = DMA_MAX_BUFF;
+// 		// }
+// 		// else
+// 		// {
+// 		// 	Lengthddd = Total;
+// 		// }
+// 		// SendLen  =0;
+// 		// Flag = FALSE;
+// 		// DMA_Cmd(DMA2_Stream1,DISABLE);
+// 		// DMA2_Stream1->PAR = (u32)(&CData[k]);
+// 		// DMA2_Stream1->NDTR = Lengthddd;
+// 		// DMA_Cmd(DMA2_Stream1,ENABLE);
+// 		// LED1_ON;
+
+// 		if(k>=sizeof(CData)/sizeof(CData[0])-4)
+// 		{
+// 			k=0;
+// 		}
+// 	}
+// }
+
+
+
+
+
+
+// void DMA2_Stream1_IRQHandler()
+// {
+// 	u32 Length;
+
+//     if(DMA_GetITStatus(DMA2_Stream1,DMA_IT_TCIF1))
+//     {
+//         DMA_ClearITPendingBit(DMA2_Stream1,DMA_IT_TCIF1);
+
+// 		SendLen += Lengthddd;
+
+// 		if( SendLen < Total)
+// 		{
+// 			DMA_Cmd(DMA2_Stream1,DISABLE);
+
+// 			Lengthddd = Total - SendLen;
+
+// 			if(  Lengthddd >= DMA_MAX_BUFF )
+// 			{
+// 				Lengthddd = DMA_MAX_BUFF;
+// 			}
+
+// 			DMA2_Stream1->NDTR = Lengthddd;
+
+// 			DMA_Cmd(DMA2_Stream1,ENABLE);
+// 		}
+// 		else
+// 		{
+// 			DMA_Cmd(DMA2_Stream1,DISABLE);
+// 			Flag = TRUE;
+// 			LED_Freq();
+// 			LED1_OFF;
+// 		}
+//     }    
+
+// }
 
 
 

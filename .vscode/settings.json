@@ -169,7 +169,10 @@
     "dma.h": "c",
     "systemstate.h": "c",
     "lv_timer.h": "c",
-    "FONT.H": "cpp"
+    "FONT.H": "cpp",
+    "vector": "c",
+    "xstring": "c",
+    "xutility": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

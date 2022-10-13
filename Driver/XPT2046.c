@@ -186,8 +186,8 @@ void XPT2046_GetXY(u16 *X_Data,u16 *Y_Data)
         y=0;
     }
 
-    // xpt2046_corr(&x, &y);
-    // xpt2046_avg(&x, &y);
+    xpt2046_corr(&x, &y);
+    xpt2046_avg(&x, &y);
 
     *X_Data = x;
     *Y_Data = y;
