@@ -180,27 +180,26 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         TFT_DMA_Start();
 #elif (DISPLAY_DEV == ILI9341)
         LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
-        // LCD_DMA_SetAddr((u32)(&color_p->full),Point);
-        // LCD_WriteToRAM();
-        // LCD_DMA_Start();
+        LCD_DMA_SetAddr((u32)(&color_p->full),Point);
+        LCD_DMA_Start();
         // disp_disable_update();
 #endif
-        LCD_WriteToRAM();
-        for(y = area->y1; y <= area->y2; y++) 
-        {
-            for(x = area->x1; x <= area->x2; x++)
-            {
-               // ST7789_DrawPoint(color_p->full);
-            //    LCD_DrawPoint(x,y,color_p->full);
-                LCD_WriteData(color_p->full);
-                color_p++;
-            }
-        }
+        // LCD_WriteToRAM();
+        // for(y = area->y1; y <= area->y2; y++) 
+        // {
+        //     for(x = area->x1; x <= area->x2; x++)
+        //     {
+        //        // ST7789_DrawPoint(color_p->full);
+        //     //    LCD_DrawPoint(x,y,color_p->full);
+        //         LCD_WriteData(color_p->full);
+        //         color_p++;
+        //     }
+        // }
     }
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-   lv_disp_flush_ready(disp_drv);
+//    lv_disp_flush_ready(disp_drv);
 }
 
 

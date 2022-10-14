@@ -7,7 +7,7 @@
 //DMA 单次最大传输个数
 #define DMA_MAX_BUFF  (60000)
 
-static u32 DMA_TXCurrentAddr,DMA_EndAddr;
+static u32 DMA_TXCurrentAddr,DMA_EndAddr,SendLength;
 
 
 //LCD的画笔颜色和背景色	   
@@ -173,6 +173,7 @@ void LCD_DMA_Init()
 
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
+	SendLength = 0;
 }
 
 
@@ -977,6 +978,8 @@ u32 LCD_DMA_GetCurrentAddr()
 //***************************************************//
 u8 LCD_DMA_GetTXComplateFlag()
 {
+	DMA_TXCurrentAddr += SendLength;
+
     if( DMA_TXCurrentAddr < DMA_EndAddr )
     {
         return FALSE;
@@ -999,22 +1002,18 @@ u8 LCD_DMA_GetTXComplateFlag()
 //***************************************************//
 void LCD_DMA_Start()
 {
-    u32 Length;
+    SendLength = (DMA_EndAddr - DMA_TXCurrentAddr);
 
-    Length = (DMA_EndAddr - DMA_TXCurrentAddr);
-
-    if( Length > DMA_MAX_BUFF )
+    if( SendLength > DMA_MAX_BUFF )
     {
-         Length = DMA_MAX_BUFF;
+        SendLength = DMA_MAX_BUFF;
     }
-	
+
     DMA_Cmd(DMA2_Stream1,DISABLE);
 	DMA2_Stream1->PAR = DMA_TXCurrentAddr;
-	DMA2_Stream1->NDTR = Length;
+	DMA2_Stream1->NDTR = SendLength;
     DMA_Cmd(DMA2_Stream1,ENABLE);
     
-    DMA_TXCurrentAddr += Length;
-
 }
 
 //***************************************************//
@@ -1032,7 +1031,7 @@ void LCD_DMA_Stop()
     DMA_Cmd(DMA2_Stream1,DISABLE);
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
-
+	SendLength = 0;
 }
 
 
