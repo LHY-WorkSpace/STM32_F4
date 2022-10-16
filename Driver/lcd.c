@@ -156,7 +156,7 @@ void LCD_DMA_Init()
 	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Enable;
 	DMA_InitConfig.DMA_Priority=DMA_Priority_High;
 	DMA_InitConfig.DMA_FIFOMode=DMA_FIFOMode_Enable;
-	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_HalfFull;
+	DMA_InitConfig.DMA_FIFOThreshold=DMA_FIFOThreshold_Full;
 	DMA_InitConfig.DMA_MemoryBurst=DMA_MemoryBurst_Single;
 	DMA_InitConfig.DMA_PeripheralBurst=DMA_PeripheralBurst_Single;
 	DMA_Init(DMA2_Stream1,&DMA_InitConfig);
@@ -949,21 +949,7 @@ void LCD_DMA_SetAddr(u32 StartAddr, u32 Point)
 {
     DMA_TXCurrentAddr = StartAddr;
     DMA_EndAddr = StartAddr + Point;
-}
-
-//***************************************************//
-//  功能描述: 获取当前发送地址
-//  
-//  参数: 无
-//  
-//  返回值: u32
-//  
-//  说明: 无
-//  
-//***************************************************//
-u32 LCD_DMA_GetCurrentAddr()
-{
-    return DMA_TXCurrentAddr;
+	SendLength =0;
 }
 
 //***************************************************//
@@ -1056,44 +1042,45 @@ void LCD_DMA_Stop()
 
 // u8 Flag=TRUE;
 
-// u32 Total=240*320;
+// u32 Total=1600;
 // u32 Lengthddd=0;
 // u32 SendLen=0;
 
-// u16 CData[] = {WHITE,BLACK,BLUE,GBLUE,RED,GREEN,YELLOW,BRRED,MAGENTA,BLUE,GRAY,RED,GRED,MAGENTA,WHITE,BLACK,BLUE,GBLUE,RED,GREEN,YELLOW};
+// u8 xxx=0,yyy=0;
+// u16 CData[] = {WHITE,BLACK,BLUE,BRRED,RED,GREEN,YELLOW,BRRED,MAGENTA,BLUE,GRAY,RED,GRED,MAGENTA,WHITE,BLACK,BLUE,GBLUE,RED,GREEN,YELLOW};
 
 // void DMATest()
 // {
 // 	if( Flag == TRUE )
 // 	{
 
-//         LCD_SetXY_Area(0,0,239,319);
+//         LCD_SetXY_Area(xxx,0+xxx,39+xxx,39+xxx);
 //         LCD_WriteToRAM();
-
-// 		LED1_ON;
-// 		for (i = 0; i < 240*80; i++)
-// 		{
-// 			LCD_WriteData(CData[k]);
-// 		}
-// 		k++;
-
-// 		// if( Total >= DMA_MAX_BUFF)
-// 		// {
-// 		// 	Lengthddd = DMA_MAX_BUFF;
-// 		// }
-// 		// else
-// 		// {
-// 		// 	Lengthddd = Total;
-// 		// }
-// 		// SendLen  =0;
-// 		// Flag = FALSE;
-// 		// DMA_Cmd(DMA2_Stream1,DISABLE);
-// 		// DMA2_Stream1->PAR = (u32)(&CData[k]);
-// 		// DMA2_Stream1->NDTR = Lengthddd;
-// 		// DMA_Cmd(DMA2_Stream1,ENABLE);
+// 		xxx++;
 // 		// LED1_ON;
+// 		// for (i = 0; i < 240*80; i++)
+// 		// {
+// 		// 	LCD_WriteData(CData[k]);
+// 		// }
+// 		// k++;
 
-// 		if(k>=sizeof(CData)/sizeof(CData[0])-4)
+// 		if( Total >= DMA_MAX_BUFF)
+// 		{
+// 			Lengthddd = DMA_MAX_BUFF;
+// 		}
+// 		else
+// 		{
+// 			Lengthddd = Total;
+// 		}
+// 		SendLen  =0;
+// 		Flag = FALSE;
+// 		DMA_Cmd(DMA2_Stream1,DISABLE);
+// 		DMA2_Stream1->PAR = (u32)(&CData[k]);
+// 		DMA2_Stream1->NDTR = Lengthddd;
+// 		DMA_Cmd(DMA2_Stream1,ENABLE);
+// 		LED1_ON;
+// 		k++;
+// 		if(k>=sizeof(CData)/sizeof(CData[0]))
 // 		{
 // 			k=0;
 // 		}
@@ -1134,7 +1121,7 @@ void LCD_DMA_Stop()
 // 		{
 // 			DMA_Cmd(DMA2_Stream1,DISABLE);
 // 			Flag = TRUE;
-// 			LED_Freq();
+// 			//LED_Freq();
 // 			LED1_OFF;
 // 		}
 //     }    

@@ -141,6 +141,7 @@ static void disp_init(void)
     /*You code here*/
 }
 
+volatile bool State = true;
 volatile bool disp_flush_enabled = true;
 
 /* Enable updating the screen (the flushing process) when disp_flush() is called by LVGL
@@ -173,18 +174,19 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         disp_DMA = disp_drv;
 
         Point = ( area->x2 - area->x1 + 1 )*(area->y2 - area->y1 + 1 );
-        
+
 #if (DISPLAY_DEV == ST7789)
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         TFT_DMA_SetAddr((u32)(&color_p->full),Point);
         TFT_DMA_Start();
+       // disp_disable_update();
 #elif (DISPLAY_DEV == ILI9341)
         LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         LCD_DMA_SetAddr((u32)(&color_p->full),Point);
+        LCD_WriteToRAM();
         LCD_DMA_Start();
-        // disp_disable_update();
+        disp_disable_update();
 #endif
-        // LCD_WriteToRAM();
         // for(y = area->y1; y <= area->y2; y++) 
         // {
         //     for(x = area->x1; x <= area->x2; x++)
@@ -212,6 +214,7 @@ void DMA2_Stream3_IRQHandler()
 
         if( TFT_DMA_GetTXComplateFlag() == TRUE )
         {
+          //  disp_enable_update();
             TFT_DMA_Stop();
             lv_disp_flush_ready(disp_DMA);
         }
@@ -232,18 +235,15 @@ void DMA2_Stream1_IRQHandler()
 
         if( LCD_DMA_GetTXComplateFlag() == TRUE )
         {
-
             LCD_DMA_Stop();
-            lv_disp_flush_ready(disp_DMA);
             disp_enable_update();
+            lv_disp_flush_ready(disp_DMA);
         }
         else
         {
             LCD_DMA_Start();
-        }
-        
+        } 
     }    
-
 }
 
 #endif

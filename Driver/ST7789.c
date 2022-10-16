@@ -8,7 +8,7 @@
 #define DMA_MAX_BUFF  (60000)
 
 //DMA传输控制参数
-static u32 DMA_TXCurrentAddr,DMA_EndAddr;
+static u32 DMA_TXCurrentAddr,DMA_EndAddr,Length;;
 
 
 
@@ -19,7 +19,7 @@ static u32 DMA_TXCurrentAddr,DMA_EndAddr;
 //  
 //  返回值: TRUE / FALSE
 //  
-//  说明: 2分频 = 40Mhz
+//  说明: 2分频 = 42Mhz
 //  PA5-------SCLK          PA7------SDA
 //  PA6-------D/C           PA4------RST 
 //***************************************************//
@@ -89,10 +89,10 @@ void ST7789_DMA_Init()
 	DMA_InitConfig.DMA_PeripheralBaseAddr=(u32)&(SPI1->DR);
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_Byte;
 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_Byte;
-	DMA_InitConfig.DMA_BufferSize = DMA_MAX_BUFF;//初始化单次传输的大小
-	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral; //先试试从内存到外设  
+	DMA_InitConfig.DMA_BufferSize = DMA_MAX_BUFF;
+	DMA_InitConfig.DMA_DIR=DMA_DIR_MemoryToPeripheral;  
 	DMA_InitConfig.DMA_Channel=DMA_Channel_3; 
-	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal; //循环发送 DMA_Mode_Normal(单次)DMA_Mode_Circular
+	DMA_InitConfig.DMA_Mode=DMA_Mode_Normal;
 	DMA_InitConfig.DMA_MemoryInc=DMA_MemoryInc_Enable;
 	DMA_InitConfig.DMA_PeripheralInc=DMA_PeripheralInc_Disable;
 	DMA_InitConfig.DMA_Priority=DMA_Priority_VeryHigh;
@@ -103,7 +103,7 @@ void ST7789_DMA_Init()
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=5;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -128,18 +128,24 @@ void ST7789_DMA_Init()
 static void TFT_SendData(u8 Data)
 {
 	
+    u8 OverTime;
     TFT_DATA;
 	SPI_I2S_SendData(SPI1,Data);		
-	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET); 
-    while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) != RESET);
+    OverTime = 0xFF;
+	while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET ) || (OverTime--) ); 
+    OverTime = 0xFF;
+    while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) != RESET ) || (OverTime--) ); 
 }
 
 static void TFT_SetCmd(u8 CMD)
 {
+    u8 OverTime;
     TFT_CMD;	
 	SPI_I2S_SendData(SPI1,CMD);	
-	while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET); 
-    while(SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) != RESET); 
+    OverTime = 0xFF;
+	while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET ) || (OverTime--) ); 
+    OverTime = 0xFF;
+    while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) != RESET ) || (OverTime--) ); 
 
 }
 
@@ -235,6 +241,7 @@ void ST7789_Init()
 
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
+    Length =0;
 }
 
 
@@ -355,21 +362,7 @@ void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
 {
     DMA_TXCurrentAddr = StartAddr;
     DMA_EndAddr = StartAddr + Point*POINT_SIZE;
-}
-
-//***************************************************//
-//  功能描述: 获取当前发送地址
-//  
-//  参数: 无
-//  
-//  返回值: u32
-//  
-//  说明: 无
-//  
-//***************************************************//
-u32 TFT_DMA_GetCurrentAddr()
-{
-    return DMA_TXCurrentAddr;
+    Length =0;
 }
 
 //***************************************************//
@@ -384,6 +377,8 @@ u32 TFT_DMA_GetCurrentAddr()
 //***************************************************//
 u8 TFT_DMA_GetTXComplateFlag()
 {
+     DMA_TXCurrentAddr += Length;
+
     if( DMA_TXCurrentAddr < DMA_EndAddr )
     {
         return FALSE;
@@ -406,7 +401,6 @@ u8 TFT_DMA_GetTXComplateFlag()
 //***************************************************//
 void TFT_DMA_Start()
 {
-    u32 Length;
 
     TFT_DATA;
 
@@ -422,7 +416,6 @@ void TFT_DMA_Start()
     DMA_SetCurrDataCounter(DMA2_Stream3,Length);
     DMA_Cmd(DMA2_Stream3,ENABLE);
     
-    DMA_TXCurrentAddr += Length;
 
 }
 
