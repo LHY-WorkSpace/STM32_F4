@@ -35,13 +35,13 @@
 //使用DMA模式的时候,传输速率可以到48Mhz(bypass on时),不过如果你的卡不是高速
 //卡,可能也会出错,出错就请降低时钟
 #define SDIO_INIT_CLK_DIV        0x76 		//SDIO初始化频率，最大400Kh  
-#define SDIO_TRANSFER_CLK_DIV    0x02		//SDIO传输频率 = 12Mhz
+#define SDIO_TRANSFER_CLK_DIV    0x05		//SDIO传输频率 = 12Mhz
 										 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 //SDIO工作模式定义,通过SD_SetDeviceMode函数设置.
-#define SD_POLLING_MODE    	0  	//查询模式,该模式下,如果读写有问题,建议增大SDIO_TRANSFER_CLK_DIV的设置.
-#define SD_DMA_MODE    		1	//DMA模式,该模式下,如果读写有问题,建议增大SDIO_TRANSFER_CLK_DIV的设置.   
+#define SD_POLLING_MODE    	1  	//查询模式,该模式下,如果读写有问题,建议增大SDIO_TRANSFER_CLK_DIV的设置.
+#define SD_DMA_MODE    		0	//DMA模式,该模式下,如果读写有问题,建议增大SDIO_TRANSFER_CLK_DIV的设置.   
 
 //SDIO 各种错误枚举定义
 typedef enum

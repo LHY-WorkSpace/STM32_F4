@@ -389,12 +389,12 @@ void LVGL_Init()
 #ifndef ON_PC
     lv_init();
 	lv_port_disp_init();
-	lv_port_indev_init();
+	//lv_port_indev_init();
 #endif
 
-//    LVGL_Build_GUI();
+    // LVGL_Build_GUI();
     // roller_show_3();
-    LVGL_Demo();
+   LVGL_Demo();
 }
 
 

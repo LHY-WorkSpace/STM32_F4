@@ -22,7 +22,7 @@
 
 #ifndef MY_DISP_VER_RES
     //#warning Please define or replace the macro MY_DISP_HOR_RES with the actual screen height, default value 240 is used for now.
-    #define MY_DISP_VER_RES    320
+    #define MY_DISP_VER_RES    240
 #endif
 
 /**********************
@@ -83,15 +83,15 @@ void lv_port_disp_init(void)
      */
 
     /* Example for 1) */
-    static lv_disp_draw_buf_t draw_buf_dsc_1;
-    static lv_color_t buf_1[MY_DISP_HOR_RES * 10];                          /*A buffer for 10 rows*/
-    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
+    // static lv_disp_draw_buf_t draw_buf_dsc_1;
+    // static lv_color_t buf_1[MY_DISP_HOR_RES * 10];                          /*A buffer for 10 rows*/
+    // lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
     /* Example for 2) */
-    // static lv_disp_draw_buf_t draw_buf_dsc_2;
-    // static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*A buffer for 10 rows*/
-    // static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
-    // lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
+    static lv_disp_draw_buf_t draw_buf_dsc_2;
+    static lv_color_t buf_2_1[MY_DISP_HOR_RES * 10];                        /*A buffer for 10 rows*/
+    static lv_color_t buf_2_2[MY_DISP_HOR_RES * 10];                        /*An other buffer for 10 rows*/
+    lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 10);   /*Initialize the display buffer*/
 
     // /* Example for 3) also set disp_drv.full_refresh = 1 below*/
     // static lv_disp_draw_buf_t draw_buf_dsc_3;
@@ -117,7 +117,7 @@ void lv_port_disp_init(void)
     disp_drv.flush_cb = disp_flush;
 
     /*Set a display buffer*/
-    disp_drv.draw_buf = &draw_buf_dsc_1;
+    disp_drv.draw_buf = &draw_buf_dsc_2;
 
     /*Required for Example 3)*/
     //disp_drv.full_refresh = 1;
@@ -141,7 +141,6 @@ static void disp_init(void)
     /*You code here*/
 }
 
-volatile bool State = true;
 volatile bool disp_flush_enabled = true;
 
 /* Enable updating the screen (the flushing process) when disp_flush() is called by LVGL
@@ -179,12 +178,14 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         TFT_DMA_SetAddr((u32)(&color_p->full),Point);
         TFT_DMA_Start();
-       // disp_disable_update();
+        disp_disable_update();
+        LED1_OFF;
 #elif (DISPLAY_DEV == ILI9341)
         LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         LCD_DMA_SetAddr((u32)(&color_p->full),Point);
         LCD_WriteToRAM();
         LCD_DMA_Start();
+        LED1_OFF;
         disp_disable_update();
 #endif
         // for(y = area->y1; y <= area->y2; y++) 
@@ -197,33 +198,35 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         //         color_p++;
         //     }
         // }
+        //    lv_disp_flush_ready(disp_drv);
     }
 
     /*IMPORTANT!!!
      *Inform the graphics library that you are ready with the flushing*/
-//    lv_disp_flush_ready(disp_drv);
+
 }
 
 
 #if (DISPLAY_DEV == ST7789)
-void DMA2_Stream3_IRQHandler()
-{
-    if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
-    {
-        DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
+// void DMA2_Stream3_IRQHandler()
+// {
+//     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+//     {
+//         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
-        if( TFT_DMA_GetTXComplateFlag() == TRUE )
-        {
-          //  disp_enable_update();
-            TFT_DMA_Stop();
-            lv_disp_flush_ready(disp_DMA);
-        }
-        else
-        {
-            TFT_DMA_Start();
-        }
-    }    
-}
+//         if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
+//         {
+//            disp_enable_update();
+//             TFT_DMA_Stop();
+//             lv_disp_flush_ready(disp_DMA);
+//             LED1_ON;
+//         }
+//         else
+//         {
+//             TFT_DMA_Start();
+//         }
+//     }    
+// }
 
 
 #elif (DISPLAY_DEV == ILI9341)
@@ -238,6 +241,7 @@ void DMA2_Stream1_IRQHandler()
             LCD_DMA_Stop();
             disp_enable_update();
             lv_disp_flush_ready(disp_DMA);
+            LED1_ON;
         }
         else
         {

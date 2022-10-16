@@ -36,8 +36,9 @@ void TFT_DMA_Start(void);
 void TFT_DMA_SetAddr(u32 StartAddr, u32 Point);
 u32 TFT_DMA_GetCurrentAddr(void);
 void TFT_DMA_SetAddr(u32 StartAddr, u32 Point);
-u8 TFT_DMA_GetTXComplateFlag(void);
+u8 TFT_DMA_ISR_GetTXComplateFlag(void);
 void TFT_DMA_Start(void);
 void TFT_DMA_Stop(void);
 void TFT_SwapDataForDMA(u16 *Data);
+u8 TFT_DMA_GetTXState(void);
 #endif

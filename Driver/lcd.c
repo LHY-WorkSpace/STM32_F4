@@ -833,11 +833,13 @@ void LCD_ShowPicture()
     
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
-	u32 P=0;
+	static u32 P=0;
 	//u32 totalpoint=LCD_Dev.Height*LCD_Dev.Width; 			//得到总点数
-	 LCD_Display_Dir(Vertical);
-	 LCD_SetXY_Area(0,0,239,319);	//设置光标位置 
-	 LCD_WriteToRAM();     		//开始写入GRAM
+	//  LCD_Display_Dir(Vertical);
+	//  LCD_SetXY_Area(0,0,239,319);	//设置光标位置 
+	//  LCD_WriteToRAM();     		//开始写入GRAM
+
+
 	FIL fils;
 ////////////////////////////////////////////////////////////
 
@@ -846,45 +848,46 @@ void LCD_ShowPicture()
 	// File_ReadData("1:/SD/Data_1.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
 
 ////////////////////////////////////////////////////////////
-
-		for(y=0;y<64;y++)
+		// ST7789_SetArea(0,y*10-1,239,y*10+10-1);
+		ST7789_SetArea(0,0,239,239);
+		for(y=0;y<24;y++)
 		{
-			File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,2400,P);
-			P+=2400;		
-			for(x=0;x<1200;x++)
-			{
-				LCD_WriteData(DataTemp.Data_16[x]);
-			}
+			File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,4800,P);
+			P+=4800;
+
+			TFT_DMA_SetAddr((u32)(DataTemp.Data_8),2400);
+			TFT_DMA_Start();
+			while (TFT_DMA_GetTXState() != TRUE);
 		}
 
-		//Delay_ms(100);
+		// //Delay_ms(100);
 
-		P=0;
-		for(y=0;y<64;y++)
-		{
-			File_ReadData(&fils,"1:/SD/Data_2.bin",DataTemp.Data_8,2400,P);
-			P+=2400;		
-			for(x=0;x<1200;x++)
-			{
-				LCD_WriteData(DataTemp.Data_16[x]);
-			}
-		}
+		// P=0;
+		// for(y=0;y<64;y++)
+		// {
+		// 	File_ReadData(&fils,"1:/SD/Data_2.bin",DataTemp.Data_8,2400,P);
+		// 	P+=2400;		
+		// 	for(x=0;x<1200;x++)
+		// 	{
+		// 		LCD_WriteData(DataTemp.Data_16[x]);
+		// 	}
+		// }
 
-		//Delay_ms(100);
+		// //Delay_ms(100);
 
-		LCD_Display_Dir(Horizontal);
-	 	LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
-		LCD_WriteToRAM();     		//开始写入GRAM
-		P=0;
-		for(y=0;y<240;y++)
-		{
-			File_ReadData(&fils,"1:/SD/Data_3.bin",DataTemp.Data_8,640,P);
-			P+=640;		
-			for(x=0;x<320;x++)
-			{
-				LCD_WriteData(DataTemp.Data_16[x]);
-			}
-		}
+		// LCD_Display_Dir(Horizontal);
+	 	// LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
+		// LCD_WriteToRAM();     		//开始写入GRAM
+		// P=0;
+		// for(y=0;y<240;y++)
+		// {
+		// 	File_ReadData(&fils,"1:/SD/Data_3.bin",DataTemp.Data_8,640,P);
+		// 	P+=640;		
+		// 	for(x=0;x<320;x++)
+		// 	{
+		// 		LCD_WriteData(DataTemp.Data_16[x]);
+		// 	}
+		// }
 		//Delay_ms(100);
 
 //////////////////////////////////////////////////////////////////
@@ -892,7 +895,23 @@ void LCD_ShowPicture()
 } 
 
 
+void DMA2_Stream3_IRQHandler()
+{
+    if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+    {
+        DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
+        if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
+        {
+            TFT_DMA_Stop();
+            LED1_ON;
+        }
+        else
+        {
+            TFT_DMA_Start();
+        }
+    }    
+}
 
 
 //在指定区域内填充单个颜色
