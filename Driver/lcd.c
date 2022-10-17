@@ -855,9 +855,9 @@ void ILI9341_ShowPicture()
 			File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,4800,P);
 			P+=4800;
 
-			TFT_DMA_SetAddr((u32)(DataTemp.Data_8),2400);
-			TFT_DMA_Start();
-			while (TFT_DMA_GetTXState() != TRUE);
+			ST7789_DMA_SetAddr((u32)(DataTemp.Data_8),2400);
+			ST7789_DMA_Start();
+			while (ST7789_DMA_GetTXState() != TRUE);
 		}
 
 		// //Delay_ms(100);
@@ -901,14 +901,14 @@ void ILI9341_ShowPicture()
 //     {
 //         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
-//         if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
+//         if( ILI9341_DMA_ISR_GetTXComplateFlag() == TRUE )
 //         {
-//             TFT_DMA_Stop();
+//             ILI9341_DMA_Stop();
 //             LED1_ON;
 //         }
 //         else
 //         {
-//             TFT_DMA_Start();
+//             ILI9341_DMA_Start();
 //         }
 //     }    
 // }
@@ -1002,7 +1002,7 @@ u8 ILI9341_DMA_GetTXComplateFlag()
 //  
 //  返回值: 无
 //  
-//  说明: 启动DMA传输时先调用 TFT_DMA_SetAddr(),确定数据起始地址和长度
+//  说明: 启动DMA传输时先调用 ILI9341_DMA_SetAddr(),确定数据起始地址和长度
 //        中断里直接调用
 //***************************************************//
 void ILI9341_DMA_Start()

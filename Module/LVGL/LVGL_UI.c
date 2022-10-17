@@ -392,9 +392,9 @@ void LVGL_Init()
 	//lv_port_indev_init();
 #endif
 
-    // LVGL_Build_GUI();
-    // roller_show_3();
-   LVGL_Demo();
+    LVGL_Build_GUI();
+    roller_show_3();
+//    LVGL_Demo();
 }
 
 

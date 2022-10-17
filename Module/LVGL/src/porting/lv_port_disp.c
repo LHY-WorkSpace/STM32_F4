@@ -179,13 +179,11 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         ST7789_DMA_SetAddr((u32)(&color_p->full),Point);
         ST7789_DMA_Start();
         disp_disable_update();
-        LED1_OFF;
 #elif (DISPLAY_DEV == ILI9341)
         ILI9341_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         ILI9341_DMA_SetAddr((u32)(&color_p->full),Point);
         ILI9341_WriteToRAM();
         ILI9341_DMA_Start();
-        LED1_OFF;
         disp_disable_update();
 #endif
         // for(y = area->y1; y <= area->y2; y++) 
@@ -208,25 +206,24 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
 
 #if (DISPLAY_DEV == ST7789)
-// void DMA2_Stream3_IRQHandler()
-// {
-//     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
-//     {
-//         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
+void DMA2_Stream3_IRQHandler()
+{
+    if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+    {
+        DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
-//         if( ST7789_DMA_ISR_GetTXComplateFlag() == TRUE )
-//         {
-//            disp_enable_update();
-//             ST7789_DMA_Stop();
-//             lv_disp_flush_ready(disp_DMA);
-//             LED1_ON;
-//         }
-//         else
-//         {
-//             ST7789_DMA_Start();
-//         }
-//     }    
-// }
+        if( ST7789_DMA_ISR_GetTXComplateFlag() == TRUE )
+        {
+           disp_enable_update();
+            ST7789_DMA_Stop();
+            lv_disp_flush_ready(disp_DMA);
+        }
+        else
+        {
+            ST7789_DMA_Start();
+        }
+    }    
+}
 
 
 #elif (DISPLAY_DEV == ILI9341)
@@ -241,7 +238,6 @@ void DMA2_Stream1_IRQHandler()
             ILI9341_DMA_Stop();
             disp_enable_update();
             lv_disp_flush_ready(disp_DMA);
-            LED1_ON;
         }
         else
         {

@@ -53,26 +53,26 @@ int  main()
 //    KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
-	// ST7789_Init();
-	LCD_Init();
+	ST7789_Init();
+	// ILI9341_Init();
 
 	printf("Power Online\r\n");
 
     LVGL_Init();
-	while (1)
-	{
-	// lv_tick_inc(1);
-	// DMATest();
-	// Delay_ms(100);
-	// lv_tick_inc(10);
-	LVGL_Task();
-	// Delay_ms(2);
-	// LCD_ShowPicture();
-	}
+	// while (1)
+	// {
+	// // lv_tick_inc(1);
+	// // DMATest();
+	// // Delay_ms(100);
+	// // lv_tick_inc(10);
+	// LVGL_Task();
+	// // Delay_ms(2);
+	// // LCD_ShowPicture();
+	// }
 	
 
-	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
-	// vTaskStartScheduler();
+	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
+	vTaskStartScheduler();
 	SystemDown();
 }
 
