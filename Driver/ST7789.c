@@ -23,7 +23,7 @@ static u8 TX_Flag;
 //  PA5-------SCLK          PA7------SDA
 //  PA6-------D/C           PA4------RST 
 //***************************************************//
-static void TFT_IOInit()
+static void ST7789_IOInit()
 {
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SPI1,ENABLE);
@@ -125,11 +125,11 @@ void ST7789_DMA_Init()
 //  说明: 无
 //  
 //***************************************************//
-static void TFT_SendData(u8 Data)
+static void ST7789_SendData(u8 Data)
 {
 	
     u8 OverTime;
-    TFT_DATA;
+    ST7789_DATA;
 	SPI_I2S_SendData(SPI1,Data);		
     OverTime = 0xFF;
 	while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET ) || (OverTime--) ); 
@@ -137,10 +137,10 @@ static void TFT_SendData(u8 Data)
     while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) != RESET ) || (OverTime--) ); 
 }
 
-static void TFT_SetCmd(u8 CMD)
+static void ST7789_SetCmd(u8 CMD)
 {
     u8 OverTime;
-    TFT_CMD;	
+    ST7789_CMD;	
 	SPI_I2S_SendData(SPI1,CMD);	
     OverTime = 0xFF;
 	while( ( SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET ) || (OverTime--) ); 
@@ -162,82 +162,82 @@ static void TFT_SetCmd(u8 CMD)
 void ST7789_Init()
 {
 
-    TFT_IOInit();
+    ST7789_IOInit();
     ST7789_DMA_Init();
 
-	TFT_RST_ON;
+	ST7789_RST_ON;
 	Delay_ms(10);
-    TFT_RST_OFF;
+    ST7789_RST_OFF;
 	Delay_ms(10);
 
-    TFT_SetCmd(0x11); 			//Sleep Out
+    ST7789_SetCmd(0x11); 			//Sleep Out
 	Delay_ms(120);               //DELAY120ms 
-    TFT_SetCmd(0x3A);        //65k mode
-    TFT_SendData(0x05);
-    TFT_SetCmd(0xC5); 		//VCOM
-    TFT_SendData(0x1A);
-    TFT_SetCmd(0x36);                 // 屏幕显示方向设置
-    TFT_SendData(0x00);
-    TFT_SetCmd(0xb2);		//Porch Setting
-    TFT_SendData(0x05);
-    TFT_SendData(0x05);
-    TFT_SendData(0x00);
-    TFT_SendData(0x33);
-    TFT_SendData(0x33);
-    TFT_SetCmd(0xb7);			//Gate Control
-    TFT_SetCmd(0xBB);//VCOM
-    TFT_SendData(0x3F);
-    TFT_SetCmd(0xC0); //Power control
-    TFT_SendData(0x2c);
-    TFT_SetCmd(0xC2);		//VDV and VRH Command Enable
-    TFT_SendData(0x01);
-    TFT_SetCmd(0xC3);			//VRH Set
-    TFT_SendData(0x0F);		//4.3+( vcom+vcom offset+vdv)
-    TFT_SetCmd(0xC4);			//VDV Set
-    TFT_SendData(0x20);				//0v
-    TFT_SetCmd(0xC6);				//Frame Rate Control in Normal Mode
-    TFT_SendData(0X01);			//111Hz
-    TFT_SetCmd(0xd0);				//Power Control 1
-    TFT_SendData(0xa4);
-    TFT_SendData(0xa1);
-    TFT_SetCmd(0xE8);				//Power Control 1
-    TFT_SendData(0x03);
-    TFT_SetCmd(0xE9);				//Equalize time control
-    TFT_SendData(0x09);
-    TFT_SendData(0x09);
-    TFT_SendData(0x08);
-    TFT_SetCmd(0xE0); //Set Gamma
-    TFT_SendData(0xD0);
-    TFT_SendData(0x05);
-    TFT_SendData(0x09);
-    TFT_SendData(0x09);
-    TFT_SendData(0x08);
-    TFT_SendData(0x14);
-    TFT_SendData(0x28);
-    TFT_SendData(0x33);
-    TFT_SendData(0x3F);
-    TFT_SendData(0x07);
-    TFT_SendData(0x13);
-    TFT_SendData(0x14);
-    TFT_SendData(0x28);
-    TFT_SendData(0x30);
-    TFT_SetCmd(0XE1); //Set Gamma
-    TFT_SendData(0xD0);
-    TFT_SendData(0x05);
-    TFT_SendData(0x09);
-    TFT_SendData(0x09);
-    TFT_SendData(0x08);
-    TFT_SendData(0x03);
-    TFT_SendData(0x24);
-    TFT_SendData(0x32);
-    TFT_SendData(0x32);
-    TFT_SendData(0x3B);
-    TFT_SendData(0x14);
-    TFT_SendData(0x13);
-    TFT_SendData(0x28);
-    TFT_SendData(0x2F);
-    TFT_SetCmd(0x21); 		//反显
-    TFT_SetCmd(0x29);         //开启显示 
+    ST7789_SetCmd(0x3A);        //65k mode
+    ST7789_SendData(0x05);
+    ST7789_SetCmd(0xC5); 		//VCOM
+    ST7789_SendData(0x1A);
+    ST7789_SetCmd(0x36);                 // 屏幕显示方向设置
+    ST7789_SendData(0x00);
+    ST7789_SetCmd(0xb2);		//Porch Setting
+    ST7789_SendData(0x05);
+    ST7789_SendData(0x05);
+    ST7789_SendData(0x00);
+    ST7789_SendData(0x33);
+    ST7789_SendData(0x33);
+    ST7789_SetCmd(0xb7);			//Gate Control
+    ST7789_SetCmd(0xBB);//VCOM
+    ST7789_SendData(0x3F);
+    ST7789_SetCmd(0xC0); //Power control
+    ST7789_SendData(0x2c);
+    ST7789_SetCmd(0xC2);		//VDV and VRH Command Enable
+    ST7789_SendData(0x01);
+    ST7789_SetCmd(0xC3);			//VRH Set
+    ST7789_SendData(0x0F);		//4.3+( vcom+vcom offset+vdv)
+    ST7789_SetCmd(0xC4);			//VDV Set
+    ST7789_SendData(0x20);				//0v
+    ST7789_SetCmd(0xC6);				//Frame Rate Control in Normal Mode
+    ST7789_SendData(0X01);			//111Hz
+    ST7789_SetCmd(0xd0);				//Power Control 1
+    ST7789_SendData(0xa4);
+    ST7789_SendData(0xa1);
+    ST7789_SetCmd(0xE8);				//Power Control 1
+    ST7789_SendData(0x03);
+    ST7789_SetCmd(0xE9);				//Equalize time control
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x08);
+    ST7789_SetCmd(0xE0); //Set Gamma
+    ST7789_SendData(0xD0);
+    ST7789_SendData(0x05);
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x08);
+    ST7789_SendData(0x14);
+    ST7789_SendData(0x28);
+    ST7789_SendData(0x33);
+    ST7789_SendData(0x3F);
+    ST7789_SendData(0x07);
+    ST7789_SendData(0x13);
+    ST7789_SendData(0x14);
+    ST7789_SendData(0x28);
+    ST7789_SendData(0x30);
+    ST7789_SetCmd(0XE1); //Set Gamma
+    ST7789_SendData(0xD0);
+    ST7789_SendData(0x05);
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x09);
+    ST7789_SendData(0x08);
+    ST7789_SendData(0x03);
+    ST7789_SendData(0x24);
+    ST7789_SendData(0x32);
+    ST7789_SendData(0x32);
+    ST7789_SendData(0x3B);
+    ST7789_SendData(0x14);
+    ST7789_SendData(0x13);
+    ST7789_SendData(0x28);
+    ST7789_SendData(0x2F);
+    ST7789_SetCmd(0x21); 		//反显
+    ST7789_SetCmd(0x29);         //开启显示 
 
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
@@ -259,18 +259,18 @@ void ST7789_Init()
 void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 {	
 
-	TFT_SetCmd(0x2a);
-	TFT_SendData(0x00);
-	TFT_SendData(x_start);
-	TFT_SendData(0x00);
-	TFT_SendData(x_end);
+	ST7789_SetCmd(0x2a);
+	ST7789_SendData(0x00);
+	ST7789_SendData(x_start);
+	ST7789_SendData(0x00);
+	ST7789_SendData(x_end);
 
-	TFT_SetCmd(0x2b);
-	TFT_SendData(0x00);
-	TFT_SendData(y_start);
-	TFT_SendData(0x00);
-	TFT_SendData(y_end);	
-	TFT_SetCmd(0x2c);
+	ST7789_SetCmd(0x2b);
+	ST7789_SendData(0x00);
+	ST7789_SendData(y_start);
+	ST7789_SendData(0x00);
+	ST7789_SendData(y_end);	
+	ST7789_SetCmd(0x2c);
 }
 
 
@@ -286,8 +286,8 @@ void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 //***************************************************//
 void ST7789_DrawPoint(u16 color)
 {
-    TFT_SendData(color>>8);
-    TFT_SendData(color);
+    ST7789_SendData(color>>8);
+    ST7789_SendData(color);
 }
 
 
@@ -301,27 +301,27 @@ void ST7789_DrawPoint(u16 color)
 //  说明: 无
 //  
 //***************************************************//
-void TFT_Full(u16 color)
+void ST7789_Full(u16 color)
 {
     u32 ROW,column;
-    TFT_SetCmd(0x2a);     //Column address set
-    TFT_SendData(0x00);    //start column
-    TFT_SendData(0x00); 
-    TFT_SendData(0x00);    //end column
-    TFT_SendData(0xF0);
+    ST7789_SetCmd(0x2a);     //Column address set
+    ST7789_SendData(0x00);    //start column
+    ST7789_SendData(0x00); 
+    ST7789_SendData(0x00);    //end column
+    ST7789_SendData(0xF0);
 
-    TFT_SetCmd(0x2b);     //Row address set
-    TFT_SendData(0x00);    //start row
-    TFT_SendData(0x00); 
-    TFT_SendData(0x00);    //end row
-    TFT_SendData(0xF0);
-    TFT_SetCmd(0x2C);     //Memory write
+    ST7789_SetCmd(0x2b);     //Row address set
+    ST7789_SendData(0x00);    //start row
+    ST7789_SendData(0x00); 
+    ST7789_SendData(0x00);    //end row
+    ST7789_SendData(0xF0);
+    ST7789_SetCmd(0x2C);     //Memory write
     for(ROW=0;ROW<240;ROW++)             //ROW loop
     { 
         for(column=0;column<240 ;column++) //column loop
         {
-            TFT_SendData(color>>8);
-            TFT_SendData(color);
+            ST7789_SendData(color>>8);
+            ST7789_SendData(color);
         }
     }
 }
@@ -337,7 +337,7 @@ void TFT_Full(u16 color)
 //  说明: 交换后为 BGR 565  ,7789先接收高字节数据
 //  
 //***************************************************//
-void TFT_SwapDataForDMA(u16 *Data)
+void ST7789_SwapDataForDMA(u16 *Data)
 {
     u16 Buf;
 
@@ -359,7 +359,7 @@ void TFT_SwapDataForDMA(u16 *Data)
 //  说明: 
 //  
 //***************************************************//
-void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
+void ST7789_DMA_SetAddr(u32 StartAddr, u32 Point)
 {
     DMA_TXCurrentAddr = StartAddr;
     DMA_EndAddr = StartAddr + Point*POINT_SIZE;
@@ -376,7 +376,7 @@ void TFT_DMA_SetAddr(u32 StartAddr, u32 Point)
 //  说明:
 //  
 //***************************************************//
-u8 TFT_DMA_ISR_GetTXComplateFlag()
+u8 ST7789_DMA_ISR_GetTXComplateFlag()
 {
     DMA_TXCurrentAddr += Length;
 
@@ -400,7 +400,7 @@ u8 TFT_DMA_ISR_GetTXComplateFlag()
 //  说明:
 //  
 //***************************************************//
-u8 TFT_DMA_GetTXState()
+u8 ST7789_DMA_GetTXState()
 {
     return TX_Flag;
 }
@@ -413,13 +413,13 @@ u8 TFT_DMA_GetTXState()
 //  
 //  返回值: 无
 //  
-//  说明: 启动DMA传输时先调用 TFT_DMA_SetAddr(),确定数据起始地址和长度
+//  说明: 启动DMA传输时先调用 ST7789_DMA_SetAddr(),确定数据起始地址和长度
 //        中断里直接调用
 //***************************************************//
-void TFT_DMA_Start()
+void ST7789_DMA_Start()
 {
 
-    TFT_DATA;
+    ST7789_DATA;
 
     Length = (DMA_EndAddr - DMA_TXCurrentAddr);
 
@@ -446,7 +446,7 @@ void TFT_DMA_Start()
 //  说明: 数据传输到达设定长度后停止DMA
 //  
 //***************************************************//
-void TFT_DMA_Stop()
+void ST7789_DMA_Stop()
 {
     DMA_Cmd(DMA2_Stream3,DISABLE);
     DMA_TXCurrentAddr = 0;
@@ -470,7 +470,7 @@ void TFT_DMA_Stop()
 // 	{
 //         ST7789_SetArea(0,0,239,239);
 
-//         TFT_DATA;
+//         ST7789_DATA;
 // 		if( Total >= DMA_MAX_BUFF)
 // 		{
 // 			Lengthddd = DMA_MAX_BUFF;
@@ -516,7 +516,7 @@ void TFT_DMA_Stop()
 // 			}
 
 // 			DMA2_Stream3->NDTR = Lengthddd;
-//             TFT_DATA;
+//             ST7789_DATA;
 // 			DMA_Cmd(DMA2_Stream3,ENABLE);
 // 		}
 // 		else

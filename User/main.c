@@ -51,23 +51,23 @@ int  main()
 	led_init();
 //	XPT2046_Init();
 //    KeyInit();
-	File_FATFSInit();
+	// File_FATFSInit();
 	TickTimer_Init(1);
-	ST7789_Init();
-	// LCD_Init();
+	// ST7789_Init();
+	LCD_Init();
 
 	printf("Power Online\r\n");
 
-    // LVGL_Init();
+    LVGL_Init();
 	while (1)
 	{
 	// lv_tick_inc(1);
 	// DMATest();
 	// Delay_ms(100);
 	// lv_tick_inc(10);
-	// LVGL_Task();
+	LVGL_Task();
 	// Delay_ms(2);
-	LCD_ShowPicture();
+	// LCD_ShowPicture();
 	}
 	
 

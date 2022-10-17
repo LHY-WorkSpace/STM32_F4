@@ -18,8 +18,8 @@ u16 BACK_COLOR=0xFFFF;  //背景色
 
 //管理LCD重要参数
 //默认为竖屏
-LCD_Dev_t LCD_Dev;
-LCD_State_t LCD_State = { .Row_AddrMode = Up_Down,
+ILI9341_Dev_t ILI9341_Dev;
+ILI9341_State_t ILI9341_State = { .Row_AddrMode = Up_Down,
 						  .Col_AddrMode = Left_Right,
 						  .RowCol_Exchenge = 0,
 						  .Ver_ScanMode = Up_Down,
@@ -30,81 +30,81 @@ LCD_State_t LCD_State = { .Row_AddrMode = Up_Down,
 						};
 //写指令函数
 //regval:指令值
-void LCD_WriteCMD(vu16 regval)
+void ILI9341_WriteCMD(vu16 regval)
 {   
-	LCD->LCD_REG=regval;//写入要写的指令序号	 
+	LCD->ILI9341_REG=regval;//写入要写的指令序号	 
 }
 
 
 //写LCD数据
 //data:要写入的值
-void LCD_WriteData(vu16 data)
+void ILI9341_WriteData(vu16 data)
 {	  
-	LCD->LCD_RAM=data;		 
+	LCD->ILI9341_RAM=data;		 
 }
 
 
 //读LCD数据
 //返回值:读到的值
-u16 LCD_ReadData(void)
+u16 ILI9341_ReadData(void)
 {
 	vu16 ram;			//防止被优化
-	ram=LCD->LCD_RAM;	
+	ram=LCD->ILI9341_RAM;	
 	return ram;	 
 }
 
 
 //带参数写指令
-//LCD_Cmd:指令地址
-//LCD_CmdValue:要写入的数据
-void LCD_WriteCmdPara(vu16 LCD_Cmd,vu16 LCD_CmdValue)
+//ILI9341_Cmd:指令地址
+//ILI9341_CmdValue:要写入的数据
+void ILI9341_WriteCmdPara(vu16 ILI9341_Cmd,vu16 ILI9341_CmdValue)
 {	
-	LCD->LCD_REG = LCD_Cmd;		//写入要写的指令序号	 
-	LCD->LCD_RAM = LCD_CmdValue;//写入数据	    		 
+	LCD->ILI9341_REG = ILI9341_Cmd;		//写入要写的指令序号	 
+	LCD->ILI9341_RAM = ILI9341_CmdValue;//写入数据	    		 
 }
 
 
 //读ID
-//LCD_Cmd:指令地址
+//ILI9341_Cmd:指令地址
 //返回值:读到的数据
-u16 LCD_ReadID(u16 LCD_Cmd)
+u16 ILI9341_ReadID(u16 ILI9341_Cmd)
 {										   
-	LCD_WriteCMD(LCD_Cmd);		//写入要读的指令序号
+	ILI9341_WriteCMD(ILI9341_Cmd);		//写入要读的指令序号
 	Delay_us(5);		  
-	return LCD_ReadData();		//返回读到的值
+	return ILI9341_ReadData();		//返回读到的值
 } 
 
 
 
 //软件复位
-void LCD_Reset()
+void ILI9341_Reset()
 {
-	LCD_WriteCMD(LCD_SWRESET);
+	ILI9341_WriteCMD(ILI9341_SWRESET);
 	Delay_ms(7);
 }
 
 
 
 //开始写GRAM
-void LCD_WriteToRAM(void)
+void ILI9341_WriteToRAM(void)
 {
- 	LCD->LCD_REG=LCD_Dev.UpToGRAM;	  
+ 	LCD->ILI9341_REG=ILI9341_Dev.UpToGRAM;	  
 }	
 
 
 //LCD开启显示
-void LCD_DisplayOn(void)
+void ILI9341_DisplayOn(void)
 {					   
-	LCD_WriteCMD(LCD_DISPLAY_ON);	//开启显示
-	LCD_BACK_LIGHT_ON;
+	ILI9341_WriteCMD(ILI9341_DISPLAY_ON);	//开启显示
+	ILI9341_BACK_LIGHT_ON;
 }	
 
 
 //LCD关闭显示
-void LCD_DisplayOff(void)
+void ILI9341_DisplayOff(void)
 {	   
-	LCD_WriteCMD(LCD_DISPLAY_OFF);	//关闭显示
-	LCD_BACK_LIGHT_OFF;
+	ILI9341_WriteCMD(ILI9341_DISPLAY_OFF);	//关闭显示
+	ILI9341_BACK_LIGHT_OFF;
 } 
 
 
@@ -112,7 +112,7 @@ void LCD_DisplayOff(void)
 //通过该函数转换
 //c:GBR格式的颜色值
 //返回值：RGB格式的颜色值
-u16 LCD_BGR2RGB(u16 c)
+u16 ILI9341_BGR2RGB(u16 c)
 {
 	u16  r,g,b,rgb;   
 	b=(c>>0)&0x1f;
@@ -125,17 +125,17 @@ u16 LCD_BGR2RGB(u16 c)
 
 //当mdk -O1时间优化时需要设置
 //延时i
-void LCD_Delay(u8 i)
+void ILI9341_Delay(u8 i)
 {
 	 u8 j;
 	for(j=0;j<i;j++)
 	{
-		LCD_WriteCMD(LCD_NOP);
+		ILI9341_WriteCMD(ILI9341_NOP);
 	}
 }
 
 
-void LCD_DMA_Init()
+void ILI9341_DMA_Init()
 {
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2,ENABLE);
@@ -144,7 +144,7 @@ void LCD_DMA_Init()
 	NVIC_InitTypeDef  NVIC_Initstr;
 
     DMA_Cmd(DMA2_Stream3,DISABLE);
-	DMA_InitConfig.DMA_Memory0BaseAddr = (u32)&(LCD->LCD_RAM);	
+	DMA_InitConfig.DMA_Memory0BaseAddr = (u32)&(LCD->ILI9341_RAM);	
 	DMA_InitConfig.DMA_PeripheralBaseAddr= (u32)0;
 	DMA_InitConfig.DMA_PeripheralDataSize=DMA_PeripheralDataSize_HalfWord;
 	DMA_InitConfig.DMA_MemoryDataSize=DMA_MemoryDataSize_HalfWord;
@@ -178,7 +178,7 @@ void LCD_DMA_Init()
 
 
 
-void LCD_IO_Init()
+void ILI9341_IO_Init()
 {
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
@@ -248,16 +248,16 @@ void LCD_IO_Init()
 	GPIO_PinAFConfig(GPIOD,GPIO_PinSource7,GPIO_AF_FSMC);
 
 
-	readWriteTiming.FSMC_AddressSetupTime = 0X01;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
+	readWriteTiming.FSMC_AddressSetupTime = 0X05;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
 	readWriteTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（ADDHLD）模式A未用到	
-	readWriteTiming.FSMC_DataSetupTime = 10;			//数据保存时间为60个HCLK	=6*60=360ns
+	readWriteTiming.FSMC_DataSetupTime = 30;			//数据保存时间为60个HCLK	=6*60=360ns
 	readWriteTiming.FSMC_BusTurnAroundDuration = 0x00;
 	readWriteTiming.FSMC_CLKDivision = 0x00;
 	readWriteTiming.FSMC_DataLatency = 0x00;
 	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
 
 
-	writeTiming.FSMC_AddressSetupTime =0x01;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
+	writeTiming.FSMC_AddressSetupTime =0x02;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
 	writeTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（A		
 	writeTiming.FSMC_DataSetupTime = 10;		 //数据保存时间为6ns*9个HCLK=54ns
 	writeTiming.FSMC_BusTurnAroundDuration = 0x00;
@@ -289,95 +289,95 @@ void LCD_IO_Init()
 
 
 //获取ID
-void LCD_GetID()
+void ILI9341_GetID()
 {
 	u8 temp;
-	LCD_Dev.ID = 0;
-	LCD_WriteCMD(LCD_READ_ID4);
+	ILI9341_Dev.ID = 0;
+	ILI9341_WriteCMD(ILI9341_READ_ID4);
 	for(temp=0;temp<2;temp++)
 	{
-		LCD_ReadData();
+		ILI9341_ReadData();
 	}
-	LCD_Dev.ID = LCD_ReadData()<<8;
-	LCD_Dev.ID |= LCD_ReadData();
+	ILI9341_Dev.ID = ILI9341_ReadData()<<8;
+	ILI9341_Dev.ID |= ILI9341_ReadData();
 
-	if(LCD_Dev.ID == 0)
+	if(ILI9341_Dev.ID == 0)
 	{
-		LCD_Dev.ID = 0xFFFF;
+		ILI9341_Dev.ID = 0xFFFF;
 	}
 }
 
 
 
 //查询显示模式(只支持部分参数，需要查询其他参数时再另外添加)
-void LCD_GetState(LCD_State_t *LCD_State)
+void ILI9341_GetState(ILI9341_State_t *ILI9341_State)
 {
 	u16 DataTemp[2];
-	LCD_WriteCMD(LCD_RDDST);
-	LCD_ReadData();
-	DataTemp[0] = LCD_ReadData();
-	DataTemp[1] = LCD_ReadData();
+	ILI9341_WriteCMD(ILI9341_RDDST);
+	ILI9341_ReadData();
+	DataTemp[0] = ILI9341_ReadData();
+	DataTemp[1] = ILI9341_ReadData();
 	if( DataTemp[0] & 0x02) 
 	{
-		LCD_State->Hor_ScanMode = Right_Left;
+		ILI9341_State->Hor_ScanMode = Right_Left;
 	}
 	else
 	{
-		LCD_State->Hor_ScanMode = Left_Right;
+		ILI9341_State->Hor_ScanMode = Left_Right;
 	}
 
 	if( DataTemp[0] & 0x04)
 	{
-		LCD_State->RGB_BGR_Mode = BGR;
+		ILI9341_State->RGB_BGR_Mode = BGR;
 	}
 	else
 	{
-		LCD_State->RGB_BGR_Mode = RGB;
+		ILI9341_State->RGB_BGR_Mode = RGB;
 	}
 	if( DataTemp[0] & 0x08)
 	{
-		LCD_State->Ver_ScanMode = Down_Up;
+		ILI9341_State->Ver_ScanMode = Down_Up;
 	}
 	else
 	{
-		LCD_State->Ver_ScanMode = Up_Down;
+		ILI9341_State->Ver_ScanMode = Up_Down;
 	}
 
 	if( DataTemp[0] & 0x10)
 	{
-		LCD_State->RowCol_Exchenge = 1;
+		ILI9341_State->RowCol_Exchenge = 1;
 	}
 	else
 	{
-		LCD_State->RowCol_Exchenge = 0;
+		ILI9341_State->RowCol_Exchenge = 0;
 	}
 	if( DataTemp[0] & 0x20)
 	{
-		LCD_State->Col_AddrMode = Right_Left;
+		ILI9341_State->Col_AddrMode = Right_Left;
 	}
 	else
 	{
-		LCD_State->Col_AddrMode = Left_Right;
+		ILI9341_State->Col_AddrMode = Left_Right;
 	}
 
 	if( DataTemp[0] & 0x40)
 	{
-		LCD_State->Row_AddrMode = Down_Up;
+		ILI9341_State->Row_AddrMode = Down_Up;
 	}
 	else
 	{
-		LCD_State->Row_AddrMode = Up_Down;
+		ILI9341_State->Row_AddrMode = Up_Down;
 	}
 
 	if( DataTemp[1] & 0x50)
 	{
-		LCD_State->Pixel_Bit = 16;
+		ILI9341_State->Pixel_Bit = 16;
 	}
 	else
 	{
-		LCD_State->Pixel_Bit = 18;
+		ILI9341_State->Pixel_Bit = 18;
 	}
-	LCD_State->ID = LCD_Dev.ID; 
+	ILI9341_State->ID = ILI9341_Dev.ID; 
 }
 
 
@@ -385,14 +385,14 @@ void LCD_GetState(LCD_State_t *LCD_State)
 //设置光标起始位置
 //Xpos:横坐标
 //Ypos:纵坐标
-void LCD_SetXY_Start(u16 Xpos, u16 Ypos)
+void ILI9341_SetXY_Start(u16 Xpos, u16 Ypos)
 { 	    
-	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
-	LCD_WriteData(Xpos>>8);
-	LCD_WriteData(Xpos&0XFF); 
-	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
-	LCD_WriteData(Ypos>>8);
-	LCD_WriteData(Ypos&0XFF); 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_X_CMD); 
+	ILI9341_WriteData(Xpos>>8);
+	ILI9341_WriteData(Xpos&0XFF); 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_Y_CMD); 
+	ILI9341_WriteData(Ypos>>8);
+	ILI9341_WriteData(Ypos&0XFF); 
 		
 } 
 
@@ -403,18 +403,18 @@ void LCD_SetXY_Start(u16 Xpos, u16 Ypos)
 //  x_E  y起始
 //  y_E  y结束
 
-void LCD_SetXY_Area(u16 x_S, u16 y_S,u16 x_E,u16 y_E)
+void ILI9341_SetXY_Area(u16 x_S, u16 y_S,u16 x_E,u16 y_E)
 { 	    
-	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
-	LCD_WriteData(x_S>>8);
-	LCD_WriteData(x_S&0XFF); 
-	LCD_WriteData(x_E>>8);
-	LCD_WriteData(x_E&0XFF);			 
-	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
-	LCD_WriteData(y_S>>8);
-	LCD_WriteData(y_S&0XFF); 
-	LCD_WriteData(y_E>>8);
-	LCD_WriteData(y_E&0XFF);  			
+	ILI9341_WriteCMD(ILI9341_Dev.Set_X_CMD); 
+	ILI9341_WriteData(x_S>>8);
+	ILI9341_WriteData(x_S&0XFF); 
+	ILI9341_WriteData(x_E>>8);
+	ILI9341_WriteData(x_E&0XFF);			 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_Y_CMD); 
+	ILI9341_WriteData(y_S>>8);
+	ILI9341_WriteData(y_S&0XFF); 
+	ILI9341_WriteData(y_E>>8);
+	ILI9341_WriteData(y_E&0XFF);  			
 } 
 
 
@@ -424,14 +424,14 @@ void LCD_SetXY_Area(u16 x_S, u16 y_S,u16 x_E,u16 y_E)
 //读取个某点的颜色值	 
 //x,y:坐标
 //返回值:此点的颜色
-u16 LCD_ReadPoint(u16 x,u16 y)
+u16 ILI9341_ReadPoint(u16 x,u16 y)
 {
  	u16 r=0,g=0,b=0;
 
-	if(LCD_Dev.Dir == Horizontal)  //横屏
+	if(ILI9341_Dev.Dir == Horizontal)  //横屏
 	{
-		if(   x > (LCD_HIGH-1) ||
-			  y > (LCD_WIDTH-1)
+		if(   x > (ILI9341_HIGH-1) ||
+			  y > (ILI9341_WIDTH-1)
 			)
 		{
 			return 0;	//超过了范围,直接返回	
@@ -439,20 +439,20 @@ u16 LCD_ReadPoint(u16 x,u16 y)
 	}
 	else
 	{
-		if(   x > (LCD_WIDTH-1) ||
-			  y > (LCD_HIGH-1)
+		if(   x > (ILI9341_WIDTH-1) ||
+			  y > (ILI9341_HIGH-1)
 			)
 		{
 			return 0;	//超过了范围,直接返回			
 		}
 	}
 
-	LCD_SetXY_Start(x,y);	    
-	LCD_WriteCMD(LCD_RAMRD);	//读GRAM
- 	LCD_ReadData();	
+	ILI9341_SetXY_Start(x,y);	    
+	ILI9341_WriteCMD(ILI9341_RAMRD);	//读GRAM
+ 	ILI9341_ReadData();	
 
- 	r = LCD_ReadData();  		//实际坐标颜色  
-	b = LCD_ReadData() >> 11; 
+ 	r = ILI9341_ReadData();  		//实际坐标颜色  
+	b = ILI9341_ReadData() >> 11; 
 	g = r & 0x00FC;
 	r &= 0xF800;	 
 	g <<= 3;
@@ -464,26 +464,26 @@ u16 LCD_ReadPoint(u16 x,u16 y)
 // XStart:起始行
 // Xend:终止行
 // High:滚动区域高度(单位：行)
-void LCD_VerScroll(u16 XStart,u16 Xend,u16 High)
+void ILI9341_VerScroll(u16 XStart,u16 Xend,u16 High)
 {
-	LCD_WriteCMD(LCD_VSCRDEF);
-	LCD_WriteData( XStart >> 8 );
-	LCD_WriteData( XStart & 0xFF);
-	LCD_WriteData( High >> 8 );
-	LCD_WriteData( High & 0xFF);
-	LCD_WriteData( Xend >> 8 );
-	LCD_WriteData( Xend & 0xFF);
-	LCD_Delay(2);
-	LCD_WriteCMD(LCD_VSCRSADD);
-	LCD_WriteData( XStart >> 8 );
-	LCD_WriteData( XStart & 0xFF);
+	ILI9341_WriteCMD(ILI9341_VSCRDEF);
+	ILI9341_WriteData( XStart >> 8 );
+	ILI9341_WriteData( XStart & 0xFF);
+	ILI9341_WriteData( High >> 8 );
+	ILI9341_WriteData( High & 0xFF);
+	ILI9341_WriteData( Xend >> 8 );
+	ILI9341_WriteData( Xend & 0xFF);
+	ILI9341_Delay(2);
+	ILI9341_WriteCMD(ILI9341_VSCRSADD);
+	ILI9341_WriteData( XStart >> 8 );
+	ILI9341_WriteData( XStart & 0xFF);
 }
 
 
 
 
 //设置LCD的数据写入方向  	   
-void LCD_WriteData_Dir(u8 Dir)
+void ILI9341_WriteData_Dir(u8 Dir)
 {
 	u16 regval=0;
 	u16 temp;  
@@ -519,37 +519,37 @@ void LCD_WriteData_Dir(u8 Dir)
 
 		regval|=0X08;//5310/5510/1963不需要BGR    
 
-		LCD_WriteCmdPara(LCD_MAC,regval);
+		ILI9341_WriteCmdPara(ILI9341_MAC,regval);
 
 		if(regval&0X20)
 		{
-			if(LCD_Dev.Width<LCD_Dev.Height)//交换X,Y
+			if(ILI9341_Dev.Width<ILI9341_Dev.Height)//交换X,Y
 			{
-				temp=LCD_Dev.Width;
-				LCD_Dev.Width=LCD_Dev.Height;
-				LCD_Dev.Height=temp;
+				temp=ILI9341_Dev.Width;
+				ILI9341_Dev.Width=ILI9341_Dev.Height;
+				ILI9341_Dev.Height=temp;
 			}
 		}
 		else  
 		{
-			if(LCD_Dev.Width>LCD_Dev.Height)//交换X,Y
+			if(ILI9341_Dev.Width>ILI9341_Dev.Height)//交换X,Y
 			{
-				temp=LCD_Dev.Width;
-				LCD_Dev.Width=LCD_Dev.Height;
-				LCD_Dev.Height=temp;
+				temp=ILI9341_Dev.Width;
+				ILI9341_Dev.Width=ILI9341_Dev.Height;
+				ILI9341_Dev.Height=temp;
 			}
 		}  
 
-		LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
-		LCD_WriteData(0);
-		LCD_WriteData(0);
-		LCD_WriteData((LCD_Dev.Width-1)>>8);
-		LCD_WriteData((LCD_Dev.Width-1)&0XFF);
-		LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
-		LCD_WriteData(0);
-		LCD_WriteData(0);
-		LCD_WriteData((LCD_Dev.Height-1)>>8);
-		LCD_WriteData((LCD_Dev.Height-1)&0XFF);  
+		ILI9341_WriteCMD(ILI9341_Dev.Set_X_CMD); 
+		ILI9341_WriteData(0);
+		ILI9341_WriteData(0);
+		ILI9341_WriteData((ILI9341_Dev.Width-1)>>8);
+		ILI9341_WriteData((ILI9341_Dev.Width-1)&0XFF);
+		ILI9341_WriteCMD(ILI9341_Dev.Set_Y_CMD); 
+		ILI9341_WriteData(0);
+		ILI9341_WriteData(0);
+		ILI9341_WriteData((ILI9341_Dev.Height-1)>>8);
+		ILI9341_WriteData((ILI9341_Dev.Height-1)&0XFF);  
 
 
 }   
@@ -558,32 +558,32 @@ void LCD_WriteData_Dir(u8 Dir)
 //快速画点
 //x,y:坐标
 //color:颜色
-void LCD_DrawPoint(u16 x,u16 y,u16 color)
+void ILI9341_DrawPoint(u16 x,u16 y,u16 color)
 {	   
-	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
-	LCD_WriteData(x>>8);
-	LCD_WriteData(x&0XFF);  			 
-	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
-	LCD_WriteData(y>>8);
-	LCD_WriteData(y&0XFF); 		 	 			 
-	LCD_WriteToRAM();
-	LCD->LCD_RAM=color; 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_X_CMD); 
+	ILI9341_WriteData(x>>8);
+	ILI9341_WriteData(x&0XFF);  			 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_Y_CMD); 
+	ILI9341_WriteData(y>>8);
+	ILI9341_WriteData(y&0XFF); 		 	 			 
+	ILI9341_WriteToRAM();
+	LCD->ILI9341_RAM=color; 
 }
 
 
 
 
 //设置背光LED亮度
-void LCD_Set_BackLight(u8 pwm)
+void ILI9341_Set_BackLight(u8 pwm)
 {	
-	LCD_WriteCMD(LCD_WCD);	    //亮度控制
-	LCD_WriteData(0x2C);
+	ILI9341_WriteCMD(ILI9341_WCD);	    //亮度控制
+	ILI9341_WriteData(0x2C);
 
-	LCD_WriteCMD(LCD_BACKLIGHT8);	//配置PWM模式
-	LCD_WriteData(0x00);	
+	ILI9341_WriteCMD(ILI9341_BACKLIGHT8);	//配置PWM模式
+	ILI9341_WriteData(0x00);	
 
-	LCD_WriteCMD(LCD_BACKLIGHT7);	//配置PWM输出
-	LCD_WriteData(pwm);	        //1设置PWM频率
+	ILI9341_WriteCMD(ILI9341_BACKLIGHT7);	//配置PWM输出
+	ILI9341_WriteData(pwm);	        //1设置PWM频率
 
 }
 
@@ -591,27 +591,27 @@ void LCD_Set_BackLight(u8 pwm)
 
 //设置LCD显示方向
 //Dir:0,竖屏；1,横屏
-void LCD_Display_Dir(u8 Dir)
+void ILI9341_Display_Dir(u8 Dir)
 {
 	if(Dir==Vertical)			//竖屏
 	{
-		LCD_Dev.Dir=Vertical;	//竖屏
-		LCD_Dev.Width=LCD_WIDTH;
-		LCD_Dev.Height=LCD_HIGH;
-		LCD_Dev.UpToGRAM=LCD_GRAM;
-		LCD_Dev.Set_X_CMD=LCD_COLUMN_ADDR;
-		LCD_Dev.Set_Y_CMD=LCD_PAGE_ADDR;  
-		LCD_WriteData_Dir(L2R_U2D);	//默认填充方向	 
+		ILI9341_Dev.Dir=Vertical;	//竖屏
+		ILI9341_Dev.Width=ILI9341_WIDTH;
+		ILI9341_Dev.Height=ILI9341_HIGH;
+		ILI9341_Dev.UpToGRAM=ILI9341_GRAM;
+		ILI9341_Dev.Set_X_CMD=ILI9341_COLUMN_ADDR;
+		ILI9341_Dev.Set_Y_CMD=ILI9341_PAGE_ADDR;  
+		ILI9341_WriteData_Dir(L2R_U2D);	//默认填充方向	 
 	}
 	else 				//横屏
 	{	  				
-		LCD_Dev.Dir=Horizontal;	//横屏
-		LCD_Dev.Width=LCD_HIGH;
-		LCD_Dev.Height=LCD_WIDTH;
-		LCD_Dev.UpToGRAM=LCD_GRAM;
-		LCD_Dev.Set_X_CMD=LCD_COLUMN_ADDR;
-		LCD_Dev.Set_Y_CMD=LCD_PAGE_ADDR;  	 
-		LCD_WriteData_Dir(U2D_R2L);	//默认填充方向
+		ILI9341_Dev.Dir=Horizontal;	//横屏
+		ILI9341_Dev.Width=ILI9341_HIGH;
+		ILI9341_Dev.Height=ILI9341_WIDTH;
+		ILI9341_Dev.UpToGRAM=ILI9341_GRAM;
+		ILI9341_Dev.Set_X_CMD=ILI9341_COLUMN_ADDR;
+		ILI9341_Dev.Set_Y_CMD=ILI9341_PAGE_ADDR;  	 
+		ILI9341_WriteData_Dir(U2D_R2L);	//默认填充方向
 	} 
 	
 }
@@ -623,47 +623,47 @@ void LCD_Display_Dir(u8 Dir)
 //sx,sy:窗口起始坐标(左上角)
 //Width,Height:窗口宽度和高度,必须大于0!!
 //窗体大小:Width*Height. 
-void LCD_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height)
+void ILI9341_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height)
 {    
 	u16 twidth,theight;
 	twidth=sx+Width-1;
 	theight=sy+Height-1;
 
 
-	if(LCD_Dev.Dir == Horizontal)  //横屏
+	if(ILI9341_Dev.Dir == Horizontal)  //横屏
 	{
-		if(   twidth > (LCD_HIGH-1) ||
-			  theight > (LCD_WIDTH-1)
+		if(   twidth > (ILI9341_HIGH-1) ||
+			  theight > (ILI9341_WIDTH-1)
 			)
 		{
-			twidth = LCD_HIGH -1;
-			theight = LCD_WIDTH -1;	
+			twidth = ILI9341_HIGH -1;
+			theight = ILI9341_WIDTH -1;	
 		}
 
 	}
 	else
 	{
 
-		if(   twidth > (LCD_WIDTH-1) ||
-			  theight > (LCD_HIGH-1)
+		if(   twidth > (ILI9341_WIDTH-1) ||
+			  theight > (ILI9341_HIGH-1)
 			)
 		{
-			twidth = LCD_WIDTH -1;
-			theight = LCD_HIGH -1;
+			twidth = ILI9341_WIDTH -1;
+			theight = ILI9341_HIGH -1;
 			
 		}
 	}
 
-	LCD_WriteCMD(LCD_Dev.Set_X_CMD); 
-	LCD_WriteData(sx>>8); 
-	LCD_WriteData(sx&0XFF);	 
-	LCD_WriteData(twidth>>8); 
-	LCD_WriteData(twidth&0XFF);  
-	LCD_WriteCMD(LCD_Dev.Set_Y_CMD); 
-	LCD_WriteData(sy>>8); 
-	LCD_WriteData(sy&0XFF); 
-	LCD_WriteData(theight>>8); 
-	LCD_WriteData(theight&0XFF); 
+	ILI9341_WriteCMD(ILI9341_Dev.Set_X_CMD); 
+	ILI9341_WriteData(sx>>8); 
+	ILI9341_WriteData(sx&0XFF);	 
+	ILI9341_WriteData(twidth>>8); 
+	ILI9341_WriteData(twidth&0XFF);  
+	ILI9341_WriteCMD(ILI9341_Dev.Set_Y_CMD); 
+	ILI9341_WriteData(sy>>8); 
+	ILI9341_WriteData(sy&0XFF); 
+	ILI9341_WriteData(theight>>8); 
+	ILI9341_WriteData(theight&0XFF); 
 	
 }
 
@@ -677,167 +677,167 @@ void LCD_Set_Window(u16 sx,u16 sy,u16 Width,u16 Height)
 
 
 //初始化lcd
-void LCD_Init(void)
+void ILI9341_Init(void)
 { 	
-	LCD_IO_Init();
-	LCD_DMA_Init();
+	ILI9341_IO_Init();
+	ILI9341_DMA_Init();
 
-	LCD_Reset();
-	LCD_Delay(100);//NOP
+	ILI9341_Reset();
+	ILI9341_Delay(100);//NOP
 	//读设备ID	
-	LCD_GetID();   			   
+	ILI9341_GetID();   			   
 
-	LCD_WriteCMD(LCD_POWERB);  //功耗B设置
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0xC1); 
-	LCD_WriteData(0X30);
+	ILI9341_WriteCMD(ILI9341_POWERB);  //功耗B设置
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0xC1); 
+	ILI9341_WriteData(0X30);
 
-	LCD_WriteCMD(LCD_POWER_SEQ);  //电源序列设置
-	LCD_WriteData(0x64); 
-	LCD_WriteData(0x03); 
-	LCD_WriteData(0X12); 
-	LCD_WriteData(0X81); 
+	ILI9341_WriteCMD(ILI9341_POWER_SEQ);  //电源序列设置
+	ILI9341_WriteData(0x64); 
+	ILI9341_WriteData(0x03); 
+	ILI9341_WriteData(0X12); 
+	ILI9341_WriteData(0X81); 
 
-	LCD_WriteCMD(LCD_DTCA);  //驱动时序A设置
-	LCD_WriteData(0x85); 
-	LCD_WriteData(0x10); 
-	LCD_WriteData(0x7A); 
+	ILI9341_WriteCMD(ILI9341_DTCA);  //驱动时序A设置
+	ILI9341_WriteData(0x85); 
+	ILI9341_WriteData(0x10); 
+	ILI9341_WriteData(0x7A); 
 
-	LCD_WriteCMD(LCD_POWERA);  //功耗设置A
-	LCD_WriteData(0x39); 
-	LCD_WriteData(0x2C); 
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x34); 
-	LCD_WriteData(0x02); 
+	ILI9341_WriteCMD(ILI9341_POWERA);  //功耗设置A
+	ILI9341_WriteData(0x39); 
+	ILI9341_WriteData(0x2C); 
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x34); 
+	ILI9341_WriteData(0x02); 
 
-	LCD_WriteCMD(LCD_PRC);  //泵比控制
-	LCD_WriteData(0x20); 
+	ILI9341_WriteCMD(ILI9341_PRC);  //泵比控制
+	ILI9341_WriteData(0x20); 
 
-	LCD_WriteCMD(LCD_DTCB);  //驱动时序B设置
+	ILI9341_WriteCMD(ILI9341_DTCB);  //驱动时序B设置
 
 
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x00); 
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x00); 
 
-	LCD_WriteCMD(LCD_POWER1);    //功耗1设置
-	LCD_WriteData(0x1B);   //VRH[5:0] 
+	ILI9341_WriteCMD(ILI9341_POWER1);    //功耗1设置
+	ILI9341_WriteData(0x1B);   //VRH[5:0] 
 
-	LCD_WriteCMD(LCD_POWER2);    //功耗2设置
-	LCD_WriteData(0x01);   //SAP[2:0];BT[3:0] 
+	ILI9341_WriteCMD(ILI9341_POWER2);    //功耗2设置
+	ILI9341_WriteData(0x01);   //SAP[2:0];BT[3:0] 
 
-	LCD_WriteCMD(LCD_VCOM1);    //VCM 控制 1
-	LCD_WriteData(0x30); 	 //3F
-	LCD_WriteData(0x30); 	 //3C
+	ILI9341_WriteCMD(ILI9341_VCOM1);    //VCM 控制 1
+	ILI9341_WriteData(0x30); 	 //3F
+	ILI9341_WriteData(0x30); 	 //3C
 
-	LCD_WriteCMD(LCD_VCOM2);    //VCM 控制 2
-	LCD_WriteData(0XB7); 
+	ILI9341_WriteCMD(ILI9341_VCOM2);    //VCM 控制 2
+	ILI9341_WriteData(0XB7); 
 
-	LCD_WriteCMD(LCD_MAC);    // 存储器访问控制 
-	LCD_WriteData(0x48); 
+	ILI9341_WriteCMD(ILI9341_MAC);    // 存储器访问控制 
+	ILI9341_WriteData(0x48); 
 
-	LCD_WriteCMD(LCD_PIXEL_FORMAT);   //像素格式控制
-	LCD_WriteData(0x55); 
+	ILI9341_WriteCMD(ILI9341_PIXEL_FORMAT);   //像素格式控制
+	ILI9341_WriteData(0x55); 
 
-	LCD_WriteCMD(LCD_FRMCTR1);   //帧速率控制
-	LCD_WriteData(0x00);   
-	LCD_WriteData(0x10); 
+	ILI9341_WriteCMD(ILI9341_FRMCTR1);   //帧速率控制
+	ILI9341_WriteData(0x00);   
+	ILI9341_WriteData(0x10); 
 
-	LCD_WriteCMD(LCD_DFC);    // 显示功能控制
-	LCD_WriteData(0x0A); 
-	LCD_WriteData(0xA2); 
+	ILI9341_WriteCMD(ILI9341_DFC);    // 显示功能控制
+	ILI9341_WriteData(0x0A); 
+	ILI9341_WriteData(0xA2); 
 
-	LCD_WriteCMD(LCD_3GAMMA_EN);    // 伽马3使能
-	LCD_WriteData(0x00); 
+	ILI9341_WriteCMD(ILI9341_3GAMMA_EN);    // 伽马3使能
+	ILI9341_WriteData(0x00); 
 
-	LCD_WriteCMD(LCD_GAMMA);    //伽马设置
-	LCD_WriteData(0x01); 
+	ILI9341_WriteCMD(ILI9341_GAMMA);    //伽马设置
+	ILI9341_WriteData(0x01); 
 
-	LCD_WriteCMD(LCD_PGAMMA);    //正极伽马校准
-	LCD_WriteData(0x0F); 
-	LCD_WriteData(0x2A); 
-	LCD_WriteData(0x28); 
-	LCD_WriteData(0x08); 
-	LCD_WriteData(0x0E); 
-	LCD_WriteData(0x08); 
-	LCD_WriteData(0x54); 
-	LCD_WriteData(0XA9); 
-	LCD_WriteData(0x43); 
-	LCD_WriteData(0x0A); 
-	LCD_WriteData(0x0F); 
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x00); 	
+	ILI9341_WriteCMD(ILI9341_PGAMMA);    //正极伽马校准
+	ILI9341_WriteData(0x0F); 
+	ILI9341_WriteData(0x2A); 
+	ILI9341_WriteData(0x28); 
+	ILI9341_WriteData(0x08); 
+	ILI9341_WriteData(0x0E); 
+	ILI9341_WriteData(0x08); 
+	ILI9341_WriteData(0x54); 
+	ILI9341_WriteData(0XA9); 
+	ILI9341_WriteData(0x43); 
+	ILI9341_WriteData(0x0A); 
+	ILI9341_WriteData(0x0F); 
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x00); 	
 
-	LCD_WriteCMD(LCD_NGAMMA);    //负极伽马校准
-	LCD_WriteData(0x00); 
-	LCD_WriteData(0x15); 
-	LCD_WriteData(0x17); 
-	LCD_WriteData(0x07); 
-	LCD_WriteData(0x11); 
-	LCD_WriteData(0x06); 
-	LCD_WriteData(0x2B); 
-	LCD_WriteData(0x56); 
-	LCD_WriteData(0x3C); 
-	LCD_WriteData(0x05); 
-	LCD_WriteData(0x10); 
-	LCD_WriteData(0x0F); 
-	LCD_WriteData(0x3F); 
-	LCD_WriteData(0x3F); 
-	LCD_WriteData(0x0F); 
+	ILI9341_WriteCMD(ILI9341_NGAMMA);    //负极伽马校准
+	ILI9341_WriteData(0x00); 
+	ILI9341_WriteData(0x15); 
+	ILI9341_WriteData(0x17); 
+	ILI9341_WriteData(0x07); 
+	ILI9341_WriteData(0x11); 
+	ILI9341_WriteData(0x06); 
+	ILI9341_WriteData(0x2B); 
+	ILI9341_WriteData(0x56); 
+	ILI9341_WriteData(0x3C); 
+	ILI9341_WriteData(0x05); 
+	ILI9341_WriteData(0x10); 
+	ILI9341_WriteData(0x0F); 
+	ILI9341_WriteData(0x3F); 
+	ILI9341_WriteData(0x3F); 
+	ILI9341_WriteData(0x0F); 
 
-	LCD_WriteCMD(LCD_PAGE_ADDR); //行地址设置
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x01);
-	LCD_WriteData(0x3f);
+	ILI9341_WriteCMD(ILI9341_PAGE_ADDR); //行地址设置
+	ILI9341_WriteData(0x00);
+	ILI9341_WriteData(0x00);
+	ILI9341_WriteData(0x01);
+	ILI9341_WriteData(0x3f);
 
-	LCD_WriteCMD(LCD_COLUMN_ADDR); //列地址设置
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x00);
-	LCD_WriteData(0x00);
-	LCD_WriteData(0xef);	 
+	ILI9341_WriteCMD(ILI9341_COLUMN_ADDR); //列地址设置
+	ILI9341_WriteData(0x00);
+	ILI9341_WriteData(0x00);
+	ILI9341_WriteData(0x00);
+	ILI9341_WriteData(0xef);	 
 
-	LCD_WriteCMD(LCD_SLEEP_OUT); //退出睡眠
+	ILI9341_WriteCMD(ILI9341_SLEEP_OUT); //退出睡眠
 	Delay_ms(120);
-	LCD_WriteCMD(LCD_DISPLAY_ON); //开显示
+	ILI9341_WriteCMD(ILI9341_DISPLAY_ON); //开显示
  
-	LCD_Display_Dir(Vertical);		//默认为竖屏	
-	LCD_Clear(WHITE);
-	LCD_GetState(&LCD_State);
-	LCD_BACK_LIGHT_ON;
+	ILI9341_Display_Dir(Vertical);		//默认为竖屏	
+	ILI9341_Clear(WHITE);
+	ILI9341_GetState(&ILI9341_State);
+	ILI9341_BACK_LIGHT_ON;
 }  
 
 
 
 //清屏函数
 //color:要清屏的填充色
-void LCD_Clear(u16 color)
+void ILI9341_Clear(u16 color)
 {
 	u32 index=0;      
-	u32 totalpoint=LCD_Dev.Width;
-	totalpoint*=LCD_Dev.Height; 			//得到总点数
-	LCD_SetXY_Start(0x00,0x00);		//设置光标位置 
-	LCD_WriteToRAM();     		//开始写入GRAM	 	  
+	u32 totalpoint=ILI9341_Dev.Width;
+	totalpoint*=ILI9341_Dev.Height; 			//得到总点数
+	ILI9341_SetXY_Start(0x00,0x00);		//设置光标位置 
+	ILI9341_WriteToRAM();     		//开始写入GRAM	 	  
 	for(index=0;index<totalpoint;index++)
 	{
-		LCD->LCD_RAM=color;	
+		LCD->ILI9341_RAM=color;	
 	}
 }  
 
 
 
 
-void LCD_ShowPicture()
+void ILI9341_ShowPicture()
 {
     
 	u32 x=0,y=0;
 	Data_Buff DataTemp;				//存放LCD ID字符串
 	static u32 P=0;
-	//u32 totalpoint=LCD_Dev.Height*LCD_Dev.Width; 			//得到总点数
-	//  LCD_Display_Dir(Vertical);
-	//  LCD_SetXY_Area(0,0,239,319);	//设置光标位置 
-	//  LCD_WriteToRAM();     		//开始写入GRAM
+	//u32 totalpoint=ILI9341_Dev.Height*ILI9341_Dev.Width; 			//得到总点数
+	//  ILI9341_Display_Dir(Vertical);
+	//  ILI9341_SetXY_Area(0,0,239,319);	//设置光标位置 
+	//  ILI9341_WriteToRAM();     		//开始写入GRAM
 
 
 	FIL fils;
@@ -845,7 +845,7 @@ void LCD_ShowPicture()
 
 	// totalpoint=File_GetFileSize("1:/SD/Data_1.bin");
 
-	// File_ReadData("1:/SD/Data_1.bin",(u8*)&(LCD->LCD_RAM),totalpoint,P);
+	// File_ReadData("1:/SD/Data_1.bin",(u8*)&(LCD->ILI9341_RAM),totalpoint,P);
 
 ////////////////////////////////////////////////////////////
 		// ST7789_SetArea(0,y*10-1,239,y*10+10-1);
@@ -869,15 +869,15 @@ void LCD_ShowPicture()
 		// 	P+=2400;		
 		// 	for(x=0;x<1200;x++)
 		// 	{
-		// 		LCD_WriteData(DataTemp.Data_16[x]);
+		// 		ILI9341_WriteData(DataTemp.Data_16[x]);
 		// 	}
 		// }
 
 		// //Delay_ms(100);
 
-		// LCD_Display_Dir(Horizontal);
-	 	// LCD_SetXY_Area(0,0,319,239);	//设置光标位置 
-		// LCD_WriteToRAM();     		//开始写入GRAM
+		// ILI9341_Display_Dir(Horizontal);
+	 	// ILI9341_SetXY_Area(0,0,319,239);	//设置光标位置 
+		// ILI9341_WriteToRAM();     		//开始写入GRAM
 		// P=0;
 		// for(y=0;y<240;y++)
 		// {
@@ -885,7 +885,7 @@ void LCD_ShowPicture()
 		// 	P+=640;		
 		// 	for(x=0;x<320;x++)
 		// 	{
-		// 		LCD_WriteData(DataTemp.Data_16[x]);
+		// 		ILI9341_WriteData(DataTemp.Data_16[x]);
 		// 	}
 		// }
 		//Delay_ms(100);
@@ -895,39 +895,39 @@ void LCD_ShowPicture()
 } 
 
 
-void DMA2_Stream3_IRQHandler()
-{
-    if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
-    {
-        DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
+// void DMA2_Stream3_IRQHandler()
+// {
+//     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
+//     {
+//         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
-        if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
-        {
-            TFT_DMA_Stop();
-            LED1_ON;
-        }
-        else
-        {
-            TFT_DMA_Start();
-        }
-    }    
-}
+//         if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
+//         {
+//             TFT_DMA_Stop();
+//             LED1_ON;
+//         }
+//         else
+//         {
+//             TFT_DMA_Start();
+//         }
+//     }    
+// }
 
 
 //在指定区域内填充单个颜色
 //(sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex-sx+1)*(ey-sy+1)   
 //color:要填充的颜色
-void LCD_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
+void ILI9341_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
 {          
 	u16 i,j;
 	u16 xlen=0;
 	xlen=ex-sx+1;	 
 	for(i=sy;i<=ey;i++)
 	{
-		LCD_SetXY_Start(sx,i);      				//设置光标位置 
-		LCD_WriteToRAM();     			//开始写入GRAM	  
+		ILI9341_SetXY_Start(sx,i);      				//设置光标位置 
+		ILI9341_WriteToRAM();     			//开始写入GRAM	  
 		for(j=0;j<xlen;j++)
-			LCD->LCD_RAM=color;	//显示颜色 	    
+			LCD->ILI9341_RAM=color;	//显示颜色 	    
 	} 
 }  
 
@@ -938,7 +938,7 @@ void LCD_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
 //在指定区域内填充指定颜色块			 
 //(sx,sy),(ex,ey):填充矩形对角坐标,区域大小为:(ex-sx+1)*(ey-sy+1)   
 //color:要填充的颜色
-void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
+void ILI9341_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 {  
 	u16 Height,Width;
 	u16 i,j;
@@ -946,9 +946,9 @@ void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 	Height=ey-sy+1;			//高度
  	for(i=0;i<Height;i++)
 	{
- 		LCD_SetXY_Start(sx,sy+i);   	//设置光标位置 
-		LCD_WriteToRAM();     //开始写入GRAM
-		for(j=0;j<Width;j++)LCD->LCD_RAM=color[i*Width+j];//写入数据 
+ 		ILI9341_SetXY_Start(sx,sy+i);   	//设置光标位置 
+		ILI9341_WriteToRAM();     //开始写入GRAM
+		for(j=0;j<Width;j++)LCD->ILI9341_RAM=color[i*Width+j];//写入数据 
 	}		  
 }  
 
@@ -964,7 +964,7 @@ void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 //  说明: 
 //  
 //***************************************************//
-void LCD_DMA_SetAddr(u32 StartAddr, u32 Point)
+void ILI9341_DMA_SetAddr(u32 StartAddr, u32 Point)
 {
     DMA_TXCurrentAddr = StartAddr;
     DMA_EndAddr = StartAddr + Point;
@@ -981,7 +981,7 @@ void LCD_DMA_SetAddr(u32 StartAddr, u32 Point)
 //  说明: 无
 //  
 //***************************************************//
-u8 LCD_DMA_GetTXComplateFlag()
+u8 ILI9341_DMA_GetTXComplateFlag()
 {
 	DMA_TXCurrentAddr += SendLength;
 
@@ -1005,7 +1005,7 @@ u8 LCD_DMA_GetTXComplateFlag()
 //  说明: 启动DMA传输时先调用 TFT_DMA_SetAddr(),确定数据起始地址和长度
 //        中断里直接调用
 //***************************************************//
-void LCD_DMA_Start()
+void ILI9341_DMA_Start()
 {
     SendLength = (DMA_EndAddr - DMA_TXCurrentAddr);
 
@@ -1031,7 +1031,7 @@ void LCD_DMA_Start()
 //  说明: 数据传输到达设定长度后停止DMA
 //  
 //***************************************************//
-void LCD_DMA_Stop()
+void ILI9341_DMA_Stop()
 {
     DMA_Cmd(DMA2_Stream1,DISABLE);
     DMA_TXCurrentAddr = 0;
@@ -1073,13 +1073,13 @@ void LCD_DMA_Stop()
 // 	if( Flag == TRUE )
 // 	{
 
-//         LCD_SetXY_Area(xxx,0+xxx,39+xxx,39+xxx);
-//         LCD_WriteToRAM();
+//         ILI9341_SetXY_Area(xxx,0+xxx,39+xxx,39+xxx);
+//         ILI9341_WriteToRAM();
 // 		xxx++;
 // 		// LED1_ON;
 // 		// for (i = 0; i < 240*80; i++)
 // 		// {
-// 		// 	LCD_WriteData(CData[k]);
+// 		// 	ILI9341_WriteData(CData[k]);
 // 		// }
 // 		// k++;
 

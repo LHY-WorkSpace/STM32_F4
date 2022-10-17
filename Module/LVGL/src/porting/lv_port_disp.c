@@ -176,15 +176,15 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
 #if (DISPLAY_DEV == ST7789)
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
-        TFT_DMA_SetAddr((u32)(&color_p->full),Point);
-        TFT_DMA_Start();
+        ST7789_DMA_SetAddr((u32)(&color_p->full),Point);
+        ST7789_DMA_Start();
         disp_disable_update();
         LED1_OFF;
 #elif (DISPLAY_DEV == ILI9341)
-        LCD_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
-        LCD_DMA_SetAddr((u32)(&color_p->full),Point);
-        LCD_WriteToRAM();
-        LCD_DMA_Start();
+        ILI9341_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
+        ILI9341_DMA_SetAddr((u32)(&color_p->full),Point);
+        ILI9341_WriteToRAM();
+        ILI9341_DMA_Start();
         LED1_OFF;
         disp_disable_update();
 #endif
@@ -193,8 +193,8 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         //     for(x = area->x1; x <= area->x2; x++)
         //     {
         //        // ST7789_DrawPoint(color_p->full);
-        //     //    LCD_DrawPoint(x,y,color_p->full);
-        //         LCD_WriteData(color_p->full);
+        //     //    ILI9341_DrawPoint(x,y,color_p->full);
+        //         ILI9341_WriteData(color_p->full);
         //         color_p++;
         //     }
         // }
@@ -214,16 +214,16 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 //     {
 //         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
 
-//         if( TFT_DMA_ISR_GetTXComplateFlag() == TRUE )
+//         if( ST7789_DMA_ISR_GetTXComplateFlag() == TRUE )
 //         {
 //            disp_enable_update();
-//             TFT_DMA_Stop();
+//             ST7789_DMA_Stop();
 //             lv_disp_flush_ready(disp_DMA);
 //             LED1_ON;
 //         }
 //         else
 //         {
-//             TFT_DMA_Start();
+//             ST7789_DMA_Start();
 //         }
 //     }    
 // }
@@ -236,16 +236,16 @@ void DMA2_Stream1_IRQHandler()
     {
         DMA_ClearITPendingBit(DMA2_Stream1,DMA_IT_TCIF1);
 
-        if( LCD_DMA_GetTXComplateFlag() == TRUE )
+        if( ILI9341_DMA_GetTXComplateFlag() == TRUE )
         {
-            LCD_DMA_Stop();
+            ILI9341_DMA_Stop();
             disp_enable_update();
             lv_disp_flush_ready(disp_DMA);
             LED1_ON;
         }
         else
         {
-            LCD_DMA_Start();
+            ILI9341_DMA_Start();
         } 
     }    
 }
