@@ -248,22 +248,22 @@ void ILI9341_IO_Init()
 	GPIO_PinAFConfig(GPIOD,GPIO_PinSource7,GPIO_AF_FSMC);
 
 
-	readWriteTiming.FSMC_AddressSetupTime = 0X05;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
-	readWriteTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（ADDHLD）模式A未用到	
-	readWriteTiming.FSMC_DataSetupTime = 30;			//数据保存时间为60个HCLK	=6*60=360ns
+	readWriteTiming.FSMC_AddressSetupTime = 5;	 //地址建立时间（ADDSET）为16个HCLK 1/168M=6ns*16=96ns	
+	readWriteTiming.FSMC_AddressHoldTime = 5;	 //地址保持时间（ADDHLD）模式A未用到	
+	readWriteTiming.FSMC_DataSetupTime = 5;			//数据保存时间为60个HCLK	=6*60=360ns
 	readWriteTiming.FSMC_BusTurnAroundDuration = 0x00;
 	readWriteTiming.FSMC_CLKDivision = 0x00;
 	readWriteTiming.FSMC_DataLatency = 0x00;
-	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
+	readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
 
 
-	writeTiming.FSMC_AddressSetupTime =0x02;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
-	writeTiming.FSMC_AddressHoldTime = 0x00;	 //地址保持时间（A		
-	writeTiming.FSMC_DataSetupTime = 10;		 //数据保存时间为6ns*9个HCLK=54ns
+	writeTiming.FSMC_AddressSetupTime =2;	      //地址建立时间（ADDSET）为9个HCLK =54ns 
+	writeTiming.FSMC_AddressHoldTime = 2;	 //地址保持时间（A		
+	writeTiming.FSMC_DataSetupTime = 5;		 //数据保存时间为6ns*9个HCLK=54ns
 	writeTiming.FSMC_BusTurnAroundDuration = 0x00;
 	writeTiming.FSMC_CLKDivision = 0x00;
 	writeTiming.FSMC_DataLatency = 0x00;
-	writeTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 //模式A 
+	writeTiming.FSMC_AccessMode = FSMC_AccessMode_B;	 //模式A 
 
 
 	FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM1;//  这里我们使用NE4 ，也就对应BTCR[6],[7]。
@@ -849,16 +849,16 @@ void ILI9341_ShowPicture()
 
 ////////////////////////////////////////////////////////////
 		// ST7789_SetArea(0,y*10-1,239,y*10+10-1);
-		ST7789_SetArea(0,0,239,239);
-		for(y=0;y<24;y++)
-		{
-			File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,4800,P);
-			P+=4800;
+		// ST7789_SetArea(0,0,239,239);
+		// for(y=0;y<24;y++)
+		// {
+		// 	File_ReadData(&fils,"1:/SD/Data_1.bin",DataTemp.Data_8,4800,P);
+		// 	P+=4800;
 
-			ST7789_DMA_SetAddr((u32)(DataTemp.Data_8),2400);
-			ST7789_DMA_Start();
-			while (ST7789_DMA_GetTXState() != TRUE);
-		}
+		// 	ST7789_DMA_SetAddr((u32)(DataTemp.Data_8),2400);
+		// 	ST7789_DMA_Start();
+		// 	while (ST7789_DMA_GetTXState() != TRUE);
+		// }
 
 		// //Delay_ms(100);
 
@@ -888,7 +888,7 @@ void ILI9341_ShowPicture()
 		// 		ILI9341_WriteData(DataTemp.Data_16[x]);
 		// 	}
 		// }
-		//Delay_ms(100);
+		// Delay_ms(100);
 
 //////////////////////////////////////////////////////////////////
 

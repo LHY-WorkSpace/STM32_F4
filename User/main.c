@@ -49,12 +49,12 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-//	XPT2046_Init();
+	XPT2046_Init();
 //    KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
-	ST7789_Init();
-	// ILI9341_Init();
+	// ST7789_Init();
+	ILI9341_Init();
 
 	printf("Power Online\r\n");
 
@@ -66,7 +66,7 @@ int  main()
 	// // Delay_ms(100);
 	// // lv_tick_inc(10);
 	// LVGL_Task();
-	// // Delay_ms(2);
+	// // Delay_ms(10);
 	// // LCD_ShowPicture();
 	// }
 	
