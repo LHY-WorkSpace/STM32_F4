@@ -53,8 +53,8 @@ int  main()
 //    KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
-	// ST7789_Init();
-	ILI9341_Init();
+	ST7789_Init();
+	// ILI9341_Init();
 
 	printf("Power Online\r\n");
 

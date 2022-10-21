@@ -22,7 +22,7 @@
 
 #ifndef MY_DISP_VER_RES
     //#warning Please define or replace the macro MY_DISP_HOR_RES with the actual screen height, default value 240 is used for now.
-    #define MY_DISP_VER_RES    320
+    #define MY_DISP_VER_RES    240
 #endif
 
 /**********************
@@ -179,7 +179,6 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         ST7789_DMA_SetAddr((u32)(&color_p->full),Point);
         ST7789_DMA_Start();
         disp_disable_update();
-        Delay_ms(500);
 #elif (DISPLAY_DEV == ILI9341)
         ILI9341_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         ILI9341_DMA_SetAddr((u32)(&color_p->full),Point);
