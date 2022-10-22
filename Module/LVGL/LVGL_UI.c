@@ -134,7 +134,7 @@ void KeyBtn_OK()
     lv_obj_t *Lable = lv_label_create(Btn_OK);
 
     lv_obj_set_size(Btn_OK,30,20);
-    lv_obj_set_pos(Btn_OK,5,260);
+    lv_obj_set_pos(Btn_OK,5,100);
     lv_obj_set_style_border_side(Btn_OK,LV_BORDER_SIDE_FULL,LV_PART_MAIN);
     lv_obj_set_style_border_width(Btn_OK,2,LV_PART_MAIN);
 
@@ -158,7 +158,7 @@ void  KeyBtn_BACK()
     lv_obj_t *Lable = lv_label_create(Btn_BACK);
 
     lv_obj_set_size(Btn_BACK,30,20);
-    lv_obj_set_pos(Btn_BACK,205,260);
+    lv_obj_set_pos(Btn_BACK,205,100);
     lv_obj_set_style_border_side(Btn_BACK,LV_BORDER_SIDE_FULL,LV_PART_MAIN);
     lv_obj_set_style_border_width(Btn_BACK,2,LV_PART_MAIN);
 
@@ -182,7 +182,7 @@ void  KeyBtn_UP()
     lv_obj_t *Lable = lv_label_create(Btn_UP);
 
     lv_obj_set_size(Btn_UP,30,20);
-    lv_obj_set_pos(Btn_UP,5,285);
+    lv_obj_set_pos(Btn_UP,5,200);
     lv_obj_set_style_border_side(Btn_UP,LV_BORDER_SIDE_FULL,LV_PART_MAIN);
     lv_obj_set_style_border_width(Btn_UP,2,LV_PART_MAIN);
 
@@ -207,7 +207,7 @@ void  KeyBtn_DOWN()
     lv_obj_t *Lable = lv_label_create(Btn_DOWN);
 
     lv_obj_set_size(Btn_DOWN,30,20);
-    lv_obj_set_pos(Btn_DOWN,205,285);
+    lv_obj_set_pos(Btn_DOWN,205,200);
 
     lv_obj_set_style_border_side(Btn_DOWN,LV_BORDER_SIDE_FULL,LV_PART_MAIN);
     lv_obj_set_style_border_width(Btn_DOWN,2,LV_PART_MAIN);
@@ -333,11 +333,20 @@ void roller_show_3(void)
                         "October\n"
                         "November\n"
                         "December",
-                        LV_ROLLER_MODE_NORMAL);
+                        LV_ROLLER_MODE_INFINITE);
 
     lv_obj_center(roller1);                             //居中对象
     lv_roller_set_visible_row_count(roller1, 5);        //设置对象间距
     lv_obj_add_event_cb(roller1, mask_event_cb, LV_EVENT_ALL, NULL);   //设置回调
+
+    lv_group_t *Group = lv_group_create();
+    lv_group_add_obj(Group,roller1);
+    lv_group_add_obj(Group,Btn_OK);
+    lv_group_add_obj(Group,Btn_BACK);
+    lv_group_add_obj(Group,Btn_DOWN);
+    lv_group_add_obj(Group,Btn_UP);
+    lv_indev_set_group(indev_encoder,Group);
+
 }
 
 
@@ -397,7 +406,7 @@ void MeterTest()
 }
 
 
-
+// extern lv_indev_t * indev_encoder;
 
 //***************************************************//
 //  功能描述: LVGL UI绘制
@@ -412,12 +421,20 @@ void MeterTest()
 static void LVGL_Build_GUI()
 {
     BackGroung();
-    // KeyBtn_OK();
-    // KeyBtn_BACK();
-    // KeyBtn_UP();
-    // KeyBtn_DOWN();
+    KeyBtn_OK();
+    KeyBtn_BACK();
+    KeyBtn_UP();
+    KeyBtn_DOWN();
+
+    // lv_group_t *Group = lv_group_create();
+    // lv_group_add_obj(Group,Btn_OK);
+    // lv_group_add_obj(Group,Btn_BACK);
+    // lv_group_add_obj(Group,Btn_DOWN);
+    // lv_group_add_obj(Group,Btn_UP);
+
+    // lv_indev_set_group(indev_encoder,Group);
     // Btn();
-    MeterTest();
+    // MeterTest();
 }
 
 
@@ -458,7 +475,7 @@ void LVGL_Init()
 #endif
 
     LVGL_Build_GUI();
-    //roller_show_3();
+   roller_show_3();
 //    LVGL_Demo();
 }
 

@@ -17,10 +17,20 @@ typedef enum
 }Key_ID_e;
 
 
+typedef struct
+{
+    u8 Key_ID;
+    u8 (*GetState)();
+}Key_Info_t;
+
+
+
+
 
 
 void KeyInit(void);
 u8 KeyGetID(u8 ID);
+u8 EnCoderID(void);
 
 #endif
 

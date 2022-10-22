@@ -28,7 +28,7 @@
 
 
 
-#define  DEV_TYPE  TOUCH_PAD
+#define  DEV_TYPE  ENCODER
 
 
 /**********************
@@ -74,10 +74,10 @@ static bool button_is_pressed(uint8_t id);
 lv_indev_t * indev_button;
 static const lv_point_t btn_points[BUTTON_NUM] = 
 {
-    {10, 195},   /*Button OK -&gt; x:10; y:10*/
-    {210, 195},  /*Button BACK -&gt; x:40; y:100*/
-    {15, 220},   /*Button UP -&gt; x:10; y:10*/
-    {210, 225},  /*Button DOWN -&gt; x:40; y:100*/
+    {5, 100},   /*Button OK -&gt; x:10; y:10*/
+    {205, 100},  /*Button BACK -&gt; x:40; y:100*/
+    {5, 200},   /*Button UP -&gt; x:10; y:10*/
+    {205, 200},  /*Button DOWN -&gt; x:40; y:100*/
 };
 
 #endif
@@ -376,28 +376,24 @@ static void encoder_handler(void)
 {
     uint8_t Val;
     /*Your code comes here*/
-    Val = Enocde_Data();
+    Val = EnCoderID();
 
     switch (Val)
     {
-        case 1:
+        case UP_KEY:
             encoder_diff =1;
-             encoder_state = LV_INDEV_STATE_REL;
-            break;
-        case 2:
-           encoder_diff =-1;
             encoder_state = LV_INDEV_STATE_REL;
             break;
-        case 3:
+        case DOWN_KEY:
+            encoder_diff =-1;
+            encoder_state = LV_INDEV_STATE_REL;
+            break;
+        case OK_KEY:
             encoder_diff  =0;
             encoder_state = LV_INDEV_STATE_PR;
             break;
-        case 4:
-            encoder_diff  =0;
-            encoder_state = LV_INDEV_STATE_REL;
-            break;
         default:
-             encoder_diff  =0;
+            encoder_diff  =0;
             encoder_state = LV_INDEV_STATE_REL;
             break;
     }

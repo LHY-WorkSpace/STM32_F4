@@ -49,8 +49,8 @@ int  main()
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	XPT2046_Init();
-//    KeyInit();
+	//XPT2046_Init();
+   KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
 	ST7789_Init();
