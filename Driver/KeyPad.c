@@ -132,6 +132,8 @@ u8 EnCoderID()
             return Key_Info[i].Key_ID;
         }
     }
+    return MAX_KEY;
+
 }
 
 

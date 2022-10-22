@@ -16,7 +16,7 @@ lv_obj_t *Btn_BACK;
 lv_obj_t *Btn_DOWN;
 lv_obj_t *Btn_UP;
 lv_obj_t *Bg;
-
+lv_obj_t *Slider;
 
 
 //***************************************************//
@@ -147,7 +147,7 @@ void KeyBtn_OK()
     lv_label_set_text(Lable,LV_SYMBOL_OK);
     lv_obj_set_align(Lable,LV_ALIGN_CENTER);
 
-    lv_obj_add_event_cb(Btn_OK, OKKeyProcess ,LV_EVENT_CLICKED,NULL);
+    //lv_obj_add_event_cb(Btn_OK, OKKeyProcess ,LV_EVENT_CLICKED,NULL);
 
 }
 
@@ -171,7 +171,7 @@ void  KeyBtn_BACK()
     lv_label_set_text(Lable,LV_SYMBOL_CLOSE);
     lv_obj_set_align(Lable,LV_ALIGN_CENTER);
 
-    lv_obj_add_event_cb(Btn_BACK, BackKeyProcess ,LV_EVENT_CLICKED,NULL);
+    //lv_obj_add_event_cb(Btn_BACK, BackKeyProcess ,LV_EVENT_CLICKED,NULL);
 
 
 }
@@ -195,7 +195,7 @@ void  KeyBtn_UP()
     lv_label_set_text(Lable,LV_SYMBOL_UP);
     lv_obj_set_align(Lable,LV_ALIGN_CENTER);
 
-    lv_obj_add_event_cb(Btn_UP, UpKeyProcess ,LV_EVENT_CLICKED,NULL);
+   // lv_obj_add_event_cb(Btn_UP, UpKeyProcess ,LV_EVENT_CLICKED,NULL);
 }
 
 
@@ -221,7 +221,7 @@ void  KeyBtn_DOWN()
     lv_label_set_text(Lable,LV_SYMBOL_DOWN);
     lv_obj_set_align(Lable,LV_ALIGN_CENTER);
 
-    lv_obj_add_event_cb(Btn_DOWN, DownKeyProcess ,LV_EVENT_CLICKED,NULL);
+    //lv_obj_add_event_cb(Btn_DOWN, DownKeyProcess ,LV_EVENT_CLICKED,NULL);
 
 }
 
@@ -318,7 +318,7 @@ void roller_show_3(void)
     lv_obj_add_style(roller1, &style, 0);               //添加样式
     lv_obj_set_style_bg_opa(roller1, LV_OPA_TRANSP, LV_PART_SELECTED);  //设置对象的透明度
 
-   lv_obj_set_style_text_font(roller1, &lv_font_montserrat_14, LV_PART_SELECTED);  //设置对象字体
+    lv_obj_set_style_text_font(roller1, &lv_font_montserrat_14, LV_PART_SELECTED);  //设置对象字体
 
     lv_roller_set_options(roller1,                      //设置对象选项
                         "January\n"
@@ -345,8 +345,8 @@ void roller_show_3(void)
     lv_group_add_obj(Group,Btn_BACK);
     lv_group_add_obj(Group,Btn_DOWN);
     lv_group_add_obj(Group,Btn_UP);
+    lv_group_add_obj(Group,Slider);
     lv_indev_set_group(indev_encoder,Group);
-
 }
 
 
@@ -406,6 +406,37 @@ void MeterTest()
 }
 
 
+void EncodeControl()
+{
+
+   Slider = lv_slider_create(lv_scr_act());
+
+    lv_obj_set_size(Slider,100,20);
+    lv_obj_set_pos(Slider,30,220);
+    // lv_obj_center(Slider);
+
+
+
+
+
+
+    // lv_group_t *Group = lv_group_create();
+    // lv_group_add_obj(Group,Slider);
+    // lv_group_add_obj(Group,Btn_OK);
+    // lv_group_add_obj(Group,Btn_BACK);
+    // lv_group_add_obj(Group,Btn_DOWN);
+    // lv_group_add_obj(Group,Btn_UP);
+    // lv_indev_set_group(indev_encoder,Group);
+}
+
+
+
+
+
+
+
+
+
 // extern lv_indev_t * indev_encoder;
 
 //***************************************************//
@@ -425,7 +456,7 @@ static void LVGL_Build_GUI()
     KeyBtn_BACK();
     KeyBtn_UP();
     KeyBtn_DOWN();
-
+   EncodeControl();
     // lv_group_t *Group = lv_group_create();
     // lv_group_add_obj(Group,Btn_OK);
     // lv_group_add_obj(Group,Btn_BACK);
@@ -475,7 +506,7 @@ void LVGL_Init()
 #endif
 
     LVGL_Build_GUI();
-   roller_show_3();
+    roller_show_3();
 //    LVGL_Demo();
 }
 

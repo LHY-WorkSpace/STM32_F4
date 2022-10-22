@@ -376,27 +376,59 @@ static void encoder_handler(void)
 {
     uint8_t Val;
     /*Your code comes here*/
-    Val = EnCoderID();
+    // Val = EnCoderID();
 
-    switch (Val)
+    // if(Val != OK_KEY)
+    // {
+    //     encoder_state = LV_INDEV_STATE_REL;
+    // }
+    // else
+    // {
+    //     encoder_state = LV_INDEV_STATE_PR;
+    // }
+
+    // switch (Val)
+    // {
+    //     case UP_KEY:
+    //         encoder_diff ++;
+    //         break;
+    //     case DOWN_KEY:
+    //         encoder_diff --;
+    //         break;
+    //     // case OK_KEY:
+    //     //     // encoder_diff  =0;
+    //     //     encoder_state = LV_INDEV_STATE_PR;
+    //         // break;
+    //     default:
+    //         encoder_diff  =0;
+    //         // encoder_state = LV_INDEV_STATE_REL;
+    //         break;
+    // }
+
+
+    if( KEY_OK == RESET)
     {
-        case UP_KEY:
-            encoder_diff =1;
-            encoder_state = LV_INDEV_STATE_REL;
-            break;
-        case DOWN_KEY:
-            encoder_diff =-1;
-            encoder_state = LV_INDEV_STATE_REL;
-            break;
-        case OK_KEY:
-            encoder_diff  =0;
-            encoder_state = LV_INDEV_STATE_PR;
-            break;
-        default:
-            encoder_diff  =0;
-            encoder_state = LV_INDEV_STATE_REL;
-            break;
+       encoder_state = LV_INDEV_STATE_PR;
     }
+    else
+    {
+       encoder_state = LV_INDEV_STATE_REL;
+    }
+
+    if(KEY_BACK == RESET)
+    {
+         encoder_diff ++;
+    }
+    else if(KEY_UP == RESET)
+    {
+        encoder_diff --;
+    }
+    else
+    {
+        encoder_diff =0;
+    }
+
+
 }
 
 
