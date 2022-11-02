@@ -176,8 +176,11 @@ void ST7789_Init()
     ST7789_SendData(0x05);
     ST7789_SetCmd(0xC5); 		//VCOM
     ST7789_SendData(0x1A);
+
     ST7789_SetCmd(0x36);                 // 屏幕显示方向设置
-    ST7789_SendData(0x00);
+    ST7789_SendData(0x60);
+
+
     ST7789_SetCmd(0xb2);		//Porch Setting
     ST7789_SendData(0x05);
     ST7789_SendData(0x05);
@@ -196,7 +199,7 @@ void ST7789_Init()
     ST7789_SetCmd(0xC4);			//VDV Set
     ST7789_SendData(0x20);				//0v
     ST7789_SetCmd(0xC6);				//Frame Rate Control in Normal Mode
-    ST7789_SendData(0X01);			//111Hz
+    ST7789_SendData(0X00);			//111Hz
     ST7789_SetCmd(0xd0);				//Power Control 1
     ST7789_SendData(0xa4);
     ST7789_SendData(0xa1);
@@ -238,6 +241,7 @@ void ST7789_Init()
     ST7789_SendData(0x2F);
     ST7789_SetCmd(0x21); 		//反显
     ST7789_SetCmd(0x29);         //开启显示 
+    // ST7789_Full(0x0000);
 
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
@@ -303,7 +307,7 @@ void ST7789_DrawPoint(u16 color)
 //***************************************************//
 void ST7789_Full(u16 color)
 {
-    u32 ROW,column;
+    u32 ROW;
     ST7789_SetCmd(0x2a);     //Column address set
     ST7789_SendData(0x00);    //start column
     ST7789_SendData(0x00); 
@@ -316,13 +320,10 @@ void ST7789_Full(u16 color)
     ST7789_SendData(0x00);    //end row
     ST7789_SendData(0xF0);
     ST7789_SetCmd(0x2C);     //Memory write
-    for(ROW=0;ROW<240;ROW++)             //ROW loop
+    for(ROW=0;ROW<240*240;ROW++)             //ROW loop
     { 
-        for(column=0;column<240 ;column++) //column loop
-        {
-            ST7789_SendData(color>>8);
-            ST7789_SendData(color);
-        }
+        ST7789_SendData(color>>8);
+        ST7789_SendData(color);
     }
 }
 

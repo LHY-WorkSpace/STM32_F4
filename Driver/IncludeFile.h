@@ -46,7 +46,7 @@
 #include "lcd.h"
 #include "PID.h"
 #include "ST7789.h"
-
+#include "Encoder.h"
 
 // TRUE     使用
 // FALSE    不使用
