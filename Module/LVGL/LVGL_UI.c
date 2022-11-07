@@ -431,6 +431,112 @@ void EncodeControl()
 
 
 
+static void scroll_event_cb(lv_event_t * e)
+{
+    //>>>>>>>>>>>-----------------<!>---Link
+    ///E1.----------------------------得到容器
+    lv_obj_t * cont = lv_event_get_target(e); //通过绑定了该事件的对象，来获取这个对象
+
+    ///E2.---------------------------通过一定算法，得到容器的y轴中心位置（目的：用于后面与子元素按钮进行y轴中心偏差比较）
+    lv_area_t cont_a; //区域 cont_area
+    lv_obj_get_coords(cont, &cont_a); //将cont的坐标赋值给cont_a (将cont_a约束为container的大小（200 * 200)  coords：坐标(x1,y1); (x2,y1); (x1,y2); (x2,y2)
+
+    lv_coord_t cont_y_center = cont_a.y1 + lv_area_get_height(&cont_a) / 2; //获取Container的y轴中心
+
+    lv_coord_t r = lv_obj_get_height(cont) * 7 / 10; // 200*7 / 10 = 140
+
+    uint32_t i;
+    uint32_t child_cnt = lv_obj_get_child_cnt(cont); //child_cnt : child count 儿子数量 获取container里面元素个数
+
+    ///E3.------------------遍历容器里面的子元素（按钮），以便操作这些元素的属性（用户垂直滚动时候，按钮发生水平偏移，并且设置不同的透明度）
+    for(i = 0; i < child_cnt; i++)  //遍历Buttons
+    {
+        lv_obj_t * child = lv_obj_get_child(cont, i); //获取container的第i个button
+        lv_area_t child_a; //创建一个属于儿子区域
+        lv_obj_get_coords(child, &child_a); //将child_a约束为button的大小（200 * 200）
+        lv_coord_t child_y_center = child_a.y1 + lv_area_get_height(&child_a) / 2; //计算得到button的y轴中心
+
+        lv_coord_t diff_y = child_y_center - cont_y_center; // button的y轴中心 - Container的y轴中心 = Button相对于Container的垂直偏差
+        diff_y = LV_ABS(diff_y); // 对偏差取绝对值（ABS）
+
+        ///E3.1------------------根据偏差（按钮相对于容器的y方向中心位置）来产生不同的x值
+        /*Get the x of diff_y on a circle.*/
+        lv_coord_t x;
+        /*If diff_y is out of the circle use the last point of the circle (the radius)*/
+        if(diff_y >= r) // diff_y >= 140
+        {
+            x = r; //x = 140
+        }
+        else     // diff_y < 140
+        {
+            /*Use Pythagoras theorem to get x from radius and y*/
+            uint32_t x_sqr = r * r - diff_y * diff_y; // 140 * 140  - diff_y的平方
+            lv_sqrt_res_t res;
+            lv_sqrt(x_sqr, &res, 0x8000);   /*Use lvgl's built in sqrt root function*/
+            x = r - res.i;
+        }
+        ///E3.2--------------------根据x值，将button移动x个单位距离，根据r映射出不同的透明度值，设置按钮不同透明度
+        /*Translate the item by the calculated X coordinate*/
+        lv_obj_set_style_translate_x(child, x, 0); //将button 移动 x个单位距离
+
+        /*Use some opacity with larger translations*/
+        lv_opa_t opa = lv_map(x, 0, r, LV_OPA_TRANSP, LV_OPA_COVER);  //通过r的不同值，动态映射创建不透明度值 opa: opacity
+        lv_obj_set_style_opa(child, LV_OPA_COVER - opa, 0); //给按钮应用不透明度值  opa: opacity
+    }
+}
+
+
+void lv_example_soll_6(void)
+{
+
+
+    Bg = lv_obj_create(lv_scr_act());
+    lv_obj_set_size(Bg,240,240);
+    lv_obj_set_style_bg_color(Bg,lv_color_black(),LV_PART_MAIN);
+    lv_obj_set_style_radius(Bg,0,LV_PART_MAIN);
+    
+    ///祖父对象
+    //lv_obj_t *screenA = lv_scr_act();
+    ///父对象
+    lv_obj_t * cont = lv_obj_create(lv_scr_act()); //在屏幕上创建一个container
+    lv_obj_set_size(cont, 200, 200); //设置cont的尺寸： w200, h200  （正方形）
+    lv_obj_center(cont);//让cont垂直水平居中（相对于父级）
+    lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_COLUMN);//设置cont的子级的layout: 弹性布局弹性流（flex-flow）(布局+滚动功能)
+    ///对象的特性
+    //1.添加事件 // Link---<!>----------------------------------->>>>>>>>>>>>
+    lv_obj_add_event_cb(cont, scroll_event_cb, LV_EVENT_SCROLL, NULL);//给cont添加event，事件的回调函数、事件类型（Scroll）
+    //2.设置样式
+    lv_obj_set_style_radius(cont, LV_RADIUS_CIRCLE, 0); //设置矩形圆角 LV_RADIUS_CIRCLE：圆角最大化
+    lv_obj_set_style_clip_corner(cont, true, 0); //儿子超出部分隐藏
+    lv_obj_set_scroll_dir(cont, LV_DIR_VER); //设置Scroll的允许方向direction：垂直方向
+    lv_obj_set_scroll_snap_y(cont, LV_SCROLL_SNAP_CENTER); //捕捉Cont Y方向的子对象，将他们与Container中心对齐 ； snap ：捕获；捕捉
+    lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);//隐藏scrollbar
+
+    ///子对象
+    uint32_t i;
+    ///在container上创建若干个button
+
+
+    lv_group_t *Group = lv_group_create();
+
+    for(i = 0; i < 20; i++)
+    {
+        lv_obj_t * btn = lv_btn_create(cont); //在container上创建button
+        lv_obj_set_width(btn, lv_pct(100)); //设置button的width = lv_pct(100); //pct : percentage 相对于父亲的宽度100%
+
+        ///孙对象
+        lv_obj_t * label = lv_label_create(btn); //在button上创建一个label（标签）
+        lv_label_set_text_fmt(label, "Button %d", i);  //动态设置label的文本内容  fmt: format（格式）
+        lv_group_add_obj(Group,btn);
+    }
+
+    lv_indev_set_group(indev_encoder,Group);
+    /*Update the buttons position manually for first*/ //首次手动更新按钮的位置
+    lv_event_send(cont, LV_EVENT_SCROLL, NULL); //TODO
+
+    /*Be sure the fist button is in the middle*/ //确保第一个按钮处于中间
+    lv_obj_scroll_to_view(lv_obj_get_child(cont, 0), LV_ANIM_ON); //第一个按钮是否以滚动动画，滚动到指定位置（默认位置）
+}
 
 
 
