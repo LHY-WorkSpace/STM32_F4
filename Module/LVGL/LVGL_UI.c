@@ -87,7 +87,7 @@ void BackKeyProcess(lv_event_t *Event)
 //  ËµÃ÷: ÎÞ
 //  
 //***************************************************//
-void Btn()
+void Botn()
 {
     lv_obj_t *Btn = lv_btn_create(lv_scr_act());
     lv_obj_align(Btn,LV_ALIGN_CENTER,0,0);
@@ -543,7 +543,7 @@ void lv_example_soll_6(void)
 
 
 
-// extern lv_indev_t * indev_encoder;
+extern lv_indev_t * indev_encoder;
 #define UI_SIZE    (100)
 
 
@@ -716,7 +716,8 @@ void StateBar()
     lv_obj_set_size(Center,UI_SIZE-45,UI_SIZE-45);
     lv_obj_align_to(Center,Arc_In,LV_ALIGN_CENTER,0,0);
     lv_obj_set_style_radius(Center,LV_RADIUS_CIRCLE,0);
-    lv_obj_set_style_opa(Center,LV_OPA_50,LV_PART_MAIN);
+    lv_obj_set_style_bg_opa(Center,LV_OPA_50,LV_PART_MAIN);
+    lv_obj_set_style_border_width(Center,0,LV_PART_MAIN);
     lv_obj_set_style_bg_color(Center,lv_palette_main(LV_PALETTE_GREY),LV_PART_MAIN);
 
 
@@ -822,7 +823,8 @@ void LVGL_Init()
 	lv_port_indev_init();
 #endif
 
-    LVGL_Build_GUI();
+    StateBar();
+    // LVGL_Build_GUI();
     // roller_show_3();
 //    LVGL_Demo();
 }
