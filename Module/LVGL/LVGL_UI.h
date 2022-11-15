@@ -3,6 +3,14 @@
 
 //#define ON_PC
 
+typedef enum
+{
+    Charing,
+    Full,
+    InRelease
+}BarState_e;
+
+
 
 
 void LVGL_Init(void);
