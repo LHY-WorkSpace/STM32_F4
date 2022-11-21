@@ -1,19 +1,9 @@
-1.[21.6.3]:
-        STM32-IAP
-    (1)划分程序地址
-    ()选择升级方式
-    ()设计跳转函数
-    ()设计接收函数
-    ()设计写FLASH函数
-    ()重新定位程序地址
+1.输入设备
+2022-11-21
+完善编码器驱动
 
-
-
-2022.3.25
-  1.完善和优化SD卡代码
-  2.完善和优化USB代码
-  3.完善和优化FSMC和LCD代码
-  4.LVGL和U8G2使用
+2.显示设备
+3.存储设备
 
 
 
@@ -21,51 +11,6 @@
 
 
 
-407VET FSMC TFT	LCD移植部分
-https://blog.csdn.net/yyyyyyyyyysz/article/details/96774504
-
-
-
-
-
-修改PCB黑色背景的方法：
-1.点一下黑色背景
-2.按下2，在右键，选择修改形状或调整顶点，调整好大小后，右键
-3.按3退出该模式
-
-
-
-
-vTaskSuspendAll(); //挂起任务调度器
-之间不能有FreeRTOS函数！！！！
-xTaskResumeAll();//恢复任务调度器
-
-
-
-临界区访问函数只会屏蔽和开启受FreeRTOS管理的中断，
-对于高于【configMAX_SYSCALL_INTERRUPT_PRIORITY】中断函数内不能包含FreeRTOS函数
-taskENTER_CRITICAL();进入临界区
-taskEXIT_CRITICAL();退出临界区
-
-
-1.EEPROM的空间分配及读写函数==
-2.u8g2移植==
-3.ESPP8266 
-  双串口之间的通信  
-4.MQTT
-
-
-
-=============================================================================
-1个按键：用于唤醒，唤醒后可使用手机连接，长时间未连接再次睡眠,任务栏显示电压，唤醒有效时间等状态，建议登录阶段用OLED显示，验证完成后用LCD显示
-        长按：熄屏？显示版本信息？其他信息？
-        进入LCD后，按键可作为熄屏使用？
-        其他作用待定
-        
-验证密码后应支持程序升级：
-
-ESP8266:
-      用于数据连接
 
 
 
@@ -73,68 +18,120 @@ ESP8266:
 
 
 
-1.双屏显示(待定)
-  LCD用于主屏显示，OLED用于密码验证后查看操作记录和异常等
-  OLED隐藏
-
-定时
-
-
-
-外部设备电源控制：
-  ESP8266,DS18B20,DHT11,OLED,LCD,
-
-内部外设电源控制：
-  
-
-
-
-void Function_list()
-{
-	队列相关:
-			1.创建一个队列          				xQueueCreate == xQueueGenericCreate
-			2.向队列中写数据 						xQueueSendToFront(向队首) xQueueSendToBack(向队尾)  ==  xQueueGenericSend(带参数)
-			3.从队列中读数据            			xQueueReceive(读后删除)     xQueuePeek(只读数据)
-			4.查询队列中当前有效数据单元个数		 uxSemaphoreGetCount == uxQueueMessagesWaiting  
-
-	切换相关:
-		1.立即切换任务，调用这个函数的任务会进入就绪态			taskYIELD()
-
-
-	延时相关：
-		TickType_t Time;
-		Time=xTaskGetTickCount();
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);周期执行
-		vTaskDelay(100);非周期执行，延时可能被打断而导致边长
-
-
-	调试相关:
-		vTaskList();//用于获取各个任务信息
-
-
-
-只会关闭上下文的切换，不关闭中断
-临界区执行时间太长时建议使用此操作，而不是使用临界区开关中断的方式
-vTaskSuspendAll(); //挂起任务调度器
-之间不能有FreeRTOS函数！！！！
-xTaskResumeAll();//恢复任务调度器
-
-
-
-临界区访问函数只会屏蔽和开启受FreeRTOS管理的中断，
-对于高于【configMAX_SYSCALL_INTERRUPT_PRIORITY】中断函数内不能包含FreeRTOS函数
-taskENTER_CRITICAL();进入临界区
-taskEXIT_CRITICAL();退出临界区
 
 
 
 
 
-	https://blog.csdn.net/qq_40318498/article/details/97111069?utm_term=tft%E6%98%BE%E7%A4%BA%E9%97%AA%E7%83%81&utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~sobaiduweb~default-5-97111069&spm=3001.4430
-	https://mp.weixin.qq.com/s/JME3VArPETgPjD0n_cHKNQ
-	https://www.waveshare.net/study/article-969-1.html
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
