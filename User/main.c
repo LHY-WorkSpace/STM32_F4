@@ -50,7 +50,7 @@ int  main()
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
 	//XPT2046_Init();
-   KeyInit();
+	KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
 	ST7789_Init();

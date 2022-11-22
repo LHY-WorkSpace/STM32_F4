@@ -1,26 +1,37 @@
 #include "IncludeFile.h"
 
-//转一周多少个信号
-#define ENCODER_LINES   (10)
 
 EnCoderInfo_t EnCoderInfo;
 
 // Timer_2
-//  D12 D13 
-void EncoderInit()
+// A:D12 
+// B:D13 
+// Key:B6
+void EnCoderInit()
 {
 
 	GPIO_InitTypeDef Encoder_GPIO_Init;
 	NVIC_InitTypeDef  NVIC_Initstr;
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStr;
+	GPIO_InitTypeDef Key_Initstruc;
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
+   	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
 
+    //编码器
     Encoder_GPIO_Init.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13;
     Encoder_GPIO_Init.GPIO_Mode = GPIO_Mode_AF;
     Encoder_GPIO_Init.GPIO_PuPd = GPIO_PuPd_UP;
     Encoder_GPIO_Init.GPIO_Speed = GPIO_Speed_100MHz;
     GPIO_Init(GPIOD,&Encoder_GPIO_Init);
+
+    //按键
+	Key_Initstruc.GPIO_Pin=GPIO_Pin_6;
+	Key_Initstruc.GPIO_Mode=GPIO_Mode_IN;
+	Key_Initstruc.GPIO_Speed=GPIO_Speed_50MHz;         
+	Key_Initstruc.GPIO_PuPd=GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB,&Key_Initstruc); 
+
 
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
@@ -40,13 +51,18 @@ void EncoderInit()
     //T1 T2 均计数(4倍频计数)，IC1 不反相,IC2 不反相
     TIM_EncoderInterfaceConfig(TIM4,TIM_EncoderMode_TI12,TIM_ICPolarity_Rising,TIM_ICPolarity_Rising);
 
+    EnCoderInfo.Dir = Encoder_UP;
+    EnCoderInfo.KeyState = Encoder_Release;
+    EnCoderInfo.Value = 0;
+    TIM4->CNT = 0;
+
     TIM_ClearITPendingBit(TIM4,TIM_IT_Update );
     TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM4,ENABLE);
 
 }
 
-static void EnCoderUpData()
+static void EnCoderUpdate()
 {
     if( ( TIM4->CR1  ) & 0x10)
     {
@@ -61,9 +77,29 @@ static void EnCoderUpData()
 }
 
 
+void EnCoderUpdateKey()
+{
+    static u8 count = 0;
+
+    if(count > ENCODER_DELAY)
+    {
+        if( ENCODER_KEY == SET )
+        {
+            EnCoderInfo.KeyState = Encoder_Pressed;
+        }
+        else
+        {
+            EnCoderInfo.KeyState = Encoder_Release;
+        }
+        count = 0;
+    }
+}
 
 
-
+ Encoder_Key_e EnCoderGetKeyState()
+ {
+    return EnCoderInfo.KeyState
+ }
 
 
 void EnCoderSetValue(u16 Data)
@@ -72,12 +108,14 @@ void EnCoderSetValue(u16 Data)
     EnCoderInfo.Value = Data;
 }
 
+
 void EnCoderGetValue()
 {
     return EnCoderInfo.Value;
 }
 
-u8 EnCoderGetDir()
+
+Encoder_Dir_e EnCoderGetDir()
 {
     return EnCoderInfo.Dir;
 }
