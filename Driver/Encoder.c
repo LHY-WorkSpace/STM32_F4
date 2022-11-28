@@ -1,7 +1,8 @@
 #include "IncludeFile.h"
 
 
-EnCoderInfo_t EnCoderInfo;
+static EnCoderInfo_t EnCoderInfo;
+
 
 // Timer_2
 // A:D12 
@@ -53,27 +54,16 @@ void EnCoderInit()
 
     EnCoderInfo.Dir = Encoder_UP;
     EnCoderInfo.KeyState = Encoder_Release;
-    EnCoderInfo.Value = 0;
+    EnCoderInfo.Circle_Cnt = 0;
+    EnCoderInfo.Pluse_Cnt = 0;
+    EnCoderInfo.CNT_REG = 0;
+
     TIM4->CNT = 0;
 
     TIM_ClearITPendingBit(TIM4,TIM_IT_Update );
     TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
     TIM_Cmd(TIM4,ENABLE);
 
-}
-
-static void EnCoderUpdate()
-{
-    if( ( TIM4->CR1  ) & 0x10)
-    {
-        EnCoderInfo.Dir = Encoder_UP;
-    }
-    else
-    {
-        EnCoderInfo.Dir = Encoder_DOWN;
-    }
-    
-    EnCoderInfo.Value = TIM4->CNT;
 }
 
 
@@ -102,21 +92,59 @@ void EnCoderUpdateKey()
  }
 
 
-void EnCoderSetValue(u16 Data)
-{
-    TIM4->CNT = Data;
-    EnCoderInfo.Value = Data;
-}
-
-
 void EnCoderGetValue()
 {
     return EnCoderInfo.Value;
 }
 
+void EnCoderUpdate()
+{
+
+    if( ( TIM4->CR1  ) & 0x10)
+    {
+        EnCoderInfo.Dir = Encoder_UP;
+    }
+    else
+    {
+        EnCoderInfo.Dir = Encoder_DOWN;
+    }
+
+    if( EnCoderInfo.Circle_Cnt == 0 )
+    {
+        if( EnCoderInfo.Dir == Encoder_UP)
+        {
+            EnCoderInfo.Pluse_Cnt =   (TIM4->CNTS/4);
+        }
+        else
+        {
+            EnCoderInfo.Pluse_Cnt =  - (TIM4->CNT/4);
+        }
+    }
+    else if ( EnCoderInfo.Circle_Cnt > 0 )
+    {
+        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNTS/4);
+    }
+    else
+    {
+        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES - (TIM4->CNT/4);
+    }
+
+    EnCoderInfo.CNT_REG = TIM4->CNT;
+}
+
+
 
 Encoder_Dir_e EnCoderGetDir()
 {
+    if( ( TIM4->CR1  ) & 0x10)
+    {
+        EnCoderInfo.Dir = Encoder_UP;
+    }
+    else
+    {
+        EnCoderInfo.Dir = Encoder_DOWN;
+    }
+
     return EnCoderInfo.Dir;
 }
 
@@ -126,7 +154,15 @@ void TIM4_IRQHandler()
     if( TIM_GetITStatus(TIM4,TIM_IT_Update) == SET)
     {
         TIM_ClearITPendingBit(TIM4,TIM_IT_Update );
-        EnCoderUpData();
+        //计数溢出中断，计数值超过一圈
+        if( ( TIM4->CR1  ) & 0x10)
+        {
+            EnCoderInfo.Circle_Cnt ++;
+        }
+        else
+        {
+            EnCoderInfo.Circle_Cnt --;
+        }
     }
 }
 

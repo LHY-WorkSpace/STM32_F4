@@ -126,7 +126,7 @@ void TIM1_BRK_TIM9_IRQHandler()
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
         TickCount++;
-        EnCoderUpdateKey();
+        EnCoderUpdate();
     }
 
     TIM_ClearFlag(TIM9,TIM_IT_Update);

@@ -33,7 +33,9 @@ typedef struct
 {
     Encoder_Dir_e Dir;
     Encoder_Key_e KeyState;
-    u16 Value;
+    u16 CNT_REG;
+    s32 Pluse_Cnt;
+    s32 Circle_Cnt;
 
 }EnCoderInfo_t;
 
@@ -46,5 +48,6 @@ void EnCoderUpdateKey(void);
 
 Encoder_Key_e EnCoderGetKeyState(void);
 Encoder_Dir_e EnCoderGetDir(void);
+void EnCoderUpdate(void);
 
 #endif
