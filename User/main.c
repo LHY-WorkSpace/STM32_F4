@@ -43,22 +43,39 @@ void CreateAllTask()
 
 int  main()
 {
+	s32 DAta=0;
 
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
+	EnCoderInit();
 	//XPT2046_Init();
 	KeyInit();
 	// File_FATFSInit();
 	TickTimer_Init(1);
-	ST7789_Init();
+	// ST7789_Init();
 	// ILI9341_Init();
 
 	printf("Power Online\r\n");
 
-    LVGL_Init();
+	while (1)
+	{
+
+		//if ( DAta != EnCoderGetValue() )
+		{
+			DAta =  EnCoderGetValue();
+			printf("个数 %d \r\n",DAta);
+
+		}
+	}
+
+
+
+
+
+    // LVGL_Init();
 	// while (1)
 	// {
 	// // lv_tick_inc(1);
@@ -71,8 +88,8 @@ int  main()
 	// }
 	
 
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
-	vTaskStartScheduler();
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
+	// vTaskStartScheduler();
 	SystemDown();
 }
 

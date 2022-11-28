@@ -18,7 +18,7 @@ void EnCoderInit()
 
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
    	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB,ENABLE);
-
+   	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD,ENABLE);
     //编码器
     Encoder_GPIO_Init.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13;
     Encoder_GPIO_Init.GPIO_Mode = GPIO_Mode_AF;
@@ -44,7 +44,7 @@ void EnCoderInit()
     GPIO_PinAFConfig(GPIOD,GPIO_PinSource13,GPIO_AF_TIM4);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM4_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=8;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=5;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -88,13 +88,13 @@ void EnCoderUpdateKey()
 
  Encoder_Key_e EnCoderGetKeyState()
  {
-    return EnCoderInfo.KeyState
+    return EnCoderInfo.KeyState;
  }
 
 
-void EnCoderGetValue()
+s32 EnCoderGetValue()
 {
-    return EnCoderInfo.Value;
+    return EnCoderInfo.Pluse_Cnt;
 }
 
 void EnCoderUpdate()
@@ -102,27 +102,27 @@ void EnCoderUpdate()
 
     if( ( TIM4->CR1  ) & 0x10)
     {
-        EnCoderInfo.Dir = Encoder_UP;
+        EnCoderInfo.Dir = Encoder_DOWN ;
     }
     else
     {
-        EnCoderInfo.Dir = Encoder_DOWN;
+        EnCoderInfo.Dir = Encoder_UP;
     }
 
     if( EnCoderInfo.Circle_Cnt == 0 )
     {
         if( EnCoderInfo.Dir == Encoder_UP)
         {
-            EnCoderInfo.Pluse_Cnt =   (TIM4->CNTS/4);
+            EnCoderInfo.Pluse_Cnt =  (TIM4->CNT/4);
         }
         else
         {
-            EnCoderInfo.Pluse_Cnt =  - (TIM4->CNT/4);
+            EnCoderInfo.Pluse_Cnt =  -(TIM4->CNT/4);
         }
     }
     else if ( EnCoderInfo.Circle_Cnt > 0 )
     {
-        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNTS/4);
+        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNT/4);
     }
     else
     {
@@ -155,14 +155,19 @@ void TIM4_IRQHandler()
     {
         TIM_ClearITPendingBit(TIM4,TIM_IT_Update );
         //计数溢出中断，计数值超过一圈
-        if( ( TIM4->CR1  ) & 0x10)
+        if(EnCoderInfo.Circle_Cnt != 0)
         {
-            EnCoderInfo.Circle_Cnt ++;
+            if( ( TIM4->CR1  ) & 0x10)
+            {
+                EnCoderInfo.Circle_Cnt --;
+            }
+            else
+            {
+                EnCoderInfo.Circle_Cnt ++;
+            }
+
         }
-        else
-        {
-            EnCoderInfo.Circle_Cnt --;
-        }
+
     }
 }
 

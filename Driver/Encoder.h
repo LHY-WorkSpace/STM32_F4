@@ -3,7 +3,7 @@
 // #include "stm32f4xx.h"
 
 //转一周多少个信号
-#define ENCODER_LINES   (10)
+#define ENCODER_LINES   (100)
 
 //按键消抖延时(N*systick*ms)
 #define ENCODER_DELAY   (30)
@@ -43,7 +43,7 @@ typedef struct
 
 void EnCoderInit(void);
 void EnCoderSetValue(u16 Data);
-void EnCoderGetValue(void);
+s32 EnCoderGetValue(void);
 void EnCoderUpdateKey(void);
 
 Encoder_Key_e EnCoderGetKeyState(void);
