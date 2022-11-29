@@ -86,17 +86,6 @@ void EnCoderUpdateKey()
 }
 
 
- Encoder_Key_e EnCoderGetKeyState()
- {
-    return EnCoderInfo.KeyState;
- }
-
-
-s32 EnCoderGetValue()
-{
-    return EnCoderInfo.Pluse_Cnt;
-}
-
 void EnCoderUpdate()
 {
 
@@ -109,30 +98,34 @@ void EnCoderUpdate()
         EnCoderInfo.Dir = Encoder_UP;
     }
 
-    if( EnCoderInfo.Circle_Cnt == 0 )
-    {
-        if( EnCoderInfo.Dir == Encoder_UP)
-        {
-            EnCoderInfo.Pluse_Cnt =  (TIM4->CNT/4);
-        }
-        else
-        {
-            EnCoderInfo.Pluse_Cnt =  -(TIM4->CNT/4);
-        }
-    }
-    else if ( EnCoderInfo.Circle_Cnt > 0 )
-    {
-        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNT/4);
-    }
-    else
-    {
-        EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES - (TIM4->CNT/4);
-    }
+    EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNT/4);
 
     EnCoderInfo.CNT_REG = TIM4->CNT;
 }
 
+void EnCoderReset()
+{
+    TIM_Cmd(TIM4,DISABLE);
+    memset(&EnCoderInfo,0x00,sizeof(EnCoderInfo));
+    TIM4->CNT = 0;
+    TIM_Cmd(TIM4,ENABLE);
+}
 
+s32 EnCoderGetPluseCNT()
+{
+    EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNT/4);
+    return EnCoderInfo.Pluse_Cnt;
+}
+
+s32  EnCoderGetCircleCNT()
+{
+    return EnCoderInfo.Circle_Cnt;
+}
+
+ Encoder_Key_e EnCoderGetKeyState()
+ {
+    return EnCoderInfo.KeyState;
+ }
 
 Encoder_Dir_e EnCoderGetDir()
 {
@@ -149,23 +142,21 @@ Encoder_Dir_e EnCoderGetDir()
 }
 
 
+
+
 void TIM4_IRQHandler()
 {
     if( TIM_GetITStatus(TIM4,TIM_IT_Update) == SET)
     {
         TIM_ClearITPendingBit(TIM4,TIM_IT_Update );
         //计数溢出中断，计数值超过一圈
-        if(EnCoderInfo.Circle_Cnt != 0)
+        if( ( TIM4->CR1  ) & 0x10)
         {
-            if( ( TIM4->CR1  ) & 0x10)
-            {
-                EnCoderInfo.Circle_Cnt --;
-            }
-            else
-            {
-                EnCoderInfo.Circle_Cnt ++;
-            }
-
+            EnCoderInfo.Circle_Cnt --;
+        }
+        else
+        {
+            EnCoderInfo.Circle_Cnt ++;
         }
 
     }

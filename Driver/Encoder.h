@@ -42,12 +42,13 @@ typedef struct
 
 
 void EnCoderInit(void);
-void EnCoderSetValue(u16 Data);
-s32 EnCoderGetValue(void);
-void EnCoderUpdateKey(void);
+void EnCoderUpdateKey();
+void EnCoderUpdate(void);
+void EnCoderReset(void);
 
+s32 EnCoderGetPluseCNT(void);
+s32 EnCoderGetCircleCNT(void);
 Encoder_Key_e EnCoderGetKeyState(void);
 Encoder_Dir_e EnCoderGetDir(void);
-void EnCoderUpdate(void);
 
 #endif

@@ -63,9 +63,9 @@ int  main()
 	while (1)
 	{
 
-		//if ( DAta != EnCoderGetValue() )
+		if ( DAta != EnCoderGetPluseCNT() )
 		{
-			DAta =  EnCoderGetValue();
+			DAta =  EnCoderGetPluseCNT();
 			printf("¸öÊý %d \r\n",DAta);
 
 		}
