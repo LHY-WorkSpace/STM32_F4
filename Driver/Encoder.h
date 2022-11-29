@@ -2,8 +2,8 @@
 #define ENCODER_H
 // #include "stm32f4xx.h"
 
-//转一周多少个信号
-#define ENCODER_LINES   (100)
+//转一周多少个脉冲
+#define ENCODER_LINES   (3)
 
 //按键消抖延时(N*systick*ms)
 #define ENCODER_DELAY   (30)

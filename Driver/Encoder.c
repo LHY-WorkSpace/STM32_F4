@@ -66,7 +66,16 @@ void EnCoderInit()
 
 }
 
-
+//***************************************************//
+//  功能描述: 更新按键状态
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//  
+//***************************************************//
 void EnCoderUpdateKey()
 {
     static u8 count = 0;
@@ -85,7 +94,22 @@ void EnCoderUpdateKey()
     }
 }
 
+//获取按键状态
+ Encoder_Key_e EnCoderGetKeyState()
+ {
+    return EnCoderInfo.KeyState;
+ }
 
+//***************************************************//
+//  功能描述: 更新编码器旋钮状态
+//  
+//  参数: 无
+//  
+//  返回值: 无
+//  
+//  说明: 无
+//  
+//***************************************************//
 void EnCoderUpdate()
 {
 
@@ -103,6 +127,17 @@ void EnCoderUpdate()
     EnCoderInfo.CNT_REG = TIM4->CNT;
 }
 
+
+//***************************************************//
+//  功能描述: 复位编码器状态
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 无
+//  
+//***************************************************//
 void EnCoderReset()
 {
     TIM_Cmd(TIM4,DISABLE);
@@ -111,22 +146,32 @@ void EnCoderReset()
     TIM_Cmd(TIM4,ENABLE);
 }
 
+
+//***************************************************//
+//  功能描述: 获取编码器各种数据
+//  
+//  参数: 无
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 调用时自动更新，无需依靠EnCoderUpdate()定时更新
+//  
+//***************************************************//
+
+//获取总脉冲数
 s32 EnCoderGetPluseCNT()
 {
     EnCoderInfo.Pluse_Cnt =  EnCoderInfo.Circle_Cnt*ENCODER_LINES + (TIM4->CNT/4);
     return EnCoderInfo.Pluse_Cnt;
 }
 
+//获取旋转圈数
 s32  EnCoderGetCircleCNT()
 {
     return EnCoderInfo.Circle_Cnt;
 }
 
- Encoder_Key_e EnCoderGetKeyState()
- {
-    return EnCoderInfo.KeyState;
- }
-
+//获取旋转方向
 Encoder_Dir_e EnCoderGetDir()
 {
     if( ( TIM4->CR1  ) & 0x10)
@@ -140,8 +185,6 @@ Encoder_Dir_e EnCoderGetDir()
 
     return EnCoderInfo.Dir;
 }
-
-
 
 
 void TIM4_IRQHandler()
