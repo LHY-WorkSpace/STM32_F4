@@ -113,7 +113,8 @@ void EnCoderUpdateKey()
 void EnCoderUpdate()
 {
 
-    if( ( TIM4->CR1  ) & 0x10)
+
+	if( ( TIM4->CR1  ) & 0x10)
     {
         EnCoderInfo.Dir = Encoder_DOWN ;
     }

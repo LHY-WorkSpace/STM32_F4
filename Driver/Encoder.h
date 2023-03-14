@@ -42,7 +42,7 @@ typedef struct
 
 
 void EnCoderInit(void);
-void EnCoderUpdateKey();
+void EnCoderUpdateKey(void);
 void EnCoderUpdate(void);
 void EnCoderReset(void);
 

@@ -178,7 +178,7 @@ void ST7789_Init()
     ST7789_SendData(0x1A);
 
     ST7789_SetCmd(0x36);                 // ÆÁÄ»ÏÔÊ¾·½ÏòÉèÖÃ
-    ST7789_SendData(0x60);
+    ST7789_SendData(0x00);              // 0x00ÊúÆÁ£¬0x60ºáÆÁ
 
 
     ST7789_SetCmd(0xb2);		//Porch Setting
@@ -454,81 +454,6 @@ void ST7789_DMA_Stop()
     DMA_EndAddr = 0;
     TX_Flag = TRUE;
 }
-
-
-
-
-// u32 i=0,k=0;
-// u8 Flag=TRUE;
-// u32 Total=240*240*2;
-// u32 Lengthddd=0;
-// u32 SendLen=0;
-// u8 xxx=0,yyy=0;
-// u16 CData[] = {WHITE,BLACK,BRRED,GREEN,YELLOW,BRRED};
-// void DMATest()
-// {
-// 	if( Flag == TRUE )
-// 	{
-//         ST7789_SetArea(0,0,239,239);
-
-//         ST7789_DATA;
-// 		if( Total >= DMA_MAX_BUFF)
-// 		{
-// 			Lengthddd = DMA_MAX_BUFF;
-// 		}
-// 		else
-// 		{
-// 			Lengthddd = Total;
-// 		}
-// 		SendLen  =0;
-// 		Flag = FALSE;
-// 		DMA_Cmd(DMA2_Stream3,DISABLE);
-// 		DMA2_Stream3->M0AR = (u32)(&CData[k]);
-// 		DMA2_Stream3->NDTR = Lengthddd;
-// 		DMA_Cmd(DMA2_Stream3,ENABLE);
-// 		LED1_ON;
-// 		k++;
-// 		if(k>=sizeof(CData)/sizeof(CData[0]))
-// 		{
-// 			k=0;
-// 		}
-// 	}
-// }
-
-// void DMA2_Stream3_IRQHandler()
-// {
-// 	u32 Length;
-
-//     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))
-//     {
-//         DMA_ClearITPendingBit(DMA2_Stream3,DMA_IT_TCIF3);
-
-// 		SendLen += Lengthddd;
-
-// 		if( SendLen < Total)
-// 		{
-// 			DMA_Cmd(DMA2_Stream3,DISABLE);
-
-// 			Lengthddd = Total - SendLen;
-
-// 			if(  Lengthddd >= DMA_MAX_BUFF )
-// 			{
-// 				Lengthddd = DMA_MAX_BUFF;
-// 			}
-
-// 			DMA2_Stream3->NDTR = Lengthddd;
-//             ST7789_DATA;
-// 			DMA_Cmd(DMA2_Stream3,ENABLE);
-// 		}
-// 		else
-// 		{
-// 			DMA_Cmd(DMA2_Stream3,DISABLE);
-// 			Flag = TRUE;
-// 			LED1_OFF;
-// 		}
-//     }    
-
-// }
 
 
 

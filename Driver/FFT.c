@@ -61,7 +61,7 @@ void DMA_ConfigInit()
 	DMA_Init(DMA2_Stream0,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream0_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=6;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -403,12 +403,10 @@ void TIM2_IRQHandler()
 		if( ADC_DataFlag == RESET)
 		{
 			ADC_DataFlag = SET;
-			LED1_ON;
 		}
 		else
 		{	
 			ADC_DataFlag = RESET;
-			LED1_OFF;
 		}
 
     }
@@ -419,10 +417,6 @@ void ADC_IRQHandler()
 	if( ADC_GetITStatus(ADC1,ADC_IT_EOC) == SET) 
 	{
 		ADC_ClearITPendingBit(ADC1,ADC_IT_EOC);
-
-
-
-
 
 	}
 }

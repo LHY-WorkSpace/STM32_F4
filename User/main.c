@@ -20,7 +20,6 @@ void LED_Tasssk(void)
 
 void lvgl_Task()
 {
-
     TickType_t Time;	
     Time=xTaskGetTickCount();
     while (1)
@@ -28,14 +27,25 @@ void lvgl_Task()
 		LVGL_Task();
         vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
     }
-}
+} 
 
+void FFT_Task()
+{
+    TickType_t Time;	
+    Time=xTaskGetTickCount();
+    while (1)
+    {
+		FFT_Process();
+        vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
+    }
+}
 
 
 void CreateAllTask()
 {
 	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",500,NULL,9,NULL);
-    xTaskCreate( (TaskFunction_t)LED_Tasssk,"LVGL",200,NULL,10,NULL);
+   	xTaskCreate( (TaskFunction_t)LED_Tasssk,"LVGL",200,NULL,10,NULL);
+	// xTaskCreate( (TaskFunction_t)FFT_Task,"FFT",500,NULL,9,NULL);
 	vTaskDelete(NULL);
 }
 
@@ -43,50 +53,17 @@ void CreateAllTask()
 
 int  main()
 {
-	s32 DAta=0;
-
  	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);	
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
-	// USART2_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	// EnCoderInit();
-	//XPT2046_Init();
-	// KeyInit();
-	// File_FATFSInit();
+	// OLED_Init();
 	TickTimer_Init(1);
 	ST7789_Init();
-	// ILI9341_Init();
-
+	// FFT_Init();
+    LVGL_Init();
 	printf("Power Online\r\n");
 
-	// while (1)
-	// {
-
-	// 	if ( DAta != EnCoderGetPluseCNT() )
-	// 	{
-	// 		DAta =  EnCoderGetPluseCNT();
-	// 		printf("个数 %d \r\n",DAta);
-
-	// 	}
-	// }
-
-
-
-
-
-    LVGL_Init();
-	// while (1)
-	// {
-	// // lv_tick_inc(1);
-	// // DMATest();
-	// // Delay_ms(100);
-	// // lv_tick_inc(10);
-	// LVGL_Task();
-	// // Delay_ms(10);
-	// // LCD_ShowPicture();
-	// }
-	
 
 	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",200,NULL,10,NULL);
 	vTaskStartScheduler();
