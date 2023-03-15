@@ -29,7 +29,7 @@
 /* Private define ------------------------------------------------------------ */
 /* Private macro ------------------------------------------------------------- */
 /* Private variables --------------------------------------------------------- */
-extern USB_OTG_CORE_HANDLE USB_OTG_dev;
+// extern USB_OTG_CORE_HANDLE USB_OTG_dev;
 
 /* Private function prototypes ----------------------------------------------- */
 extern uint32_t USBD_OTG_ISR_Handler(USB_OTG_CORE_HANDLE * pdev);
@@ -157,7 +157,7 @@ void OTG_HS_IRQHandler(void)
 #ifdef USE_USB_OTG_FS
 void OTG_FS_IRQHandler(void)
 {
-  USBD_OTG_ISR_Handler(&USB_OTG_dev);
+  // USBD_OTG_ISR_Handler(&USB_OTG_dev);
 }
 #endif
 #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED

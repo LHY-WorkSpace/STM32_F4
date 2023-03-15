@@ -4,15 +4,15 @@
 // __align(4) u8 A[1024],B[2048];   //对齐的部分不能在栈里！！！
 
 
-__ALIGN_BEGIN 
-USB_OTG_CORE_HANDLE USB_OTG_dev 
-__ALIGN_END;
-USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
+// __ALIGN_BEGIN 
+// USB_OTG_CORE_HANDLE USB_OTG_dev 
+// __ALIGN_END;
+// USB_OTG_CORE_ID_TypeDef coreID=USB_OTG_FS_CORE_ID;
 
 
 void USB_Task()
 {
-	USBD_Init(&USB_OTG_dev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
+	//USBD_Init(&USB_OTG_dev,coreID,&USR_desc,&USBD_MSC_cb, &USR_cb);
 //           https://blog.csdn.net/zhengnianli/article/details/113931569    LVGL
 }
 
