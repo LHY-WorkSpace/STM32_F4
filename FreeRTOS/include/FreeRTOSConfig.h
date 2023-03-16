@@ -56,7 +56,6 @@
 #define configMINIMAL_STACK_SIZE						( ( unsigned short ) 150 )
 #define configTOTAL_HEAP_SIZE							( ( size_t ) ( 30 * 1024 ) )  // 30k的堆大小，由FreeRTOS管理
 #define configMAX_TASK_NAME_LEN							( 20 )
-#define configUSE_TRACE_FACILITY						1
 #define configUSE_16_BIT_TICKS							0
 #define configIDLE_SHOULD_YIELD							1
 #define configUSE_MUTEXES								1
@@ -66,7 +65,19 @@
 #define configUSE_MALLOC_FAILED_HOOK					0
 #define configUSE_APPLICATION_TASK_TAG					0
 #define configUSE_COUNTING_SEMAPHORES					1
-#define configGENERATE_RUN_TIME_STATS					0
+
+//输出调试信息可打开以下3个开关
+#define configUSE_TRACE_FACILITY						1
+#define configGENERATE_RUN_TIME_STATS					1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 			1 
+
+
+extern uint32_t RTOS_DebugTimer;
+//用于给获取任务函数提供时间基准
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()  TickTimer_Init(2) 
+//用于提供当前时间基准变量 unsigned long long类型
+#define portGET_RUN_TIME_COUNTER_VALUE()  RTOS_DebugTimer 
+
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 								0

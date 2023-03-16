@@ -11,9 +11,9 @@
 
 
 static u32 TickCount;
-
+u32 RTOS_DebugTimer;
 //************************// 
-//  功能描述: Tickj计数函数
+//  功能描述: Tick计数函数
 //  
 //  参数: Period中断周期(ms)
 //  
@@ -32,7 +32,7 @@ void TickTimer_Init(u16 Period)
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitStr.TIM_Period = Period*10;
-	TIM_TimeBaseInitStr.TIM_Prescaler = 16800-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler = 168-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
@@ -40,6 +40,8 @@ void TickTimer_Init(u16 Period)
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
+
+    RTOS_DebugTimer=0;
 
     TIM_ARRPreloadConfig(TIM9,ENABLE);
     TIM_ITConfig(TIM9,TIM_IT_Update,ENABLE);
@@ -126,7 +128,8 @@ void TIM1_BRK_TIM9_IRQHandler()
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
         TickCount++;
-        EnCoderUpdate();
+        RTOS_DebugTimer++;
+        // EnCoderUpdate();
     }
 
     TIM_ClearFlag(TIM9,TIM_IT_Update);

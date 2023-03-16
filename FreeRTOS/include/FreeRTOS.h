@@ -771,7 +771,7 @@ extern "C" {
 #endif
 
 #ifndef configUSE_STATS_FORMATTING_FUNCTIONS
-	#define configUSE_STATS_FORMATTING_FUNCTIONS 0              //用于输出任务信息(  vTaskList()  )，不用时可关闭此处
+	#define configUSE_STATS_FORMATTING_FUNCTIONS 1              //用于输出任务信息(  vTaskList()  )，不用时可关闭此处
 #endif
 
 #ifndef portASSERT_IF_INTERRUPT_PRIORITY_INVALID

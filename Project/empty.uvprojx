@@ -1060,6 +1060,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\Encoder.c</FilePath>
             </File>
+            <File>
+              <FileName>DataType.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\DataType.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

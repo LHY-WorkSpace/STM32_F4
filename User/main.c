@@ -32,11 +32,14 @@ void lvgl_Task()
 void FFT_Task()
 {
     TickType_t Time;	
+	char InfoBuffer[200];
     Time=xTaskGetTickCount();
     while (1)
     {
-		FFT_Process();
-        vTaskDelayUntil(&Time,30/portTICK_PERIOD_MS);
+		vTaskList(InfoBuffer);
+		printf("taskName\ttaskState\ttaskPrio\ttaskStack\ttaskNum\r\n");
+		printf("%s",InfoBuffer);
+        vTaskDelayUntil(&Time,3000/portTICK_PERIOD_MS);
     }
 }
 
@@ -44,8 +47,8 @@ void FFT_Task()
 void CreateAllTask()
 {
 	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",500,NULL,9,NULL);
-   	xTaskCreate( (TaskFunction_t)LED_Tasssk,"LVGL",200,NULL,10,NULL);
-	// xTaskCreate( (TaskFunction_t)FFT_Task,"FFT",500,NULL,9,NULL);
+   	xTaskCreate( (TaskFunction_t)LED_Tasssk,"LED",200,NULL,10,NULL);
+	xTaskCreate( (TaskFunction_t)FFT_Task,"FFT",500,NULL,9,NULL);
 	vTaskDelete(NULL);
 }
 
@@ -57,10 +60,8 @@ int  main()
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
-	// OLED_Init();
-	TickTimer_Init(1);
+	TickTimer_Init(20);
 	ST7789_Init();
-	// FFT_Init();
     LVGL_Init();
 	printf("Power Online\r\n");
 

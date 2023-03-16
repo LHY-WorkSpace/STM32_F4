@@ -51,6 +51,15 @@ typedef union
     u32 B32;
 }B32_B16;
 
+//弧度->角度
+#define RADTODEG(x) ((x) * 57.295779513082320876798154814105f)
+//角度->弧度
+#define DEGTORAD(x) ((x) * 0.01745329251994329576923690768489f)
+
+float FastSin(float x);
+float FastCos(float x);
+
+
 
 #define  CLOSE_ALL_IRQ      do{  __disable_irq();  }while(0)    
 #define  OPEN_ALL_IRQ       do{  __enable_irq();  }while(0)    
