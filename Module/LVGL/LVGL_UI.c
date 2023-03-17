@@ -337,7 +337,9 @@ void LVGL_Demo()
 //***************************************************//
 void LVGL_Init()
 {
+
 #ifndef ON_PC
+	LVGLTimerInit(1);
     lv_init();
 	lv_port_disp_init();
 	lv_port_indev_init();

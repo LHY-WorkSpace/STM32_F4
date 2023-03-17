@@ -637,23 +637,6 @@ void Clear_Task()
 }
 
 
-void LED_Task(void)
-{
-	TickType_t Time;
-	Time=xTaskGetTickCount();
-	while(1)
-	{	
-		LED1_ON;
-		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
-		LED1_OFF;
-		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
-		LED1_ON;
-		vTaskDelayUntil(&Time,150/portTICK_PERIOD_MS);
-		LED1_OFF;
-		vTaskDelayUntil(&Time,1500/portTICK_PERIOD_MS);
-	}
-}
-
 
 void Teat_Task()
 {
