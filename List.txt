@@ -7,6 +7,119 @@
 
 
 
+#include "stm32f4xx.h"
+
+#define FOC_PWM_FREQ        20000               // PWM频率20kHz
+#define FOC_PWM_PIN_A       TIM3->CCR1          // A相输出引脚
+#define FOC_PWM_PIN_B       TIM3->CCR2          // B相输出引脚
+#define FOC_PWM_PIN_C       TIM3->CCR3          // C相输出引脚
+
+#define FOC_CURRENT_SENSOR  ADC1->DR            // 电流传感器ADC寄存器地址
+#define FOC_VOLTAGE_SENSOR  ADC1->DR            // 电压传感器ADC寄存器地址
+
+static float currentPhase = 0;                  // 电流相位
+static float voltagePhase = 0;                  // 电压相位
+
+void foc_init()
+{
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+
+    GPIO_InitTypeDef gpioConfig;
+    gpioConfig.GPIO_Pin = GPIO_Pin_6 | GPIO_Pin_7 | GPIO_Pin_8;
+    gpioConfig.GPIO_Mode = GPIO_Mode_AF;
+    gpioConfig.GPIO_Speed = GPIO_Speed_100MHz;
+    gpioConfig.GPIO_OType = GPIO_OType_PP;
+    gpioConfig.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(GPIOA, &gpioConfig);
+
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource6, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource7, GPIO_AF_TIM3);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource8, GPIO_AF_TIM3);
+
+    TIM_TimeBaseInitTypeDef timConfig;
+    timConfig.TIM_Period = (SystemCoreClock / FOC_PWM_FREQ) - 1;
+    timConfig.TIM_Prescaler = 0;
+    timConfig.TIM_ClockDivision = 0;
+    timConfig.TIM_CounterMode = TIM_CounterMode_Up;
+    TIM_TimeBaseInit(TIM3, &timConfig);
+
+    TIM_OCInitTypeDef ocConfig;
+    ocConfig.TIM_OCMode = TIM_OCMode_PWM1;
+    ocConfig.TIM_OutputState = TIM_OutputState_Enable;
+    ocConfig.TIM_Pulse = 0;
+    ocConfig.TIM_OCPolarity = TIM_OCPolarity_High;
+    TIM_OC1Init(TIM3, &ocConfig);
+    TIM_OC2Init(TIM3, &ocConfig);
+    TIM_OC3Init(TIM3, &ocConfig);
+
+    TIM_Cmd(TIM3, ENABLE);
+}
+
+void foc_control()
+{
+    int current = FOC_CURRENT_SENSOR;
+    int voltage = FOC_VOLTAGE_SENSOR;
+    float currentAngle = atan2(current * sin(currentPhase), voltage - current * cos(currentPhase));
+    float voltageAngle = atan2(voltage * sin(voltagePhase), voltage * cos(voltagePhase) - current);
+    float phaseError = currentAngle - voltageAngle;
+    currentPhase -= 0.01 * phaseError;          // PI调节器控制电流相位
+    voltagePhase += 0.1 * phaseError;           // PI调节器控制电压相位
+
+    int dutyA = (int)(TIM3->ARR * sin(currentPhase));
+    int dutyB = (int)(TIM3->ARR * sin(currentPhase + (2 * M_PI / 3)));
+    int dutyC = (int)(TIM3->ARR * sin(currentPhase + (4 * M_PI / 3)));
+    FOC_PWM_PIN_A = dutyA;
+    FOC_PWM_PIN_B = dutyB;
+    FOC_PWM_PIN_C = dutyC;
+}
+
+int main(void)
+{
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+    GPIO_InitTypeDef gpioConfig;
+    gpioConfig.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
+    gpioConfig.GPIO_Mode = GPIO_Mode_AN;
+    gpioConfig.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_Init(GPIOC, &gpioConfig);
+
+    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+    ADC_CommonInitTypeDef adcCommonConfig;
+    adcCommonConfig.ADC_Mode = ADC_Mode_Independent;
+    adcCommonConfig.ADC_Prescaler = ADC_Prescaler_Div2;
+    adcCommonConfig.ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+    adcCommonConfig.ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+    ADC_CommonInit(&adcCommonConfig);
+
+    ADC_InitTypeDef adcConfig;
+
+    adcConfig.ADC_Resolution = ADC_Resolution_12b;
+    adcConfig.ADC_ScanConvMode = DISABLE;
+    adcConfig.ADC_ContinuousConvMode = ENABLE;
+    adcConfig.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+    adcConfig.ADC_DataAlign = ADC_DataAlign_Right;
+    adcConfig.ADC_NbrOfConversion = 1;
+    ADC_Init(ADC1, &adcConfig);
+
+    ADC_RegularChannelConfig(ADC1, FOC_CURRENT_SENSOR, 1, ADC_SampleTime_15Cycles);
+    ADC_RegularChannelConfig(ADC1, FOC_VOLTAGE_SENSOR, 2, ADC_SampleTime_15Cycles);
+
+    foc_init();
+while (1) {
+    ADC_SoftwareStartConv(ADC1);
+    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+    foc_control();
+    delay_us(10000);                        // 控制周期10ms
+}
+}
+
+void delay_us(uint32_t time)
+{
+uint32_t i;
+for (i = 0; i < (8 * time); i++);
+}
+
+
 
 
 
