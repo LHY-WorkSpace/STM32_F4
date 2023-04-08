@@ -28,7 +28,7 @@
 
 
 
-#define  DEV_TYPE  ENCODER
+#define  DEV_TYPE  BUTTON
 
 
 /**********************
@@ -234,8 +234,8 @@ static void touchpad_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     data->point.x = last_x;
     data->point.y = last_y;
 
-    printf("x:%d \r\n",data->point.x);
-    printf("y:%d \r\n",data->point.y);
+    // printf("x:%d \r\n",data->point.x);
+    // printf("y:%d \r\n",data->point.y);
 }
 
 /*Return true is the touchpad is pressed*/

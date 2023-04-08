@@ -32,11 +32,11 @@ void TickTimer_Init(u16 Period)
 	TIM_TimeBaseInitStr.TIM_ClockDivision=TIM_CKD_DIV1;
 	TIM_TimeBaseInitStr.TIM_CounterMode=TIM_CounterMode_Up;
 	TIM_TimeBaseInitStr.TIM_Period = Period*10;
-	TIM_TimeBaseInitStr.TIM_Prescaler = 168-1;
+	TIM_TimeBaseInitStr.TIM_Prescaler = 16800-1;
     TIM_TimeBaseInit(TIM9,&TIM_TimeBaseInitStr);
 
 	NVIC_Initstr.NVIC_IRQChannel=TIM1_BRK_TIM9_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=3;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=8;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
@@ -128,10 +128,10 @@ void TIM1_BRK_TIM9_IRQHandler()
     if( TIM_GetFlagStatus(TIM9,TIM_IT_Update) == SET)
     {
         TickCount++;
-        RTOS_DebugTimer++;
+        //RTOS_DebugTimer++;
         // EnCoderUpdate();
     }
-
+    
     TIM_ClearFlag(TIM9,TIM_IT_Update);
 }
 

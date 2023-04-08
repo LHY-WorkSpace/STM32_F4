@@ -162,7 +162,7 @@ void ILI9341_DMA_Init()
 	DMA_Init(DMA2_Stream1,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=2;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=9;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);

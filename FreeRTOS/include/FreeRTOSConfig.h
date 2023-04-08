@@ -51,7 +51,7 @@
 #define configUSE_IDLE_HOOK								0
 #define configUSE_TICK_HOOK								0
 #define configCPU_CLOCK_HZ								( SystemCoreClock )
-#define configTICK_RATE_HZ								( ( TickType_t ) 100 )
+#define configTICK_RATE_HZ								( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES							( 15 )
 #define configMINIMAL_STACK_SIZE						( ( unsigned short ) 150 )
 #define configTOTAL_HEAP_SIZE							( ( size_t ) ( 30 * 1024 ) )  // 30k的堆大小，由FreeRTOS管理
@@ -67,9 +67,9 @@
 #define configUSE_COUNTING_SEMAPHORES					1
 
 //输出调试信息可打开以下3个开关
-#define configUSE_TRACE_FACILITY						1
-#define configGENERATE_RUN_TIME_STATS					1
-#define configUSE_STATS_FORMATTING_FUNCTIONS 			1 
+#define configUSE_TRACE_FACILITY						0
+#define configGENERATE_RUN_TIME_STATS					0
+#define configUSE_STATS_FORMATTING_FUNCTIONS 			0
 
 
 extern uint32_t RTOS_DebugTimer;
