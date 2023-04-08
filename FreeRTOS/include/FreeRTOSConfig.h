@@ -69,15 +69,17 @@
 //输出调试信息可打开以下3个开关
 #define configUSE_TRACE_FACILITY						0
 #define configGENERATE_RUN_TIME_STATS					0
-#define configUSE_STATS_FORMATTING_FUNCTIONS 			0
+#define configUSE_STATS_FORMATTING_FUNCTIONS 			0 
 
 
+
+#if ( configUSE_TRACE_FACILITY == 1 )
 extern uint32_t RTOS_DebugTimer;
 //用于给获取任务函数提供时间基准
-#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()  TickTimer_Init(2) 
+#define portCONFIGURE_TIMER_FOR_RUN_TIME_STATS()  RTOSDebugTimerInit() 
 //用于提供当前时间基准变量 unsigned long long类型
 #define portGET_RUN_TIME_COUNTER_VALUE()  RTOS_DebugTimer 
-
+#endif
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 								0

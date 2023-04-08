@@ -1,22 +1,5 @@
 #include "IncludeFile.h"
 
-void LED_Tasssk(void)
-{
-	TickType_t Time;
-	Time=xTaskGetTickCount();
-	while(1)
-	{	
-		LED1_ON;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
-		LED1_OFF;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
-		LED1_ON;
-		vTaskDelayUntil(&Time,100/portTICK_PERIOD_MS);
-		LED1_OFF;
-		vTaskDelayUntil(&Time,1000/portTICK_PERIOD_MS);
-
-	}
-}
 
 void lvgl_Task()
 {
@@ -51,9 +34,6 @@ void FFT_Task()
 
 void CreateAllTask()
 {
-	xTaskCreate( (TaskFunction_t)lvgl_Task,"LVGL",500,NULL,8,NULL);
-   	xTaskCreate( (TaskFunction_t)LED_Tasssk,"LED",200,NULL,5,NULL);
-	// xTaskCreate( (TaskFunction_t)FFT_Task,"FFT",500,NULL,9,NULL);
 	vTaskDelete(NULL);
 }
 
@@ -65,9 +45,9 @@ int  main()
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
+	TickTimer_Init(20);
 	TickTimer_Init(1);
-	// ILI9341_Init();
-	ST7789_Init();
+	// ILI9341_Init();	ST7789_Init();
 	printf("Power Online\r\n");
     LVGL_Init();
 	// while (1)

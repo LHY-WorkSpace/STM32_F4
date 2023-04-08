@@ -273,8 +273,71 @@ u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data
 			k++;
 		}
 	}
+}
 
-	return TRUE;
+//***************************************************//
+//  功能描述: 获取接受状态
+//  
+//  参数: 
+//  
+//  返回值: TRUE / FALSE
+//  
+//  说明: 只有接收完成后才能有后续读取操作
+//  
+//***************************************************//
+u8 USART_RxCompleteFlag(USART_Data_t *USART_Data)
+{
+	if( USART_Data->RX_Length  == 0 )
+	{
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;
+	}
+}
+
+//***************************************************//
+//  功能描述: 获取接收数据缓冲的地址
+//  
+//  参数: offset：缓冲偏移
+//  
+//  返回值: RX_Data偏移对应的数据地址
+//  
+//  说明: 无
+//  
+//***************************************************//
+u8 *USART_RxDataAddr(USART_Data_t *USART_Data,,u16 offset)
+{
+	if(offset >= BUFFER_SIZE )
+	{
+		return (USART_Data->RX_Data);
+	}
+	else
+	{
+		return (USART_Data->RX_Data + offset);
+	}
+}
+//***************************************************//
+//  功能描述: 获取发送数据缓冲的地址
+//  
+//  参数: offset：缓冲偏移
+//  
+//  返回值: TX_Data偏移对应的数据地址
+//  
+//  说明: 无
+//  
+//***************************************************//
+u8 *USART_TxDataAddr(USART_Data_t *USART_Data,,u16 offset)
+{
+	if(offset >= BUFFER_SIZE )
+	{
+		return (USART_Data->TX_Data);
+	}
+	else
+	{
+		return (USART_Data->TX_Data + offset);
+	}
 }
 
 //************************// 
@@ -333,11 +396,6 @@ u8 USART_GetData(USART_Data_t *USART_Data,u16 Buffsize,u8 *Data,u16 *Length)
 	}
 
 }
-
-
-
-QueueHandle_t USART1_TaskHandle;
-
 //************************// 
 //  功能描述: USARTx_IRQ 函数
 //  
@@ -350,27 +408,6 @@ QueueHandle_t USART1_TaskHandle;
 //************************//  
 void USART1_IRQHandler()
 {
-	// u8 Buff,i;
-	// 	//接收中断
-	// if(USART_GetITStatus(USART1,USART_IT_RXNE) != RESET)
-	// {
-	// 	USART_ClearITPendingBit(USART1,USART_IT_RXNE);
-	// 	Buff = USART_ReceiveData(USART1);
-	// 	xQueueSendFromISR( USART1_TaskHandle,&Buff,NULL);
-	// }
-
-	// //接收空闲中断
-	// if(USART_GetITStatus(USART1,USART_IT_IDLE) != RESET)
-	// {
-	// 	//此处必须先读SR再度DR来清标志位
-	// 	i = USART1->SR;
-	// 	i = USART1->DR;
-	// 	i++;
-
-	// }
-
-
-
 	USARTx_ITHandle(USART1,&USART1_Data);
 }
 
@@ -378,50 +415,6 @@ void USART2_IRQHandler()
 {
 	USARTx_ITHandle(USART2,&USART2_Data);
 }
-
-
-
-
-u8 RX_Data[20];
-u16 Length;
-u8 Sta;
-u8 Enocde_Data()
-{
-
-	if( USART_GetData(&USART1_Data,sizeof(RX_Data),RX_Data,&Length) == TRUE)
-	{
-		switch (RX_Data[0])
-		{
-			case '1':
-				Sta = 1;
-				break;
-			case '2':
-				Sta = 2;
-				break;
-			case '3':
-				Sta = 3;
-				break;		
-			case '4':
-				Sta = 4;
-				break;		
-			case '0':
-				Sta = 0;
-				break;						
-			default:
-				Sta = 10;
-				break;
-		}
-	}
-	else
-	{
-		Sta = 10;
-	}
-
-	return Sta;
-}
-
-
-
 
 
 
