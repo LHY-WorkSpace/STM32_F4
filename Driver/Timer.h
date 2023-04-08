@@ -2,8 +2,10 @@
 #define TIMER_H
 #include "stm32f4xx.h"
 
+#if ( configUSE_TRACE_FACILITY == 1 )
+    extern u32 RTOS_DebugTimer;
+#endif
 
-extern u32 RTOS_DebugTimer;
 void LVGL_TimerInit(u16 Period);
 u32 LVGL_GetTick(void);
 void Delay_Init(void);

@@ -178,13 +178,12 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         ST7789_DMA_SetAddr((u32)(&color_p->full),Point);
         ST7789_DMA_Start();
-        disp_disable_update();
+
 #elif (DISPLAY_DEV == ILI9341)
         ILI9341_SetXY_Area(area->x1,area->y1,area->x2,area->y2);
         ILI9341_DMA_SetAddr((u32)(&color_p->full),Point);
         ILI9341_WriteToRAM();
         ILI9341_DMA_Start();
-        disp_disable_update();
 #endif
         // for(y = area->y1; y <= area->y2; y++) 
         // {
@@ -197,6 +196,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
         //     }
         // }
         // lv_disp_flush_ready(disp_drv);
+        disp_disable_update();
     }
 
     /*IMPORTANT!!!

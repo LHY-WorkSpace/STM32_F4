@@ -5,7 +5,7 @@
 USART_Data_t USART1_Data;
 USART_Data_t USART2_Data;
 
-
+QueueHandle_t USART1_TaskHandle;
 
 //使用中断方式发送数据时，应先将数据发送到寄存器中，然后再开启中断，发送完毕后应在中断函数里关闭发送中断！！！！！！！
 // sendBuffer(Data);
@@ -260,7 +260,7 @@ u8 USART_ITSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u16 Length,u8
 //  说明: 无
 //
 //************************//  
-u8 USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
+void USART_PollingSendData(USART_TypeDef* USARTx,USART_Data_t *USART_Data,u8 *Data,u16 Length)
 {
 	u16 i,k=0;
 	for ( i = 0; i < Length; i++)
@@ -307,7 +307,7 @@ u8 USART_RxCompleteFlag(USART_Data_t *USART_Data)
 //  说明: 无
 //  
 //***************************************************//
-u8 *USART_RxDataAddr(USART_Data_t *USART_Data,,u16 offset)
+u8 *USART_RxDataAddr(USART_Data_t *USART_Data,u16 offset)
 {
 	if(offset >= BUFFER_SIZE )
 	{
@@ -328,7 +328,7 @@ u8 *USART_RxDataAddr(USART_Data_t *USART_Data,,u16 offset)
 //  说明: 无
 //  
 //***************************************************//
-u8 *USART_TxDataAddr(USART_Data_t *USART_Data,,u16 offset)
+u8 *USART_TxDataAddr(USART_Data_t *USART_Data,u16 offset)
 {
 	if(offset >= BUFFER_SIZE )
 	{

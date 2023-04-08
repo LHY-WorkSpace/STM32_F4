@@ -258,11 +258,11 @@ void Eye_BodyAnimPath()
         lv_anim_init(&EyeBodyPath_Anim[i]);
         lv_anim_set_var(&EyeBodyPath_Anim[i],Eye_Group[i]);
         lv_anim_set_values(&EyeBodyPath_Anim[i],0,90);
-        lv_anim_set_time(&EyeBodyPath_Anim[i], 150);
-		lv_anim_set_delay(&EyeBodyPath_Anim[i], 200);
+        lv_anim_set_time(&EyeBodyPath_Anim[i], 400);
+		lv_anim_set_delay(&EyeBodyPath_Anim[i], 400);
         lv_anim_set_exec_cb(&EyeBodyPath_Anim[i], Eye_BodyAnimPath_CB);
         lv_anim_set_path_cb(&EyeBodyPath_Anim[i],lv_anim_path_ease_in_out);
-        lv_anim_set_repeat_delay(&EyeBodyPath_Anim[i],100);
+        lv_anim_set_repeat_delay(&EyeBodyPath_Anim[i],300);
         // lv_anim_set_repeat_count(&EyeBodyPath_Anim[i], LV_ANIM_REPEAT_INFINITE);
 		lv_anim_set_repeat_count(&EyeBodyPath_Anim[i], 3);
     }
@@ -284,13 +284,13 @@ void EyeFocalizeAnimCreat()
 		lv_anim_init(&EyeFocalize_Anim[i]);
         lv_anim_set_var(&EyeFocalize_Anim[i],Eye_base[i]);
         lv_anim_set_values(&EyeFocalize_Anim[i],EYE_HOLE_SIZE,EYE_HOLE_MIN_SIZE);
-        lv_anim_set_time(&EyeFocalize_Anim[i], 100);
-		lv_anim_set_delay(&EyeFocalize_Anim[i], 200);
+        lv_anim_set_time(&EyeFocalize_Anim[i], 300);
+		lv_anim_set_delay(&EyeFocalize_Anim[i], 400);
         lv_anim_set_exec_cb(&EyeFocalize_Anim[i], ChangeEyeFocalize_CB);
         lv_anim_set_path_cb(&EyeFocalize_Anim[i],lv_anim_path_ease_in_out);
-		lv_anim_set_playback_time(&EyeFocalize_Anim[i],100);
-		lv_anim_set_playback_delay(&EyeFocalize_Anim[i],100);
-        lv_anim_set_repeat_delay(&EyeFocalize_Anim[i],150);
+		lv_anim_set_playback_time(&EyeFocalize_Anim[i],200);
+		lv_anim_set_playback_delay(&EyeFocalize_Anim[i],200);
+        lv_anim_set_repeat_delay(&EyeFocalize_Anim[i],300);
         lv_anim_set_repeat_count(&EyeFocalize_Anim[i], LV_ANIM_REPEAT_INFINITE);
 
 	}
@@ -450,7 +450,7 @@ void LVGL_Init()
 {
 
 #ifndef ON_PC
-	LVGLTimerInit(1);
+	LVGL_TimerInit(1);
     lv_init();
 	lv_port_disp_init();
 	lv_port_indev_init();
@@ -460,8 +460,8 @@ void LVGL_Init()
     // EYE_FACE();
     // LVGL_Build_GUI();
     // roller_show_3();
-   LVGL_Demo();
-//    Eye_Main();
+//    LVGL_Demo();
+   Eye_Main();
 }
 
 

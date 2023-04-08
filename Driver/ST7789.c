@@ -103,7 +103,7 @@ void ST7789_DMA_Init()
 	DMA_Init(DMA2_Stream3,&DMA_InitConfig);
 
 	NVIC_Initstr.NVIC_IRQChannel=DMA2_Stream3_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=5;
+	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=9;
 	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);

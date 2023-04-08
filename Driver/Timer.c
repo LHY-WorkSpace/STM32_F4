@@ -4,8 +4,8 @@
 // 16位:T3,T4,T9 - T14
 // 32位:T2,T5
 
-// 84Mhz:T1,T8,T9,T10,T11
-// 42Mhz:除84之外的
+// 168Mhz:T1,T8,T9,T10,T11
+// 84Mhz:除168之外的
 
 
 //  Timer_10: Delay计数
@@ -14,7 +14,7 @@
 
 static u32 LVGL_TickCount;
 //************************// 
-//  功能描述: LVGL_Tick计数函数
+//  功能描述: Tick计数函数
 //  
 //  参数: Period中断周期(ms)
 //  
@@ -42,7 +42,6 @@ void LVGL_TimerInit(u16 Period)
 	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
 	NVIC_Init(&NVIC_Initstr);
 
-    RTOS_DebugTimer=0;
 
     TIM_ARRPreloadConfig(TIM9,ENABLE);
     TIM_ITConfig(TIM9,TIM_IT_Update,ENABLE);
@@ -189,7 +188,7 @@ void TIM3_IRQHandler()
     if( TIM_GetFlagStatus(TIM3,TIM_IT_Update) == SET)
     {
         TIM_ClearFlag(TIM3,TIM_IT_Update);
-        //RTOS_DebugTimer++;
+        RTOS_DebugTimer++;
     }
     
 }
