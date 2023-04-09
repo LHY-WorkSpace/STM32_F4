@@ -22,7 +22,7 @@
 /**********************
  *      TYPEDEFS
  **********************/
-
+FATFS lv_Fatfs;
 /**********************
  *  STATIC PROTOTYPES
  **********************/
@@ -92,6 +92,12 @@ static void fs_init(void)
 {
     /*Initialize the SD card and FatFS itself.
      *Better to do it in your code to keep this library untouched for easy updating*/
+    disk_initialize(1);
+    // f_mount(&lv_Fatfs,"1:",1);
+    printf("mount Code %d\r\n",f_mount(&lv_Fatfs,"1:",1));
+
+    // printf("size %d\r\n",File_GetFileSize("1:/Img/321.PNG"));
+    
 }
 
 /**
@@ -114,6 +120,9 @@ static void * fs_open(lv_fs_drv_t * drv, const char * path, lv_fs_mode_t mode)
     if(f == NULL) return NULL;
 
     FRESULT res = f_open(f, path, flags);
+
+    // printf("open %d  path %s\r\n",res,path);
+
     if(res == FR_OK) {
         return f;
     }

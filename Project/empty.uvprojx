@@ -2683,11 +2683,6 @@
               <FilePath>..\Module\LVGL\src\porting\lv_port_disp.c</FilePath>
             </File>
             <File>
-              <FileName>lv_port_fs_template.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Module\LVGL\src\porting\lv_port_fs_template.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_port_indev.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Module\LVGL\src\porting\lv_port_indev.c</FilePath>

@@ -9,9 +9,9 @@
 /*********************
  *      INCLUDES
  *********************/
-#include "lv_port_fs_template.h"
+#include "lv_port_fs.h"
 #include "../../lvgl.h"
-
+#include "IncludeFile.h"
 /*********************
  *      DEFINES
  *********************/
@@ -19,7 +19,8 @@
 /**********************
  *      TYPEDEFS
  **********************/
-
+FIL lv_File;
+FATFS lv_Fatfs;
 /**********************
  *  STATIC PROTOTYPES
  **********************/
@@ -69,7 +70,7 @@ void lv_port_fs_init(void)
     lv_fs_drv_init(&fs_drv);
 
     /*Set up fields...*/
-    fs_drv.letter = 'P';
+    fs_drv.letter = '1';
     fs_drv.open_cb = fs_open;
     fs_drv.close_cb = fs_close;
     fs_drv.read_cb = fs_read;
@@ -92,7 +93,8 @@ void lv_port_fs_init(void)
 static void fs_init(void)
 {
     /*E.g. for FatFS initialize the SD card and FatFS itself*/
-
+    disk_initialize(DEV_SD);
+    f_mount(&lv_Fatfs,"1:",1);
     /*You code here*/
 }
 
@@ -111,15 +113,18 @@ static void * fs_open(lv_fs_drv_t * drv, const char * path, lv_fs_mode_t mode)
 
     if(mode == LV_FS_MODE_WR) {
         /*Open a file for write*/
-        f = ...         /*Add your code here*/
+        //f = ...         /*Add your code here*/
+        f_open(&lv_File,path,FA_OPEN_ALWAYS|FA_WRITE);
     }
     else if(mode == LV_FS_MODE_RD) {
         /*Open a file for read*/
-        f = ...         /*Add your code here*/
+       // f = ...         /*Add your code here*/
+        f_open(&lv_File,path,FA_OPEN_ALWAYS|FA_READ);
     }
     else if(mode == (LV_FS_MODE_WR | LV_FS_MODE_RD)) {
         /*Open a file for read and write*/
-        f = ...         /*Add your code here*/
+        // f = ...         /*Add your code here*/
+        f_open(&lv_File,path,FA_OPEN_ALWAYS|FA_READ|FA_WRITE);
     }
 
     return f;

@@ -511,8 +511,8 @@ const char * lv_fs_get_last(const char * path)
  */
 static const char * lv_fs_get_real_path(const char * path)
 {
-    path++; /*Ignore the driver letter*/
-    if(*path == ':') path++;
+    // path++; /*Ignore the driver letter*/
+    // if(*path == ':') path++;
 
     return path;
 }

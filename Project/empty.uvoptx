@@ -158,7 +158,88 @@
           <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_512 -FS08000000 -FL080000 -FP0($$Device:STM32F407VETx$CMSIS\Flash\STM32F4xx_512.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>107</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134339790</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Module\LVGL\src\widgets\lv_img.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../Module/LVGL/src/widgets/lv_img.c\107</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>122</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134290450</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Module\LVGL\src\extra\libs\fsdrv\lv_fs_fatfs.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\1\../Module/LVGL/src/extra/libs/fsdrv/lv_fs_fatfs.c\122</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>82</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134253182</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\Module\LVGL\src\extra\libs\png\lv_png.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\\../Module/LVGL/src/extra/libs/png/lv_png.c\82</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>78</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\Module\LVGL\src\extra\libs\bmp\lv_bmp.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>80</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\Module\LVGL\src\widgets\lv_img.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -169,6 +250,36 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>EnCoderInfo</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>new_str</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>img</ItemText>
+        </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>path</ItemText>
+        </Ww>
+        <Ww>
+          <count>5</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>res</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>header</ItemText>
+        </Ww>
+        <Ww>
+          <count>7</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>img</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -197,7 +308,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -1421,7 +1532,7 @@
 
   <Group>
     <GroupName>Driver</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -3425,7 +3536,7 @@
 
   <Group>
     <GroupName>LVGL</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -5236,18 +5347,6 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Module\LVGL\src\porting\lv_port_fs_template.c</PathWithFileName>
-      <FilenameWithoutPath>lv_port_fs_template.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>10</GroupNumber>
-      <FileNumber>411</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
       <PathWithFileName>..\Module\LVGL\src\porting\lv_port_indev.c</PathWithFileName>
       <FilenameWithoutPath>lv_port_indev.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -5255,7 +5354,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>412</FileNumber>
+      <FileNumber>411</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5267,7 +5366,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>413</FileNumber>
+      <FileNumber>412</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5279,7 +5378,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>414</FileNumber>
+      <FileNumber>413</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5291,7 +5390,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>415</FileNumber>
+      <FileNumber>414</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5303,7 +5402,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>416</FileNumber>
+      <FileNumber>415</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5315,7 +5414,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>417</FileNumber>
+      <FileNumber>416</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5327,7 +5426,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>418</FileNumber>
+      <FileNumber>417</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5339,7 +5438,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>419</FileNumber>
+      <FileNumber>418</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5351,7 +5450,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>420</FileNumber>
+      <FileNumber>419</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5363,7 +5462,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>421</FileNumber>
+      <FileNumber>420</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5375,7 +5474,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>422</FileNumber>
+      <FileNumber>421</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5387,7 +5486,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>423</FileNumber>
+      <FileNumber>422</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5399,7 +5498,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>424</FileNumber>
+      <FileNumber>423</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5411,7 +5510,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>425</FileNumber>
+      <FileNumber>424</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5423,7 +5522,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>426</FileNumber>
+      <FileNumber>425</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5435,7 +5534,7 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>427</FileNumber>
+      <FileNumber>426</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5447,9 +5546,9 @@
     </File>
     <File>
       <GroupNumber>10</GroupNumber>
-      <FileNumber>428</FileNumber>
+      <FileNumber>427</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\Module\LVGL\LVGL_UI.c</PathWithFileName>
@@ -5467,7 +5566,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>429</FileNumber>
+      <FileNumber>428</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5479,7 +5578,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>430</FileNumber>
+      <FileNumber>429</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5491,7 +5590,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>431</FileNumber>
+      <FileNumber>430</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5503,7 +5602,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>432</FileNumber>
+      <FileNumber>431</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5515,7 +5614,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>433</FileNumber>
+      <FileNumber>432</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5527,7 +5626,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>434</FileNumber>
+      <FileNumber>433</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5539,7 +5638,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>435</FileNumber>
+      <FileNumber>434</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5551,7 +5650,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>436</FileNumber>
+      <FileNumber>435</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5563,7 +5662,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>437</FileNumber>
+      <FileNumber>436</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5575,7 +5674,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>438</FileNumber>
+      <FileNumber>437</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5587,7 +5686,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>439</FileNumber>
+      <FileNumber>438</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5599,7 +5698,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>440</FileNumber>
+      <FileNumber>439</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -5611,7 +5710,7 @@
     </File>
     <File>
       <GroupNumber>11</GroupNumber>
-      <FileNumber>441</FileNumber>
+      <FileNumber>440</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
