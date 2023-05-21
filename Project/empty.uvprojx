@@ -54,8 +54,8 @@
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
-          <DebugInformation>0</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
+          <DebugInformation>1</DebugInformation>
+          <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
@@ -1064,6 +1064,11 @@
               <FileName>DataType.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\DataType.c</FilePath>
+            </File>
+            <File>
+              <FileName>AS5600.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\AS5600.c</FilePath>
             </File>
           </Files>
         </Group>

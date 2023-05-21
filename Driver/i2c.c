@@ -4,8 +4,8 @@
 
 
 /*
-IIC_SCL     GPIO_Pin_6                                       
-IIC_SDA     GPIO_Pin_7
+IIC_SCL     GPIO_Pin_4                                       
+IIC_SDA     GPIO_Pin_5
 */
 
 void IIC_Init()

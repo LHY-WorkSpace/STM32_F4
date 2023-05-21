@@ -5,8 +5,8 @@
  
 #define PORT_AHB                  RCC_AHB1Periph_GPIOB                                      //IO总线
 #define PORT_GROUP                GPIOB                                                     //IO端口组
-#define IIC_SCL                   GPIO_Pin_6                                       
-#define IIC_SDA                   GPIO_Pin_7
+#define IIC_SCL                   GPIO_Pin_5                                       
+#define IIC_SDA                   GPIO_Pin_4
 #define IIC_SCL_LOW  			GPIO_ResetBits(PORT_GROUP,IIC_SCL)
 #define IIC_SCL_HIGH  		 	GPIO_SetBits(PORT_GROUP,IIC_SCL)
 #define IIC_SDA_LOW  			GPIO_ResetBits(PORT_GROUP,IIC_SDA)

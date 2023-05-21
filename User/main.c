@@ -48,19 +48,21 @@ int  main()
 	USART1_Init(115200,USART_DATA_8bit,USART_STOP_1bit,USART_PARTYT_NO);
 	Delay_Init();  //延时函数必须靠前，因为有些函数操作需要延时
 	led_init();
+	AS5600_Init();
+
 	// ILI9341_Init();
-	ST7789_Init();
-	printf("Power Online\r\n");
-    LVGL_Init();
-	// while (1)
-	// {
+	// ST7789_Init();
+	// printf("Power Online\r\n");
+    // LVGL_Init();
+	while (1)
+	{
 	// 	LED_Freq();
 	// 	LVGL_Task();
-	// }
-
-	xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
-	vTaskStartScheduler();
-	// SystemDown();
+		AS5600_Test();
+	}
+	// xTaskCreate((TaskFunction_t)CreateAllTask,"StartTask",500,NULL,10,NULL);
+	// vTaskStartScheduler();
+	SystemDown();
 }
 
 

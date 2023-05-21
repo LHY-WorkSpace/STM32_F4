@@ -47,6 +47,7 @@
 #include "PID.h"
 #include "ST7789.h"
 #include "Encoder.h"
+#include "AS5600.h"
 
 // TRUE     使用
 // FALSE    不使用
