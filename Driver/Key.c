@@ -11,11 +11,9 @@
 
 static struct Button* head_handle = NULL;
 
+static uint8_t KeyState[Key_MaxNum];
 
-
-static KeyState_t KeyInfo;
-
-
+KeyInfo_t KeyInfo;
 
 struct Button Button_Up;
 struct Button Button_Down;
@@ -290,19 +288,19 @@ void SINGLE_Click_Handler(void *Data)
     {
         case Key_Up:
             printf("Key_Up    Click\r\n");
-			KeyInfo.KeyState[Key_Up] = SINGLE_CLICK;
+			KeyState[Key_Up] = SINGLE_CLICK;
             break;
         case Key_Down:
             printf("Key_Down    Click\r\n");
-			KeyInfo.KeyState[Key_Down] = SINGLE_CLICK;
+			KeyState[Key_Down] = SINGLE_CLICK;
             break;
         case Key_Left:
             printf("Key_Left    Click\r\n");
-			KeyInfo.KeyState[Key_Left] = SINGLE_CLICK;
+			KeyState[Key_Left] = SINGLE_CLICK;
             break;
         case Key_Right:
             printf("Key_Right    Click\r\n");
-			KeyInfo.KeyState[Key_Right] = SINGLE_CLICK;
+			KeyState[Key_Right] = SINGLE_CLICK;
             break;
         default:
 		printf("==============\r\n");
@@ -318,19 +316,19 @@ void DOUBLE_Click_Handler(void *Data)
     {
         case Key_Up:
             printf("Key_Up    Click * 2\r\n");
-			KeyInfo.KeyState[Key_Up] = DOUBLE_CLICK;
+			KeyState[Key_Up] = DOUBLE_CLICK;
             break;
         case Key_Down:
             printf("Key_Down    Click * 2\r\n");
-			KeyInfo.KeyState[Key_Down] = DOUBLE_CLICK;
+			KeyState[Key_Down] = DOUBLE_CLICK;
             break;
         case Key_Left:
             printf("Key_Left    Click * 2\r\n");
-			KeyInfo.KeyState[Key_Left] = DOUBLE_CLICK;
+			KeyState[Key_Left] = DOUBLE_CLICK;
             break;
         case Key_Right:
             printf("Key_Right    Click * 2\r\n");
-			KeyInfo.KeyState[Key_Right] = DOUBLE_CLICK;
+			KeyState[Key_Right] = DOUBLE_CLICK;
             break;
         default:
 			printf("==============\r\n");
@@ -448,253 +446,30 @@ void Key_Init()
 
 
 
-uint8_t GetKeyState()
+KeyInfo_t GetKeyState()
 {
 	uint8_t i;
-
-	//仅支持单个按键动作
-	for (i = 0; i < 4; i++)
+	for( i = 0; i < Key_MaxNum; i++)
 	{
-		if(KeyInfo.KeyState[i] != 0xff)
+		if(KeyState[i] != 0xff)
 		{
-			KeyInfo.Index = i;
-			break;
+			break; 
 		}
 	}
-	
-	memset((uint8_t *)&KeyInfo,0xff,sizeof(KeyInfo));
+
+	if( i >= Key_MaxNum) 
+	{
+		KeyInfo.KeyState = NONE_PRESS;
+		KeyInfo.KeyNum = Key_MaxNum;
+	}
+	else
+	{
+		KeyInfo.KeyNum = i;
+		KeyInfo.KeyState = KeyState[i];
+	}
+
+	memset(&KeyState,0xff,sizeof(KeyState));
+
+	return KeyInfo;
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // void KeyScan()
-// // {
-// //     static uint8_t State = 0;
-
-// //     if(KEY_LEFT|KEY_DOWN|KEY_UP|KEY_RIGHT)
-// //     {
-// //         if(KEY_LEFT)
-// //         {
-// //             Sta = (uint8_t)Key_Left;
-// //         }
-// //         else if(KEY_DOWN)
-// //         {
-// //             Sta = (uint8_t)Key_Down;
-// //         }
-// //         else if(KEY_UP)
-// //         {
-// //             Sta = (uint8_t)Key_Up;
-// //         }
-// //         else if(KEY_RIGHT)
-// //         {
-// //             Sta = (uint8_t)Key_Right;
-// //         }
-// //         else
-// //         {
-// //             Sta = (uint8_t)Key_Release;
-// //         }
-// //     }
-// //     else
-// //     {
-// //         Sta = (uint8_t)Key_Release; 
-// //     }
-// // }
-
-
-// void KeyScan()
-// {
-//     static uint8_t State = (uint8_t)Key_Release;
-
-//     if(KEY_LEFT)
-//     {
-//         State = (uint8_t)Key_Left;
-//     }
-//     else if(KEY_DOWN)
-//     {
-//         State = (uint8_t)Key_Down;
-//     }
-//     else if(KEY_UP)
-//     {
-//         State = (uint8_t)Key_Up;
-//     }
-//     else if(KEY_RIGHT)
-//     {
-//         State = (uint8_t)Key_Right;
-//     }
-//     else
-//     {
-//         //State = (uint8_t)Key_Release;
-//     }
-
-
-
-
-//     if(State = State)
-//     {
-//         Sta = State;
-//     }
-
-//     State = 
-// }
-
-
-
-
-
-
-
-// void KeyTask()
-// {
-//     static uint8_t cnt=0;
-
-//     if(Time_GetFlag(Dev_Key,Flag_20ms) == SET)
-//     {
-//         if(KEY_LEFT|KEY_DOWN|KEY_UP|KEY_RIGHT)
-//         {
-//             cnt = 1;
-//         }
-
-//         if(cnt)
-//         {
-//             cnt++;
-//         }
-
-//         if(cnt >= KEY_MAX_PERIOD_MS/20)
-//         {
-//             if(KEY_LEFT)
-//             {
-//                 Sta = (uint8_t)Key_Left;
-//             }
-//             else if(KEY_DOWN)
-//             {
-//                 Sta = (uint8_t)Key_Down;
-//             }
-//             else if(KEY_UP)
-//             {
-//                 Sta = (uint8_t)Key_Up;
-//             }
-//             else if(KEY_RIGHT)
-//             {
-//                 Sta = (uint8_t)Key_Right;
-//             }
-//             else
-//             {
-//                 Sta = (uint8_t)Key_Release;
-//                 cnt = 0;
-//             }
-//         }
-//         else
-//         {
-//             printf("Sta:%d\r\n",Sta);
-//             cnt =0;  
-//         }
-//     }
-
-// }
-
-
-
-
-

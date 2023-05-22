@@ -15,7 +15,7 @@
 #define TICKS_INTERVAL    20	//ms
 #define DEBOUNCE_TICKS    2	//MAX 8
 #define SHORT_TICKS       (200 /TICKS_INTERVAL)
-#define LONG_TICKS        (800 /TICKS_INTERVAL)
+#define LONG_TICKS        (600 /TICKS_INTERVAL)
 
 
 typedef void (*BtnCallback)(void*);
@@ -27,7 +27,7 @@ typedef enum
     Key_Down,
     Key_Up,
     Key_Right,
-    Key_Release,
+	Key_MaxNum,
 }Key_State_e;
 
 
@@ -59,13 +59,11 @@ typedef struct Button {
 }Button;
 
 
-
-typedef struct  
+typedef struct
 {
-	uint8_t Index;
-	uint8_t KeyState[4];
-}KeyState_t;
-
+	uint8_t KeyNum;
+	PressEvent KeyState;
+}KeyInfo_t;
 
 
 
@@ -80,6 +78,11 @@ void button_ticks(void);
 
 void Key_Init(void);
 void KeyScan(void);
-uint8_t GetKeyState(void);
+KeyInfo_t GetKeyState(void);
 void KeyTask(void);
+
+// uint8_t GetKeyState(uint8_t Sta);
+
+
+
 #endif 
