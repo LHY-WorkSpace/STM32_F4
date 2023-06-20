@@ -39,7 +39,7 @@ void MPU6050_Test()
 }
 	
 
-void AT24C08_Test()
+void EEPROM_Test()
 {
 
 

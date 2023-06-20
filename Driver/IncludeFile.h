@@ -34,7 +34,7 @@
 
 
 //Æ÷¼þÇý¶¯²ã
-#include "AT24C08.h"
+#include "EEPROM.h"
 #include "MPU6050.h"
 #include "DHT11.h"
 #include "DS18B20.h"

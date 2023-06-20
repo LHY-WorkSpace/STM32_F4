@@ -3,7 +3,7 @@
 
 
 //************************// 
-//  功能描述: AT24C08 IO 初始化函数
+//  功能描述: EEPROM IO 初始化函数
 //  
 //  参数: 无
 //  
@@ -14,13 +14,13 @@
 //  说明: 
 //
 //************************//  
-void AT24C08_Init(void)
+void EEPROM_Init(void)
 {
 	IIC_Init();
 }
 
 //************************// 
-//  功能描述: AT24C08 数据写入函数
+//  功能描述: EEPROM 数据写入函数
 //  
 //  参数: 物理地址，长度，数据指针
 //  
@@ -31,22 +31,22 @@ void AT24C08_Init(void)
 //  说明: 
 //
 //************************//  
-u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
+u8  EEPROMWriteData(u16 addr,u16 length,u8 *data)
 {
 	u8 k,i;
 	u16 PageNum,WR_Len,Offset,LenCount;
 	B16_B08 MemAddr;	//绝对地址
 
-	if( addr >= AT24C08_PAGE_SIZE*AT24C08_PAGES)
+	if( addr >= EEPROM_PAGE_SIZE*EEPROM_PAGES)
 	{
 		return 0XFF;
 	}
 	
 	MemAddr.B16 = addr;
 
-	PageNum = addr/AT24C08_PAGE_SIZE;			//得到页编号
-	Offset = addr - PageNum*AT24C08_PAGE_SIZE;	//计算页内偏移
-	WR_Len = AT24C08_PAGE_SIZE - Offset;		//计算一页内从偏移位置要写入的字节数
+	PageNum = addr/EEPROM_PAGE_SIZE;			//得到页编号
+	Offset = addr - PageNum*EEPROM_PAGE_SIZE;	//计算页内偏移
+	WR_Len = EEPROM_PAGE_SIZE - Offset;		//计算一页内从偏移位置要写入的字节数
 	LenCount = 0;
 
 	if( WR_Len >= length )	//长度小于等于未跨页剩余字节数，则按实际长度写入
@@ -57,7 +57,7 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 	do
 	{
 		Start_IIC();
-		IIC_SenddByte(AT24C08_ADDRESS | MemAddr.B08[1] <<1);
+		IIC_SenddByte(EEPROM_ADDRESS | MemAddr.B08[1] <<1);
 		IIC_Wait_Ack_OK();
 		IIC_SenddByte(MemAddr.B08[0]);
 		IIC_Wait_Ack_OK();
@@ -80,9 +80,9 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 		
 		MemAddr.B16 += WR_Len;
 
-		if( (length - LenCount) >= AT24C08_PAGE_SIZE)
+		if( (length - LenCount) >= EEPROM_PAGE_SIZE)
 		{
-			WR_Len = AT24C08_PAGE_SIZE;
+			WR_Len = EEPROM_PAGE_SIZE;
 		}
 		else
 		{
@@ -97,7 +97,7 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 
 
 //************************// 
-//  功能描述: AT24C08 数据读取函数
+//  功能描述: EEPROM 数据读取函数
 //  
 //  参数: 物理地址，长度，数据指针
 //  
@@ -108,12 +108,12 @@ u8  AT24C08WriteData(u16 addr,u16 length,u8 *data)
 //  说明: 
 //
 //************************//  
-u8 AT24C08ReadData(u16 addr,u16 length,u8 *data)
+u8 EEPROMReadData(u16 addr,u16 length,u8 *data)
 {
 	u16 i;
 	B16_B08 MemAddr;	//绝对地址
 
-	if( addr >= AT24C08_PAGE_SIZE*AT24C08_PAGES)
+	if( addr >= EEPROM_PAGE_SIZE*EEPROM_PAGES)
 	{
 		return 0XFF;
 	}
@@ -121,13 +121,13 @@ u8 AT24C08ReadData(u16 addr,u16 length,u8 *data)
 	MemAddr.B16=addr;
 
 	Start_IIC();
-	IIC_SenddByte(AT24C08_ADDRESS |MemAddr.B08[1]<<1);
+	IIC_SenddByte(EEPROM_ADDRESS |MemAddr.B08[1]<<1);
     IIC_Wait_Ack_OK();
 	IIC_SenddByte(MemAddr.B08[0]);
 	IIC_Wait_Ack_OK();
 
 	Start_IIC();
-	IIC_SenddByte(AT24C08_ADDRESS|0X01|MemAddr.B08[1]<<1);//读取操作
+	IIC_SenddByte(EEPROM_ADDRESS|0X01|MemAddr.B08[1]<<1);//读取操作
     IIC_Wait_Ack_OK();
 
 	for(i=0;i<length;i++)
