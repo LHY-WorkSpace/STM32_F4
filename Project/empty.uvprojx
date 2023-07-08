@@ -886,11 +886,6 @@
               <FilePath>..\Driver\adc.c</FilePath>
             </File>
             <File>
-              <FileName>AT24C08.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\AT24C08.c</FilePath>
-            </File>
-            <File>
               <FileName>CODE_RUN_TIME.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\CODE_RUN_TIME.c</FilePath>
@@ -1069,6 +1064,11 @@
               <FileName>AS5600.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\AS5600.c</FilePath>
+            </File>
+            <File>
+              <FileName>EEPROM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\EEPROM.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -74,10 +74,17 @@ static unsigned char FreeRTOS_Logo[] =
 //***************************************************//
 void u8g2_Init()
 {
+    OLED_Init();
+    #if(OLED_TYPE == SSD1306)
 	u8g2_Setup_ssd1306_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
+    #elif(OLED_TYPE == SH1106)
+    u8g2_Setup_sh1106_128x64_noname_f(&u8g2_Data, U8G2_R0, u8x8_byte_4wire_hw_spi, u8x8_stm32_gpio_and_delay); 
+    #else
+    #warning "œ‘ æ…Ë±∏Œ¥  ≈‰"
+    #endif
 	u8g2_InitDisplay(&u8g2_Data);
 	u8g2_SetPowerSave(&u8g2_Data, 0);
-     u8g2_ClearDisplay(&u8g2_Data);
+    u8g2_ClearDisplay(&u8g2_Data);
 }
 
 
@@ -438,19 +445,19 @@ void Battery_icon()
     Time=xTaskGetTickCount();
     while (1)
     {
-        taskENTER_CRITICAL();
+        // taskENTER_CRITICAL();
         u8g2_SetFontMode(&u8g2_Data,0);
         u8g2_SetDrawColor(&u8g2_Data,1);
 
             u8g2_SetFont(&u8g2_Data, u8g2_font_battery19_tn);
             u8g2_SetFontDirection(&u8g2_Data, 1);
-            u8g2_DrawGlyph(&u8g2_Data,106,8,0x30+k);
+            u8g2_DrawGlyph(&u8g2_Data,-1,50,0x30+k);
             k++;
             if(k==7)
             k=0;
        u8g2_SendBuffer(&u8g2_Data);
-        taskEXIT_CRITICAL();
-        vTaskDelayUntil(&Time,500/portTICK_PERIOD_MS);
+        // taskEXIT_CRITICAL();
+        vTaskDelayUntil(&Time,10/portTICK_PERIOD_MS);
     }
 
 }
@@ -755,8 +762,7 @@ void u8g2_TaskCreate()
 {
 
 
-    xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",200,NULL,10,&u8g2_Battery_T);
-    xTaskCreate( (TaskFunction_t)LED_Task,    "IconTask",200,NULL,8,&LED_T);
+    xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",300,NULL,10,NULL);
     // xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
     // xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
     // xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
@@ -768,6 +774,7 @@ void u8g2_TaskCreate()
 
    //xTaskCreate( (TaskFunction_t)Teat_Task,    "IconTask",200,NULL,10,            NULL);
    //xTaskCreate( (TaskFunction_t)Clear_Task,    "IconTask",200,NULL,10,            NULL);
+   	vTaskDelete(NULL);
 }
 
 
