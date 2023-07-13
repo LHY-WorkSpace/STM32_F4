@@ -6,7 +6,22 @@
 
 #define  OLED_TYPE  SH1106
 
+#define  ALWAYS     (0x0000)
 
+typedef enum
+{
+    Main_ui,
+    UI_MAX,
+}UI_Index_e;
+
+
+
+typedef struct 
+{
+    KeyInfo_t KeyInfo;
+    UI_Index_e Index; 
+    void (*UI_List[UI_MAX])(void);
+}GUI_t;
 
 
 
