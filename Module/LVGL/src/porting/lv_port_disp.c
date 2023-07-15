@@ -15,15 +15,7 @@
 /*********************
  *      DEFINES
  *********************/
-#ifndef MY_DISP_HOR_RES
-    //#warning Please define or replace the macro MY_DISP_HOR_RES with the actual screen width, default value 320 is used for now.
-    #define MY_DISP_HOR_RES    240
-#endif
 
-#ifndef MY_DISP_VER_RES
-    //#warning Please define or replace the macro MY_DISP_HOR_RES with the actual screen height, default value 240 is used for now.
-    #define MY_DISP_VER_RES    240
-#endif
 
 /**********************
  *      TYPEDEFS
@@ -84,21 +76,21 @@ void lv_port_disp_init(void)
 
     /* Example for 1) */
     static lv_disp_draw_buf_t draw_buf_dsc_1;
-    static lv_color_t buf_1[MY_DISP_HOR_RES * 60];                          /*A buffer for 10 rows*/
-    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, MY_DISP_HOR_RES * 60);   /*Initialize the display buffer*/
+    static lv_color_t buf_1[DISP_HOR_RES * 30];                          /*A buffer for 10 rows*/
+    lv_disp_draw_buf_init(&draw_buf_dsc_1, buf_1, NULL, DISP_HOR_RES * 30);   /*Initialize the display buffer*/
 
     /* Example for 2) */
     // static lv_disp_draw_buf_t draw_buf_dsc_2;
-    // static lv_color_t buf_2_1[MY_DISP_HOR_RES * 80];                        /*A buffer for 10 rows*/
-    // static lv_color_t buf_2_2[MY_DISP_HOR_RES * 80];                        /*An other buffer for 10 rows*/
-    // lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, MY_DISP_HOR_RES * 80);   /*Initialize the display buffer*/
+    // static lv_color_t buf_2_1[DISP_HOR_RES * 80];                        /*A buffer for 10 rows*/
+    // static lv_color_t buf_2_2[DISP_HOR_RES * 80];                        /*An other buffer for 10 rows*/
+    // lv_disp_draw_buf_init(&draw_buf_dsc_2, buf_2_1, buf_2_2, DISP_HOR_RES * 80);   /*Initialize the display buffer*/
 
     // /* Example for 3) also set disp_drv.full_refresh = 1 below*/
     // static lv_disp_draw_buf_t draw_buf_dsc_3;
-    // static lv_color_t buf_3_1[MY_DISP_HOR_RES * MY_DISP_VER_RES];            /*A screen sized buffer*/
-    // static lv_color_t buf_3_2[MY_DISP_HOR_RES * MY_DISP_VER_RES];            /*Another screen sized buffer*/
+    // static lv_color_t buf_3_1[DISP_HOR_RES * DISP_VER_RES];            /*A screen sized buffer*/
+    // static lv_color_t buf_3_2[DISP_HOR_RES * DISP_VER_RES];            /*Another screen sized buffer*/
     // lv_disp_draw_buf_init(&draw_buf_dsc_3, buf_3_1, buf_3_2,
-    //                       MY_DISP_VER_RES * LV_VER_RES_MAX);   /*Initialize the display buffer*/
+    //                       DISP_VER_RES * LV_VER_RES_MAX);   /*Initialize the display buffer*/
 
     /*-----------------------------------
      * Register the display in LVGL
@@ -110,8 +102,8 @@ void lv_port_disp_init(void)
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = MY_DISP_HOR_RES;
-    disp_drv.ver_res = MY_DISP_VER_RES;
+    disp_drv.hor_res = DISP_HOR_RES;
+    disp_drv.ver_res = DISP_VER_RES;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = disp_flush;
@@ -174,7 +166,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 
         Point = ( area->x2 - area->x1 + 1 )*(area->y2 - area->y1 + 1 );
 
-#if (DISPLAY_DEV == ST7789)
+#if ( (DISPLAY_DEV == ST7789) || (DISPLAY_DEV == ST7789V) )
         ST7789_SetArea(area->x1,area->y1,area->x2,area->y2);
         ST7789_DMA_SetAddr((u32)(&color_p->full),Point);
         ST7789_DMA_Start();
@@ -205,7 +197,7 @@ static void disp_flush(lv_disp_drv_t * disp_drv, const lv_area_t * area, lv_colo
 }
 
 
-#if (DISPLAY_DEV == ST7789)
+#if ( (DISPLAY_DEV == ST7789) || (DISPLAY_DEV == ST7789V) )
 void DMA2_Stream3_IRQHandler()
 {
     if(DMA_GetITStatus(DMA2_Stream3,DMA_IT_TCIF3))

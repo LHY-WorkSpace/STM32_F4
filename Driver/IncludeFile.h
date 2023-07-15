@@ -94,8 +94,9 @@
 #if (USE_LVGL == TRUE)
 
 #define ST7789      0    
-#define ILI9341     1    
-#define DISPLAY_DEV    ST7789
+#define ILI9341     1
+#define ST7789V     2      
+#define DISPLAY_DEV    ST7789V
 
 #include "../Module/LVGL/lvgl.h"
 #include "../Module/LVGL/src/lvgl.h"

@@ -2,6 +2,11 @@
 #define ST7789_H
 
 
+
+#define DISP_HOR_RES    320
+#define DISP_VER_RES    240
+
+
 #define  ST7789_RST_OFF   GPIO_SetBits(GPIOA,GPIO_Pin_4)	              //复位关
 #define  ST7789_RST_ON    GPIO_ResetBits(GPIOA,GPIO_Pin_4)	          //复位开
 

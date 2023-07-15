@@ -5,7 +5,7 @@
 #define POINT_SIZE  (sizeof(u16))
 
 //DMA 单次最大传输个数
-#define DMA_MAX_BUFF  (60000)
+#define DMA_MAX_BUFF  (65500)
 
 //DMA传输控制参数
 static u32 DMA_TXCurrentAddr,DMA_EndAddr,Length;
@@ -170,6 +170,8 @@ void ST7789_Init()
     ST7789_RST_OFF;
 	Delay_ms(10);
 
+#if ( (DISPLAY_DEV == ST7789)  )
+
     ST7789_SetCmd(0x11); 			//Sleep Out
 	Delay_ms(120);               //DELAY120ms 
     ST7789_SetCmd(0x3A);        //65k mode
@@ -178,8 +180,15 @@ void ST7789_Init()
     ST7789_SendData(0x1A);
 
     ST7789_SetCmd(0x36);                 // 屏幕显示方向设置
-    ST7789_SendData(0x00);              // 0x00竖屏，0x60横屏
-
+	// 0x00竖屏，0x60横屏
+	if(DISP_HOR_RES > DISP_VER_RES)
+	{
+		ST7789_SendData(0x60);
+	}
+	else
+	{
+		ST7789_SendData(0x00);
+	}
 
     ST7789_SetCmd(0xb2);		//Porch Setting
     ST7789_SendData(0x05);
@@ -243,6 +252,106 @@ void ST7789_Init()
     ST7789_SetCmd(0x29);         //开启显示 
     // ST7789_Full(0x0000);
 
+#elif (DISPLAY_DEV == ST7789V)
+    ST7789_SetCmd(0x01);//Software Reset
+	Delay_ms(10);
+    ST7789_SetCmd(0x11); 			//Sleep Out
+	Delay_ms(120);               //DELAY120ms
+	 	  //-----------------------ST7789V Frame rate setting-----------------//
+//************************************************
+	ST7789_SetCmd(0x3A);        //65k mode
+	ST7789_SendData(0x05);
+	ST7789_SetCmd(0xC5); 		//VCOM
+	ST7789_SendData(0x1A);
+
+	ST7789_SetCmd(0x36);                 // 屏幕显示方向设置
+	if(DISP_HOR_RES > DISP_VER_RES)
+	{
+		ST7789_SendData(0x60);
+	}
+	else
+	{
+		ST7789_SendData(0x00);
+	}
+
+	//-------------ST7789V Frame rate setting-----------//
+	ST7789_SetCmd(0xb2);		//Porch Setting
+	ST7789_SendData(0x05);
+	ST7789_SendData(0x05);
+	ST7789_SendData(0x00);
+	ST7789_SendData(0x33);
+	ST7789_SendData(0x33);
+
+	ST7789_SetCmd(0xb7);			//Gate Control
+	ST7789_SendData(0x05);			//12.2v   -10.43v
+	//--------------ST7789V Power setting---------------//
+	ST7789_SetCmd(0xBB);//VCOM
+	ST7789_SendData(0x3F);
+
+	ST7789_SetCmd(0xC0); //Power control
+	ST7789_SendData(0x2c);
+
+	ST7789_SetCmd(0xC2);		//VDV and VRH Command Enable
+	ST7789_SendData(0x01);
+
+	ST7789_SetCmd(0xC3);			//VRH Set
+	ST7789_SendData(0x0F);		//4.3+( vcom+vcom offset+vdv)
+
+	ST7789_SetCmd(0xC4);			//VDV Set
+	ST7789_SendData(0x20);				//0v
+
+	ST7789_SetCmd(0xC6);				//Frame Rate Control in Normal Mode
+	ST7789_SendData(0X01);			//111Hz
+
+	ST7789_SetCmd(0xd0);				//Power Control 1
+	ST7789_SendData(0xa4);
+	ST7789_SendData(0xa1);
+
+	ST7789_SetCmd(0xE8);				//Power Control 1
+	ST7789_SendData(0x03);
+
+	ST7789_SetCmd(0xE9);				//Equalize time control
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x08);
+	//---------------ST7789V gamma setting-------------//
+	ST7789_SetCmd(0xE0); //Set Gamma
+	ST7789_SendData(0xD0);
+	ST7789_SendData(0x05);
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x08);
+	ST7789_SendData(0x14);
+	ST7789_SendData(0x28);
+	ST7789_SendData(0x33);
+	ST7789_SendData(0x3F);
+	ST7789_SendData(0x07);
+	ST7789_SendData(0x13);
+	ST7789_SendData(0x14);
+	ST7789_SendData(0x28);
+	ST7789_SendData(0x30);
+
+	ST7789_SetCmd(0XE1); //Set Gamma
+	ST7789_SendData(0xD0);
+	ST7789_SendData(0x05);
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x09);
+	ST7789_SendData(0x08);
+	ST7789_SendData(0x03);
+	ST7789_SendData(0x24);
+	ST7789_SendData(0x32);
+	ST7789_SendData(0x32);
+	ST7789_SendData(0x3B);
+	ST7789_SendData(0x14);
+	ST7789_SendData(0x13);
+	ST7789_SendData(0x28);
+	ST7789_SendData(0x2F);
+	ST7789_SetCmd(0x21); 		//反显
+	ST7789_SetCmd(0x29);         //开启显示
+#endif
+
+    // ST7789_Full(0x0000);
+
     DMA_TXCurrentAddr = 0;
     DMA_EndAddr = 0;
     Length =0;
@@ -264,16 +373,16 @@ void ST7789_SetArea(u16 x_start,u16 y_start,u16 x_end,u16 y_end)
 {	
 
 	ST7789_SetCmd(0x2a);
-	ST7789_SendData(0x00);
-	ST7789_SendData(x_start);
-	ST7789_SendData(0x00);
-	ST7789_SendData(x_end);
+	ST7789_SendData(x_start>>8);
+	ST7789_SendData(x_start&0xFF);
+	ST7789_SendData(x_end>>8);
+	ST7789_SendData(x_end&0xFF);
 
 	ST7789_SetCmd(0x2b);
-	ST7789_SendData(0x00);
-	ST7789_SendData(y_start);
-	ST7789_SendData(0x00);
-	ST7789_SendData(y_end);	
+	ST7789_SendData(y_start>>8);
+	ST7789_SendData(y_start&0xFF);
+	ST7789_SendData(y_end>>8);
+	ST7789_SendData(y_end&0xFF);	
 	ST7789_SetCmd(0x2c);
 }
 

@@ -217,7 +217,7 @@ void Eye_BodyCreate()
 		lv_obj_set_style_radius(Eye_base[i],EYE_HOLE_SIZE/2,LV_PART_MAIN);
 		lv_obj_align_to(Eye_base[i],Eye_Group[i],LV_ALIGN_CENTER,0,0);
 		lv_obj_set_style_bg_color(Eye_base[i],lv_color_black(),LV_PART_MAIN);
-		lv_obj_set_style_outline_width(Eye_base[i],5,LV_PART_MAIN);
+		lv_obj_set_style_outline_width(Eye_base[i],3,LV_PART_MAIN);
 		lv_obj_set_style_outline_color(Eye_base[i],lv_color_black(),LV_PART_MAIN);
 		lv_obj_set_scrollbar_mode(Eye_base[i],LV_SCROLLBAR_MODE_OFF);
 		lv_obj_clear_flag(Eye_base[i],LV_OBJ_FLAG_CLICKABLE );
@@ -432,7 +432,7 @@ void LVGL_Demo()
 {
 	// lv_ex_keyboard_1();
 	// lv_demo_stress();
-	// lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_REAL);
+	lv_demo_benchmark(LV_DEMO_BENCHMARK_MODE_REAL);
 	// lv_demo_keypad_encoder();
 }
 
@@ -506,12 +506,12 @@ void LVGL_Init()
 	lv_port_disp_init();
 	lv_port_indev_init();
 #endif
-    img();
+    // img();
     // StateBar();
     // EYE_FACE();
     // LVGL_Build_GUI();
     // roller_show_3();
-//    LVGL_Demo();
+   LVGL_Demo();
 //    Eye_Main();
 }
 
