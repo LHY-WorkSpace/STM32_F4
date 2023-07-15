@@ -4,8 +4,8 @@
  
 #define KEY_OK  			GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_7)
 #define KEY_BACK  		 	GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_6)
-#define KEY_UP  			GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_4)
-#define KEY_DOWN 			GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_5)
+// #define KEY_UP  			GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_4)
+// #define KEY_DOWN 			GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_5)
 
 typedef enum
 {

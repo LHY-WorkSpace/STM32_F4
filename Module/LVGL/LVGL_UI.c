@@ -504,7 +504,7 @@ void LVGL_Init()
 	LVGL_TimerInit(1);
     lv_init();
 	lv_port_disp_init();
-	lv_port_indev_init();
+	// lv_port_indev_init();
 #endif
     // img();
     // StateBar();

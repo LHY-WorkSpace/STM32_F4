@@ -1,10 +1,4 @@
-#include "gd32f4xx.h"
-#include <stdio.h>
-#include "systick.h"
-#include "Key.h"
-#include "Timer.h"
-#include "GPIO.h"
-
+#include "IncludeFile.h"
 
 #define EVENT_CB(ev)   if(handle->cb[ev])handle->cb[ev]((Button*)handle)
 
@@ -20,7 +14,7 @@ struct Button Button_Down;
 struct Button Button_Left;
 struct Button Button_Right;
 
-void button_init(struct Button* handle, uint8_t(*pin_level)(uint8_t), uint8_t active_level, uint8_t button_id)
+void Button_init(struct Button* handle, uint8_t(*pin_level)(uint8_t), uint8_t active_level, uint8_t button_id)
 {
 	memset(handle, 0, sizeof(struct Button));
 	handle->event = (uint8_t)NONE_PRESS;
@@ -390,18 +384,18 @@ void DOUBLE_Click_Handler(void *Data)
 
 void Key_Init()
 {
-    rcu_periph_clock_enable(RCU_GPIOE);
+    // rcu_periph_clock_enable(RCU_GPIOE);
 
-    gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_2);
-    gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_3);
-    gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_4);
-    gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_5);
+    // gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_2);
+    // gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_3);
+    // gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_4);
+    // gpio_mode_set(GPIOE, GPIO_MODE_INPUT, GPIO_PUPD_NONE, GPIO_PIN_5);
 
 
-    button_init(&Button_Up,read_button_GPIO,SET,Key_Up);
-    button_init(&Button_Down,read_button_GPIO,SET,Key_Down);
-    button_init(&Button_Left,read_button_GPIO,SET,Key_Left);
-    button_init(&Button_Right,read_button_GPIO,SET,Key_Right);
+    Button_init(&Button_Up,read_button_GPIO,SET,Key_Up);
+    Button_init(&Button_Down,read_button_GPIO,SET,Key_Down);
+    Button_init(&Button_Left,read_button_GPIO,SET,Key_Left);
+    Button_init(&Button_Right,read_button_GPIO,SET,Key_Right);
 
 
     // button_attach(&Button_Up, PRESS_DOWN,       PRESS_DOWN_Handler);

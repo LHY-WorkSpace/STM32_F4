@@ -66,15 +66,15 @@ static unsigned char FreeRTOS_Logo[] =
 
 
 
-
+void Power_On(void);
 
 GUI_t GUI_Info =
 {   
     .KeyInfo.KeyNum = Key_MaxNum,
     .KeyInfo.KeyState = NONE_PRESS,
     .Index = Main_ui,
-    .UI_List[Main_ui] = Anim_Test,
-    .UI_List[Main_ui] = Main_UI,
+    .UI_List[Main_ui] = Power_On,
+    // .UI_List[Main_ui] = Main_UI,
 
 };
 
