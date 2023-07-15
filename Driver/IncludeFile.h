@@ -31,7 +31,7 @@
 #include "lcd.h"
 #include "XPT2046.h"
 #include "KeyPad.h"
-
+#include "Key.h"
 
 //Æ÷¼þÇý¶¯²ã
 #include "EEPROM.h"

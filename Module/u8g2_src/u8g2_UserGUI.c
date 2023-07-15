@@ -62,6 +62,22 @@ static unsigned char FreeRTOS_Logo[] =
 };
 
 
+
+
+
+
+
+
+GUI_t GUI_Info =
+{   
+    .KeyInfo.KeyNum = Key_MaxNum,
+    .KeyInfo.KeyState = NONE_PRESS,
+    .Index = Main_ui,
+    .UI_List[Main_ui] = Anim_Test,
+    .UI_List[Main_ui] = Main_UI,
+
+};
+
 //***************************************************//
 //  π¶ƒ‹√Ë ˆ: 
 //  
@@ -135,35 +151,6 @@ void Display_U8g2_Logo()
     Delay_ms(500);  
     u8g2_ClearBuffer(&u8g2_Data);
 }
-
-    #define CIRCLE_SEC_X 60
-    #define CIRCLE_SEC_Y 30
-    #define CIRCLE_SEC_R 15
-
-// void Clock()
-// {
-//         int8_t x0,y0;
-//       static int8_t  sec=0;
-
-
-//         // arm_sin_cos_f32();
-//              u8g2_ClearBuffer(&u8g2_Data);  
-//         u8g2_DrawCircle(&u8g2_Data,CIRCLE_SEC_X,CIRCLE_SEC_Y,CIRCLE_SEC_R,U8G2_DRAW_ALL);
-//        x0 = CIRCLE_SEC_X + (int8_t)(FastSin(DEGTORAD(sec*6.0f))*CIRCLE_SEC_R);
-//        y0 = CIRCLE_SEC_Y - (int8_t)(CIRCLE_SEC_R*FastCos(DEGTORAD(sec*6.0f)));
-//        u8g2_DrawLine(&u8g2_Data,CIRCLE_SEC_X, CIRCLE_SEC_Y, x0, y0);
-//        sec++;
-//        if(sec == 60)
-//         sec=0;
-//           u8g2_SendBuffer(&u8g2_Data);
-// }
-
-
-
-
-
-
-
 
 void DispalyUTF_8Strings()
 {   
@@ -241,27 +228,54 @@ void Battery_icon()
 }
 
 
-
-void u8g2_TaskCreate()
+void Power_On()
 {
+    static uint8_t x=1,y=0,z=0;
+    static uint8_t px=1,py=0;
 
+    if(x <= 31)
+    {
+        u8g2_DrawHLine(&u8g2_Data,62-x*2,31,(x+1)*4);
+        u8g2_DrawHLine(&u8g2_Data,62-x*2,32,(x+1)*4);
+        x++;
+    }
+    else
+    {
+        px = 63*FastCos(DEGTORAD(y));
+        py = 31*FastSin(DEGTORAD(y));
 
-    xTaskCreate( (TaskFunction_t)Battery_icon,"IconTask",300,NULL,10,NULL);
-    // xTaskCreate( (TaskFunction_t)Safe_icon,    "IconTask",200,NULL,10, &u8g2_Safe_T);
-    // xTaskCreate( (TaskFunction_t)Dir_icon,    "IconTask",200,NULL,10, &u8g2_Dir_T);
-    // xTaskCreate( (TaskFunction_t)Switch_Task,   "IconTask",200,NULL,12, NULL);
+        if(y<90)
+        {
+            y++;
+            u8g2_DrawLine(&u8g2_Data,63,31,63-px,31+py);
+            u8g2_DrawLine(&u8g2_Data,63,31,63-px,31-py);
+            u8g2_DrawLine(&u8g2_Data,63,31,63+px,31+py);
+            u8g2_DrawLine(&u8g2_Data,63,31,63+px,31-py);
+        }
+        else
+        {
+            if(z<63)
+            {
+                z++;
+                u8g2_DrawVLine(&u8g2_Data,63-z,0,63);
+                u8g2_DrawVLine(&u8g2_Data,64+z,0,63);
 
-    // xTaskCreate( (TaskFunction_t)Streamline_icon,    "IconTask",200,NULL,10,            NULL);
-    // xTaskCreate( (TaskFunction_t)Shift_icon,    "IconTask",200,NULL,10,            NULL);
-//   xTaskCreate( (TaskFunction_t)Round_Task,    "IconTask",200,NULL,10,            NULL);
-    // xTaskCreate( (TaskFunction_t)Moon_Task,    "IconTask",200,NULL,10,            NULL);
-
-   //xTaskCreate( (TaskFunction_t)Teat_Task,    "IconTask",200,NULL,10,            NULL);
-   //xTaskCreate( (TaskFunction_t)Clear_Task,    "IconTask",200,NULL,10,            NULL);
-   	vTaskDelete(NULL);
+                if( z > 11 )
+                {
+                    u8g2_SetFont(&u8g2_Data, u8g2_font_streamline_all_t);
+                    u8g2_DrawGlyph(&u8g2_Data,51,84-z,0x011F);
+                }
+            }
+            else
+            {
+                x=1;
+                y=0;
+                z=0;
+                GUI_Info.Index = Main_ui;
+            }
+        }
+    }
 }
-
-
 
 
 
@@ -269,17 +283,17 @@ void u8g2_Task()
 {
     TickType_t Time;	
 
-    Time=xTaskGetTickCount();
+    Time = xTaskGetTickCount();
 
     while (1)
     {
         u8g2_ClearBuffer(&u8g2_Data);
 
+        GUI_Info.KeyInfo = GetKeyState();
 
+        GUI_Info.UI_List[GUI_Info.Index]();
 
-
-
-
+        u8g2_DrawFrame(&u8g2_Data,0,0,128,64);
 
         // taskENTER_CRITICAL();
         u8g2_SendBuffer(&u8g2_Data);
@@ -288,24 +302,6 @@ void u8g2_Task()
     }
     vTaskDelete(NULL);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// ?????®®??
-//     u8g2_SetFontMode(&u8g2,x); x=1?®∞0
-//     u8g2_SetDrawColor(&u8g2,2);????????
-//      u8g2_SetDrawColor(&u8g2,1);??°¿?????
-//     delay();
-
 
 
 
