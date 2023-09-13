@@ -769,17 +769,17 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 		{
 		StackType_t *pxStack;
 
-			/* Allocate space for the stack used by the task being created. */
+			//申请 usStackDepth * StackType_t 大小的内存
 			pxStack = ( StackType_t * ) pvPortMalloc( ( ( ( size_t ) usStackDepth ) * sizeof( StackType_t ) ) ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 
 			if( pxStack != NULL )
 			{
-				/* Allocate space for the TCB. */
+				//申请 TCB_t 大小的内存
 				pxNewTCB = ( TCB_t * ) pvPortMalloc( sizeof( TCB_t ) ); /*lint !e961 MISRA exception as the casts are only redundant for some paths. */
 
 				if( pxNewTCB != NULL )
 				{
-					/* Store the stack location in the TCB. */
+					//将申请到的内存作为TCB的任务栈
 					pxNewTCB->pxStack = pxStack;
 				}
 				else
@@ -805,7 +805,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 				pxNewTCB->ucStaticallyAllocated = tskDYNAMICALLY_ALLOCATED_STACK_AND_TCB;
 			}
 			#endif /* configSUPPORT_STATIC_ALLOCATION */
-
+			//添加到任务列表
 			prvInitialiseNewTask( pxTaskCode, pcName, ( uint32_t ) usStackDepth, pvParameters, uxPriority, pxCreatedTask, pxNewTCB, NULL );
 			prvAddNewTaskToReadyList( pxNewTCB );
 			xReturn = pdPASS;
@@ -861,7 +861,9 @@ UBaseType_t x;
 	by the port. */
 	#if( portSTACK_GROWTH < 0 )
 	{
+		//将申请的内存指针移动到高地址作为栈使用
 		pxTopOfStack = pxNewTCB->pxStack + ( ulStackDepth - ( uint32_t ) 1 );
+		//地址 8字节 对齐
 		pxTopOfStack = ( StackType_t * ) ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack ) & ( ~( ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) ) ); /*lint !e923 MISRA exception.  Avoiding casts between pointers and integers is not practical.  Size differences accounted for using portPOINTER_SIZE_TYPE type. */
 
 		/* Check the alignment of the calculated top of stack is correct. */
@@ -888,7 +890,7 @@ UBaseType_t x;
 	}
 	#endif /* portSTACK_GROWTH */
 
-	/* Store the task name in the TCB. */
+	//复制任务名称字符串
 	for( x = ( UBaseType_t ) 0; x < ( UBaseType_t ) configMAX_TASK_NAME_LEN; x++ )
 	{
 		pxNewTCB->pcTaskName[ x ] = pcName[ x ];
@@ -928,16 +930,22 @@ UBaseType_t x;
 		pxNewTCB->uxMutexesHeld = 0;
 	}
 	#endif /* configUSE_MUTEXES */
-
+	//清空 
 	vListInitialiseItem( &( pxNewTCB->xStateListItem ) );
 	vListInitialiseItem( &( pxNewTCB->xEventListItem ) );
 
 	/* Set the pxNewTCB as a link back from the ListItem_t.  This is so we can get
 	back to	the containing TCB from a generic item in a list. */
+
+	//将 pxNewTCB  加入到 xStateListItem 中,方便 xStateListItem 返回到 pxNewTCB
 	listSET_LIST_ITEM_OWNER( &( pxNewTCB->xStateListItem ), pxNewTCB );
 
 	/* Event lists are always in priority order. */
+	
+	// 换算优先级 === 
 	listSET_LIST_ITEM_VALUE( &( pxNewTCB->xEventListItem ), ( TickType_t ) configMAX_PRIORITIES - ( TickType_t ) uxPriority ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
+	
+	//将 pxNewTCB  加入到 xEventListItem 中,方便 xEventListItem 返回到 pxNewTCB
 	listSET_LIST_ITEM_OWNER( &( pxNewTCB->xEventListItem ), pxNewTCB );
 
 	#if ( portCRITICAL_NESTING_IN_TCB == 1 )
@@ -1008,6 +1016,7 @@ UBaseType_t x;
 	}
 	#else /* portUSING_MPU_WRAPPERS */
 	{
+		//手动入栈
 		pxNewTCB->pxTopOfStack = pxPortInitialiseStack( pxTopOfStack, pxTaskCode, pvParameters );
 	}
 	#endif /* portUSING_MPU_WRAPPERS */
@@ -1031,7 +1040,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
 	updated. */
 	taskENTER_CRITICAL();
 	{
-		uxCurrentNumberOfTasks++;
+		uxCurrentNumberOfTasks++;//当前任务数加 1
 		if( pxCurrentTCB == NULL )
 		{
 			/* There are no other tasks, or all the other tasks are in
