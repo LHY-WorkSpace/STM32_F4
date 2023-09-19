@@ -195,18 +195,24 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 
 	/* Offset added to account for the way the MCU uses the stack on entry/exit
 	of interrupts, and to ensure alignment. */
-	pxTopOfStack--;
 
-	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+	//满减栈，先移动指针，在写入值
 	pxTopOfStack--;
-	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* PC */
+	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+
+	pxTopOfStack--;
+	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* 任务函数地址，LR */
+
 	pxTopOfStack--;
 	*pxTopOfStack = ( StackType_t ) prvTaskExitError;	/* LR */
 
 	/* Save code space by skipping register initialisation. */
 	pxTopOfStack -= 5;	/* R12, R3, R2 and R1. */
 	*pxTopOfStack = ( StackType_t ) pvParameters;	/* R0 */
+	//以上寄存器在函数调用时由CPU自动入栈
 
+
+	//以下寄存器由程序手动入栈
 	/* A save method is being used that requires each task to maintain its
 	own exec return value. */
 	pxTopOfStack--;
