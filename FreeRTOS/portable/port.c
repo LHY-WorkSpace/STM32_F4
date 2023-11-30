@@ -201,9 +201,10 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
 
 	pxTopOfStack--;
-	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* 任务函数地址，LR */
+	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* 任务函数地址 */
 
 	pxTopOfStack--;
+	//正常情况下是不会任务是不会退出的,一旦非正常退出，则进入prvTaskExitError
 	*pxTopOfStack = ( StackType_t ) prvTaskExitError;	/* LR */
 
 	/* Save code space by skipping register initialisation. */
@@ -246,6 +247,8 @@ __asm void vPortSVCHandler( void )
 	ldr	r3, =pxCurrentTCB	//取 pxCurrentTCB 的地址
 	ldr r1, [r3]			//取 pxCurrentTCB 的内容到R1( 即 R1 = pxTopOfStack )  pxTopOfStack为一个指针变量！！！！
 	ldr r0, [r1]			//取 pxTopOfStack 指向的内容，即 R0 = 栈地址
+	
+	//出栈,将pxTopOfStack地址里的数据还原到R4 - R11,R14中
 	/* Pop the core registers. */
 	ldmia r0!, {r4-r11, r14}
 	msr psp, r0
@@ -318,7 +321,10 @@ BaseType_t xPortStartScheduler( void )
 	#if( configASSERT_DEFINED == 1 )
 	{
 		volatile uint32_t ulOriginalPriority;
+
+		//外部中断的优先级值寄存器基地址
 		volatile uint8_t * const pucFirstUserPriorityRegister = ( uint8_t * ) ( portNVIC_IP_REGISTERS_OFFSET_16 + portFIRST_USER_INTERRUPT_NUMBER );
+
 		volatile uint8_t ucMaxPriorityValue;
 
 		/* Determine the maximum priority from which ISR safe FreeRTOS API
@@ -382,11 +388,13 @@ BaseType_t xPortStartScheduler( void )
 	#endif /* conifgASSERT_DEFINED */
 
 	/* Make PendSV and SysTick the lowest priority interrupts. */
+	// DebugMon_Handler 的优先级
 	portNVIC_SYSPRI2_REG |= portNVIC_PENDSV_PRI;
 	portNVIC_SYSPRI2_REG |= portNVIC_SYSTICK_PRI;
 
 	/* Start the timer that generates the tick ISR.  Interrupts are disabled
 	here already. */
+	// 开启SysTick
 	vPortSetupTimerInterrupt();
 
 	/* Initialise the critical nesting count ready for the first task. */
@@ -450,6 +458,7 @@ __asm void xPortPendSVHandler( void )
 
 	PRESERVE8
 
+	// 将 PSP 加载到 R0
 	mrs r0, psp
 	isb
 	/* Get the location of the current TCB. */
@@ -457,14 +466,18 @@ __asm void xPortPendSVHandler( void )
 	ldr	r2, [r3]
 
 	/* Is the task using the FPU context?  If so, push high vfp registers. */
+	// 进入异常时，LR会被更新为EXC_RET,其中带有FPU信息所以有以下指令
+	// 测试指令：2个数按位与，且更新 Z 标志
 	tst r14, #0x10
 	it eq
 	vstmdbeq r0!, {s16-s31}
 
 	/* Save the core registers. */
+	// 手动入栈 r4-r11, r14 
 	stmdb r0!, {r4-r11, r14}
 
 	/* Save the new top of stack into the first member of the TCB. */
+	// 保存R0到R2地址中，将任务栈的入栈后的指针写入到TCB的 pxTopOfStack 中
 	str r0, [r2]
 
 	stmdb sp!, {r0, r3}

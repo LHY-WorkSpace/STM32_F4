@@ -861,7 +861,7 @@ UBaseType_t x;
 	by the port. */
 	#if( portSTACK_GROWTH < 0 )
 	{
-		//将申请的内存指针移动到高地址作为栈使用
+		//将申请的内存指针移动到高地址作为栈使用,pxNewTCB->pxStack为任务栈的首地址
 		pxTopOfStack = pxNewTCB->pxStack + ( ulStackDepth - ( uint32_t ) 1 );
 		//地址 8字节 对齐
 		pxTopOfStack = ( StackType_t * ) ( ( ( portPOINTER_SIZE_TYPE ) pxTopOfStack ) & ( ~( ( portPOINTER_SIZE_TYPE ) portBYTE_ALIGNMENT_MASK ) ) ); /*lint !e923 MISRA exception.  Avoiding casts between pointers and integers is not practical.  Size differences accounted for using portPOINTER_SIZE_TYPE type. */
@@ -1091,18 +1091,23 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB )
 		#endif /* configUSE_TRACE_FACILITY */
 		traceTASK_CREATE( pxNewTCB );
 
+
+		//按 pxNewTCB 的任务优先级，将 pxNewTCB 的 xStateListItem 加入到 pxReadyTasksLists[configMAX_PRIORITIES] 中
+		//这样，pxReadyTasksLists[]记录着对应优先级的多个任务列表
 		prvAddTaskToReadyList( pxNewTCB );
 
 		portSETUP_TCB( pxNewTCB );
 	}
 	taskEXIT_CRITICAL();
 
+	//检查调度器是否运行，正在运行则触发任务切换
 	if( xSchedulerRunning != pdFALSE )
 	{
 		/* If the created task is of a higher priority than the current task
 		then it should run now. */
 		if( pxCurrentTCB->uxPriority < pxNewTCB->uxPriority )
 		{
+			// 触发 PendSV 任务切换
 			taskYIELD_IF_USING_PREEMPTION();
 		}
 		else

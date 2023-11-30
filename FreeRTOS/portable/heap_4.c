@@ -336,14 +336,14 @@ size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 	/* Ensure the heap starts on a correctly aligned boundary. */
 	uxAddress = ( size_t ) ucHeap;
 
-	if( ( uxAddress & portBYTE_ALIGNMENT_MASK ) != 0 )
+	if( ( uxAddress & portBYTE_ALIGNMENT_MASK ) != 0 )//检查是否8字节对齐
 	{
-		uxAddress += ( portBYTE_ALIGNMENT - 1 );
-		uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
-		xTotalHeapSize -= uxAddress - ( size_t ) ucHeap;
+		uxAddress += ( portBYTE_ALIGNMENT - 1 );//进位，移动下一个满足的范围内
+		uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );//取整
+		xTotalHeapSize -= uxAddress - ( size_t ) ucHeap;//舍去不满足对齐的地址后，可用的堆大小
 	}
 
-	pucAlignedHeap = ( uint8_t * ) uxAddress;
+	pucAlignedHeap = ( uint8_t * ) uxAddress;//对齐后的首地址
 
 	/* xStart is used to hold a pointer to the first item in the list of free
 	blocks.  The void cast is used to prevent compiler warnings. */
@@ -352,17 +352,17 @@ size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 
 	/* pxEnd is used to mark the end of the list of free blocks and is inserted
 	at the end of the heap space. */
-	uxAddress = ( ( size_t ) pucAlignedHeap ) + xTotalHeapSize;
-	uxAddress -= xHeapStructSize;
+	uxAddress = ( ( size_t ) pucAlignedHeap ) + xTotalHeapSize;//总空间的尾地址
+	uxAddress -= xHeapStructSize;//减去内存管理的结构
 	uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
-	pxEnd = ( void * ) uxAddress;
+	pxEnd = ( void * ) uxAddress;//使用数据后的尾地址
 	pxEnd->xBlockSize = 0;
 	pxEnd->pxNextFreeBlock = NULL;
 
 	/* To start with there is a single free block that is sized to take up the
 	entire heap space, minus the space taken by pxEnd. */
 	pxFirstFreeBlock = ( void * ) pucAlignedHeap;
-	pxFirstFreeBlock->xBlockSize = uxAddress - ( size_t ) pxFirstFreeBlock;
+	pxFirstFreeBlock->xBlockSize = uxAddress - ( size_t ) pxFirstFreeBlock;//尾地址 - 首地址
 	pxFirstFreeBlock->pxNextFreeBlock = pxEnd;
 
 	/* Only one block exists - and it covers the entire usable heap space. */
