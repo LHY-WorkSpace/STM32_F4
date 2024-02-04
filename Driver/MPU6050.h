@@ -136,7 +136,7 @@ void MPU6050_Write_Data(u8 COMMOND,u8 data);
 u8 MPU6050_Read_Data(u8 COMMOND);
 void MPU6050_Get_Gyro_Data(void);
 void MPU6050_Get_Acce_Data(void);
-double MPU6050_Tempure(void);
+float MPU6050_Tempure(void);
 
 
 

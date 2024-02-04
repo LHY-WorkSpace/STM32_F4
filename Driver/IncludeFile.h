@@ -70,6 +70,8 @@
 #include "../FreeRTOS/include/queue.h"
 #include "../FreeRTOS/include/semphr.h"
 #include "../FreeRTOS/FreeROS_Communication.h"
+#include "../FreeRTOS/include/message_buffer.h"
+#include "../FreeRTOS/include/stream_buffer.h"
 #endif
 
 #include "../MPU6050DMP/inv_mpu.h"

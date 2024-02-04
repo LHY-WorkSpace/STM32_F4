@@ -70,16 +70,16 @@ void USART1_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 	USART1_Initstruc.USART_HardwareFlowControl=USART_HardwareFlowControl_None;
 	USART_Init(USART1,&USART1_Initstruc);
 	
-	NVIC_Initstr.NVIC_IRQChannel=USART1_IRQn;
-	NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=4;
-	NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
-	NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
-	NVIC_Init(&NVIC_Initstr);
+	// NVIC_Initstr.NVIC_IRQChannel=USART1_IRQn;
+	// NVIC_Initstr.NVIC_IRQChannelPreemptionPriority=4;
+	// NVIC_Initstr.NVIC_IRQChannelSubPriority=0;
+	// NVIC_Initstr.NVIC_IRQChannelCmd=ENABLE;
+	// NVIC_Init(&NVIC_Initstr);
 
 	USART_ClearFlag(USART1,0x3ff);
 
-	USART_ITConfig(USART1,USART_IT_RXNE ,ENABLE);
-	USART_ITConfig(USART1,USART_IT_IDLE, ENABLE);//不支持或（ | ）操作
+	// USART_ITConfig(USART1,USART_IT_RXNE ,ENABLE);
+	// USART_ITConfig(USART1,USART_IT_IDLE, ENABLE);//不支持或（ | ）操作
 
 	USART_Cmd(USART1,ENABLE);	
 }
@@ -160,11 +160,12 @@ void USART2_Init(u32 bode,u16 DataLength,u16 StopBit,u16 Parity)
 int fputc(int ch, FILE* stream)          
 {		
 	u8 i=0;
+	USART_ClearFlag(USART1,USART_FLAG_TC);
+	USART_SendData(USART1, (unsigned char) ch);	
 	while ((USART_GetFlagStatus(USART1,USART_FLAG_TC)==RESET) && ( i < 10))
 	{
-		Delay_us(2);
+		// Delay_us(2);
 	}
-	USART_SendData(USART1, (unsigned char) ch);	
 	USART_ClearFlag(USART1,USART_FLAG_TC);
     return ch;
 }

@@ -238,20 +238,22 @@ void MPU6050_Init(void)
 
 
 
-double MPU6050_Tempure(void)
+float MPU6050_Tempure(void)
 {
 	short int temp;
-	double reval;
-	temp=(MPU6050_Read_Data(MPU6050_TEMP_OUT_H)<<8|MPU6050_Read_Data(MPU6050_TEMP_OUT_L));
-	reval=((double)temp/340+36.53f);
-  return reval;
-
+	float reval;
+	u8 Data[2];
+	memset(Data,0,sizeof(Data));
+	MPU6050_Read_DMP(MPU6050_ADDRESS,MPU6050_TEMP_OUT_H,2,Data);
+	temp=(Data[0]<<8|Data[1]);
+	reval=(((float)temp/340.0f)+36.53f);
+	return reval;
 }
 
 
 
 
-/*读取数据到 pitch,yaw,roll  */
+/*读取数据到 pitch,yaw(有零漂),roll  */
 u8 MPU6050_Get_DMP_Data(float *pitch,float *yaw,float *roll)
 {
 	u8 i=0;
