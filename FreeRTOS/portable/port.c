@@ -199,9 +199,12 @@ StackType_t *pxPortInitialiseStack( StackType_t *pxTopOfStack, TaskFunction_t px
 	//满减栈，先移动指针，在写入值
 	pxTopOfStack--;
 	*pxTopOfStack = portINITIAL_XPSR;	/* xPSR */
+	// 如果xPSR的Bit9 = 1
+	// 则说明栈地址被插入了对齐空位以保证双字对齐特性
+	// 退出时会自动调整栈地址
 
 	pxTopOfStack--;
-	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* 任务函数地址 */
+	*pxTopOfStack = ( ( StackType_t ) pxCode ) & portSTART_ADDRESS_MASK;	/* 保证地址为偶数*/
 
 	pxTopOfStack--;
 	//正常情况下是不会任务是不会退出的,一旦非正常退出，则进入prvTaskExitError
@@ -409,6 +412,7 @@ BaseType_t xPortStartScheduler( void )
 	/* Start the first task. */
 	prvStartFirstTask();
 
+	// 不会运行到这里，因为上一步最后进入SVC进行任务切换
 	/* Should not get here! */
 	return 0;
 }

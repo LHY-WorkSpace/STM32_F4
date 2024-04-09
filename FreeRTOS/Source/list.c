@@ -73,7 +73,7 @@ void vListInitialiseItem( ListItem_t * const pxItem )
 
 void vListInsertEnd( List_t * const pxList, ListItem_t * const pxNewListItem )
 {
-ListItem_t * const pxIndex = pxList->pxIndex;
+ListItem_t * const pxIndex = pxList->pxIndex;//取pxList中指向的最后一个元素
 
 	/* Only effective when configASSERT() is also defined, these tests may catch
 	the list data structures being overwritten in memory.  They will not catch
