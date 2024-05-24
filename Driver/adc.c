@@ -113,13 +113,15 @@ static u16 ADC_GetVal()
 //***************************************************//
 float BatteryGetVolate()
 { 
-	float Value,V_ADC;
+	float Value;
 
 	BATTERY_CHECK_ENABLE;
 
-	Value = ( VBAT_MAX * R0 )/ ( R0 + R1 );
-	V_ADC = ( Value * (float)ADC_GetVal() / 4096.0f );
-	Value = V_ADC * ( R0 + R1 ) / R0;
+	#if( (( VBAT_MAX * R0 )/( R0 + R1 )) > VREF)
+		#warning "µç×è·ÖÑ¹³¬·¶Î§"
+	#endif
+
+	Value = (float)ADC_GetVal()*VREF/4096*( R0 + R1 )/R0;
 
 	BATTERY_CHECK_DISABLE;
 	
