@@ -97,7 +97,8 @@
 
 #define ST7789      0    
 #define ILI9341     1
-#define ST7789V     2      
+#define ST7789V     2
+#define GC9A01      3   
 #define DISPLAY_DEV    ST7789V
 
 #include "../Module/LVGL/lvgl.h"

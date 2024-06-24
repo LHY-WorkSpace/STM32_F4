@@ -124,11 +124,16 @@ PWR1_CONFIG:    DEVICES_REST     = bit[7]       RESET bit  (复位后自动清零)
 #define MOTION          (0)
 #define NO_MOTION       (1)
 
-#define DEFAULT_MPU_HZ  (100)
+#define DEFAULT_MPU_HZ  (200)
 
 
-
-
+//SCL
+#define MPU6050_IIC_SCL_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_11)
+#define MPU6050_IIC_SCL_HIGH  		 	GPIO_SetBits(GPIOB,GPIO_Pin_11)
+//SDA
+#define MPU6050_IIC_SDA_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_10)
+#define MPU6050_IIC_SDA_HIGH 			GPIO_SetBits(GPIOB,GPIO_Pin_10)
+#define MPU6050_IIC_SDA_STATE           GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_10)
 
 
 void MPU6050_Init(void);

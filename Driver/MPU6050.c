@@ -15,20 +15,164 @@ struct hal_s {
     struct rx_s rx;
 };
 static struct hal_s hal = {0};
+static signed char gyro_orientation[9] = {-1, 0, 0,
+										   0,-1, 0,
+										   0, 0, 1};	
 
 
+void MPU6050_IIC_Init(void)
+{
+	GPIO_InitTypeDef GPIO_Initstructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
+	
+	MPU6050_IIC_SCL_HIGH;
+	MPU6050_IIC_SDA_HIGH;//置为总线空闲
+
+	GPIO_Initstructure.GPIO_Pin = GPIO_Pin_11|GPIO_Pin_10;	
+	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_Initstructure.GPIO_Mode = GPIO_Mode_Out_OD;
+	GPIO_Init(GPIOB,&GPIO_Initstructure);
+
+}
+
+// SCL - 
+// SDA - 
+// 72Mhz = 210Khz
+static void MPU6050_IIC_Delay(u16 nus)
+{
+	u16 i,k;
+
+	for(k=0; k<nus; k++)
+	{
+		for(i=0; i<1; i++)
+		{
+			__NOP();
+		}
+	}
+}
+
+static void MPU6050_Start_IIC(void)
+{
+	MPU6050_IIC_SDA_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_Delay(2);
+}
+
+static void MPU6050_IIC_Stop(void)
+{
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_HIGH;
+	MPU6050_IIC_Delay(2);
+}
+
+static void MPU6050_IIC_Send_Ack(void)
+{
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_SDA_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_HIGH;
+	MPU6050_IIC_Delay(2);
+}
+
+static void MPU6050_IIC_Send_NAck(void)
+{
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_SDA_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_HIGH;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SCL_LOW;
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_HIGH;
+	MPU6050_IIC_Delay(2);
+}
+
+static u8 MPU6050_Wait_Ack_OK(void)
+{
+	u8 i=0;
+
+	MPU6050_IIC_SCL_HIGH; 
+	MPU6050_IIC_Delay(2);                              
+	while( MPU6050_IIC_SDA_STATE == HIGH)
+	{
+		i++;
+		if(i>10)
+		{
+			MPU6050_IIC_Stop();
+			return D_FALSE;
+		}
+		MPU6050_IIC_Delay(2);	
+	}			
+	MPU6050_IIC_SCL_LOW;	
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_HIGH;
+	return D_TRUE;
+}
+
+static void MPU6050_IIC_SenddByte(u8 Data)
+{
+	u8 i=0;
+	for(i=0;i<8;i++)
+	{
+		if(Data&0x80)	
+		{
+			MPU6050_IIC_SDA_HIGH;
+		}
+		else
+		{
+			MPU6050_IIC_SDA_LOW;
+		}
+		Data<<=1;
+		MPU6050_IIC_Delay(2);
+		MPU6050_IIC_SCL_HIGH;
+		MPU6050_IIC_Delay(2);
+		MPU6050_IIC_SCL_LOW;
+	}
+	MPU6050_IIC_Delay(2);  
+	MPU6050_IIC_SDA_HIGH;               
+}
+
+static u8 MPU6050_IIC_GetByte(void)
+{
+	u8 Data=0;
+	u8 i=0;
+	for(i=0;i<8;i++)
+	{		
+		Data<<=1;
+		MPU6050_IIC_SCL_LOW;
+		MPU6050_IIC_Delay(2); 		
+		MPU6050_IIC_SCL_HIGH;	
+		MPU6050_IIC_Delay(2);
+		if( MPU6050_IIC_SDA_STATE == HIGH)	
+		{
+			Data|=0x01;
+		}
+	}
+ 	MPU6050_IIC_SCL_LOW;	
+	MPU6050_IIC_Delay(2);
+	MPU6050_IIC_SDA_HIGH;
+  	return Data;
+}
 
 u8 get_ms(unsigned long *count)
 {
 	Delay_ms(5);
 	return 0;
 }
-
-
-
-static signed char gyro_orientation[9] = {-1, 0, 0,
-									0,-1, 0,
-									0, 0, 1};	
 
 static unsigned short inv_row_2_scale(const signed char *row)
 {
@@ -64,45 +208,39 @@ static unsigned short inv_orientation_matrix_to_scalar(const signed char *mtx)
 }
 
 
-
-
-
 //读写速率210Khz
 u8 MPU6050_Read_Data(u8 Reg)
 {
 	u8 DATA=0;
 	
-	Start_IIC();
-	IIC_SenddByte(MPU6050_ADDRESS|0X00);
-    IIC_Wait_Ack_OK();
-	IIC_SenddByte(Reg);
-	IIC_Wait_Ack_OK();
+	MPU6050_Start_IIC();
+	MPU6050_IIC_SenddByte(MPU6050_ADDRESS|0X00);
+    MPU6050_Wait_Ack_OK();
+	MPU6050_IIC_SenddByte(Reg);
+	MPU6050_Wait_Ack_OK();
 	
-	Start_IIC();
-	IIC_SenddByte((Reg|0X01));	
-    IIC_Wait_Ack_OK();
-	DATA=IIC_GetByte();
-	IIC_Send_NAck();
-	Stop_IIC();
+	MPU6050_Start_IIC();
+	MPU6050_IIC_SenddByte((Reg|0X01));	
+    MPU6050_Wait_Ack_OK();
+	DATA=MPU6050_IIC_GetByte();
+	MPU6050_IIC_Send_NAck();
+	MPU6050_IIC_Stop();
 	
 	return DATA;
-
-
 
 }
 
 
 void MPU6050_Write_Data(u8 Reg,u8 data)
 {
-
-	Start_IIC();
-	IIC_SenddByte(MPU6050_ADDRESS);        
-    IIC_Wait_Ack_OK();
-	IIC_SenddByte(Reg);
-	IIC_Wait_Ack_OK();
-	IIC_SenddByte(data);	
-	IIC_Wait_Ack_OK();
-	Stop_IIC();
+	MPU6050_Start_IIC();
+	MPU6050_IIC_SenddByte(MPU6050_ADDRESS);        
+    MPU6050_Wait_Ack_OK();
+	MPU6050_IIC_SenddByte(Reg);
+	MPU6050_Wait_Ack_OK();
+	MPU6050_IIC_SenddByte(data);	
+	MPU6050_Wait_Ack_OK();
+	MPU6050_IIC_Stop();
 }
 
 
@@ -110,25 +248,24 @@ void MPU6050_Write_Data(u8 Reg,u8 data)
 u8 MPU6050_Write_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 {
   	u8 i=0;
-	Start_IIC();
-	IIC_SenddByte(devices_addr|0x00);
-	IIC_Wait_Ack_OK();
-	IIC_SenddByte(Reg);
-	IIC_Wait_Ack_OK();
+	MPU6050_Start_IIC();
+	MPU6050_IIC_SenddByte(devices_addr|0x00);
+	MPU6050_Wait_Ack_OK();
+	MPU6050_IIC_SenddByte(Reg);
+	MPU6050_Wait_Ack_OK();
 	for(i=0;i<length;i++)
 	{
-		IIC_SenddByte(*data);
-		if(IIC_Wait_Ack_OK()==1)
+		MPU6050_IIC_SenddByte(*data);
+		if(MPU6050_Wait_Ack_OK()==1)
 		{
-			Stop_IIC();
+			MPU6050_IIC_Stop();
 			return 1;
 		}
 		data++;
 	}
- 	Stop_IIC();
+ 	MPU6050_IIC_Stop();
 	Delay_us(1);
 	return 0;
-
 }
 
 
@@ -136,30 +273,30 @@ u8 MPU6050_Write_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 u8 MPU6050_Read_DMP(u8 devices_addr,u8 Reg,u8 length,u8 *data)
 {
 		u8 i=0;
-    	Start_IIC();
-		IIC_SenddByte(devices_addr);
-		IIC_Wait_Ack_OK();
-		IIC_SenddByte(Reg);
-		IIC_Wait_Ack_OK();
-   		Start_IIC();
-		IIC_SenddByte(devices_addr|0X01);	
-		IIC_Wait_Ack_OK();
+    	MPU6050_Start_IIC();
+		MPU6050_IIC_SenddByte(devices_addr);
+		MPU6050_Wait_Ack_OK();
+		MPU6050_IIC_SenddByte(Reg);
+		MPU6050_Wait_Ack_OK();
+   		MPU6050_Start_IIC();
+		MPU6050_IIC_SenddByte(devices_addr|0X01);	
+		MPU6050_Wait_Ack_OK();
 	
 		for(i=0;i<length;i++)
 		{
 			if(i<(length-1))
 			{
-				*data=IIC_GetByte();
-				IIC_Send_Ack();
+				*data=MPU6050_IIC_GetByte();
+				MPU6050_IIC_Send_Ack();
 			}
 			else
 			{
-				*data=IIC_GetByte();
-				IIC_Send_NAck();	
+				*data=MPU6050_IIC_GetByte();
+				MPU6050_IIC_Send_NAck();	
 			}
 			data++;	
 		}
-		Stop_IIC();
+		MPU6050_IIC_Stop();
 
 	return 0;
 }
@@ -225,7 +362,7 @@ u8 MPU6050_DMP_Init(void)
 
 void MPU6050_Init(void)
 {
-	IIC_Init();
+	MPU6050_IIC_Init();
 	MPU6050_Write_Data(MPU6050_PWR1_CONFIG_REG,MPU6050_CLK_SOURCE);                                                              //
 	MPU6050_Write_Data(MPU6050_CONFIGURATION_REG,MPU6050_DLPF_CFG);
 	MPU6050_Write_Data(MPU6050_SMPTR_DIV_REG,MPU6050_SMPTR_DIV);
