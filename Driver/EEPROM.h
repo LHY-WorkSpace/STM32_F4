@@ -1,12 +1,19 @@
-#ifndef  _EEPROM_H_
-#define  _EEPROM_H_
+#ifndef  EEPROM_H
+#define  EEPROM_H
 
 
+#define EEPROM_SIZE                 (32 * 1024) // 字节
+#define EEPROM_PAGE_SIZE            (64)    // 字节
+#define EEPROM_PAGES                (EEPROM_SIZE / EEPROM_PAGE_SIZE) // 页数 内部Ram按页(EEPROM_PAGE_SIZE Byte)对齐
+#define EEPROM_ADDRESS              (0xA0)  //设备地址
 
-#define EEPROM_PAGE_SIZE                 (16)   //字节
-#define EEPROM_PAGES                     (64)   //页数 内部Ram按页(16 Byte)对齐
-#define EEPROM_ADDRESS                   (0xA0)  //AT24C02 设备地址
-
+//SCL
+#define EE_IIC_SCL_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_0)
+#define EE_IIC_SCL_HIGH  		 	GPIO_SetBits(GPIOB,GPIO_Pin_0)
+//SDA
+#define EE_IIC_SDA_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_1)
+#define EE_IIC_SDA_HIGH 			GPIO_SetBits(GPIOB,GPIO_Pin_1)
+#define EE_IIC_SDA_STATE            GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_1)
 
 
 

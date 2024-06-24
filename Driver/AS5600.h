@@ -42,9 +42,24 @@
 //========= Burn Commands =========
 #define BURN            (0xFF)//
 
+
+// SCL - PB11
+#define EC_IIC_SCL_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_11)
+#define EC_IIC_SCL_HIGH  		 	GPIO_SetBits(GPIOB,GPIO_Pin_11)
+// SDA - PB10
+#define EC_IIC_SDA_LOW  			GPIO_ResetBits(GPIOB,GPIO_Pin_10)
+#define EC_IIC_SDA_HIGH 			GPIO_SetBits(GPIOB,GPIO_Pin_10)
+#define EC_IIC_SDA_STATE            GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_10)
+
+#define ANGLE_MODE          (0x01)//角度
+#define TURN_MODE           (0x02)//圈数
+#define ANGLE_TURN_MODE     (0x03)//带圈数的角度
+
+
 void AS5600_Init(void);
-u8  AS5600_WriteData(u8 addr,u8 length,u8 *data);
+void  AS5600_WriteData(u8 addr,u8 length,u8 *data);
 void AS5600_ReadData(u8 addr,u8 length,u8 *data);
+float AS5600_Angle(u8 Mode);
 void AS5600_Test(void);
 #endif
 

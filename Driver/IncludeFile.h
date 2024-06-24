@@ -48,7 +48,7 @@
 #include "ST7789.h"
 #include "Encoder.h"
 #include "AS5600.h"
-
+#include "FOC.h"
 // TRUE     使用
 // FALSE    不使用
 /**************************** RTOS ***************************************/
